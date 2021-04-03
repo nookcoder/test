@@ -4,10 +4,10 @@ namespace printstar
 {
     class Program
     {
-        class Bigger
+        class Bigger // 가운데 별 찍기 
         {
-            public int Line; 
-            public void PrintingBigger()
+            public int Line; // 입력 받은 줄 수
+            public void PrintingBigger() // 별 찍기 함수 
             {
                 
                 for(int i = 1; i < Line + 1; i++)
