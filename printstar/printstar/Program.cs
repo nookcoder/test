@@ -24,12 +24,36 @@ namespace printstar
                 }
             }
         }
+
+        class Smaller // 가운데 별 찍기 반대로 찍기
+        {
+            public int Line; // 줄 갯수 
+            
+            public void PrintingSmaller() // 반대로 찍기 함수 
+            {
+                for (int i = 1; i < Line + 1; i++)
+                {
+                    for (int k = 1; k < i; k++)
+                    {
+                        Console.Write(" ");
+                    }
+                    for (int j = 2 * Line; j > (2 * i - 1); j--)
+                    {
+                        Console.Write("*");
+                    }
+                    Console.Write("\n");
+                }
+            }
+        }
         class MainApp
         {
 
             static void Main(string[] args)
             {
-             
+        
+
+        
+                
             }
         }
 
