@@ -43,6 +43,40 @@ namespace printstar
                 }
             }
         }
+
+        class Diamond // 다이아몬드 찍기 클래스
+        {
+            public void PrintingDiamond(int line)
+            {
+                for (int i = 1; i < line + 1; i++) // 다이아몬드 윗 부분 
+                {
+                    for (int k = line; k > i; k--)
+                    {
+                        Console.Write(" ");
+                    }
+                    for (int j = 0; j < (2 * i - 1); j++)
+                    {
+                        Console.Write("*");
+                    }
+                    Console.Write("\n");
+                }
+
+                for (int x = 1; x < line; x++) // 다이아몬드 아랫부분
+                {
+                    for(int y = 0; y < x; y++)
+                    {
+                        Console.Write(" ");
+                    }
+                    for(int z = (line-1)*2; z > (2*x - 1); z--)
+                    {
+                        Console.Write("*");
+                    }
+                    Console.Write("\n");
+                }
+
+            }
+        }
+        
         class PrintStar
         {
 
@@ -61,6 +95,7 @@ namespace printstar
 
                 Bigger bigger = new Bigger();
                 Smaller smaller = new Smaller();
+                Diamond diamond = new Diamond(); 
                 
                 switch(type)
                 {
@@ -76,10 +111,10 @@ namespace printstar
                         smaller.PrintingSmaller(line);
                         bigger.PrintingBigger(line);
                         break;
-                    case 4:
-                        bigger.PrintingBigger(line-1);
-                        smaller.PrintingSmaller(line);
-                        break;
+                    case 4: // 다이아몬드 찍기
+                        diamond.PrintingDiamond(line);
+                        break; 
+                        
                 }
                 
 
