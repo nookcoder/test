@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PlayGame
+namespace TicTacToe
 {
     class StartGame
     {
@@ -41,12 +41,45 @@ namespace PlayGame
 
             return _sortOfType ;
 
+        }
+
+    }
+
+    class PlayGame
+    {
+        public void PlayWithComputer()
+        {
 
         }
 
+        public void PlayWithUser()
+        {
 
+        }
 
+        public void ShowScoreBoard()
+        {
 
+        }
+
+        public void RunGame(int type)
+        {
+            switch(type)
+            {
+                case 1:
+                    PlayWithComputer();
+                    break;
+
+                case 2:
+                    PlayWithUser();
+                    break;
+
+                case 3:
+                    ShowScoreBoard();
+                    break; 
+
+            }
+        }
     }
 
     class TicTacToe
@@ -56,11 +89,17 @@ namespace PlayGame
             int wetherStart; // 게임 시작 종료 변수 (초기값은 시작) 
             int sortOfType; 
             StartGame startGame = new StartGame();
+            PlayGame playGame = new PlayGame(); 
 
+            
             wetherStart = startGame.Starting();
             while (wetherStart == 1)
             {
                 sortOfType = startGame.SelectType();
+                playGame.RunGame(sortOfType); 
+
+
+
                 wetherStart = startGame.Starting();
 
             }
