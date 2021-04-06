@@ -47,19 +47,46 @@ namespace TicTacToe
 
     class PlayGame
     {
+        public char _playerMark = ' '; 
+
+        public int _count = 0 ; // 게임 진행 총 횟수 , 9가 되면 게임 종료 
+
+        public char[] _numberOfBoard = 
+        {
+            '1', '2', '3', '4', '5', '6', '7', '8', '9'
+        }; // 틱택톡 판에 표시될 숫자 
+
+        public void PaintBoard()
+        {
+            Console.WriteLine(" -------------------------");
+            Console.WriteLine(" |       |       |       |");
+            Console.WriteLine(" |   {0}   |   {1}   |   {2}   |", _numberOfBoard[0], _numberOfBoard[1], _numberOfBoard[2]);
+            Console.WriteLine(" |       |       |       |");
+            Console.WriteLine(" -------------------------");
+            Console.WriteLine(" |       |       |       |");
+            Console.WriteLine(" |   {0}   |   {1}   |   {2}   |", _numberOfBoard[3], _numberOfBoard[4], _numberOfBoard[5]);
+            Console.WriteLine(" |       |       |       |");
+            Console.WriteLine(" -------------------------");
+            Console.WriteLine(" |       |       |       |");
+            Console.WriteLine(" |   {0}   |   {1}   |   {2}   |", _numberOfBoard[6], _numberOfBoard[7], _numberOfBoard[8]);
+            Console.WriteLine(" |       |       |       |");
+            Console.WriteLine(" -------------------------");
+
+        }
+
         public void PlayWithComputer()
         {
-
+            
         }
 
         public void PlayWithUser()
         {
-
+            
         }
 
         public void ShowScoreBoard()
         {
-
+            
         }
 
         public void RunGame(int type)
@@ -67,10 +94,12 @@ namespace TicTacToe
             switch(type)
             {
                 case 1:
+                    PaintBoard();
                     PlayWithComputer();
                     break;
 
                 case 2:
+                    PaintBoard();
                     PlayWithUser();
                     break;
 
@@ -93,14 +122,18 @@ namespace TicTacToe
 
             
             wetherStart = startGame.Starting();
+            Console.Clear();
             while (wetherStart == 1)
             {
                 sortOfType = startGame.SelectType();
-                playGame.RunGame(sortOfType); 
-
-
-
+                Console.Clear();
+                playGame.RunGame(sortOfType);
+                
+                
+                
                 wetherStart = startGame.Starting();
+                Console.Clear();
+
 
             }
         }
