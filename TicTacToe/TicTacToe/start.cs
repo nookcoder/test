@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
- public class Start
+public class Start
  {
-    private int start = 1;
-    private int end = 2; 
+    
     public void Introduction()
     {
         Console.WriteLine("          -----------------             ");
@@ -23,20 +24,57 @@
         Console.ReadKey();
     }
 
+    public int DetermineStartOrNot(int StartOrNot)
+    {
+        Ask ask = new Ask();
+        int gameType;
+
+
+        if (StartOrNot == 1)
+        {
+            gameType = ask.AskType();
+            return gameType;
+        }
+        else if (StartOrNot == 2) {
+            Environment.Exit(0);
+            return 0; 
+        }
+
+
+    }
+      
+ }
+
+public class Ask
+{
     public int AskWantStart()
     {
-        int startOrNot; 
+        int startOrNot;
 
         Console.WriteLine("  ------------------------------------ ");
         Console.WriteLine(" |           1. 시작하기              |");
-        Console.WriteLine(" |           2. 종료하기              |"); 
+        Console.WriteLine(" |           2. 종료하기              |");
         Console.WriteLine("  ------------------------------------ ");
         startOrNot = Convert.ToInt32(Console.ReadLine());
         Console.Clear();
 
-        return startOrNot; 
+        return startOrNot;
     }
 
- }
+    public int AskType()
+    {
+        int gameType;
+
+        Console.WriteLine("  ------------------------------------ ");
+        Console.WriteLine(" |           1. vs Computer           |");
+        Console.WriteLine(" |           2. vs User               |");
+        Console.WriteLine(" |           3. ScoreBoard            |");
+        Console.WriteLine("  ------------------------------------ ");
+        gameType = Convert.ToInt32(Console.ReadLine());
+        Console.Clear();
+        return gameType;
+    }
+}
+}
 
       
