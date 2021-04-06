@@ -18,13 +18,23 @@
         Console.WriteLine("    이긴다. ");
         Console.WriteLine("\n");
         Console.WriteLine(" -------------------------------------- ");
-        Console.WriteLine(" 다음으로 넘어가려면 아무키나 눌러주세요.");
+        Console.WriteLine(" 다음으로 넘어가려면 엔터를 눌러주세요.");
+        Console.WriteLine("\n");
         Console.ReadKey();
     }
 
-    public void StartGame()
+    public int AskWantStart()
     {
-        Console.WriteLine("으악!");
+        int startOrNot; 
+
+        Console.WriteLine("  ------------------------------------ ");
+        Console.WriteLine(" |           1. 시작하기              |");
+        Console.WriteLine(" |           2. 종료하기              |"); 
+        Console.WriteLine("  ------------------------------------ ");
+        startOrNot = Convert.ToInt32(Console.ReadLine());
+        Console.Clear();
+
+        return startOrNot; 
     }
 
  }

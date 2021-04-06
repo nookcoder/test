@@ -10,7 +10,7 @@ namespace TicTacToe
         {
             Start start = new Start();
             start.Introduction();
-            start.StartGame();
+            start.AskWantStart();
         }
     }
 }
