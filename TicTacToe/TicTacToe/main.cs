@@ -8,9 +8,14 @@ namespace TicTacToe
         
         static void Main(string[] args)
         {
+            int startOrNot;
             Start start = new Start();
+            Ask ask = new Ask(); 
+
             start.Introduction();
-            start.AskWantStart();
+            startOrNot = ask.AskWantStart();
+            start.DetermineStartOrNot(startOrNot);
+            ask.AskType();
         }
     }
 }

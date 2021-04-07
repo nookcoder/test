@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq; 
 using System.Text;
+using System.Threading.Tasks; 
 
 public class Start
  {
-    
     public void Introduction()
     {
         Console.WriteLine("          -----------------             ");
@@ -24,31 +25,21 @@ public class Start
         Console.ReadKey();
     }
 
-    public int DetermineStartOrNot(int StartOrNot)
+    public void DetermineStartOrNot(int StartOrNot)
     {
-        Ask ask = new Ask();
-        int gameType;
-
-
-        if (StartOrNot == 1)
+        if (StartOrNot == 2)
         {
-            gameType = ask.AskType();
-            return gameType;
-        }
-        else if (StartOrNot == 2) {
             Environment.Exit(0);
-            return 0; 
         }
-
 
     }
       
  }
 
 public class Ask
-{
-    public int AskWantStart()
-    {
+   {
+     public int AskWantStart()
+     {
         int startOrNot;
 
         Console.WriteLine("  ------------------------------------ ");
@@ -59,10 +50,10 @@ public class Ask
         Console.Clear();
 
         return startOrNot;
-    }
+     }
 
-    public int AskType()
-    {
+     public int AskType()
+     {
         int gameType;
 
         Console.WriteLine("  ------------------------------------ ");
@@ -73,8 +64,33 @@ public class Ask
         gameType = Convert.ToInt32(Console.ReadLine());
         Console.Clear();
         return gameType;
+     }
+ }
+    
+class Play
+{
+    public char[] arraryUserMark =
+    {
+        '1','2','3','4','5','6','7','8','9'
+    };
+    public void PaintBoard()
+    {
+        Console.WriteLine(" ------------------------------------ ");
+        Console.WriteLine(" |          |            |           |");
+        Console.WriteLine(" |     {0}     |      {1}      |     {2}      |",arraryUserMark[0], arraryUserMark[1], arraryUserMark[2]);
+        Console.WriteLine(" |          |            |           |");
+        Console.WriteLine(" ------------------------------------ ");
+        Console.WriteLine(" |          |            |           |");
+        Console.WriteLine(" |     {0}     |      {1}      |     {2}      |", arraryUserMark[3], arraryUserMark[4], arraryUserMark[5]);
+        Console.WriteLine(" |          |            |           |");
+        Console.WriteLine(" ------------------------------------ ");
+        Console.WriteLine(" |          |            |           |");
+        Console.WriteLine(" |     {0}     |      {1}      |     {2}      |", arraryUserMark[6], arraryUserMark[7], arraryUserMark[8]);
+        Console.WriteLine(" |          |            |           |");
+        Console.WriteLine(" ------------------------------------ ");
     }
 }
-}
+
+
 
       
