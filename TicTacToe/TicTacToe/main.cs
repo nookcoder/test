@@ -20,6 +20,18 @@ namespace TicTacToe
             start.DetermineStartOrNot(startOrNot);
             gameType = ask.AskType();
             play.PaintBoard();
+            switch(gameType)
+            {
+                case 1:
+                    play.PlayGameWithComputer();
+                    break;
+                case 2:
+                    play.PlayGameWithUser();
+                    break;
+                //case 3: 
+                    //ShowBoard(); 
+            }
+            
         }
     }
 }

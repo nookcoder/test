@@ -144,6 +144,7 @@ namespace TicTacToe
             }
 
         }
+
         public void JudgeHoriziontal()
         {
         if (arraryMark[0] == playerMark && arraryMark[1] == playerMark && arraryMark[2] == playerMark
