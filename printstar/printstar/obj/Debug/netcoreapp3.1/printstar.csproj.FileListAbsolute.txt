@@ -1,0 +1,13 @@
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\bin\Debug\netcoreapp3.1\printstar.exe
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\bin\Debug\netcoreapp3.1\printstar.deps.json
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\bin\Debug\netcoreapp3.1\printstar.runtimeconfig.json
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\bin\Debug\netcoreapp3.1\printstar.runtimeconfig.dev.json
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\bin\Debug\netcoreapp3.1\printstar.dll
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\bin\Debug\netcoreapp3.1\printstar.pdb
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\obj\Debug\netcoreapp3.1\printstar.csprojAssemblyReference.cache
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\obj\Debug\netcoreapp3.1\printstar.AssemblyInfoInputs.cache
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\obj\Debug\netcoreapp3.1\printstar.AssemblyInfo.cs
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\obj\Debug\netcoreapp3.1\printstar.csproj.CoreCompileInputs.cache
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\obj\Debug\netcoreapp3.1\printstar.dll
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\obj\Debug\netcoreapp3.1\printstar.pdb
+C:\Users\kim\OneDrive\바탕 화면\EN#\printstar\printstar\obj\Debug\netcoreapp3.1\printstar.genruntimeconfig.cache

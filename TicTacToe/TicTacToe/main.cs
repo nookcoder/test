@@ -9,13 +9,17 @@ namespace TicTacToe
         static void Main(string[] args)
         {
             int startOrNot;
+            int gameType; 
+
             Start start = new Start();
-            Ask ask = new Ask(); 
+            Ask ask = new Ask();
+            Play play = new Play();
 
             start.Introduction();
             startOrNot = ask.AskWantStart();
             start.DetermineStartOrNot(startOrNot);
-            ask.AskType();
+            gameType = ask.AskType();
+            play.PaintBoard();
         }
     }
 }

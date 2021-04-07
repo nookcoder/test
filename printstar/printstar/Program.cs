@@ -208,10 +208,6 @@ namespace printstar
 
         }
 
-       
-        
-
-        
         class PrintStar
         {
 

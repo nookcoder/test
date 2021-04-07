@@ -23,7 +23,7 @@ public class Start
         Console.WriteLine(" 다음으로 넘어가려면 엔터를 눌러주세요.");
         Console.WriteLine("\n");
         Console.ReadKey();
-    }
+    } 
 
     public void DetermineStartOrNot(int StartOrNot)
     {
@@ -40,7 +40,7 @@ public class Ask
    {
      public int AskWantStart()
      {
-        int startOrNot;
+        int startOrNot; 
 
         Console.WriteLine("  ------------------------------------ ");
         Console.WriteLine(" |           1. 시작하기              |");
@@ -50,9 +50,9 @@ public class Ask
         Console.Clear();
 
         return startOrNot;
-     }
+    } // 시작할 것인지 종료 할 것인지 물어보기(시작이면 1, 종료면 2를 반환)
 
-     public int AskType()
+    public int AskType()
      {
         int gameType;
 
@@ -64,7 +64,7 @@ public class Ask
         gameType = Convert.ToInt32(Console.ReadLine());
         Console.Clear();
         return gameType;
-     }
+     } // 유저가 하고 싶은 게임 종류 선택하기 
  }
     
 class Play
@@ -75,20 +75,20 @@ class Play
     };
     public void PaintBoard()
     {
-        Console.WriteLine(" ------------------------------------ ");
-        Console.WriteLine(" |          |            |           |");
-        Console.WriteLine(" |     {0}     |      {1}      |     {2}      |",arraryUserMark[0], arraryUserMark[1], arraryUserMark[2]);
-        Console.WriteLine(" |          |            |           |");
-        Console.WriteLine(" ------------------------------------ ");
-        Console.WriteLine(" |          |            |           |");
-        Console.WriteLine(" |     {0}     |      {1}      |     {2}      |", arraryUserMark[3], arraryUserMark[4], arraryUserMark[5]);
-        Console.WriteLine(" |          |            |           |");
-        Console.WriteLine(" ------------------------------------ ");
-        Console.WriteLine(" |          |            |           |");
-        Console.WriteLine(" |     {0}     |      {1}      |     {2}      |", arraryUserMark[6], arraryUserMark[7], arraryUserMark[8]);
-        Console.WriteLine(" |          |            |           |");
-        Console.WriteLine(" ------------------------------------ ");
-    }
+        Console.WriteLine("  -------------------------");
+        Console.WriteLine("  |       |       |       |");
+        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryUserMark[0], arraryUserMark[1], arraryUserMark[2]);
+        Console.WriteLine("  |       |       |       |");
+        Console.WriteLine("  -------------------------");
+        Console.WriteLine("  |       |       |       |");
+        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryUserMark[3], arraryUserMark[4], arraryUserMark[5]);
+        Console.WriteLine("  |       |       |       |");
+        Console.WriteLine("  -------------------------");
+        Console.WriteLine("  |       |       |       |");
+        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryUserMark[6], arraryUserMark[7], arraryUserMark[8]);
+        Console.WriteLine("  |       |       |       |");
+        Console.WriteLine("  -------------------------");
+    } //게임보드 그리기 
 }
 
 
