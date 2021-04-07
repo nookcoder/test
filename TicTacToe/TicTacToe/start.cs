@@ -69,26 +69,59 @@ public class Ask
     
 class Play
 {
-    public char[] arraryUserMark =
+    public char[] arraryMark =
     {
         '1','2','3','4','5','6','7','8','9'
-    };
+    }; // 플레이어가 말을 놓을 부분
     public void PaintBoard()
     {
         Console.WriteLine("  -------------------------");
         Console.WriteLine("  |       |       |       |");
-        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryUserMark[0], arraryUserMark[1], arraryUserMark[2]);
+        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryMark[0], arraryMark[1], arraryMark[2]);
         Console.WriteLine("  |       |       |       |");
         Console.WriteLine("  -------------------------");
         Console.WriteLine("  |       |       |       |");
-        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryUserMark[3], arraryUserMark[4], arraryUserMark[5]);
+        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryMark[3], arraryMark[4], arraryMark[5]);
         Console.WriteLine("  |       |       |       |");
         Console.WriteLine("  -------------------------");
         Console.WriteLine("  |       |       |       |");
-        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryUserMark[6], arraryUserMark[7], arraryUserMark[8]);
+        Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryMark[6], arraryMark[7], arraryMark[8]);
         Console.WriteLine("  |       |       |       |");
         Console.WriteLine("  -------------------------");
     } //게임보드 그리기 
+
+    
+    public void ChangeTrun()
+    {
+        const int firstTurn = 1;
+        const int secondTurn = 2;
+        int countTurn = 0; 
+        int player = secondTurn;
+
+        do
+        {
+            if (player == secondTurn)
+            {
+                player = firstTurn;
+                //PutMark( player, input)
+            }
+
+            else if (player == firstTurn)
+            {
+                player = secondTurn;
+                //PutMark( player, input) 
+            }
+
+            countTurn++;
+            PaintBoard();
+
+        } while (countTurn < 10);
+    }
+
+    public void PutMark(int player, int input)
+    {
+
+    }
 }
 
 
