@@ -8,8 +8,8 @@ namespace TicTacToe
     {
         Random random = new Random(); // 컴퓨터가 놓는 말을 위해 Random class 호출 
 
-        public bool correctPoint; // 이미 놓은 위치에 다시 놓았는 지 확인하는 값
-        public bool decidVictory = false; // 승패가 결정나면 True 로 변경 
+        public bool iscorrectPoint; // 이미 놓은 위치에 다시 놓았는 지 확인하는 값
+        public bool isdecidVictory = false; // 승패가 결정나면 True 로 변경 
 
         public const int firstTurn = 1;
         public const int secondTurn = 2;
@@ -22,9 +22,9 @@ namespace TicTacToe
 
         public int winByVertical;
         public int winByHoriziontal;
-        public int winByDiagnal;
+        public int winByDiagnal; 
 
-        public int winWho; 
+        public int winWho; //최종 승자가 누군지 저장 -> socreboard 에서 사용 예정 
 
         public static char[] arraryMark =
         {
@@ -55,16 +55,16 @@ namespace TicTacToe
                 '1','2','3','4','5','6','7','8','9'
             }; 
             int resetCountTurn = 0;
-            bool resetDecidVictory = false;
+            bool isresetDecidVictory = false;
             int resetPlayer = 2; 
 
-            arraryMark = resetArrayMark;// 보드 초기화 
+            arraryMark = resetArrayMark;
             countTurn = resetCountTurn;
-            decidVictory = resetDecidVictory;
-            player = resetPlayer; 
+            isdecidVictory = isresetDecidVictory;
+            player = resetPlayer;  // 각각 저장된 값 초기화 
         }
 
-        public int PlayGameWithUser()
+        public int PlayGameWithUser() // vs User 를 선택했을 실행시킬 함수 
         { 
             do
             {
@@ -92,7 +92,7 @@ namespace TicTacToe
                 winByVertical = JudgeVertical();
                 winByDiagnal = JudgeDiagnal();  // 승자가 있는 지 판단 (승리한 player 저장) 
 
-            } while (countTurn < 9 && !decidVictory);
+            } while (countTurn < 9 && !isdecidVictory);
 
             if(countTurn == 9)
             {
@@ -102,7 +102,7 @@ namespace TicTacToe
                 Console.WriteLine("   |            무   승   부             |");
                 Console.WriteLine("   |                                     | ");
                 Console.WriteLine("    ===================================== ");
-            }
+            } // 9칸이 다 채워졌는 데도 승부가 안 났을 때 
 
             winWho = winByHoriziontal + winByVertical + winByDiagnal; // 승패가 결정났을 경우 승자가 누군지 결정 
 
@@ -137,7 +137,7 @@ namespace TicTacToe
                 winByVertical = JudgeVertical();
                 winByDiagnal = JudgeDiagnal();
 
-            } while (countTurn < 9 && !decidVictory);
+            } while (countTurn < 9 && !isdecidVictory);
 
                 if (countTurn == 9)
                 {
@@ -166,7 +166,8 @@ namespace TicTacToe
             else if (player == secondTurn)
             {
                 playerMark = 'O';
-            }
+            } // 각 플레이어의 말 지정
+
             do  // 픞레이어가 같은 자리에 뒀는지 확인
             {
 
@@ -193,7 +194,7 @@ namespace TicTacToe
                         case 9: arraryMark[8] = playerMark; break;
                     }
 
-                    correctPoint = true; // do while 문 종료 
+                    iscorrectPoint = true; // do while 문 종료 
 
                 }
 
@@ -201,10 +202,10 @@ namespace TicTacToe
                 {
                     Console.WriteLine(" 이미 둔 자리입니다. 다시 선택해주세요! ");
                     point = Convert.ToInt32(Console.ReadLine());
-                    correctPoint = false;
+                    iscorrectPoint = false; // 말의 위치 입력을 다시 함. 
                 }
 
-            } while (!correctPoint); 
+            } while (!iscorrectPoint); 
 
         }
 
@@ -238,17 +239,17 @@ namespace TicTacToe
                         case 9: arraryMark[8] = playerMark; break;
                     }
 
-                    correctPoint = true;
+                    iscorrectPoint = true;
 
                 }
 
                 else
                 {
                     point = random.Next(1, 10);
-                    correctPoint = false;
+                    iscorrectPoint = false;
                 }
 
-            } while (!correctPoint);
+            } while (!iscorrectPoint);
 
         }
 
@@ -271,7 +272,7 @@ namespace TicTacToe
                     Console.WriteLine("   |                                     | ");
                     Console.WriteLine("    ===================================== ");
                     
-                    decidVictory = true;
+                    isdecidVictory = true;
                     
                     return 1; // 1번 승리 기록 -> ScoreBoard 에서 사용 
                 }
@@ -286,7 +287,7 @@ namespace TicTacToe
                     Console.WriteLine("   |                                     | ");
                     Console.WriteLine("    ===================================== ");
                     
-                    decidVictory = true;
+                    isdecidVictory = true;
                     
                     return 2; // 2번 승리 기록 -> ScoreBoard 에서 사용 
                 }
@@ -318,7 +319,7 @@ namespace TicTacToe
                     Console.WriteLine("   |                                     | ");
                     Console.WriteLine("    ===================================== ");
 
-                    decidVictory = true;
+                    isdecidVictory = true;
 
                     return 1; // 1번 승리 기록 -> ScoreBoard 에서 사용 
                 }
@@ -332,7 +333,7 @@ namespace TicTacToe
                     Console.WriteLine("   |                                     | ");
                     Console.WriteLine("    ===================================== ");
 
-                    decidVictory = true;
+                    isdecidVictory = true;
 
                     return 2; // 2번 승리 기록 -> ScoreBoard 에서 사용 
                 }
@@ -364,7 +365,7 @@ namespace TicTacToe
                     Console.WriteLine("   |                                     | ");
                     Console.WriteLine("    ===================================== ");
                    
-                    decidVictory = true;
+                    isdecidVictory = true;
 
                     return 1; 
                 }
@@ -378,7 +379,7 @@ namespace TicTacToe
                     Console.WriteLine("   |                                     | ");
                     Console.WriteLine("    ===================================== ");
                     
-                    decidVictory = true;
+                    isdecidVictory = true;
 
                     return 2;
                 }
