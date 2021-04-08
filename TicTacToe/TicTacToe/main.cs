@@ -18,9 +18,9 @@ namespace TicTacToe
             Start start = new Start();
             Ask ask = new Ask();
             Play play = new Play();
+            ScoreBoard scoreBoard = new ScoreBoard(); 
 
             start.Introduction();
-
             do
             {
                 startOrNot = ask.AskWantStart();
@@ -31,18 +31,25 @@ namespace TicTacToe
             {
                 play.ResetGame();
                 gameType = ask.AskType();
-                play.PaintBoard();
+                
 
                 switch (gameType)
                 {
                     case 1:
+                        play.PaintBoard();
                         winWho = play.PlayGameWithComputer();
+                        scoreBoard.RecordScoreBoard(winWho);
                         break;
                     case 2:
+                        play.PaintBoard();
                         winWho = play.PlayGameWithUser();
+                        scoreBoard.RecordScoreBoard(winWho);
                         break;
-                        //case 3: 
-                        //ShowBoard(); 
+                    case 3:
+                        scoreBoard.RecordScoreBoard(0);
+                        scoreBoard.PaintScoreBoard();
+                        break;
+                        
                 }
 
                 replayOrNot = ask.AskReplay();
