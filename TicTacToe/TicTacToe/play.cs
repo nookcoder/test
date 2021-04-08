@@ -67,7 +67,7 @@ namespace TicTacToe
             player = resetPlayer;  // 각각 저장된 값 초기화 
         }
 
-        public int PlayGameWithUser() // vs User 를 선택했을 실행시킬 함수 
+        public int PlayGameWithUser() // vs User 를 선택했을 때 실행시킬 함수 
         { 
             do
             {
@@ -160,7 +160,7 @@ namespace TicTacToe
               // 컴퓨터가 이기면 3을 반환
 
             return winWho; 
-        }
+        }  // vs Computer 를 선택했을 때 실행시킬 함수 
 
 
         public void PutMarkByUser(int player, int point) // User 가 놓는 말에 대한 함수 
