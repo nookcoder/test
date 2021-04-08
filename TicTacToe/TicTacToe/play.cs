@@ -48,9 +48,25 @@ namespace TicTacToe
             Console.WriteLine("  -------------------------");
         } //게임보드 그리기 
 
+        public void ResetGame() // 게임을 재시작 했을 떄 저장됐던 게임정보 초기화
+        {
+            char[] resetArrayMark =
+            {
+                '1','2','3','4','5','6','7','8','9'
+            }; 
+            int resetCountTurn = 0;
+            bool resetDecidVictory = false;
+            int resetPlayer = 2; 
+
+            arraryMark = resetArrayMark;// 보드 초기화 
+            countTurn = resetCountTurn;
+            decidVictory = resetDecidVictory;
+            player = resetPlayer; 
+        }
+
         public int PlayGameWithUser()
         { 
-            do // 플레이어가 번갈아가면서 말을 둔다. 
+            do
             {
                 if (player == secondTurn)
                 {
@@ -66,14 +82,15 @@ namespace TicTacToe
                     Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
                     point = Convert.ToInt32(Console.ReadLine());
                     PutMarkByUser(player, point);
-                }
+                } // 번갈아 가면서 말을 두도록 함
 
-                countTurn++;
+                countTurn++; 
                 Console.Clear();
-                PaintBoard();
+                PaintBoard(); // 해당 칸에 말이 있는 보드 다시 그리기
+                
                 winByHoriziontal = JudgeHoriziontal();
                 winByVertical = JudgeVertical();
-                winByDiagnal = JudgeDiagnal();
+                winByDiagnal = JudgeDiagnal();  // 승자가 있는 지 판단 (승리한 player 저장) 
 
             } while (countTurn < 9 && !decidVictory);
 
@@ -92,6 +109,7 @@ namespace TicTacToe
             return winWho;
 
         }    
+        
         public int PlayGameWithComputer()
         {
 
@@ -184,7 +202,6 @@ namespace TicTacToe
                     Console.WriteLine(" 이미 둔 자리입니다. 다시 선택해주세요! ");
                     point = Convert.ToInt32(Console.ReadLine());
                     correctPoint = false;
-                    Console.Clear();
                 }
 
             } while (!correctPoint); 
@@ -229,7 +246,6 @@ namespace TicTacToe
                 {
                     point = random.Next(1, 10);
                     correctPoint = false;
-                    Console.Clear();
                 }
 
             } while (!correctPoint);
