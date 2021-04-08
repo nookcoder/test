@@ -30,6 +30,9 @@ namespace TicTacToe
         {
         '1','2','3','4','5','6','7','8','9'
         }; // 플레이어가 말을 놓을 부분
+
+        public int computer = 1;
+        public int user = 2; 
        
         public void PaintBoard()
         {
@@ -88,9 +91,9 @@ namespace TicTacToe
                 Console.Clear();
                 PaintBoard(); // 해당 칸에 말이 있는 보드 다시 그리기
                 
-                winByHoriziontal = JudgeHoriziontal();
-                winByVertical = JudgeVertical();
-                winByDiagnal = JudgeDiagnal();  // 승자가 있는 지 판단 (승리한 player 저장) 
+                winByHoriziontal = JudgeHoriziontal(user);
+                winByVertical = JudgeVertical(user);
+                winByDiagnal = JudgeDiagnal(user);  // 승자가 있는 지 판단 (승리한 player 저장) 
 
             } while (countTurn < 9 && !isdecidVictory);
 
@@ -133,9 +136,9 @@ namespace TicTacToe
                 countTurn++;
                 Console.Clear();
                 PaintBoard();
-                winByHoriziontal = JudgeHoriziontal();
-                winByVertical = JudgeVertical();
-                winByDiagnal = JudgeDiagnal();
+                winByHoriziontal = JudgeHoriziontal(computer);
+                winByVertical = JudgeVertical(computer);
+                winByDiagnal = JudgeDiagnal(computer);
 
             } while (countTurn < 9 && !isdecidVictory);
 
@@ -150,6 +153,11 @@ namespace TicTacToe
                 }
 
             winWho = winByHoriziontal + winByVertical + winByDiagnal; // 승패가 결정났을 경우 승자가 누군지 결정 
+            if(winWho == 2)
+            {
+                winWho += 1; 
+            } // player2 가 이겼을 때 2를 반환하는 경우와 구별하기 위해 1을 더해준다. 
+              // 컴퓨터가 이기면 3을 반환
 
             return winWho; 
         }
@@ -257,7 +265,7 @@ namespace TicTacToe
 
 
 
-        public int JudgeHoriziontal()
+        public int JudgeHoriziontal(int who)
         {
         if (arraryMark[0] == playerMark && arraryMark[1] == playerMark && arraryMark[2] == playerMark
                 || arraryMark[3] == playerMark && arraryMark[4] == playerMark && arraryMark[5] == playerMark
@@ -279,16 +287,29 @@ namespace TicTacToe
                 
                 else if(playerMark == 'O')
                 {
-                    Console.Clear();
-                    Console.Clear();
-                    Console.WriteLine("    ===================================== ");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("   |   2번 플레이어 님이 승리하셨습니다  |");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("    ===================================== ");
-                    
+                    if (who == user)
+                    {
+                        Console.Clear();
+                        Console.Clear();
+                        Console.WriteLine("    ===================================== ");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("   |   2번 플레이어 님이 승리하셨습니다  |");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("    ===================================== ");
+                    }
+
+                    else if(who == computer)
+                    {
+                        Console.Clear();
+                        Console.Clear();
+                        Console.WriteLine("    ===================================== ");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("   |      Computer 가 승리했습니다       |");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("    ===================================== ");
+                    }
+
                     isdecidVictory = true;
-                    
                     return 2; // 2번 승리 기록 -> ScoreBoard 에서 사용 
                 }
 
@@ -304,7 +325,7 @@ namespace TicTacToe
             }
         } // 가로로 빙고가 됐는지 판단
         
-        public int JudgeVertical()
+        public int JudgeVertical(int who)
         {
             if (arraryMark[0] == playerMark && arraryMark[3] == playerMark && arraryMark[6] == playerMark
                     || arraryMark[1] == playerMark && arraryMark[4] == playerMark && arraryMark[7] == playerMark
@@ -326,12 +347,27 @@ namespace TicTacToe
                 
                 else if (playerMark == 'O')
                 {
-                    Console.Clear();
-                    Console.WriteLine("    ===================================== ");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("   |   2번 플레이어 님이 승리하셨습니다  |");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("    ===================================== ");
+                    if (who == user)
+                    {
+                        Console.Clear();
+                        Console.Clear();
+                        Console.WriteLine("    ===================================== ");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("   |   2번 플레이어 님이 승리하셨습니다  |");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("    ===================================== ");
+                    }
+
+                    else if (who == computer)
+                    {
+                        Console.Clear();
+                        Console.Clear();
+                        Console.WriteLine("    ===================================== ");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("   |      Computer 가 승리했습니다       |");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("    ===================================== ");
+                    }
 
                     isdecidVictory = true;
 
@@ -351,7 +387,7 @@ namespace TicTacToe
             
         }  // 세로로 빙고가 됐는지 판단
 
-        public int JudgeDiagnal()
+        public int JudgeDiagnal(int who)
         {
             if (arraryMark[0] == playerMark && arraryMark[4] == playerMark && arraryMark[8] == playerMark
                     || arraryMark[2] == playerMark && arraryMark[4] == playerMark && arraryMark[6] == playerMark)
@@ -372,13 +408,28 @@ namespace TicTacToe
                 
                 else if (playerMark == 'O')
                 {
-                    Console.Clear();
-                    Console.WriteLine("    ===================================== ");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("   |   2번 플레이어 님이 승리하셨습니다  |");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("    ===================================== ");
-                    
+                    if (who == user)
+                    {
+                        Console.Clear();
+                        Console.Clear();
+                        Console.WriteLine("    ===================================== ");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("   |   2번 플레이어 님이 승리하셨습니다  |");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("    ===================================== ");
+                    }
+
+                    else if (who == computer)
+                    {
+                        Console.Clear();
+                        Console.Clear();
+                        Console.WriteLine("    ===================================== ");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("   |      Computer 가 승리했습니다       |");
+                        Console.WriteLine("   |                                     | ");
+                        Console.WriteLine("    ===================================== ");
+                    }
+
                     isdecidVictory = true;
 
                     return 2;
