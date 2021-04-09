@@ -65,7 +65,7 @@ namespace TicTacToe
             point = Console.ReadLine();
             
             return point;
-        }
+        }  // 플레이어의 말을 어디다가 둘 지 물어보기 
     }
 
 

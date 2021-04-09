@@ -22,7 +22,8 @@ namespace TicTacToe
         public int checkPointOfUser; 
         public int pointOfComputer;
 
-        public int countTurn = 0; // 턴 수 9번이 넘어가면 무승부         
+        public int countTurn = 0; // 턴 수 9번이 넘어가면 무승부
+        public int countTurnOfComputer = 0; 
 
         public int winByVertical;
         public int winByHoriziontal;
@@ -68,9 +69,11 @@ namespace TicTacToe
             arraryMark = resetArrayMark;
             countTurn = resetCountTurn;
             isdecidVictory = isresetDecidVictory;
-            player = resetPlayer;  // 각각 저장된 값 초기화 
+            player = resetPlayer;
+            countTurnOfComputer = resetCountTurn; // 각각 저장된 값 초기화 
         }
 
+        // 게임 실행 함수 
         public int PlayGameWithUser() // vs User 를 선택했을 때 실행시킬 함수 
         { 
             do
@@ -133,8 +136,9 @@ namespace TicTacToe
                 else if (player == firstTurn)
                 {
                     player = secondTurn;
-                    pointOfComputer = random.Next(1, 10);
+                    pointOfComputer = AI(countTurnOfComputer);
                     PutMarkByComputer(player, pointOfComputer);
+                    countTurnOfComputer++; 
                 }
 
                 countTurn++;
@@ -166,7 +170,7 @@ namespace TicTacToe
             return winWho; 
         }  // vs Computer 를 선택했을 때 실행시킬 함수 
 
-
+        // 게임 보드에 말을 표시하는 함수 
         public void PutMarkByUser(int player, int point) // User 가 놓는 말에 대한 함수 
         {
 
@@ -251,6 +255,7 @@ namespace TicTacToe
                         case 9: arraryMark[8] = playerMark; break;
                     }
 
+                    pointOfComputer++; 
                     iscorrectPoint = true;
 
                 }
@@ -264,11 +269,8 @@ namespace TicTacToe
             } while (!iscorrectPoint);
 
         }
-
-
-
-
-
+        
+        // 어떻게 이겼는 지 판단하는 함수
         public int JudgeHoriziontal(int who)
         {
         if (arraryMark[0] == playerMark && arraryMark[1] == playerMark && arraryMark[2] == playerMark
@@ -450,6 +452,658 @@ namespace TicTacToe
                 return 0;
             }
         } // 대각선으로 빙고가 됐는지 판단
+
+        public int AI(int count)
+        {
+            if (count == 0)
+            {
+                if (arraryMark[4] == '5')
+                {
+                    return 5;
+                }
+
+                else
+                {
+                    return 0;
+                }
+            }
+
+            else if (count == 1) {
+                if (arraryMark[4] == 'O')
+                {
+                    // 가로 첫번째 줄 
+                    if (arraryMark[0] == 'X' && arraryMark[1] == 'X')
+                    {
+                        return 3;
+                    }
+
+                    else if (arraryMark[1] == 'X' && arraryMark[2] == 'X')
+                    {
+                        return 1;
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[2] == 'X')
+                    {
+                        return 2;
+                    }
+
+                    // 가로 세번 째 줄 
+                    else if (arraryMark[6] == 'X' && arraryMark[7] == 'X')
+                    {
+                        return 9;
+                    }
+
+                    else if (arraryMark[6] == 'X' && arraryMark[8] == 'X')
+                    {
+                        return 8;
+                    }
+
+                    else if (arraryMark[7] == 'X' && arraryMark[8] == 'X')
+                    {
+                        return 7;
+                    }
+
+                    // 세로 첫번 째 줄 
+                    else if (arraryMark[0] == 'X' && arraryMark[3] == 'X')
+                    {
+                        return 7;
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[6] == 'X')
+                    {
+                        return 4;
+                    }
+
+                    else if (arraryMark[3] == 'X' && arraryMark[6] == 'X')
+                    {
+                        return 1;
+                    }
+
+                    // 세로 세번째 줄 
+                    else if (arraryMark[2] == 'X' && arraryMark[5] == 'X')
+                    {
+                        return 9;
+                    }
+
+                    else if (arraryMark[5] == 'X' && arraryMark[8] == 'X')
+                    {
+                        return 3;
+                    }
+
+                    else if (arraryMark[2] == 'X' && arraryMark[8] == 'X')
+                    {
+                        return 6;
+                    }
+
+                    // 아무것도 아닐 때 
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    if (arraryMark[0] == 'X')
+                    {
+                        return 9;
+                    }
+
+                    else if (arraryMark[1] == 'X')
+                    {
+                        return 8;
+                    }
+
+                    else if (arraryMark[2] == 'X')
+                    {
+                        return 7;
+                    }
+
+                    // 가로 세번 째 줄 
+                    else if (arraryMark[3] == 'X')
+                    {
+                        return 6;
+                    }
+
+                    else if (arraryMark[5] == 'X')
+                    {
+                        return 4;
+                    }
+
+                    else if (arraryMark[6] == 'X')
+                    {
+                        return 3;
+                    }
+
+                    // 세로 첫번 째 줄 
+                    else if (arraryMark[7] == 'X')
+                    {
+                        return 2;
+                    }
+
+                    else if (arraryMark[8] == 'X')
+                    {
+                        return 1;
+                    }
+
+                    // 아무것도 아닐 때 
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+
+            else if (count == 2)
+            {
+                if(arraryMark[4] == 'O')
+                {
+                    if (arraryMark[0] == 'X' && arraryMark[1] == 'X')
+                    {
+                        if (arraryMark[6] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 4;
+                        }
+                    }
+
+                    else if (arraryMark[1] == 'X' && arraryMark[2] == 'X')
+                    {
+                        if (arraryMark[8] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 9;
+                        }
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[2] == 'X')
+                    {
+                        if (arraryMark[7] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 8;
+                        }
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[3] == 'X')
+                    {
+                        if (arraryMark[2] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 3;
+                        }
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[6] == 'X')
+                    {
+                        if (arraryMark[5] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 6;
+                        }
+                    }
+
+                    else if (arraryMark[3] == 'X' && arraryMark[6] == 'X')
+                    {
+                        if (arraryMark[0] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+
+                    else if (arraryMark[2] == 'X' && arraryMark[5] == 'X')
+                    {
+                        if (arraryMark[0] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[8] == 'X')
+                    {
+                        if (arraryMark[3] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 4;
+                        }
+                    }
+
+                    else if (arraryMark[5] == 'X' && arraryMark[8] == 'X')
+                    {
+                        if (arraryMark[6] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 7;
+                        }
+                    }
+
+                    else if (arraryMark[6] == 'X' && arraryMark[7] == 'X')
+                    {
+                        if (arraryMark[0] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+
+                    else if (arraryMark[7] == 'X' && arraryMark[8] == 'X')
+                    {
+                        if (arraryMark[2] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 3;
+                        }
+                    }
+
+                    else if (arraryMark[6] == 'X' && arraryMark[8] == 'X')
+                    {
+                        if (arraryMark[1] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+
+
+
+
+                }
+                
+                else
+                {
+                    if(arraryMark[0] == 'X' && arraryMark[2] == 'O')
+                    {
+                        if(arraryMark[5] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 6;
+                        }
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[5] == 'O')
+                    {
+                        if (arraryMark[2] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 3;
+                        }
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[7] == 'O')
+                    {
+                        if (arraryMark[6] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 7;
+                        }
+                    }
+
+                    else if (arraryMark[0] == 'X' && arraryMark[6] == 'O')
+                    {
+                        if (arraryMark[7] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 8;
+                        }
+                    }
+
+                    else if (arraryMark[1] == 'X' && arraryMark[6] == 'O')
+                    {
+                        if (arraryMark[8] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 9;
+                        }
+                    }
+
+                    else if (arraryMark[1] == 'X' && arraryMark[8] == 'O')
+                    {
+                        if (arraryMark[6] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 7;
+                        }
+                    }
+
+                    else if (arraryMark[2] == 'X' && arraryMark[0] == 'O')
+                    {
+                        if (arraryMark[3] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 4;
+                        }
+                    }
+
+                    else if (arraryMark[2] == 'X' && arraryMark[3] == 'O')
+                    {
+                        if (arraryMark[0] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+
+                    else if (arraryMark[2] == 'X' && arraryMark[7] == 'O')
+                    {
+                        if (arraryMark[8] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 9;
+                        }
+                    }
+
+                    else if (arraryMark[2] == 'X' && arraryMark[8] == 'O')
+                    {
+                        if (arraryMark[7] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 8;
+                        }
+                    }
+
+                    else if (arraryMark[3] == 'X' && arraryMark[2] == 'O')
+                    {
+                        if (arraryMark[8] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 9;
+                        }
+                    }
+
+                    else if (arraryMark[3] == 'X' && arraryMark[8] == 'O')
+                    {
+                        if (arraryMark[2] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 3;
+                        }
+                    }
+
+                    else if (arraryMark[3] == 'X' && arraryMark[6] == 'O')
+                    {
+                        if (arraryMark[0] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+
+                    else if (arraryMark[5] == 'X' && arraryMark[2] == 'O')
+                    {
+                        if (arraryMark[8] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 9;
+                        }
+                    }
+
+                    else if (arraryMark[5] == 'X' && arraryMark[6] == 'O')
+                    {
+                        if (arraryMark[6] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+
+                    else if (arraryMark[6] == 'X' && arraryMark[0] == 'O')
+                    {
+                        if (arraryMark[1] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 2;
+                        }
+                    }
+
+                    else if (arraryMark[6] == 'X' && arraryMark[1] == 'O')
+                    {
+                        if (arraryMark[0] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 1;
+                        }
+                    }
+
+                    else if (arraryMark[6] == 'X' && arraryMark[5] == 'O')
+                    {
+                        if (arraryMark[8] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 9;
+                        }
+                    }
+
+                    else if (arraryMark[6] == 'X' && arraryMark[8] == 'O')
+                    {
+                        if (arraryMark[5] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 6;
+                        }
+                    }
+
+                    else if (arraryMark[7] == 'X' && arraryMark[6] == 'O')
+                    {
+                        if (arraryMark[8] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 9;
+                        }
+                    }
+
+                    else if (arraryMark[7] == 'X' && arraryMark[8] == 'O')
+                    {
+                        if (arraryMark[6] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 7;
+                        }
+                    }
+
+                    else if (arraryMark[8] == 'X' && arraryMark[2] == 'O')
+                    {
+                        if (arraryMark[5] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 6;
+                        }
+                    }
+
+                    else if (arraryMark[8] == 'X' && arraryMark[1] == 'O')
+                    {
+                        if (arraryMark[2] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 3;
+                        }
+                    }
+
+                    else if (arraryMark[8] == 'X' && arraryMark[3] == 'O')
+                    {
+                        if (arraryMark[6] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 7;
+                        }
+                    }
+
+                    else if (arraryMark[8] == 'X' && arraryMark[6] == 'O')
+                    {
+                        if (arraryMark[3] == 'X')
+                        {
+                            return 0;
+                        }
+
+                        else
+                        {
+                            return 4;
+                        }
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+            }
+
+            else
+            {
+                return 0;
+            }                  
+              
+            
+        }
     }   
 }
 

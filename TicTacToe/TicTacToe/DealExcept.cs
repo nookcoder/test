@@ -118,7 +118,7 @@ namespace TicTacToe
 
         public int DealForAskPoint(string point) // 입력된 값이 버튼 외의 경우일 때 처리 
         {
-            int checkPoint = 0; // 변수가 버튼의 있는 값인지 확인할 변수 
+            int checkPoint = 0; // 변수가 Board에 있는 값인지 확인할 변수 
 
             for (int i = 0; i < point.Length; i++)
             {
@@ -139,8 +139,6 @@ namespace TicTacToe
                     Console.WriteLine("   -------------------------------- ");
                     Console.WriteLine("  |   해당칸은 존재하지 않습니다   |");
                     Console.WriteLine("   -------------------------------- ");
-                    //Thread.Sleep(2000);
-                    //Console.Clear();
                     point = ask.AskPoint();
                     checkPoint = 0;
                     for (int i = 0; i < point.Length; i++)
