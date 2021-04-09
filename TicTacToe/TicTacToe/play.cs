@@ -23,7 +23,7 @@ namespace TicTacToe
         public int pointOfComputer;
 
         public int countTurn = 0; // 턴 수 9번이 넘어가면 무승부
-        public int countTurnOfComputer = 0; 
+        public int countTurnOfComputer = 1; 
 
         public int winByVertical;
         public int winByHoriziontal;
@@ -255,7 +255,7 @@ namespace TicTacToe
                         case 9: arraryMark[8] = playerMark; break;
                     }
 
-                    pointOfComputer++; 
+                    //pointOfComputer++; 
                     iscorrectPoint = true;
 
                 }
@@ -455,11 +455,211 @@ namespace TicTacToe
 
         public int AI(int count)
         {
-            if (count == 0)
+            if (count == 1)
             {
-                if (arraryMark[4] == '5')
+                return 0;
+            }
+
+            else if(count == 2)
+            {
+                if (arraryMark[0] == 'X' && arraryMark[1] == 'X' ||
+                    arraryMark[1] == 'X' && arraryMark[2] == 'X' ||
+                    arraryMark[0] == 'X' && arraryMark[2] == 'X')
                 {
-                    return 5;
+                    if (arraryMark[0] == '1')
+                    {
+                        return 1;
+                    }
+
+                    else if (arraryMark[1] == '2')
+                    {
+                        return 2;
+                    }
+
+                    else if (arraryMark[2] == '3')
+                    {
+                        return 3;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                else if (arraryMark[3] == 'X' && arraryMark[4] == 'X' ||
+                         arraryMark[4] == 'X' && arraryMark[5] == 'X' ||
+                         arraryMark[3] == 'X' && arraryMark[5] == 'X')
+                {
+                    if (arraryMark[3] == '4')
+                    {
+                        return 4;
+                    }
+
+                    else if (arraryMark[4] == '5')
+                    {
+                        return 5;
+                    }
+
+                    else if (arraryMark[5] == '6')
+                    {
+                        return 6;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                else if (arraryMark[6] == 'X' && arraryMark[7] == 'X' ||
+                         arraryMark[7] == 'X' && arraryMark[8] == 'X' ||
+                         arraryMark[6] == 'X' && arraryMark[8] == 'X')
+                {
+                    if (arraryMark[6] == '7')
+                    {
+                        return 7;
+                    }
+
+                    else if (arraryMark[7] == '8')
+                    {
+                        return 8;
+                    }
+
+                    else if (arraryMark[8] == '9')
+                    {
+                        return 9;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                else if (arraryMark[0] == 'X' && arraryMark[3] == 'X' ||
+                         arraryMark[0] == 'X' && arraryMark[6] == 'X' ||
+                         arraryMark[3] == 'X' && arraryMark[6] == 'X')
+                {
+                    if (arraryMark[0] == '1')
+                    {
+                        return 1;
+                    }
+
+                    else if (arraryMark[3] == '4')
+                    {
+                        return 4;
+                    }
+
+                    else if (arraryMark[6] == '7')
+                    {
+                        return 7;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                else if (arraryMark[1] == 'X' && arraryMark[4] == 'X' ||
+                         arraryMark[4] == 'X' && arraryMark[7] == 'X' ||
+                         arraryMark[1] == 'X' && arraryMark[7] == 'X')
+                {
+                    if (arraryMark[1] == '2')
+                    {
+                        return 2;
+                    }
+
+                    else if (arraryMark[4] == '5')
+                    {
+                        return 5;
+                    }
+
+                    else if (arraryMark[7] == '8')
+                    {
+                        return 8;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                else if (arraryMark[2] == 'X' && arraryMark[5] == 'X' ||
+                         arraryMark[5] == 'X' && arraryMark[8] == 'X' ||
+                         arraryMark[2] == 'X' && arraryMark[8] == 'X')
+                {
+                    if (arraryMark[2] == '3')
+                    {
+                        return 3;
+                    }
+
+                    else if (arraryMark[5] == '6')
+                    {
+                        return 6;
+                    }
+
+                    else if (arraryMark[8] == '8')
+                    {
+                        return 9;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                else if (arraryMark[0] == 'X' && arraryMark[4] == 'X' ||
+                         arraryMark[4] == 'X' && arraryMark[8] == 'X' ||
+                         arraryMark[0] == 'X' && arraryMark[8] == 'X')
+                {
+                    if (arraryMark[0] == '1')
+                    {
+                        return 1;
+                    }
+
+                    else if (arraryMark[4] == '5')
+                    {
+                        return 5;
+                    }
+
+                    else if (arraryMark[8] == '9')
+                    {
+                        return 9;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
+                }
+
+                else if ((arraryMark[2] == 'X' && arraryMark[4] == 'X') ||
+                         (arraryMark[4] == 'X' && arraryMark[6] == 'X') ||
+                         (arraryMark[2] == 'X' && arraryMark[6] == 'X'))
+                {
+                    if (arraryMark[2] == '3')
+                    {
+                        return 3;
+                    }
+
+                    else if (arraryMark[4] == '5')
+                    {
+                        return 5;
+                    }
+
+                    else if (arraryMark[6] == '7')
+                    {
+                        return 7;
+                    }
+
+                    else
+                    {
+                        return 0;
+                    }
                 }
 
                 else
@@ -468,641 +668,27 @@ namespace TicTacToe
                 }
             }
 
-            else if (count == 1) {
-                if (arraryMark[4] == 'O')
-                {
-                    // 가로 첫번째 줄 
-                    if (arraryMark[0] == 'X' && arraryMark[1] == 'X')
-                    {
-                        return 3;
-                    }
-
-                    else if (arraryMark[1] == 'X' && arraryMark[2] == 'X')
-                    {
-                        return 1;
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[2] == 'X')
-                    {
-                        return 2;
-                    }
-
-                    // 가로 세번 째 줄 
-                    else if (arraryMark[6] == 'X' && arraryMark[7] == 'X')
-                    {
-                        return 9;
-                    }
-
-                    else if (arraryMark[6] == 'X' && arraryMark[8] == 'X')
-                    {
-                        return 8;
-                    }
-
-                    else if (arraryMark[7] == 'X' && arraryMark[8] == 'X')
-                    {
-                        return 7;
-                    }
-
-                    // 세로 첫번 째 줄 
-                    else if (arraryMark[0] == 'X' && arraryMark[3] == 'X')
-                    {
-                        return 7;
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[6] == 'X')
-                    {
-                        return 4;
-                    }
-
-                    else if (arraryMark[3] == 'X' && arraryMark[6] == 'X')
-                    {
-                        return 1;
-                    }
-
-                    // 세로 세번째 줄 
-                    else if (arraryMark[2] == 'X' && arraryMark[5] == 'X')
-                    {
-                        return 9;
-                    }
-
-                    else if (arraryMark[5] == 'X' && arraryMark[8] == 'X')
-                    {
-                        return 3;
-                    }
-
-                    else if (arraryMark[2] == 'X' && arraryMark[8] == 'X')
-                    {
-                        return 6;
-                    }
-
-                    // 아무것도 아닐 때 
-                    else
-                    {
-                        return 0;
-                    }
-                }
-                else
-                {
-                    if (arraryMark[0] == 'X')
-                    {
-                        return 9;
-                    }
-
-                    else if (arraryMark[1] == 'X')
-                    {
-                        return 8;
-                    }
-
-                    else if (arraryMark[2] == 'X')
-                    {
-                        return 7;
-                    }
-
-                    // 가로 세번 째 줄 
-                    else if (arraryMark[3] == 'X')
-                    {
-                        return 6;
-                    }
-
-                    else if (arraryMark[5] == 'X')
-                    {
-                        return 4;
-                    }
-
-                    else if (arraryMark[6] == 'X')
-                    {
-                        return 3;
-                    }
-
-                    // 세로 첫번 째 줄 
-                    else if (arraryMark[7] == 'X')
-                    {
-                        return 2;
-                    }
-
-                    else if (arraryMark[8] == 'X')
-                    {
-                        return 1;
-                    }
-
-                    // 아무것도 아닐 때 
-                    else
-                    {
-                        return 0;
-                    }
-                }
-            }
-
-            else if (count == 2)
+            else if(count == 3)
             {
-                if(arraryMark[4] == 'O')
-                {
-                    if (arraryMark[0] == 'X' && arraryMark[1] == 'X')
-                    {
-                        if (arraryMark[6] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 4;
-                        }
-                    }
-
-                    else if (arraryMark[1] == 'X' && arraryMark[2] == 'X')
-                    {
-                        if (arraryMark[8] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 9;
-                        }
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[2] == 'X')
-                    {
-                        if (arraryMark[7] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 8;
-                        }
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[3] == 'X')
-                    {
-                        if (arraryMark[2] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 3;
-                        }
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[6] == 'X')
-                    {
-                        if (arraryMark[5] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 6;
-                        }
-                    }
-
-                    else if (arraryMark[3] == 'X' && arraryMark[6] == 'X')
-                    {
-                        if (arraryMark[0] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-
-                    else if (arraryMark[2] == 'X' && arraryMark[5] == 'X')
-                    {
-                        if (arraryMark[0] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[8] == 'X')
-                    {
-                        if (arraryMark[3] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 4;
-                        }
-                    }
-
-                    else if (arraryMark[5] == 'X' && arraryMark[8] == 'X')
-                    {
-                        if (arraryMark[6] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 7;
-                        }
-                    }
-
-                    else if (arraryMark[6] == 'X' && arraryMark[7] == 'X')
-                    {
-                        if (arraryMark[0] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-
-                    else if (arraryMark[7] == 'X' && arraryMark[8] == 'X')
-                    {
-                        if (arraryMark[2] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 3;
-                        }
-                    }
-
-                    else if (arraryMark[6] == 'X' && arraryMark[8] == 'X')
-                    {
-                        if (arraryMark[1] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 2;
-                        }
-                    }
-
-                    else
+                if(arraryMark[0] == 'X' && arraryMark[1] == 'X')
+                    if(arraryMark[6] == 'X')
                     {
                         return 0;
                     }
+                    else
+                    {
+                        return 7;
+                    }
 
-
-
-
-                }
-                
                 else
                 {
-                    if(arraryMark[0] == 'X' && arraryMark[2] == 'O')
-                    {
-                        if(arraryMark[5] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 6;
-                        }
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[5] == 'O')
-                    {
-                        if (arraryMark[2] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 3;
-                        }
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[7] == 'O')
-                    {
-                        if (arraryMark[6] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 7;
-                        }
-                    }
-
-                    else if (arraryMark[0] == 'X' && arraryMark[6] == 'O')
-                    {
-                        if (arraryMark[7] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 8;
-                        }
-                    }
-
-                    else if (arraryMark[1] == 'X' && arraryMark[6] == 'O')
-                    {
-                        if (arraryMark[8] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 9;
-                        }
-                    }
-
-                    else if (arraryMark[1] == 'X' && arraryMark[8] == 'O')
-                    {
-                        if (arraryMark[6] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 7;
-                        }
-                    }
-
-                    else if (arraryMark[2] == 'X' && arraryMark[0] == 'O')
-                    {
-                        if (arraryMark[3] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 4;
-                        }
-                    }
-
-                    else if (arraryMark[2] == 'X' && arraryMark[3] == 'O')
-                    {
-                        if (arraryMark[0] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-
-                    else if (arraryMark[2] == 'X' && arraryMark[7] == 'O')
-                    {
-                        if (arraryMark[8] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 9;
-                        }
-                    }
-
-                    else if (arraryMark[2] == 'X' && arraryMark[8] == 'O')
-                    {
-                        if (arraryMark[7] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 8;
-                        }
-                    }
-
-                    else if (arraryMark[3] == 'X' && arraryMark[2] == 'O')
-                    {
-                        if (arraryMark[8] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 9;
-                        }
-                    }
-
-                    else if (arraryMark[3] == 'X' && arraryMark[8] == 'O')
-                    {
-                        if (arraryMark[2] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 3;
-                        }
-                    }
-
-                    else if (arraryMark[3] == 'X' && arraryMark[6] == 'O')
-                    {
-                        if (arraryMark[0] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-
-                    else if (arraryMark[5] == 'X' && arraryMark[2] == 'O')
-                    {
-                        if (arraryMark[8] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 9;
-                        }
-                    }
-
-                    else if (arraryMark[5] == 'X' && arraryMark[6] == 'O')
-                    {
-                        if (arraryMark[6] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-
-                    else if (arraryMark[6] == 'X' && arraryMark[0] == 'O')
-                    {
-                        if (arraryMark[1] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 2;
-                        }
-                    }
-
-                    else if (arraryMark[6] == 'X' && arraryMark[1] == 'O')
-                    {
-                        if (arraryMark[0] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 1;
-                        }
-                    }
-
-                    else if (arraryMark[6] == 'X' && arraryMark[5] == 'O')
-                    {
-                        if (arraryMark[8] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 9;
-                        }
-                    }
-
-                    else if (arraryMark[6] == 'X' && arraryMark[8] == 'O')
-                    {
-                        if (arraryMark[5] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 6;
-                        }
-                    }
-
-                    else if (arraryMark[7] == 'X' && arraryMark[6] == 'O')
-                    {
-                        if (arraryMark[8] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 9;
-                        }
-                    }
-
-                    else if (arraryMark[7] == 'X' && arraryMark[8] == 'O')
-                    {
-                        if (arraryMark[6] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 7;
-                        }
-                    }
-
-                    else if (arraryMark[8] == 'X' && arraryMark[2] == 'O')
-                    {
-                        if (arraryMark[5] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 6;
-                        }
-                    }
-
-                    else if (arraryMark[8] == 'X' && arraryMark[1] == 'O')
-                    {
-                        if (arraryMark[2] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 3;
-                        }
-                    }
-
-                    else if (arraryMark[8] == 'X' && arraryMark[3] == 'O')
-                    {
-                        if (arraryMark[6] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 7;
-                        }
-                    }
-
-                    else if (arraryMark[8] == 'X' && arraryMark[6] == 'O')
-                    {
-                        if (arraryMark[3] == 'X')
-                        {
-                            return 0;
-                        }
-
-                        else
-                        {
-                            return 4;
-                        }
-                    }
-
-                    else
-                    {
-                        return 0;
-                    }
+                    return 0;
                 }
             }
-
             else
             {
                 return 0;
-            }                  
-              
-            
+            }
         }
     }   
 }
