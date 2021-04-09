@@ -20,7 +20,7 @@ namespace TicTacToe
             Console.WriteLine("    이긴다. ");
             Console.WriteLine("\n");
             Console.WriteLine(" -------------------------------------- ");
-            Console.WriteLine(" 다음으로 넘어가려면 아무키나 눌러주세요 눌러주세요.");
+            Console.WriteLine(" 다음으로 넘어가려면 아무키나 눌러주세요.");
             Console.ReadKey();
             Console.WriteLine("\n");
             Console.Clear();

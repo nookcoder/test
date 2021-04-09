@@ -54,6 +54,19 @@ namespace TicTacToe
             Console.Clear();
 
             return replayOrNot;
+        } // 재시작 여부 물어보기 
+
+        public string AskPoint()
+        {
+            string point;
+            
+            Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
+            
+            point = Console.ReadLine();
+            
+            return point;
         }
     }
+
+
 }

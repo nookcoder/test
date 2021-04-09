@@ -115,5 +115,45 @@ namespace TicTacToe
                 return checkReplayOrNot;
             } // 원하는 값이 아닐 때 처리               
         }
+
+        public int DealForAskPoint(string point) // 입력된 값이 버튼 외의 경우일 때 처리 
+        {
+            int checkPoint = 0; // 변수가 버튼의 있는 값인지 확인할 변수 
+
+            for (int i = 0; i < point.Length; i++)
+            {
+                checkPoint = checkPoint * 10 + (point[i] - '0');
+            } // 정수형으로 치환
+
+            if (checkPoint == 1 || checkPoint == 2 || checkPoint == 3 || 
+                checkPoint == 4 || checkPoint == 5 || checkPoint == 6 || 
+                checkPoint == 7 || checkPoint == 8 || checkPoint == 9)
+            {
+                return checkPoint;
+            }
+
+            else
+            {
+                do
+                {
+                    Console.WriteLine("   -------------------------------- ");
+                    Console.WriteLine("  |   해당칸은 존재하지 않습니다   |");
+                    Console.WriteLine("   -------------------------------- ");
+                    //Thread.Sleep(2000);
+                    //Console.Clear();
+                    point = ask.AskPoint();
+                    checkPoint = 0;
+                    for (int i = 0; i < point.Length; i++)
+                    {
+                        checkPoint = checkPoint * 10 + (point[i] - '0');
+                    }
+
+                } while (checkPoint != 1 && checkPoint != 2 && checkPoint != 3 &&
+                checkPoint != 4 && checkPoint != 5 && checkPoint != 6 &&
+                checkPoint != 7 && checkPoint != 8 && checkPoint != 9);
+
+                return checkPoint;
+            } // 원하는 값이 아닐 때 처리               
+        }
     }
 }

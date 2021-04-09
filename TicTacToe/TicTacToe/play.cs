@@ -7,6 +7,8 @@ namespace TicTacToe
     public class Play
     {
         Random random = new Random(); // 컴퓨터가 놓는 말을 위해 Random class 호출 
+        Ask ask = new Ask();
+        DealExcept dealExcept = new DealExcept();
 
         public bool iscorrectPoint; // 이미 놓은 위치에 다시 놓았는 지 확인하는 값
         public bool isdecidVictory = false; // 승패가 결정나면 True 로 변경 
@@ -16,7 +18,8 @@ namespace TicTacToe
         public int player = secondTurn; // 변수 초기화 
         
         public char playerMark; // player1 은 X , player2 는 O 로 표시 
-        public int pointOfUser; // 말의 위치 
+        public string pointOfUser; // 말의 위치 
+        public int checkPointOfUser; 
         public int pointOfComputer;
 
         public int countTurn = 0; // 턴 수 9번이 넘어가면 무승부         
@@ -75,17 +78,17 @@ namespace TicTacToe
                 if (player == secondTurn)
                 {
                     player = firstTurn;
-                    Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
-                    pointOfUser = int.Parse(Console.ReadLine());
-                    PutMarkByUser(player, pointOfUser);
+                    pointOfUser = ask.AskPoint();
+                    checkPointOfUser = dealExcept.DealForAskPoint(pointOfUser);
+                    PutMarkByUser(player, checkPointOfUser);
                 }
 
                 else if (player == firstTurn)
                 {
-                    player = secondTurn;
-                    Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
-                    pointOfUser = int.Parse(Console.ReadLine());
-                    PutMarkByUser(player, pointOfUser);
+                    player = secondTurn;                 
+                    pointOfUser = ask.AskPoint();
+                    checkPointOfUser = dealExcept.DealForAskPoint(pointOfUser);
+                    PutMarkByUser(player, checkPointOfUser);
                 } // 번갈아 가면서 말을 두도록 함
 
                 countTurn++; 
@@ -122,9 +125,9 @@ namespace TicTacToe
                 if (player == secondTurn)
                 {
                     player = firstTurn;
-                    Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
-                    pointOfUser = int.Parse(Console.ReadLine());
-                    PutMarkByUser(player, pointOfUser);
+                    pointOfUser = ask.AskPoint();
+                    checkPointOfUser = dealExcept.DealForAskPoint(pointOfUser);
+                    PutMarkByUser(player, checkPointOfUser);
                 }
 
                 else if (player == firstTurn)
