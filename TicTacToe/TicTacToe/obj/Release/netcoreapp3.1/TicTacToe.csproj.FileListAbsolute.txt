@@ -1,0 +1,13 @@
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\bin\Release\netcoreapp3.1\`.exe
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\bin\Release\netcoreapp3.1\`.deps.json
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\bin\Release\netcoreapp3.1\`.runtimeconfig.json
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\bin\Release\netcoreapp3.1\`.runtimeconfig.dev.json
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\bin\Release\netcoreapp3.1\`.dll
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\bin\Release\netcoreapp3.1\`.pdb
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\obj\Release\netcoreapp3.1\TicTacToe.csprojAssemblyReference.cache
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\obj\Release\netcoreapp3.1\TicTacToe.AssemblyInfoInputs.cache
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\obj\Release\netcoreapp3.1\TicTacToe.AssemblyInfo.cs
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\obj\Release\netcoreapp3.1\TicTacToe.csproj.CoreCompileInputs.cache
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\obj\Release\netcoreapp3.1\`.dll
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\obj\Release\netcoreapp3.1\`.pdb
+C:\Users\kim\OneDrive\바탕 화면\EN#\TicTacToe\TicTacToe\obj\Release\netcoreapp3.1\TicTacToe.genruntimeconfig.cache

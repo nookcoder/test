@@ -26,24 +26,21 @@ namespace TicTacToe
             Console.Clear();
         }
 
-        public int DetermineStartOrNot(int StartOrNot) // 게임 처음 시작 시 뒤로가기를 포함한 시작/종료 기능  
+        public void DetermineStartOrNot(int StartOrNot) // 게임 처음 시작 시 뒤로가기를 포함한 시작/종료 기능  
         {
    
             if(StartOrNot == 1)
             {
-                return 1; 
             }
 
             else if (StartOrNot == 2)
             {
                 Environment.Exit(0);
-                return 2; 
             }
 
             else
             {
                 Introduction();
-                return 3; 
             }
 
         }

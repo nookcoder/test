@@ -16,7 +16,8 @@ namespace TicTacToe
         public int player = secondTurn; // 변수 초기화 
         
         public char playerMark; // player1 은 X , player2 는 O 로 표시 
-        public int point; // 말의 위치 
+        public int pointOfUser; // 말의 위치 
+        public int pointOfComputer;
 
         public int countTurn = 0; // 턴 수 9번이 넘어가면 무승부         
 
@@ -75,16 +76,16 @@ namespace TicTacToe
                 {
                     player = firstTurn;
                     Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
-                    point = Convert.ToInt32(Console.ReadLine());
-                    PutMarkByUser(player, point);
+                    pointOfUser = int.Parse(Console.ReadLine());
+                    PutMarkByUser(player, pointOfUser);
                 }
 
                 else if (player == firstTurn)
                 {
                     player = secondTurn;
                     Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
-                    point = Convert.ToInt32(Console.ReadLine());
-                    PutMarkByUser(player, point);
+                    pointOfUser = int.Parse(Console.ReadLine());
+                    PutMarkByUser(player, pointOfUser);
                 } // 번갈아 가면서 말을 두도록 함
 
                 countTurn++; 
@@ -122,15 +123,15 @@ namespace TicTacToe
                 {
                     player = firstTurn;
                     Console.WriteLine(" 원하는 위치의 숫자를 입력해주세요");
-                    point = Convert.ToInt32(Console.ReadLine());
-                    PutMarkByUser(player, point);
+                    pointOfUser = int.Parse(Console.ReadLine());
+                    PutMarkByUser(player, pointOfUser);
                 }
 
                 else if (player == firstTurn)
                 {
                     player = secondTurn;
-                    point = random.Next(1, 10);
-                    PutMarkByComputer(player, point);
+                    pointOfComputer = random.Next(1, 10);
+                    PutMarkByComputer(player, pointOfComputer);
                 }
 
                 countTurn++;
