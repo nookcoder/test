@@ -89,7 +89,7 @@ namespace TicTacToe
         {
             if ((array[0] == 'X' && array[4] == 'X') ||
                        (array[4] == 'X' && array[8] == 'X') ||
-                       (array[0] == 'X' && array[9] == 'X'))
+                       (array[0] == 'X' && array[8] == 'X'))
             {
                 if (array[0] != 'O')
                 {
