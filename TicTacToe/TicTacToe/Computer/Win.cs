@@ -4,9 +4,10 @@ using System.Text;
 
 namespace TicTacToe
 {
+    // 한 줄에서 두 개가 내 자리이면 남은 한 자리에 둔다.
     class Win
     {
-        char[] array;
+        public char[] array;
         public int i = 0;
         public int j = 0;
         public int point;
@@ -18,6 +19,7 @@ namespace TicTacToe
             }
         }
 
+       // 가로 확인. 
         public int Row()
         {
             for (i = 0; i < 3; i++)
@@ -50,6 +52,7 @@ namespace TicTacToe
             return point;
         }
 
+        // 세로 확인.
         public int Col()
         {
             for (i = 0; i < 3; i++)
@@ -79,6 +82,7 @@ namespace TicTacToe
             return point;
         }
 
+        // 오른쪽 아래로 향하는 대각선 확인.
         public int TopLeftToBottonRight()
         {
             if ((array[0] == 'O' && array[4] == 'O') ||
@@ -103,6 +107,8 @@ namespace TicTacToe
 
             return point;
         }
+
+        //왼쪽 아래로 향하는 대각선 확인.
         public int TopRightToBottonLeft()
         {
             if ((array[2] == 'O' && array[4] == 'O') ||
