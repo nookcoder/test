@@ -4,9 +4,10 @@ using System.Text;
 
 namespace TicTacToe
 {
+    // 상대가 2목이면 막는다.
     class Defense
     {
-        private char[] array;
+        public char[] array;
         public int i = 0;
         public int j = 0;
         public int point;
@@ -19,6 +20,8 @@ namespace TicTacToe
             }
         }
 
+
+        // 가로 확인.
         public int Row()
         {
             for (i = 0; i < 3; i++)
@@ -45,12 +48,14 @@ namespace TicTacToe
                         }
 
                     }
+
                 }
             }
-
             return point;
         }
 
+
+        // 세로 확인.
         public int Col()
         {
             for (i = 0; i < 3; i++)
@@ -129,8 +134,6 @@ namespace TicTacToe
             return point;
         }
     }
-
-
 
 }
 
