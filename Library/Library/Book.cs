@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections; 
-using System.Text;
+using System.Collections;
 
 namespace Library
 {
@@ -14,7 +12,7 @@ namespace Library
             this.Number = _number;
             this.Title = _title;
             this.Publisher = _publicher;
-            this.Author = _author; 
+            this.Author = _author;
         }
 
         public int Number
@@ -43,7 +41,7 @@ namespace Library
 
         public override string ToString()
         {
-            return $"제목 : {Title}, 저자 : {Author}";
+            return Title;
         }
 
 
@@ -55,28 +53,54 @@ namespace Library
         {
 
         }
-        public void InsertBook()
-        {
-            int number;
-            string title;
-            string publisher;
-            string author; 
-            ArrayList bookList = new ArrayList();
 
+        public int number;
+        public string title;
+        public string publisher;
+        public string author;
+        public string addition;
+        public bool isdone = false;
+        ArrayList bookList = new ArrayList();
+
+        public void AskBookInfo()
+        {
             Console.Write("도서 번호 : ");
-            number = int.Parse(Console.ReadLine()); 
+            number = int.Parse(Console.ReadLine());
             Console.Write("책 제목 : ");
             title = Console.ReadLine();
             Console.Write("출판사 :  ");
             publisher = Console.ReadLine();
             Console.Write("작가 이름 : ");
             author = Console.ReadLine();
-
             Book book = new Book(number, title, publisher, author);
             bookList.Add(book);
+            Console.WriteLine($"등록이 완료되었습니다.");
+            Console.WriteLine(" "); 
+        }
 
-            Console.WriteLine($"{bookList[0]}"); 
+        public void InsertBook()
+        {
 
+            AskBookInfo();
+            while (!isdone)
+            {
+                Console.WriteLine("추가로 등록하시겠습니까 ?");
+                Console.Write($"YES / NO : ");
+                addition = Console.ReadLine();
+
+                if (addition == "NO")
+                {
+                    isdone = true;
+                    Console.WriteLine("도서 등록을 종료합니다. ");
+                    Console.Clear();
+                }
+
+                else if (addition == "YES")
+                {
+                    AskBookInfo();
+                }
+            
+            }
         }
     }
 
