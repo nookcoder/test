@@ -462,104 +462,189 @@ namespace TicTacToe
             // 컴퓨터가 2일 때 두는 수
 
             // 가로열 확인
-            for (i = 0; i < 3; i++)
-            {
                 
-                    if ((arraryMark[3 * i] == 'O' && arraryMark[3 * i + 1] == 'O') ||
-                        (arraryMark[3 * i] == 'O' && arraryMark[3 * i + 2] == 'O') ||
-                         (arraryMark[3 * i + 1] == 'O' && arraryMark[3 * i + 2] == 'O'))
+            if ((arraryMark[0] == 'O' && arraryMark[1] == 'O') ||
+                (arraryMark[1] == 'O' && arraryMark[2] == 'O') ||
+                (arraryMark[2] == 'O' && arraryMark[1] == 'O'))
                     {
-                        if (arraryMark[j] != 'O')
+                        if (arraryMark[0] == '1')
                         {
-                            point = 3 * i + 1;
+                            point = 1;
                             
                         }
 
-                        else if (arraryMark[j + 1] != 'O')
+                        else if (arraryMark[1] == '2')
                         {
-                            point = 3 * i + 2;
+                            point = 2;
                             
                         }
 
-                        else
+                        else if(arraryMark[2] == '3')
                         {
-                            point = 3 * i + 3;
+                            point = 3;
                             
                         }
 
                     }
-                
+
+            else if ((arraryMark[3] == 'O' && arraryMark[4] == 'O') ||
+                     (arraryMark[4] == 'O' && arraryMark[5] == 'O') ||
+                     (arraryMark[3] == 'O' && arraryMark[5] == 'O'))
+            {
+                if (arraryMark[3] == '4')
+                {
+                    point = 4;
+
+                }
+
+                else if (arraryMark[4] == '5')
+                {
+                    point = 5;
+
+                }
+
+                else if (arraryMark[5] == '6')
+                {
+                    point = 6;
+
+                }
+
             }
 
-            // 세로열 확인
-            for (i = 0; i < 3; i++)
+            else if ((arraryMark[6] == '7' && arraryMark[7] == '8') ||
+                     (arraryMark[7] == '8' && arraryMark[8] == '9') ||
+                     (arraryMark[6] == '7' && arraryMark[8] == '9'))
             {
-                if ((arraryMark[i] == 'O' && arraryMark[i + 3] == 'O') ||
-                       (arraryMark[i] == 'O' && arraryMark[i + 6] == 'O') ||
-                       (arraryMark[i + 3] == 'O' && arraryMark[i + 6] == 'O'))
+                if (arraryMark[6] == '7')
                 {
-                    if (arraryMark[i] != 'O')
-                    {
-                        point = i;
-                        
-                    }
+                    point = 7;
 
-                    else if (arraryMark[i + 3] != 'O')
-                    {
-                        point = i + 3;
-                        
-                    }
+                }
 
-                    else
-                    {
-                        point = i + 6;
+                else if (arraryMark[7] == '8')
+                {
+                    point = 8;
+
+                }
+
+                else if (arraryMark[8] == '9')
+                {
+                    point = 9;
+                }
+
+            }
+
+
+
+            // 세로열 확인
+            else if ((arraryMark[0] == 'O' && arraryMark[3] == 'O') ||
+                 (arraryMark[3] == 'O' && arraryMark[6] == 'O') ||
+                 (arraryMark[0] == 'O' && arraryMark[6] == 'O'))
+            {
+                if (arraryMark[0] == '1')
+                {
+                    point = 1;        
+                }
+
+                else if (arraryMark[3] == '4')
+                {
+                    point = 4;
                         
-                    }
+                }
+
+                else if(arraryMark[6] == '7')
+                {
+                    point = 7;
+                        
+                }
+            }
+
+            else if ((arraryMark[1] == 'O' && arraryMark[4] == 'O') ||
+                     (arraryMark[1] == 'O' && arraryMark[7] == 'O') ||
+                     (arraryMark[4] == 'O' && arraryMark[7] == 'O'))
+            {
+                if (arraryMark[1] == '2')
+                {
+                    point = 2;
+                }
+
+                else if (arraryMark[4] == '5')
+                {
+                    point = 5;
+
+                }
+
+                else if(arraryMark[7] == '8')
+                {
+                    point = 8;
 
                 }
             }
 
+            else if ((arraryMark[2] == 'O' && arraryMark[5] == 'O') ||
+                      (arraryMark[8] == 'O' && arraryMark[5] == 'O') ||
+                      (arraryMark[2] == 'O' && arraryMark[8] == 'O'))
+            {
+                if (arraryMark[2] == '3')
+                {
+                    point = 3;
+                }
+
+                else if (arraryMark[5] == '6')
+                {
+                    point = 6;
+
+                }
+
+                else if (arraryMark[8] == '9')
+                {
+                    point = 9;
+
+                }
+            }
+
+
             // 대각선 확인
-            if ((arraryMark[0] == 'O' && arraryMark[4] == 'O') ||
+            else if ((arraryMark[0] == 'O' && arraryMark[4] == 'O') ||
                    (arraryMark[4] == 'O' && arraryMark[8] == 'O') ||
                    (arraryMark[0] == 'O' && arraryMark[8] == 'O'))
             {
-                if (arraryMark[0] != 'O')
+                if (arraryMark[0] == '1')
                 {
                     point = 1;
                     
                 }
 
-                else if (arraryMark[4] != 'O')
+                else if (arraryMark[4] == '5')
                 {
                     point = 5;
                     
                 }
 
-                else
+                else if(arraryMark[8] == '9')
                 {
                     point = 9;
                     
                 }
             }
 
-            if ((arraryMark[2] == 'O' && arraryMark[4] == 'O') ||
+            else if ((arraryMark[2] == 'O' && arraryMark[4] == 'O') ||
                    (arraryMark[4] == 'O' && arraryMark[6] == 'O') ||
                    (arraryMark[0] == 'O' && arraryMark[6] == 'O'))
             {
-                if (arraryMark[2] != 'O')
+                if (arraryMark[2] == '3')
                 {
                     point = 3;
                     
                 }
 
-                else if (arraryMark[4] != 'O')
+                else if (arraryMark[4] == '5')
                 {
                     point = 5;
                     
                 }
 
-                else
+                else if (arraryMark[6] == '7')
                 {
                     point = 7;
                     
@@ -571,136 +656,200 @@ namespace TicTacToe
             // 상대가 2목일 때 두는 수
 
             // 가로열 확인
-            for (i = 0; i < 3; i++)
+
+            else if ((arraryMark[0] == 'X' && arraryMark[1] == 'X') ||
+                (arraryMark[1] == 'X' && arraryMark[2] == 'X') ||
+                (arraryMark[2] == 'X' && arraryMark[1] == 'X'))
             {
-                
-                    if ((arraryMark[3 * i] == 'X' && arraryMark[3 * i + 1] == 'X') ||
-                       (arraryMark[3 * i] == 'X' && arraryMark[3 * i + 2] == 'X') ||
-                       (arraryMark[3 * i + 1] == 'X' && arraryMark[3 * i + 2] == 'X'))
-                    {
-                        if (arraryMark[3 * i ] != 'O')
-                        {
-                            point = 3 * i + 1;
-                            
-                        }
+                if (arraryMark[0] == '1')
+                {
+                    point = 1;
 
-                        else if (arraryMark[3 * i  + 1] != 'O')
-                        {
-                            point = 3 * i  + 2;
-                            
-                        }
+                }
 
-                        else
-                        {
-                            point = 3 * i  + 3;
-                            
-                        }
+                else if (arraryMark[1] == '2')
+                {
+                    point = 2;
 
-                    }
+                }
 
-                
+                else if (arraryMark[2] == '3')
+                {
+                    point = 3;
+
+                }
+
             }
 
-            // 세로열 확인
-            for (i = 0; i < 3; i++)
+            else if ((arraryMark[3] == 'X' && arraryMark[4] == 'X') ||
+                     (arraryMark[4] == 'X' && arraryMark[5] == 'X') ||
+                     (arraryMark[3] == 'X' && arraryMark[5] == 'X'))
             {
-                if ((arraryMark[i] == 'X' && arraryMark[i + 3] == 'X') ||
-                       (arraryMark[i] == 'X' && arraryMark[i + 6] == 'X') ||
-                       (arraryMark[i + 3] == 'X' && arraryMark[i + 6] == 'X'))
+                if (arraryMark[3] == '4')
                 {
-                    if (arraryMark[i] != 'O')
-                    {
-                        point = i;
-                        
-                    }
+                    point = 4;
 
-                    else if (arraryMark[i + 3] != 'O')
-                    {
-                        point = i + 3;
-                        
-                    }
+                }
 
-                    else
-                    {
-                        point = i + 6;
-                        
-                    }
+                else if (arraryMark[4] == '5')
+                {
+                    point = 5;
+
+                }
+
+                else if (arraryMark[5] == '6')
+                {
+                    point = 6;
+
+                }
+
+            }
+
+            else if ((arraryMark[6] == 'X' && arraryMark[7] == 'X') ||
+                     (arraryMark[7] == 'X' && arraryMark[8] == 'X') ||
+                     (arraryMark[6] == 'X' && arraryMark[8] == 'X'))
+            {
+                if (arraryMark[6] == '7')
+                {
+                    point = 7;
+
+                }
+
+                else if (arraryMark[8] == '8')
+                {
+                    point = 8;
+
+                }
+
+                else if (arraryMark[9] == '9')
+                {
+                    point = 9;
+
+                }
+
+            }
+
+
+
+            // 세로열 확인
+            else if ((arraryMark[0] == 'X' && arraryMark[3] == 'X') ||
+                 (arraryMark[3] == 'X' && arraryMark[6] == 'X') ||
+                 (arraryMark[0] == 'X' && arraryMark[6] == 'X'))
+            {
+                if (arraryMark[0] == '1')
+                {
+                    point = 1;
+                }
+
+                else if (arraryMark[3] == '4')
+                {
+                    point = 4;
+
+                }
+
+                else if (arraryMark[6] == '7')
+                {
+                    point = 7;
 
                 }
             }
 
+            else if ((arraryMark[1] == 'X' && arraryMark[4] == 'X') ||
+                     (arraryMark[1] == 'X' && arraryMark[7] == 'X') ||
+                     (arraryMark[4] == 'X' && arraryMark[7] == 'X'))
+            {
+                if (arraryMark[1] == '2')
+                {
+                    point = 2;
+                }
+
+                else if (arraryMark[4] == '5')
+                {
+                    point = 5;
+
+                }
+
+                else if (arraryMark[7] == '8')
+                {
+                    point = 8;
+
+                }
+            }
+
+            else if ((arraryMark[2] == 'X' && arraryMark[5] == 'X') ||
+                      (arraryMark[8] == 'X' && arraryMark[5] == 'X') ||
+                      (arraryMark[2] == 'X' && arraryMark[8] == 'X'))
+            {
+                if (arraryMark[2] == '3')
+                {
+                    point = 3;
+                }
+
+                else if (arraryMark[5] == '6')
+                {
+                    point = 6;
+
+                }
+
+                else if (arraryMark[8] == '9')
+                {
+                    point = 9;
+
+                }
+            }
+
+
             // 대각선 확인
-            if ((arraryMark[0] == 'X' && arraryMark[4] == 'X') ||
+            else if ((arraryMark[0] == 'X' && arraryMark[4] == 'X') ||
                    (arraryMark[4] == 'X' && arraryMark[8] == 'X') ||
                    (arraryMark[0] == 'X' && arraryMark[8] == 'X'))
             {
-                if (arraryMark[0] != 'O')
+                if (arraryMark[0] == '1')
                 {
                     point = 1;
-                    
+
                 }
 
-                else if (arraryMark[4] != 'O')
+                else if (arraryMark[4] == '5')
                 {
                     point = 5;
-                    
+
                 }
 
-                else
+                else if (arraryMark[8] == '9')
                 {
                     point = 9;
-                    
+
                 }
             }
 
-            if ((arraryMark[2] == 'X' && arraryMark[4] == 'X') ||
+            else if ((arraryMark[2] == 'X' && arraryMark[4] == 'X') ||
                    (arraryMark[4] == 'X' && arraryMark[6] == 'X') ||
                    (arraryMark[0] == 'X' && arraryMark[6] == 'X'))
             {
-                if (arraryMark[2] != 'O')
+                if (arraryMark[2] == '3')
                 {
                     point = 3;
-                    
+
                 }
 
-                else if (arraryMark[4] != 'O')
+                else if (arraryMark[4] == '5')
                 {
                     point = 5;
-                    
+
                 }
 
-                else
+                else if (arraryMark[6] == '7')
                 {
                     point = 7;
-                    
+
                 }
             }
-            // 첫 수에 둬야하는 수
 
-            // 상대가 코너에 둘 때 
-            if (arraryMark[0] == 'X' || arraryMark[2] == 'X' ||
-                 arraryMark[6] == 'X' || arraryMark[8] == 'X')
+            else
             {
-                if (arraryMark[4] != 'O')
-                {
-                    point = 5;
-                    
-                }
+                point = 0; 
             }
-
-            // 상대가 변에 둘 때 
-            if (arraryMark[1] == 'X' || arraryMark[3] == 'X' ||
-                    arraryMark[5] == 'X' || arraryMark[7] == 'X')
-            {
-                if (arraryMark[4] != 'O')
-                {
-                    point = 5;
-                    
-                }
-            }
-
-
-
             return point;
         }
     }
