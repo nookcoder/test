@@ -140,7 +140,7 @@ namespace TicTacToe
                 else if (player == firstTurn)
                 {
                     player = secondTurn;
-                    pointOfComputer = PutPoint();
+                    pointOfComputer = PutPoint(arraryMark);
                     PutMarkByComputer(player, pointOfComputer);
                     countTurnOfComputer++; 
                 }
@@ -457,14 +457,16 @@ namespace TicTacToe
             }
         } // 대각선으로 빙고가 됐는지 판단
 
-        public int PutPoint()
+        public int PutPoint(char[] arrayMark)
         {
-            // 상대 2목 방어
+            // 상대 2목 방어.
             
-            // 가로 확인
+            // 가로 확인.
+            
+            // 가로 1열.
             if((arraryMark[0] == 'X' && arraryMark[1] == 'X') ||
-               (arraryMark[0] == 'X' && arraryMark[1] == 'X') ||
-               (arraryMark[0] == 'X' && arraryMark[1] == 'X'))
+               (arraryMark[0] == 'X' && arraryMark[2] == 'X') ||
+               (arraryMark[1] == 'X' && arraryMark[2] == 'X'))
             {
                 if(arraryMark[0] == '1')
                 {
@@ -482,12 +484,54 @@ namespace TicTacToe
                 }
             }
 
+            // 가로 2열. 
+            else if ((arraryMark[3] == 'X' && arraryMark[4] == 'X') ||
+                     (arraryMark[3] == 'X' && arraryMark[5] == 'X') ||
+                     (arraryMark[4] == 'X' && arraryMark[5] == 'X'))
+            {
+                if (arraryMark[3] == '4')
+                {
+                    computerPoint = 4;
+                }
+
+                else if (arraryMark[4] == '5')
+                {
+                    computerPoint = 5;
+                }
+
+                else if (arraryMark[5] == '6')
+                {
+                    computerPoint = 6;
+                }
+            }
+
+            // 가로 3열. 
+            else if ((arraryMark[6] == 'X' && arraryMark[7] == 'X') ||
+                     (arraryMark[6] == 'X' && arraryMark[8] == 'X') ||
+                     (arraryMark[7] == 'X' && arraryMark[8] == 'X'))
+            {
+                if (arraryMark[6] == '7')
+                {
+                    computerPoint = 7;
+                }
+
+                else if (arraryMark[7] == '8')
+                {
+                    computerPoint = 8;
+                }
+
+                else if (arraryMark[8] == '9')
+                {
+                    computerPoint = 9;
+                }
+            }
+
             else
             {
                 computerPoint = 0;
             }
 
-            return 0; 
+            return computerPoint; 
         }
     }
 
