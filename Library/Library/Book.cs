@@ -47,63 +47,7 @@ namespace Library
 
     }
 
-    public class BookManagement
-    {
-        public BookManagement()
-        {
-
-        }
-
-        public int number;
-        public string title;
-        public string publisher;
-        public string author;
-        public string addition;
-        public bool isdone = false;
-        ArrayList bookList = new ArrayList();
-
-        public void AskBookInfo()
-        {
-            Console.Write("도서 번호 : ");
-            number = int.Parse(Console.ReadLine());
-            Console.Write("책 제목 : ");
-            title = Console.ReadLine();
-            Console.Write("출판사 :  ");
-            publisher = Console.ReadLine();
-            Console.Write("작가 이름 : ");
-            author = Console.ReadLine();
-            Book book = new Book(number, title, publisher, author);
-            bookList.Add(book);
-            Console.WriteLine($"등록이 완료되었습니다.");
-            Console.WriteLine(" "); 
-        }
-
-        public void InsertBook()
-        {
-
-            AskBookInfo();
-            while (!isdone)
-            {
-                Console.WriteLine("추가로 등록하시겠습니까 ?");
-                Console.Write($"YES / NO : ");
-                addition = Console.ReadLine();
-
-                if (addition == "NO")
-                {
-                    isdone = true;
-                    Console.WriteLine("도서 등록을 종료합니다. ");
-                    Console.Clear();
-                }
-
-                else if (addition == "YES")
-                {
-                    AskBookInfo();
-                }
-            
-            }
-        }
-    }
-
+    
 }
 
 
