@@ -9,6 +9,7 @@ namespace TicTacToe
         Random random = new Random(); // 컴퓨터가 놓는 말을 위해 Random class 호출 
         Ask ask = new Ask();
         DealExcept dealExcept = new DealExcept();
+        Paint paint = new Paint(); 
 
         public bool iscorrectPoint; // 이미 놓은 위치에 다시 놓았는 지 확인하는 값
         public bool isdecidVictory = false; // 승패가 결정나면 True 로 변경 
@@ -45,19 +46,19 @@ namespace TicTacToe
 
         public void PaintBoard()
         {
-            Console.WriteLine("  -------------------------");
-            Console.WriteLine("  |       |       |       |");
+            paint.PaintUnderLine();
+            paint.PaintVerticalLine();
             Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryMark[0], arraryMark[1], arraryMark[2]);
-            Console.WriteLine("  |       |       |       |");
-            Console.WriteLine("  -------------------------");
-            Console.WriteLine("  |       |       |       |");
+            paint.PaintVerticalLine();
+            paint.PaintUnderLine();
+            paint.PaintVerticalLine();
             Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryMark[3], arraryMark[4], arraryMark[5]);
-            Console.WriteLine("  |       |       |       |");
-            Console.WriteLine("  -------------------------");
-            Console.WriteLine("  |       |       |       |");
+            paint.PaintVerticalLine();
+            paint.PaintUnderLine();
+            paint.PaintVerticalLine();
             Console.WriteLine("  |   {0}   |   {1}   |   {2}   |", arraryMark[6], arraryMark[7], arraryMark[8]);
-            Console.WriteLine("  |       |       |       |");
-            Console.WriteLine("  -------------------------");
+            paint.PaintVerticalLine();
+            paint.PaintUnderLine();
         } //게임보드 그리기 
 
         public void ResetGame() // 게임을 재시작 했을 떄 저장됐던 게임정보 초기화
@@ -110,12 +111,7 @@ namespace TicTacToe
             // 9칸이 다 채워졌는 데도 승부가 안 났을 때 
             if (countTurn == 9)
             {
-                Console.Clear();
-                Console.WriteLine("    ===================================== ");
-                Console.WriteLine("   |                                     | ");
-                Console.WriteLine("   |            무   승   부             |");
-                Console.WriteLine("   |                                     | ");
-                Console.WriteLine("    ===================================== ");
+                paint.PaintDraw();
             }
 
                 winWho = winByHoriziontal + winByVertical + winByDiagnal; // 승패가 결정났을 경우 승자가 누군지 결정 
@@ -140,9 +136,8 @@ namespace TicTacToe
                 else if (player == firstTurn)
                 {
                     player = secondTurn;
-                    pointOfComputer = PutPoint(arraryMark);
-                    PutMarkByComputer(player, pointOfComputer);
-                    countTurnOfComputer++; 
+                    computerPoint = PutPoint();
+                    PutMarkByComputer(player, computerPoint);
                 }
 
                 countTurn++;
@@ -156,12 +151,7 @@ namespace TicTacToe
 
                 if (countTurn == 9)
                 {
-                    Console.Clear();
-                    Console.WriteLine("    ===================================== ");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("   |            무   승   부             |");
-                    Console.WriteLine("   |                                     | ");
-                    Console.WriteLine("    ===================================== ");
+                    paint.PaintDraw();
                 }
 
             winWho = winByHoriziontal + winByVertical + winByDiagnal; // 승패가 결정났을 경우 승자가 누군지 결정 
@@ -457,12 +447,13 @@ namespace TicTacToe
             }
         } // 대각선으로 빙고가 됐는지 판단
 
-        public int PutPoint(char[] arrayMark)
+        public int PutPoint()
         {
-            char[] array = {
-            '1','2','3','4','5','6','7','8','9'
-            }; 
-            
+            char[] array =
+            {
+                '1','2','3','4','5','6','7','8','9'
+            };
+
             // 상대 2목 방어.
             
             // 가로 확인.
@@ -476,6 +467,7 @@ namespace TicTacToe
                 {
                     computerPoint = 1; 
                 }
+                
 
                 else if(arraryMark[1] == '2')
                 {
@@ -599,6 +591,7 @@ namespace TicTacToe
             else
             {
                 computerPoint = 0;
+
             }
 
             return computerPoint; 
