@@ -11,10 +11,17 @@ namespace Library
         
         }
 
-        private int menu; 
+        private int menu;
 
         public void ShowBookMain()
         {
+            const int enrollment = 1;
+            const int modify = 2;
+            const int search = 3;
+            const int print = 4;
+            const int rental = 5;
+            const int bookreturn = 6;
+            const int exit =7;
             Console.WriteLine("[1] 도서 등록");
             Console.WriteLine("[2] 도서 수정");
             Console.WriteLine("[3] 도서 검색");
@@ -24,6 +31,34 @@ namespace Library
             Console.WriteLine("[7] 뒤로 가기");
             Console.Write("메뉴로 이동: ");
             menu = int.Parse(Console.ReadLine());
+
+            switch(menu)
+            {
+                case enrollment:
+                    break;
+
+                case modify:
+                    break;
+
+                case search:
+                    break;
+
+                case print:
+                    break;
+
+                case rental:
+                    break;
+
+                case bookreturn:
+                    break;
+
+                case exit:
+                    break; 
+
+                    
+
+
+            }
         }
     }
 }
