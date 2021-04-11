@@ -7,40 +7,66 @@ namespace Library
 {
     public class Book 
     {
-        private string bookNumber; 
-        private string bookTitle;
-        private string bookPublisher;
-        private string bookAuthor; 
+        private string number; 
+        private string title;
+        private string publisher;
+        private string author; 
         private bool isBookOk; // 책을 빌릴 수 있는 지 아닌 지 여부
         ArrayList booklist = new ArrayList(); 
 
-        public Book(string _bookNumber, string _bookTitle, string _bookPublisher, string _bookAuthor, bool _isBookOk)
+        public Book()
         {
-            this.bookNumber = _bookNumber;
-            this.bookTitle = _bookTitle;
-            this.bookPublisher = _bookPublisher;
-            this.bookAuthor = _bookAuthor;
-            this.isBookOk = _isBookOk; 
+        
         }
 
+        public string Number 
+        {
+            get { return number; }
+            set { number = value; }
+        }
+
+        public string Title
+        {
+            get { return title; }
+            set { title = value; }
+        }
+
+        public string Publisher
+        {
+            get { return publisher; }
+            set { publisher = value; }
+        }
+
+        public string Author
+        {
+            get { return number; }
+            set { number = value; }
+        }
+
+        public bool IsBookOk
+        {
+            get { return isBookOk; }
+            set { isBookOk = value;   }
+
+        }
         public string getBookNumber()
         {
-            return bookNumber;
+            return number;
         }
 
         public string getBookTitle()
         {
-            return bookTitle; 
+            return title; 
         }
 
         public string getPublisher()
         {
-            return bookPublisher;
+            return publisher;
         }
 
         public string getAuthor()
         {
-            return bookAuthor; 
+            return author; 
         }
 
         public bool getIsBookOk()
@@ -49,4 +75,6 @@ namespace Library
         }      
         
     }
+
+
 }
