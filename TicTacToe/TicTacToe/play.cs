@@ -459,39 +459,70 @@ namespace TicTacToe
 
         public int PutPoint(char[] arrayMark)
         {
+            char[] array = {
+            '1','2','3','4','5','6','7','8','9'
+            };
+
             // 상대 2목 방어.
-            
             // 가로 확인.
-            
-            // 가로 1열.
-            if((arraryMark[0] == 'X' && arraryMark[1] == 'X') ||
-               (arraryMark[0] == 'X' && arraryMark[2] == 'X') ||
-               (arraryMark[1] == 'X' && arraryMark[2] == 'X'))
+            for (i = 0; i < 3; i++)
             {
-                if(arraryMark[0] == '1')
+                for (j = 3 * i; j < 3 + i + 1; j++)
                 {
-                    computerPoint = 1; 
+                    if ((arraryMark[j] == arraryMark[j + 1]) ||
+                        (arraryMark[j] == arraryMark[j + 2]) ||
+                        (arraryMark[j + 1] == arraryMark[j + 2]))
+                    {
+                        if (arraryMark[j] == array[j])
+                        {
+                            computerPoint = j;
+                        }
+
+                        else if (arraryMark[j + 1] == array[j + 1])
+                        {
+                            computerPoint = j + 1;
+                        }
+
+                        else if (arraryMark[j + 2] == array[j + 2])
+                        {
+                            computerPoint = j + 2;
+                        }
+                    }
+                }
+            }
+            
+
+            // 세로 확인.
+
+            // 세로 1열.
+            if ((arraryMark[0] == 'X' && arraryMark[3] == 'X') ||
+                     (arraryMark[0] == 'X' && arraryMark[6] == 'X') ||
+                     (arraryMark[3] == 'X' && arraryMark[6] == 'X'))
+            {
+                if (arraryMark[0] == '1')
+                {
+                    computerPoint = 1;
                 }
 
-                else if(arraryMark[1] == '2')
+                else if (arraryMark[3] == '4')
                 {
-                    computerPoint = 2; 
+                    computerPoint = 2;
                 }
 
-                else if(arraryMark[2] == '3')
+                else if (arraryMark[6] == '7')
                 {
-                    computerPoint = 3; 
+                    computerPoint = 3;
                 }
             }
 
-            // 가로 2열. 
-            else if ((arraryMark[3] == 'X' && arraryMark[4] == 'X') ||
-                     (arraryMark[3] == 'X' && arraryMark[5] == 'X') ||
-                     (arraryMark[4] == 'X' && arraryMark[5] == 'X'))
+            // 세로 2열. 
+           else if ((arraryMark[1] == 'X' && arraryMark[4] == 'X') ||
+                     (arraryMark[1] == 'X' && arraryMark[7] == 'X') ||
+                     (arraryMark[4] == 'X' && arraryMark[7] == 'X'))
             {
-                if (arraryMark[3] == '4')
+                if (arraryMark[1] == '2')
                 {
-                    computerPoint = 4;
+                    computerPoint = 2;
                 }
 
                 else if (arraryMark[4] == '5')
@@ -499,25 +530,25 @@ namespace TicTacToe
                     computerPoint = 5;
                 }
 
-                else if (arraryMark[5] == '6')
-                {
-                    computerPoint = 6;
-                }
-            }
-
-            // 가로 3열. 
-            else if ((arraryMark[6] == 'X' && arraryMark[7] == 'X') ||
-                     (arraryMark[6] == 'X' && arraryMark[8] == 'X') ||
-                     (arraryMark[7] == 'X' && arraryMark[8] == 'X'))
-            {
-                if (arraryMark[6] == '7')
-                {
-                    computerPoint = 7;
-                }
-
                 else if (arraryMark[7] == '8')
                 {
                     computerPoint = 8;
+                }
+            }
+
+            // 세로 3열. 
+            else if ((arraryMark[2] == 'X' && arraryMark[5] == 'X') ||
+                     (arraryMark[2] == 'X' && arraryMark[8] == 'X') ||
+                     (arraryMark[5] == 'X' && arraryMark[8] == 'X'))
+            {
+                if (arraryMark[2] == '3')
+                {
+                    computerPoint = 3;
+                }
+
+                else if (arraryMark[5] == '6')
+                {
+                    computerPoint = 6;
                 }
 
                 else if (arraryMark[8] == '9')
