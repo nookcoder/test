@@ -7,12 +7,13 @@ namespace Library
     {
         // 도서 정보 클래스. 
 
-        public Book(int _number, string _title, string _publicher, string _author)
+        public Book(int _number, string _title, string _publicher, string _author,bool _isOk)
         {
             this.Number = _number;
             this.Title = _title;
             this.Publisher = _publicher;
             this.Author = _author;
+            this.IsOk = _isOk; // true 면 대여가능 
         }
 
         public bool IsOk
