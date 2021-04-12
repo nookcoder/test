@@ -10,12 +10,12 @@ namespace Library
         {
 
         }
-        public int bookListIndex;
-        public string id;
-        public string title;
-        public string publisher;
-        public string author;
-        public bool isdone = false;
+        private int bookListIndex;
+        private string id;
+        private string title;
+        private string publisher;
+        private string author;
+        private bool isdone = false;
         List<Book> bookList = new List<Book>();
 
         //!!!!!!!!!!!!!!!!! 도서등록에서 오류 수정하자!!!!!!!!!!!!!!!?
@@ -37,6 +37,7 @@ namespace Library
             bookPage.PrintBookMenu();
 
             // 메뉴 물어보기.
+            Console.Write("메뉴 번호 입력 : ");
             bookMenu = bookPage.GetBookMenuNumber();
 
             switch (bookMenu)
@@ -120,26 +121,27 @@ namespace Library
         {
             string bookId;
             string changedTitle;
-            string changedPulisher;
+            string changedPublisher;
             string changedAuthor;
 
-            int selectedPart;
+            string partString;
+            int part;
+
             const int title = 1;
             const int publisher = 2;
             const int Author = 3;
 
             BookPage bookPage = new BookPage();
 
-            Console.Write("수정하고 싶은 도서 번호를 입력하세요 : ");
+            PrintGetPart();
+            Console.Write("번호 입력 : ");
+            partString = Console.ReadLine();
+            part = HandlePart(partString);
+            
+            Console.Write("수정하고 도서 번호 : ");
             bookId = Console.ReadLine();
-            Console.Clear();
-            bookPage.PrintBookMenu();
-            Console.Write("무엇을 수정하시겠습니까 ?");
-            Console.Write("[1] 책 제목 \n");
-            Console.Write("[2] 출판사  \n");
-            Console.Write("[3] 저자    \n");
-            selectedPart = int.Parse(Console.ReadLine());
-            switch (selectedPart)
+           
+            switch (part)
             {
                 case title:
                     for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
@@ -153,15 +155,77 @@ namespace Library
                     break;
 
                 case publisher:
+                    for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
+                    {
+                        if (bookList[bookListIndex].Id == bookId)
+                        {
+                            changedPublisher = Console.ReadLine();
+                            bookList[bookListIndex].Title = changedPublisher;
+                        }
+                    }
                     break;
 
                 case Author:
+                    for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
+                    {
+                        if (bookList[bookListIndex].Id == bookId)
+                        {
+                            changedAuthor = Console.ReadLine();
+                            bookList[bookListIndex].Title = changedAuthor;
+                        }
+                    }
                     break;
+
+                default:
+                    break; 
             }
 
             Console.Clear();
             PrintBookMain();
         }
+
+        public int HandlePart(string _part)
+        {
+            bool isError = true;
+            const int RESET = 0;
+            int intPart = RESET ;
+            BookPage bookPage = new BookPage();
+
+            while (isError)
+            {
+                if (_part == "1" || _part == "2" || _part == "3")
+                {
+                    isError = false;
+                    intPart = int.Parse(_part);
+                }
+
+                else
+                {
+                    PrintGetPart();
+                    Console.WriteLine("다시 입력해주세요 \n");
+                    Console.Write("번호 입력 : ");
+                    _part = Console.ReadLine();
+                }
+            }
+
+            return intPart;
+        }
+
+        public void PrintGetPart()
+        {
+            BookPage bookPage = new BookPage();
+
+            
+            Console.Clear();
+            bookPage.PrintBookMenu();
+            bookPage.PirntBar();
+            Console.Write("|    [1] 책 제목     |\n");
+            Console.Write("|    [2] 출판사      |\n");
+            Console.Write("|    [3] 저자        |\n");
+            bookPage.PirntBar();
+        }
+
+
 
 
 
@@ -337,14 +401,15 @@ namespace Library
 
         public void PirntBar()
         {
-            Console.WriteLine("--------------------");
+            Console.WriteLine(" -------------------- ");
         }
 
         public int GetBookMenuNumber()
         {
             int bookMenu;
             bookMenu = int.Parse(Console.ReadLine());
-            Console.SetCursorPosition(0, 7);
+            Console.Clear();
+            PrintBookMenu();
 
             return bookMenu;
         }
@@ -357,9 +422,9 @@ namespace Library
 
             Console.Clear();
             bookPage.PrintBookMenu();
-            Console.WriteLine("");
-            Console.WriteLine("잘못 입력하셨습니다.");
-            Console.WriteLine("");
+            PirntBar();
+            Console.WriteLine("| 잘못 입력하셨습니다.| ");
+            PirntBar();
 
         }
     }
