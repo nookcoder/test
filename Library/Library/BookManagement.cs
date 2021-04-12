@@ -60,7 +60,7 @@ namespace Library
                         break;
 
                     case bookreturn:
-                        //ReturnBook();
+                        ReturnBook();
                         break;
 
                     case exit:
@@ -77,26 +77,29 @@ namespace Library
         // 도서 추가 하기 호출될 함수. 
         public void InsertBook()
         {
+            BookPage bookPage = new BookPage();
             bool isDone = false;
             string addition;
             GetBookInfo();
             while (!isDone)
             {
-                Console.WriteLine("추가로 등록하시겠습니까 ?");
-                Console.Write($"YES / NO : ");
+                Console.WriteLine("  -------------------- ");
+                Console.WriteLine(" 추가로 등록하시겠습니까 ?");
+                Console.WriteLine("       [1] YES            ");
+                Console.WriteLine("       [2] NO             ");
+                Console.WriteLine("  -------------------- ");
                 addition = Console.ReadLine();
 
-                if (addition == "NO")
+                if (addition == "2")
                 {
                     isDone = true;
-                    Console.WriteLine("도서 등록을 종료합니다. ");
                     Console.Clear();
                     PrintBookMain();
-
                 }
 
-                else if (addition == "YES")
+                else if (addition == "1")
                 {
+                    SetPrint();
                     GetBookInfo();
                 }
             }
@@ -182,7 +185,7 @@ namespace Library
             {
                 SetPrint();
                 Console.WriteLine("해당 도서가 존재하지 않습니다. 다시 시도 해주세요. ");
-                Thread.Sleep(1000);
+                GoBackBookMain();
             }
 
             Console.Clear();
@@ -381,7 +384,7 @@ namespace Library
                 Console.WriteLine("등록된 도서가 없습니다. ");
             }
 
-            GoBack();
+            GoBackBookMain();
         }
 
 
@@ -406,16 +409,16 @@ namespace Library
             if (isFound)
             {
                 bookIndex = FindBookIndex(bookName);
-                if(bookList[bookIndex].IsOk)
+                if (bookList[bookIndex].IsOk)
                 {
-                    bookList[bookIndex].IsOk = false; 
+                    bookList[bookIndex].IsOk = false;
                     PrintRentSuccess(bookList[bookIndex].Title);
                 }
 
-                else 
+                else
                 {
                     Console.WriteLine("해당 도서는 대여가 불가능합니다");
-                    GoBack();
+                    GoBackBookMain();
                 }
             }
 
@@ -423,7 +426,7 @@ namespace Library
             {
                 SetPrint();
                 Console.WriteLine("해당 도서가 존재하지 않습니다.");
-                GoBack();
+                GoBackBookMain();
             }
         }
 
@@ -436,9 +439,6 @@ namespace Library
             GoBack();
         }
 
-
-
-
         // 대여 여부 출력함수.
         public void PrintRent(bool _isOk)
         {
@@ -450,6 +450,68 @@ namespace Library
             else
             {
                 Console.WriteLine("대여여부 : 불가능");
+            }
+        }
+
+
+
+        // [6] 도서 반납하기 / 반납 기간 연장 
+        public void ReturnBook()
+        {
+            string menu;
+            bool isDone = false;
+
+            while (!isDone)
+            {
+                SetPrint();
+                Console.WriteLine(" [1] 반납 하기");
+                Console.WriteLine(" [2] 시간 연장");
+                Console.WriteLine(" [3] 뒤로 가기");
+
+                menu = Console.ReadLine();
+
+                if (menu == "1")
+                {
+                   
+                }
+
+                else if (menu == "2")
+                {
+
+                }
+
+                else if (menu == "3")
+                {
+                    isDone = true;
+                    Console.Clear();
+                    PrintBookMain();
+
+                }
+            }
+        }
+
+        public void PrintReturn()
+        {
+            string bookName;
+            int bookIndex;
+            bool isFound;
+           
+            SetPrint();
+            Console.Write("반납할 책 제목 : ");
+            bookName = Console.ReadLine();
+            isFound = FindBook(bookName);
+            if (isFound)
+            {
+                bookIndex = FindBookIndex(bookName);
+                Console.WriteLine($"{bookList[bookIndex].Title} 를 반납했습니다.");
+                bookList[bookIndex].IsOk = true;
+                Goback();
+            }
+
+            else
+            {
+                Console.WriteLine("해당 도서는 반납되었습니다. ");
+                Goback();
             }
         }
 
@@ -485,7 +547,7 @@ namespace Library
         }
 
         //뒤로가기 함수. 
-        public void GoBack()
+        public void GoBackBookMain()
         {
             Console.WriteLine(" ");
             Console.Write("뒤로가려면 아무키나 눌러주세요.... ");
@@ -493,6 +555,13 @@ namespace Library
             Console.Clear();
             PrintBookMain();
         }
+
+        public void Goback()
+        {
+            Console.WriteLine("뒤로 가려면 아무키나 입력해주세요");
+            Console.ReadKey();
+        }
+        
         // 로그가 쌓이지 않게 해주는 함수.
         public void SetPrint()
         {
