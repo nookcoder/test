@@ -7,7 +7,7 @@ namespace Library
     {
         // 도서 정보 클래스. 
 
-        public Book(int _number, string _title, string _publicher, string _author,bool _isOk)
+        public Book(string _number, string _title, string _publicher, string _author,bool _isOk)
         {
             this.Number = _number;
             this.Title = _title;
@@ -22,7 +22,7 @@ namespace Library
             set;
         } 
 
-        public int Number
+        public string Number
         {
             get;
             set;
