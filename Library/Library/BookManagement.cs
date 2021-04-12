@@ -120,9 +120,9 @@ namespace Library
         public void ModifyBook()
         {
             string bookId;
-            string changedTitle;
-            string changedPublisher;
-            string changedAuthor;
+            string updatedTitle;
+            string updatedPublisher;
+            string updateddAuthor;
 
             string partString;
             int part;
@@ -148,8 +148,8 @@ namespace Library
                     {
                         if (bookList[bookListIndex].Id == bookId)
                         {
-                            changedTitle = Console.ReadLine();
-                            bookList[bookListIndex].Title = changedTitle;
+                            updatedTitle = Console.ReadLine();
+                            bookList[bookListIndex].Title = updatedTitle;
                         }
                     }
                     break;
@@ -159,8 +159,8 @@ namespace Library
                     {
                         if (bookList[bookListIndex].Id == bookId)
                         {
-                            changedPublisher = Console.ReadLine();
-                            bookList[bookListIndex].Title = changedPublisher;
+                            updatedPublisher = Console.ReadLine();
+                            bookList[bookListIndex].Title = updatedPublisher;
                         }
                     }
                     break;
@@ -170,8 +170,8 @@ namespace Library
                     {
                         if (bookList[bookListIndex].Id == bookId)
                         {
-                            changedAuthor = Console.ReadLine();
-                            bookList[bookListIndex].Title = changedAuthor;
+                            updateddAuthor = Console.ReadLine();
+                            bookList[bookListIndex].Title = updateddAuthor;
                         }
                     }
                     break;
@@ -223,6 +223,11 @@ namespace Library
             Console.Write("|    [2] 출판사      |\n");
             Console.Write("|    [3] 저자        |\n");
             bookPage.PirntBar();
+        }
+
+        public void UpdateInfo()
+        {
+
         }
 
 
