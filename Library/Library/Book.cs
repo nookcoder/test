@@ -7,9 +7,9 @@ namespace Library
     {
         // 도서 정보 클래스. 
 
-        public Book(string _number, string _title, string _publicher, string _author,bool _isOk)
+        public Book(string _id, string _title, string _publicher, string _author,bool _isOk)
         {
-            this.Number = _number;
+            this.Id = _id;
             this.Title = _title;
             this.Publisher = _publicher;
             this.Author = _author;
@@ -22,7 +22,7 @@ namespace Library
             set;
         } 
 
-        public string Number
+        public string Id
         {
             get;
             set;
@@ -48,7 +48,7 @@ namespace Library
 
         public override string ToString()
         {
-            return $" 도서 번호 : {Number}\n" +
+            return $" 도서 번호 : {Id}\n" +
                    $" 책 제목   : {Title}\n" +
                    $" 출판사    : {Publisher}\n" +
                    $" 저자      : {Author}\n"; 
