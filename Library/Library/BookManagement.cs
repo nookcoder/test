@@ -64,7 +64,8 @@ namespace Library
                         break;
 
                     case delet:
-                        //DeletBook();
+                        DeletBook();
+                        break;
 
                     case exit:
                         isDone = true;
@@ -187,8 +188,7 @@ namespace Library
 
             else
             {
-                SetPrint();
-                Console.WriteLine("해당 도서가 존재하지 않습니다. 다시 시도 해주세요. ");
+                bookPage.PrintNoBook();
                 GoBackBookMain();
             }
 
@@ -327,6 +327,7 @@ namespace Library
         // 제목을 입력받아 해당 책이 있으면 출력하는 함수. 
         public void PrintGetTitle()
         {
+            BookPage bookPage = new BookPage(); 
             string bookTitle;
             bool isFound = false;
             int bookIndex;
@@ -349,17 +350,13 @@ namespace Library
 
                 else
                 {
-                    SetPrint();
-                    Console.WriteLine("죄송하지만 해당 책은 존재하지 않습니다. ");
-                    Console.WriteLine(" ");
+                    bookPage.PrintNoBook();
                 }
             }
 
             else
             {
-                SetPrint();
-                Console.WriteLine("죄송하지만 해당 책은 존재하지 않습니다. ");
-                Console.WriteLine(" ");
+                bookPage.PrintNoBook();
             }
         }
 
@@ -384,7 +381,6 @@ namespace Library
             else
             {
                 SetPrint();
-
                 Console.WriteLine("등록된 도서가 없습니다. ");
             }
 
@@ -488,6 +484,7 @@ namespace Library
             }
         }
 
+        //반납한다고 했을 때 호출할 함수.
         public void PrintReturn()
         {
             string bookName;
@@ -516,6 +513,7 @@ namespace Library
         // [7] 도서 삭제하기
         public void DeletBook()
         {
+            BookPage bookPage = new BookPage();
             int menu;
             const int delet = 1;
             const int back = 2;
@@ -527,10 +525,44 @@ namespace Library
             switch(menu)
             {
                 case delet:
+                    HandleDelet();
                     break;
 
                 case back:
+                    Console.Clear();
+                    PrintBookMain();
                     break;
+            }
+        }
+
+        // 삭제하기 했을 때 호출할 함수.
+        public void HandleDelet()
+        {
+            string bookTitle;
+            bool isFound;
+            int bookIndex;
+            BookPage bookPage = new BookPage();
+
+            SetPrint();
+            Console.WriteLine("삭제 도서 제목 : ");
+            bookTitle = Console.ReadLine();
+            isFound = FindBook(bookTitle);
+            if (isFound)
+            {
+                bookIndex = FindBookIndex(bookTitle);
+                bookList.RemoveAt(bookIndex);
+                SetPrint();
+                Console.WriteLine("도서가 삭제되었습니다. ");
+                Console.WriteLine("");
+                GoBack();
+                Console.Clear();
+                PrintBookMain();
+            }
+
+            else
+            {
+                bookPage.PrintNoBook();
+                GoBackBookMain();
             }
         }
 
