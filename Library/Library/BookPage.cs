@@ -19,7 +19,8 @@ namespace Library
             Console.Write("[4] : 도서 출력\n");
             Console.Write("[5] : 도서 대여\n");
             Console.Write("[6] : 도서 반납\n");
-            Console.Write("[7] : 뒤로 가기\n");
+            Console.Write("[7] : 도서 삭제\n");
+            Console.Write("[8] : 뒤로 가기\n");
         }
 
         public void PirntBar()
@@ -54,6 +55,13 @@ namespace Library
         public void PrintUpdateSort(string text)
         {
             Console.Write($"수정할 {text}을 입력해주세요 : ");
+        }
+
+        public void PrintNoBook()
+        {
+            BookManagement bookManagement = new BookManagement();
+            bookManagement.SetPrint();
+            Console.WriteLine("해당 도서는 존재하지 않습니다.");
         }
     }
 }
