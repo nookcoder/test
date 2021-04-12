@@ -60,7 +60,7 @@ namespace Library
                         break;
 
                     case rental:
-                        //RentalBook();
+                        RentBook();
                         break;
 
                     case bookreturn:
@@ -246,7 +246,7 @@ namespace Library
 
 
 
-        // [3]원하는 도서를 찾는 함수.
+        // [3]원하는 도서 출력하기
         // 원하는 도서 출력하기 호출될 함수.
         public void SelectOne()
         {
@@ -329,6 +329,7 @@ namespace Library
 
             if (bookList.Count != 0)
             {
+                // 해당 도서가 목록에 있는 지 확인. 
                 for (int bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
                 {
                     if (bookList[bookListIndex].Title == bookTitle)
@@ -355,6 +356,7 @@ namespace Library
                     }
                 }
             }
+            
             else
             {
                 SetPrint();
@@ -365,8 +367,8 @@ namespace Library
 
 
 
-        // [4] 전체 도서 출력하기 
-        // 전체 도서 출력하기 호출될 함수
+        // [4] 전체 도서 출력하기.
+        // 전체 도서 출력하기 호출될 함수.
         public void SelectAll()
         {
             BookPage bookPage = new BookPage();
@@ -391,6 +393,71 @@ namespace Library
             GoBack();
         }
 
+
+
+        // [5] 도서 대여 하기
+        // 도서 대여하기 호출될 함수.
+        public void RentBook()
+        {
+            // 대여하기 -> 책 제목 입력 -> 대여 불가 여부 판단 -> 대여 성공 = 대여기간 // 실패 == 안내문구 
+            string bookName;
+            bool isFound = false; 
+
+            SetPrint();
+            Console.Write("책 제목 : ");
+            bookName = Console.ReadLine();
+            
+            // 해당 도서가 목록에 있는 지 확인. 
+            for(bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
+            {
+                if(bookList[bookListIndex].Title == bookName)
+                {
+                    isFound = true; 
+                }
+            }
+
+
+            // 해당 도서를 대여해줌.
+            if(isFound)
+            {
+                for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
+                {
+                    if (bookList[bookListIndex].IsOk)
+                    {
+                        bookList[bookListIndex].IsOk = false; // 다른 사람 대여불가
+                        PrintRentSuccess(bookList[bookListIndex].Title);
+                    }
+
+                    else
+                    {
+                        SetPrint();
+                        Console.WriteLine("해당 도서는 대여가 불가능합니다. ");
+                    }
+                }                
+            }
+
+            else
+            {
+                SetPrint();
+                Console.WriteLine("해당 도서가 존재하지 않습니다.");
+                Thread.Sleep(2000);
+            }
+
+            isFound = false;
+            Console.Clear();
+            PrintBookMain();
+        }
+
+        // 대여 성공 출력함수
+        public void PrintRentSuccess(string _bookTitle)
+        {
+            SetPrint();
+            Console.WriteLine($"{_bookTitle}를 대여하셨습니다. \n");
+            Console.WriteLine("반납 기한은 대여일 포함 7일입니다.\n");
+            Thread.Sleep(3000);
+        }
+
+        //뒤로가기 함수. 
         public void GoBack()
         {
             Console.WriteLine(" ");
@@ -399,9 +466,6 @@ namespace Library
             Console.Clear();
             PrintBookMain();
         }
-
-
-
         // 로그가 쌓이지 않게 해주는 함수.
         public void SetPrint()
         {
