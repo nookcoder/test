@@ -147,7 +147,7 @@ namespace Library
 
     public class BookPage
     {
-        public Print()
+        public BookPage()
         {
 
         }
@@ -163,7 +163,14 @@ namespace Library
             Console.Write("[7] : 뒤로 가기\n");
         }
 
-        public int
+        public int GetBookMenuNumber()
+        {
+            int bookMenu;
+            bookMenu = int.Parse(Console.ReadLine());
+            Console.SetCursorPosition(0, 7);
+
+            return bookMenu;
+        }
     }
 }
 
