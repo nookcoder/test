@@ -126,10 +126,8 @@ namespace Library
 
                 if (selectMenu == "1")
                 {
-                    bookPage.PrintBookMenu();
-                    PrintGetTitle();
-                    selectMenu = PrintGetMoreSearch();
                     Console.Clear();
+                    bookPage.PrintBookMenu();                    
                 }
 
                 else if (selectMenu == "2")
@@ -177,13 +175,14 @@ namespace Library
                         Console.WriteLine(bookList[bookListIndex]);
                         if (bookList[bookListIndex].IsOk)
                         {
+                            Console.WriteLine(" ");
                             Console.WriteLine("대여여부 : 가능");
                         }
 
                         else
                         {
+                            Console.WriteLine(" ");
                             Console.WriteLine("대여여부 : 불가능");
-
                         }
                     }
 
@@ -204,7 +203,7 @@ namespace Library
         // 다시 검색 질문에서 잘못된 값을 입력 했을 때 처리 함수. 
         public void ReviseErrorSelectOne()
         {
-            string selectMenu;
+            string _selectMenu;
             bool isError = true;
             BookPage bookPage = new BookPage();
 
@@ -216,15 +215,16 @@ namespace Library
                 Console.WriteLine("잘못 입력하셨습니다.");
                 Console.WriteLine("");
 
-                selectMenu = PrintGetMoreSearch();
+                _selectMenu = PrintGetMoreSearch();
 
-                if (selectMenu == "1" || selectMenu == "2")
+                if (_selectMenu == "1" || _selectMenu == "2")
                 {
                     isError = false;
                 }
 
             }
         }
+
 
         // [4] 전체 도서 출력하기 
         // 전체 도서 출력하기 호출 함수
