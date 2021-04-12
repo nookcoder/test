@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace Library
 {
@@ -24,7 +23,8 @@ namespace Library
             const int print = 4;
             const int rental = 5;
             const int bookreturn = 6;
-            const int exit = 7;
+            const int delet = 7;
+            const int exit = 8;
             bool isDone = false;
             int bookMenu;
 
@@ -63,12 +63,16 @@ namespace Library
                         ReturnBook();
                         break;
 
+                    case delet:
+                        //DeletBook();
+
                     case exit:
                         isDone = true;
                         //Exit(); 
                         break;
                 }
             }
+
         }
 
 
@@ -436,7 +440,7 @@ namespace Library
             SetPrint();
             Console.WriteLine($"{_bookTitle}를 대여하셨습니다. \n");
             Console.WriteLine("반납 기한은 대여일 포함 7일입니다.\n");
-            GoBack();
+            GoBackBookMain();
         }
 
         // 대여 여부 출력함수.
@@ -465,22 +469,16 @@ namespace Library
             {
                 SetPrint();
                 Console.WriteLine(" [1] 반납 하기");
-                Console.WriteLine(" [2] 시간 연장");
-                Console.WriteLine(" [3] 뒤로 가기");
+                Console.WriteLine(" [2] 뒤로 가기");
 
                 menu = Console.ReadLine();
 
                 if (menu == "1")
                 {
-                   
+                    PrintReturn();
                 }
 
                 else if (menu == "2")
-                {
-
-                }
-
-                else if (menu == "3")
                 {
                     isDone = true;
                     Console.Clear();
@@ -495,7 +493,7 @@ namespace Library
             string bookName;
             int bookIndex;
             bool isFound;
-           
+
             SetPrint();
             Console.Write("반납할 책 제목 : ");
             bookName = Console.ReadLine();
@@ -505,15 +503,37 @@ namespace Library
                 bookIndex = FindBookIndex(bookName);
                 Console.WriteLine($"{bookList[bookIndex].Title} 를 반납했습니다.");
                 bookList[bookIndex].IsOk = true;
-                Goback();
+                GoBack();
             }
 
             else
             {
                 Console.WriteLine("해당 도서는 반납되었습니다. ");
-                Goback();
+                GoBack();
             }
         }
+
+        // [7] 도서 삭제하기
+        public void DeletBook()
+        {
+            int menu;
+            const int delet = 1;
+            const int back = 2;
+
+            SetPrint();
+            Console.WriteLine(" [1] 삭제 하기");
+            Console.WriteLine(" [2] 뒤로 가기");
+            menu = int.Parse(Console.ReadLine());
+            switch(menu)
+            {
+                case delet:
+                    break;
+
+                case back:
+                    break;
+            }
+        }
+
 
         // 해당 도서가 목록에 있는 지 확인. 
         // 있으면 true, 없으면 false 반환.
@@ -556,12 +576,12 @@ namespace Library
             PrintBookMain();
         }
 
-        public void Goback()
+        public void GoBack()
         {
             Console.WriteLine("뒤로 가려면 아무키나 입력해주세요");
             Console.ReadKey();
         }
-        
+
         // 로그가 쌓이지 않게 해주는 함수.
         public void SetPrint()
         {
