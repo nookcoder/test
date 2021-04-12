@@ -17,10 +17,12 @@ namespace Library
         public bool isdone = false;
         List<Book> bookList = new List<Book>();
 
+
+        // 도서관리 메뉴 처음 화면 출력. 
         public void PrintBookMain()
         {
             BookPage bookPage = new BookPage();
-            const int enrollment = 1;
+            const int Insert = 1;
             const int modify = 2;
             const int search = 3;
             const int print = 4;
@@ -29,12 +31,15 @@ namespace Library
             const int exit = 7;
             int bookMenu;
 
+            // 메뉴 출력하기.
             bookPage.PrintBookMenu();
-            bookMenu = bookPage.GetBookMenuNumber();
+            
+            // 메뉴 물어보기.
+            bookMenu = bookPage.GetBookMenuNumber(); 
 
             switch (bookMenu)
             {
-                case enrollment:
+                case Insert:
                     InsertBook();
                     break;
 
@@ -63,7 +68,6 @@ namespace Library
                     break;
             }
         }
-
 
         // [1] 도서 추가 하기 
         // 도서 추가 하기 호출 함수. 
@@ -109,6 +113,15 @@ namespace Library
             Console.WriteLine(" ");
         }
 
+        // [2] 도서 수정 하기 
+        public void ModifyBook()
+        {
+            string bookNumber; 
+            
+            Console.Write("수정하고 싶은 도서 번호를 입력하세요 : ");
+            Console.ReadLine();
+        }
+
 
         // [3]원하는 도서를 찾는 함수.
         // 원하는 도서 출력하기 호출 함수.
@@ -140,7 +153,6 @@ namespace Library
 
                 else
                 {
-                    isError = true;
                     while (isError)
                     {
                         bookPage.PrintError();
@@ -152,12 +164,15 @@ namespace Library
                         }
 
                     }
+
                     Console.Clear();
+
                     if (selectMenu == "2")
                     {
                         isdone = true;
                         PrintBookMain();
                     }
+
                     else
                     {
                         bookPage.PrintBookMenu();
