@@ -9,7 +9,7 @@ namespace Library
         public BookMain()
         {
             BookManagement bookManagment = new BookManagement();
-            bookManagment.ShowBookMain();
+            bookManagment.PrintBookMain();
         }
  
     }

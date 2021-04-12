@@ -15,6 +15,12 @@ namespace Library
             this.Author = _author;
         }
 
+        public bool IsOk
+        {
+            get;
+            set;
+        } 
+
         public int Number
         {
             get;
@@ -41,7 +47,10 @@ namespace Library
 
         public override string ToString()
         {
-            return Title;
+            return $" 도서 번호 : {Number}\n" +
+                   $" 책 제목   : {Title}\n" +
+                   $" 출판사    : {Publisher}\n" +
+                   $" 저자      : {Author}\n"; 
         }
 
 
