@@ -50,6 +50,11 @@ namespace Library
             PirntBar();
 
         }
+
+        public void PrintUpdateSort(string text)
+        {
+            Console.Write($"수정할 {text}을 입력해주세요 : ");
+        }
     }
 }
-}
+
