@@ -15,7 +15,6 @@ namespace Library
         private string title;
         private string publisher;
         private string author;
-        private bool isdone = false;
         List<Book> bookList = new List<Book>();
 
         //!!!!!!!!!!!!!!!!! 도서등록에서 오류 수정하자!!!!!!!!!!!!!!!?
@@ -31,44 +30,48 @@ namespace Library
             const int rental = 5;
             const int bookreturn = 6;
             const int exit = 7;
+            bool isDone = false; 
             int bookMenu;
 
-            // 메뉴 출력하기.
-            bookPage.PrintBookMenu();
-
-            // 메뉴 물어보기.
-            Console.Write("메뉴 번호 입력 : ");
-            bookMenu = bookPage.GetBookMenuNumber();
-
-            switch (bookMenu)
+            while (!isDone)
             {
-                case Insert:
-                    InsertBook();
-                    break;
+                // 메뉴 출력하기.
+                bookPage.PrintBookMenu();
 
-                case modify:
-                    ModifyBook();
-                    break;
+                // 메뉴 물어보기.
+                Console.Write("메뉴 번호 입력 : ");
+                bookMenu = bookPage.GetBookMenuNumber();
+                switch (bookMenu)
+                {
+                    case Insert:
+                        InsertBook();
+                        break;
 
-                case search:
-                    SelectOne();
-                    break;
+                    case modify:
+                        ModifyBook();
+                        break;
 
-                case print:
-                    SelectAll();
-                    break;
+                    case search:
+                        SelectOne();
+                        break;
 
-                case rental:
-                    //RentalBook();
-                    break;
+                    case print:
+                        SelectAll();
+                        break;
 
-                case bookreturn:
-                    //ReturnBook();
-                    break;
+                    case rental:
+                        //RentalBook();
+                        break;
 
-                case exit:
-                    //Exit(); 
-                    break;
+                    case bookreturn:
+                        //ReturnBook();
+                        break;
+
+                    case exit:
+                        isDone = true;
+                        //Exit(); 
+                        break;
+                }
             }
         }
 
@@ -76,9 +79,10 @@ namespace Library
         // 도서 추가 하기 호출 함수. 
         public void InsertBook()
         {
+            bool isDone = false;
             string addition;
             GetBookInfo();
-            while (!isdone)
+            while (!isDone)
             {
                 Console.WriteLine("추가로 등록하시겠습니까 ?");
                 Console.Write($"YES / NO : ");
@@ -86,7 +90,7 @@ namespace Library
 
                 if (addition == "NO")
                 {
-                    isdone = true;
+                    isDone = true;
                     Console.WriteLine("도서 등록을 종료합니다. ");
                     Console.Clear();
                     PrintBookMain();
@@ -120,9 +124,9 @@ namespace Library
         public void ModifyBook()
         {
             string bookId;
-            string updatedTitle;
-            string updatedPublisher;
-            string updateddAuthor;
+            string updatedTitle = null;
+            string updatedPublisher = null;
+            string updateddAuthor = null;
 
             string partString;
             int part;
@@ -137,47 +141,26 @@ namespace Library
             Console.Write("번호 입력 : ");
             partString = Console.ReadLine();
             part = HandlePart(partString);
-            
+
+            Console.Clear();
+            bookPage.PrintBookMenu();
             Console.Write("수정하고 도서 번호 : ");
             bookId = Console.ReadLine();
            
             switch (part)
             {
                 case title:
-                    for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
-                    {
-                        if (bookList[bookListIndex].Id == bookId)
-                        {
-                            updatedTitle = Console.ReadLine();
-                            bookList[bookListIndex].Title = updatedTitle;
-                        }
-                    }
+                    UpdateInfo(bookId, updatedTitle);
                     break;
 
                 case publisher:
-                    for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
-                    {
-                        if (bookList[bookListIndex].Id == bookId)
-                        {
-                            updatedPublisher = Console.ReadLine();
-                            bookList[bookListIndex].Title = updatedPublisher;
-                        }
-                    }
+                    UpdateInfo(bookId, updatedPublisher);
                     break;
 
                 case Author:
-                    for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
-                    {
-                        if (bookList[bookListIndex].Id == bookId)
-                        {
-                            updateddAuthor = Console.ReadLine();
-                            bookList[bookListIndex].Title = updateddAuthor;
-                        }
-                    }
+                    UpdateInfo(bookId, updateddAuthor);
                     break;
 
-                default:
-                    break; 
             }
 
             Console.Clear();
@@ -225,9 +208,16 @@ namespace Library
             bookPage.PirntBar();
         }
 
-        public void UpdateInfo()
+        public void UpdateInfo(string _bookId, string update)
         {
-
+            for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
+            {
+                if (bookList[bookListIndex].Id == _bookId)
+                {
+                    update = Console.ReadLine();
+                    bookList[bookListIndex].Title = update;
+                }
+            }
         }
 
 
@@ -259,7 +249,7 @@ namespace Library
                 else if (selectMenu == "2")
                 {
                     PrintBookMain();
-                    isdone = true;
+                    isDone = true;
                 }
 
                 else
@@ -280,7 +270,7 @@ namespace Library
 
                     if (selectMenu == "2")
                     {
-                        isdone = true;
+                        isDone = true;
                         PrintBookMain();
                     }
 
