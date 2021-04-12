@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Library
 {
@@ -16,8 +17,6 @@ namespace Library
         private string publisher;
         private string author;
         List<Book> bookList = new List<Book>();
-
-        //!!!!!!!!!!!!!!!!! 도서등록에서 오류 수정하자!!!!!!!!!!!!!!!?
 
         // 도서관리 메뉴 처음 화면 출력. 
         public void PrintBookMain()
@@ -37,6 +36,7 @@ namespace Library
             {
                 // 메뉴 출력하기.
                 bookPage.PrintBookMenu();
+                Console.WriteLine("");
 
                 // 메뉴 물어보기.
                 Console.Write("메뉴 번호 입력 : ");
@@ -75,8 +75,10 @@ namespace Library
             }
         }
 
+
+
         // [1] 도서 추가 하기 
-        // 도서 추가 하기 호출 함수. 
+        // 도서 추가 하기 호출될 함수. 
         public void InsertBook()
         {
             bool isDone = false;
@@ -107,6 +109,7 @@ namespace Library
         // 책의 정보를 물어보는 함수. 
         public void GetBookInfo()
         {
+            Console.WriteLine("");
             Console.Write("도서 번호 : ");
             id = Console.ReadLine();
             Console.Write("책 제목 : ");
@@ -120,7 +123,10 @@ namespace Library
             Console.WriteLine(" ");
         }
 
+
+
         // [2] 도서 수정 하기 
+        // 도서 수정 하기 호출될 함수.
         public void ModifyBook()
         {
             string bookId;
@@ -135,44 +141,62 @@ namespace Library
             const int publisher = 2;
             const int Author = 3;
 
-            BookPage bookPage = new BookPage();
+            bool isFound = false; 
 
             PrintGetPart();
             Console.Write("번호 입력 : ");
             partString = Console.ReadLine();
             part = HandlePart(partString);
 
-            Console.Clear();
-            bookPage.PrintBookMenu();
+            SetPrint();
+
             Console.Write("수정하고 도서 번호 : ");
             bookId = Console.ReadLine();
-           
-            switch (part)
+            for(bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
             {
-                case title:
-                    UpdateInfo(bookId, updatedTitle);
-                    break;
+                if (bookList[bookListIndex].Id == bookId)
+                {
+                    isFound = true;
+                }
+            }
 
-                case publisher:
-                    UpdateInfo(bookId, updatedPublisher);
-                    break;
+            if (isFound)
+            {
+                switch (part)
+                {
+                    case title:
+                        UpdateInfo(bookId, updatedTitle);
+                        break;
 
-                case Author:
-                    UpdateInfo(bookId, updateddAuthor);
-                    break;
+                    case publisher:
+                        UpdateInfo(bookId, updatedPublisher);
+                        break;
 
+                    case Author:
+                        UpdateInfo(bookId, updateddAuthor);
+                        break;
+
+                }
+            }
+
+            else
+            {
+                SetPrint();
+                Console.WriteLine("해당 도서가 존재하지 않습니다. 다시 시도 해주세요. ");
+                Thread.Sleep(1000);
             }
 
             Console.Clear();
             PrintBookMain();
         }
 
+        // part 예외처리 
         public int HandlePart(string _part)
         {
-            bool isError = true;
+            bool isError = true; // 에러가 있어서 실행된 함수이므로 초기 값 true;
+
             const int RESET = 0;
             int intPart = RESET ;
-            BookPage bookPage = new BookPage();
 
             while (isError)
             {
@@ -198,9 +222,8 @@ namespace Library
         {
             BookPage bookPage = new BookPage();
 
-            
-            Console.Clear();
-            bookPage.PrintBookMenu();
+            SetPrint();
+
             bookPage.PirntBar();
             Console.Write("|    [1] 책 제목     |\n");
             Console.Write("|    [2] 출판사      |\n");
@@ -208,6 +231,7 @@ namespace Library
             bookPage.PirntBar();
         }
 
+        // 도서 정보를 수정하는 함수.
         public void UpdateInfo(string _bookId, string update)
         {
             for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
@@ -222,10 +246,8 @@ namespace Library
 
 
 
-
-
         // [3]원하는 도서를 찾는 함수.
-        // 원하는 도서 출력하기 호출 함수.
+        // 원하는 도서 출력하기 호출될 함수.
         public void SelectOne()
         {
             string selectMenu;
@@ -288,6 +310,7 @@ namespace Library
         {
             string selectMenu;
             Console.WriteLine("다른 책을 검색하시겠습니까 ?");
+            Console.WriteLine(""); 
             Console.WriteLine("[1] 다시 검색");
             Console.WriteLine("[2] 종료 하기");
             selectMenu = Console.ReadLine();
@@ -300,6 +323,7 @@ namespace Library
         {
             string bookTitle;
 
+            Console.WriteLine("");
             Console.Write("찾으시는 책 제목을 입력해주세요 : ");
             bookTitle = Console.ReadLine();
 
@@ -325,6 +349,7 @@ namespace Library
 
                     else
                     {
+                        SetPrint();
                         Console.WriteLine("죄송하지만 해당 책은 존재하지 않습니다. ");
                         Console.WriteLine(" ");
                     }
@@ -332,14 +357,16 @@ namespace Library
             }
             else
             {
+                SetPrint();
                 Console.WriteLine("죄송하지만 해당 책은 존재하지 않습니다. ");
                 Console.WriteLine(" ");
             }
         }
 
 
+
         // [4] 전체 도서 출력하기 
-        // 전체 도서 출력하기 호출 함수
+        // 전체 도서 출력하기 호출될 함수
         public void SelectAll()
         {
             BookPage bookPage = new BookPage();
@@ -347,6 +374,7 @@ namespace Library
             {
                 for (bookListIndex = 0; bookListIndex < bookList.Count; bookListIndex++)
                 {
+                    Console.WriteLine("");
                     bookPage.PirntBar();
                     Console.WriteLine($"{bookList[bookListIndex]}");
                     bookPage.PirntBar();
@@ -355,9 +383,8 @@ namespace Library
 
             else
             {
-                Console.Clear();
-                bookPage.PrintBookMenu();
-                Console.WriteLine(" ");
+                SetPrint();
+
                 Console.WriteLine("등록된 도서가 없습니다. ");
             }
 
@@ -371,6 +398,18 @@ namespace Library
             Console.ReadKey();
             Console.Clear();
             PrintBookMain();
+        }
+
+
+
+        // 로그가 쌓이지 않게 해주는 함수.
+        public void SetPrint()
+        {
+            BookPage bookPage = new BookPage();
+
+            Console.Clear();
+            bookPage.PrintBookMenu();
+            Console.WriteLine("");
         }
     }
 
