@@ -116,6 +116,8 @@ namespace Library
         {
             string selectMenu;
             bool isDone = false;
+            bool isError = true;
+
             BookPage bookPage = new BookPage();
 
             while (!isDone)
@@ -127,7 +129,7 @@ namespace Library
                 if (selectMenu == "1")
                 {
                     Console.Clear();
-                    bookPage.PrintBookMenu();                    
+                    bookPage.PrintBookMenu();
                 }
 
                 else if (selectMenu == "2")
@@ -138,9 +140,28 @@ namespace Library
 
                 else
                 {
-                    ReviseErrorSelectOne();
+                    isError = true;
+                    while (isError)
+                    {
+                        bookPage.PrintError();
+                        selectMenu = PrintGetMoreSearch();
+
+                        if (selectMenu == "1" || selectMenu == "2")
+                        {
+                            isError = false;
+                        }
+
+                    }
                     Console.Clear();
-                    bookPage.PrintBookMenu();
+                    if (selectMenu == "2")
+                    {
+                        isdone = true;
+                        PrintBookMain();
+                    }
+                    else
+                    {
+                        bookPage.PrintBookMenu();
+                    }
                 }
             }
 
@@ -200,30 +221,7 @@ namespace Library
             }
         }
 
-        // 다시 검색 질문에서 잘못된 값을 입력 했을 때 처리 함수. 
-        public void ReviseErrorSelectOne()
-        {
-            string _selectMenu;
-            bool isError = true;
-            BookPage bookPage = new BookPage();
 
-            while (isError)
-            {
-                Console.Clear();
-                bookPage.PrintBookMenu();
-                Console.WriteLine("");
-                Console.WriteLine("잘못 입력하셨습니다.");
-                Console.WriteLine("");
-
-                _selectMenu = PrintGetMoreSearch();
-
-                if (_selectMenu == "1" || _selectMenu == "2")
-                {
-                    isError = false;
-                }
-
-            }
-        }
 
 
         // [4] 전체 도서 출력하기 
@@ -245,8 +243,8 @@ namespace Library
             {
                 Console.Clear();
                 bookPage.PrintBookMenu();
-                Console.WriteLine(" "); 
-                Console.WriteLine("등록된 도서가 없습니다. "); 
+                Console.WriteLine(" ");
+                Console.WriteLine("등록된 도서가 없습니다. ");
             }
 
             GoBack();
@@ -254,7 +252,7 @@ namespace Library
 
         public void GoBack()
         {
-            Console.WriteLine(" "); 
+            Console.WriteLine(" ");
             Console.Write("뒤로가려면 아무키나 눌러주세요.... ");
             Console.ReadKey();
             Console.Clear();
@@ -294,6 +292,20 @@ namespace Library
             Console.SetCursorPosition(0, 7);
 
             return bookMenu;
+        }
+
+        // 에러 출력 함수 
+        public void PrintError()
+        {
+
+            BookPage bookPage = new BookPage();
+
+            Console.Clear();
+            bookPage.PrintBookMenu();
+            Console.WriteLine("");
+            Console.WriteLine("잘못 입력하셨습니다.");
+            Console.WriteLine("");
+
         }
     }
 }
