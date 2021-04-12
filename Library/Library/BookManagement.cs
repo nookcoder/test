@@ -19,6 +19,7 @@ namespace Library
 
         public void PrintBookMain()
         {
+            Get get = new Get();
             int bookMenu;
             const int enrollment = 1;
             const int modify = 2;
@@ -35,8 +36,7 @@ namespace Library
             Console.Write("[5] : 도서 대여\n");
             Console.Write("[6] : 도서 반납\n");
             Console.Write("[7] : 뒤로 가기\n");
-            bookMenu = int.Parse(Console.ReadLine());
-            Console.SetCursorPosition(0, 7);
+            bookMenu = get.GetMenuNumber();
 
             switch (bookMenu)
             {
@@ -143,7 +143,28 @@ namespace Library
                 }
             }
         }
+    }
 
+    public class BookPage
+    {
+        public Print()
+        {
 
+        }
+
+        public void PrintBookMenu()
+        {
+            Console.Write("[1] : 도서 등록\n");
+            Console.Write("[2] : 도서 수정\n");
+            Console.Write("[3] : 도서 검색\n");
+            Console.Write("[4] : 도서 출력\n");
+            Console.Write("[5] : 도서 대여\n");
+            Console.Write("[6] : 도서 반납\n");
+            Console.Write("[7] : 뒤로 가기\n");
+        }
+
+        public int
     }
 }
+
+ 
