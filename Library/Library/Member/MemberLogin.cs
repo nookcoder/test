@@ -8,16 +8,20 @@ namespace Library
     {
         public MemberLogin()
         {
-            Console.SetWindowSize(50, 30);
             SetMemberMenu();
         }
 
         List<Member> members = new List<Member>();
-        
+        public string memberName;
+        public string phoneNumber;
+        public string memberId;
+        public string password;
+        public int index;
+
         // MemberLogin Class 호출 시 실행 함수.
         public void SetMemberMenu()
         {
-            string  menu; 
+            string menu;
             Console.Clear();
             PrintMemberMenu();
             Console.Write("                메뉴 입력:");
@@ -42,7 +46,7 @@ namespace Library
         }
 
         // 입력된 메뉴 처리.
-        public void HandleExceptMemberMenu(string _menu)
+        public void HandleExceptMemberMenu(string _menu)          
         {
             bool isError = true;
 
@@ -51,13 +55,14 @@ namespace Library
                 if (_menu == "1")
                 {
                     isError = NoError(isError);
-
+                    SignUpMember();
                 }
 
                 else if (_menu == "2")
                 {
                     isError = NoError(isError);
-
+                    BookManagement bookManagement = new BookManagement();
+                    bookManagement.SetMemberBookMenu();
 
                 }
 
@@ -92,6 +97,122 @@ namespace Library
             Console.Clear();
 
             return _isError;
+        }
+
+
+
+        public void SignUpMember()
+        {
+            Console.Clear();
+            GetMemberInfo();
+            Console.Clear();
+            SetMemberMenu();
+        }
+
+        public void GetMemberInfo()
+        {
+            
+            Console.WriteLine("");
+            Console.WriteLine("");
+            PrintGetMemberInfo("이름");
+            memberName = Console.ReadLine();
+            PrintGetMemberInfo("전화번호");
+            phoneNumber = Console.ReadLine();
+            PrintGetMemberInfo("아이디");
+            memberId = Console.ReadLine();
+            PrintGetMemberInfo("비밀 번호");
+            password = Console.ReadLine();
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("           회원가입이 완료됐습니다.");
+            Console.ReadKey();
+            members.Add(new Member(memberName, phoneNumber, memberId, password));
+        }
+
+        /*public string HandlePhoneNumber()
+        {
+            string _phoneNumber;
+             
+
+            PrintSaveMemberInfo("이름", memberName);
+            PrintGetMemberInfo("전화 번호(-제외)");
+            _phoneNumber = Console.ReadLine();
+
+            if(_phoneNumber.Length != 11)
+            {
+                bool isError = true;
+
+                while(isError)
+                {
+                    _phoneNumber = PrintPhoneNumberError();
+                    isError = CheckError(_phoneNumber);
+                }
+            }
+
+            else
+            {
+                bool isError = true;
+
+                while (isError)
+                {
+                    _phoneNumber = PrintPhoneNumberError();
+                    isError = CheckError(_phoneNumber);
+                }
+            }
+
+            return _phoneNumber;
+            
+        }*/
+
+        /*public bool CheckError(string _phoneNumber)
+        {
+            bool _isError = true;
+            int count = 0;
+            for (int Index = 0; Index < _phoneNumber.Length; Index++)
+            {
+                if (_phoneNumber[Index] - '0' >= 0 && _phoneNumber[Index] - '0' <= 9)
+                {
+                    count++;
+                }
+            }
+            
+            if(count == 11)
+            {
+                _isError = false;
+            }
+
+            return _isError;
+        }*/
+
+        /*public string PrintPhoneNumberError()
+        {
+            string _phoneNumber;
+            PrintSaveMemberInfo("이름", memberName);
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("              다시 입력해주세요!!!");
+            Console.ForegroundColor = ConsoleColor.White;
+            PrintGetMemberInfo("전화 번호(-제외)");
+            _phoneNumber = Console.ReadLine();
+
+            return _phoneNumber;
+        }*/
+
+        //public void HandleMemberId()
+     
+
+        //public void HandlePassword()
+
+        public void PrintGetMemberInfo(string text)
+        {
+            Console.Write($"              {text} : ");
+        }
+
+        public void PrintSaveMemberInfo(string text, string _info)
+        {
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.Write($"              {text} : {_info}\n");
         }
     }
 }

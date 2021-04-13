@@ -47,10 +47,11 @@ namespace Library
 
         public override string ToString()
         {
-            return $" 도서 번호 : {Id}\n" +
-                   $" 책 제목   : {Title}\n" +
-                   $" 출판사    : {Publisher}\n" +
-                   $" 저자      : {Author}\n"; 
+            return $"\n"+
+                   $"               도서 번호 : {Id}\n" +
+                   $"               책 제목   : {Title}\n" +
+                   $"               출판사    : {Publisher}\n" +
+                   $"               저자      : {Author}\n"; 
         }
 
 

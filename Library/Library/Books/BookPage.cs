@@ -13,17 +13,24 @@ namespace Library
 
         public void PrintBookMenu()
         {
-            Console.WriteLine("    ==================================");
+            PirntBar();
             Console.WriteLine("              [1] : 도서 등록");
             Console.WriteLine("              [2] : 도서 수정");
-            Console.WriteLine("              [3] : 도서 검색");
-            Console.WriteLine("              [4] : 도서 출력");
-            Console.WriteLine("              [5] : 도서 대여");
-            Console.WriteLine("              [6] : 도서 반납");
-            Console.WriteLine("              [7] : 도서 삭제");
-            Console.WriteLine("              [8] : 뒤로 가기");
-            Console.WriteLine("    ==================================");
+            Console.WriteLine("              [3] : 도서 출력");
+            Console.WriteLine("              [4] : 도서 삭제");
+            Console.WriteLine("              [5] : 뒤로 가기");
+            PirntBar();
 
+        }
+
+        public void PrintMemberBookMenu()
+        {
+            PirntBar();
+            Console.WriteLine("              [1] : 도서 검색");
+            Console.WriteLine("              [2] : 도서 대여");
+            Console.WriteLine("              [3] : 도서 반납");
+            Console.WriteLine("              [4] : 뒤로 가기");
+            PirntBar();
         }
 
         public void PirntBar()
@@ -63,7 +70,7 @@ namespace Library
         public void PrintNoBook()
         {
             BookManagement bookManagement = new BookManagement();
-            bookManagement.SetPrint();
+            bookManagement.SetManagerPrint();
             Console.WriteLine("      해당 도서는 존재하지 않습니다.");
         }
     }

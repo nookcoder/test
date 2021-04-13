@@ -14,6 +14,7 @@ namespace Library
         public void SetFirstMenu()
         {
             string firstMenu;
+
             PrintFirstPage(); 
             Console.Write("                메뉴 입력:");
             firstMenu = Console.ReadLine();
@@ -37,18 +38,19 @@ namespace Library
         public void HandleExceptFirstMenu(string _firstMenu)
         {
             bool isError = true;
+            
             while (isError)
             {
                 if (_firstMenu == "1")
                 {
                     isError = false;
-                    // MemberLogint memberLogin = new MemberLogin();
+                    MemberLogin memberLogin = new MemberLogin();
                 }
 
                 else if (_firstMenu == "2")
                 {
                     isError = false; 
-                    // ManagerLogin managerLogin = new ManagerLogin(); 
+                    ManagerLogin managerLogin = new ManagerLogin(); 
                 }
 
                 else
