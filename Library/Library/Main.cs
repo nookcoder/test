@@ -7,11 +7,11 @@ namespace Library
         public Main()
         {
             Console.SetWindowSize(45, 30);
-            SelectFirstMenu();
+            SetFirstMenu();
         }
 
         // Main 클래스 생성할 때 호출될 함수. 
-        public void SelectFirstMenu()
+        public void SetFirstMenu()
         {
             string firstMenu;
             PrintFirstPage(); 
