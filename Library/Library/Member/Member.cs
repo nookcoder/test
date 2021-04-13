@@ -6,15 +6,15 @@ namespace Library
 {
     public class Member
     {
-        public Member(string _userName, string _phoneNumber,string _id, string _password)
+        public Member(string _memberName, string _phoneNumber,string _Memberid, string _password)
         {
-            this.UserName = _userName;
+            this.MemberName = _memberName;
             this.PhoneNumber = _phoneNumber;
-            this.Id = _id;
+            this.MemberId = _Memberid;
             this.Password = _password;
         }
 
-        public string UserName
+        public string MemberName
         {
             get;
             set;
@@ -26,7 +26,7 @@ namespace Library
             set;
         }
 
-        public string Id
+        public string MemberId
         {
             get;
             set;
