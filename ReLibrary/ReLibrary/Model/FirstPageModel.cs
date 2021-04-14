@@ -16,14 +16,15 @@ namespace ReLibrary.Model
         
         }
 
-        public void TakeFirstPageMenu(int menu)
+        public void GuideFirstPageMenu(int menu)
         {
             switch(menu)
             {
-                case Constants.USERMENU:
+                case Constants.USER_MENU:
+                    UserLogin userLogin = new UserLogin();
                     break;
 
-                case Constants.MANAGERMENU:
+                case Constants.MANAGER_MENU:
                     break;
 
                 case Constants.QUIT:
