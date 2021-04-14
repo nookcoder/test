@@ -10,7 +10,6 @@ namespace ReLibrary.View
     {
         public FirstPage()
         {
-            Label label = new Label();
             PrintFirstPage();
         }
 
@@ -19,8 +18,8 @@ namespace ReLibrary.View
             Console.WriteLine("============================================================");
             Console.WriteLine("                    [1] 회원 입니다                         ");
             Console.WriteLine("                    [2] 관리자 입니다                       ");
+            Console.WriteLine("                    [3] 프로그램 종료                       ");
             Console.WriteLine("============================================================");
-
         }
     }
 }
