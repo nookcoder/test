@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ReLibrary.Model;
-using ReLibrary.View;
 
 namespace ReLibrary.Controller
 {
@@ -12,24 +11,25 @@ namespace ReLibrary.Controller
     {
         public UserLogin()
         {
-            Screen screen = new Screen();
-            Console.Clear();
-            screen.PrintLabel();
-            screen.PrintUserLoginPage();
-            screen.PrintInput();
-            GoUserLoginNextMenu();
+            
         }
 
         public void GoUserLoginNextMenu()
         {
             Except except = new Except();
-            UserLoginModel userLoginModel = new UserLoginModel();
+            Guide guide = new Guide();
             string check;
             int menu;
 
+            Screen screen = new Screen();
+            Console.Clear();
+            screen.PrintLabel();
+            screen.PrintUserLoginPage();
+            screen.PrintInput();
             check = Console.ReadLine();
-            menu = except.HandleUserloginExcept(check);
-            userLoginModel.GuideUserLoginMenu(menu);
+            menu = except.HandleUserMenuExcept(check);
+            guide.GuideUserLoginMenu(menu);
         }
+
     }
 }

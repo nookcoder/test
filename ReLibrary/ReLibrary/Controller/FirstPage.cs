@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ReLibrary.View;
 using ReLibrary.Model;
 
 namespace ReLibrary.Controller
@@ -23,15 +22,14 @@ namespace ReLibrary.Controller
         public void GoSecondPage()
         {
             Except except = new Except();
-            FirstPageModel firstPageModel = new FirstPageModel();
-            Input input = new Input();
+            Guide guide = new Guide();
 
             string check;
             int menu;
-            
-            check = input.RequestInput();
+
+            check = Console.ReadLine();
             menu = except.HandleFirstMenuExcept(check);
-            firstPageModel.GuideFirstPageMenu(menu);
+            guide.GuideFirstPageMenu(menu);
         }
     }
 
