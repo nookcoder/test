@@ -17,8 +17,8 @@ namespace ReLibrary.Model
         // 회원 메뉴 
         public const int USER_LOGIN = 1;
         public const int USER_SIGNUP = 2;
-        public const int USER_WITHDRAW = 3;
-        public const int USER_FIND = 4;
+        public const int USER_WITHDRAW = 4;
+        public const int USER_FIND = 3;
         public const int USER_BACK = 5;
 
         // 회원 도서 메뉴 
