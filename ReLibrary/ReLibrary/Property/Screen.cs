@@ -229,5 +229,54 @@ namespace ReLibrary
             Console.WriteLine("\n");
             Console.Write("찾으시는 도서 제목 혹은 저자를 입력해주세요 : ");
         }
+
+        public void PrintGuideBorrowBook()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("        대여할 책 번호를 입력해주세요");   
+        }
+
+        public void PrintBorrowBook(string title)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("        {0} 을 대여하셨습니다.", title);
+            Console.WriteLine("        대여 기한은 대여일 포함 7일입니다.");
+        }
+
+        public void PrintNoBorrowBook(string title)
+        {
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("        죄송합니다. {0}는 이미 대여되었습니다.", title);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void PrintHaveNoBorrowBook()
+        {
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("        죄송합니다. 해당 도서는 없습니다. ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void PrintGuideReturnBook()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("        반납할 책 번호를 입력해주세요");
+        }
+
+        public void PrintReturnBook(string title)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("        {0} 을 반납하셨습니다.", title);
+        }
+
+        public void PrintNoReturnBook(string title)
+        {
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("        {0}는 이미 반납되었습니다.", title);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
 }
