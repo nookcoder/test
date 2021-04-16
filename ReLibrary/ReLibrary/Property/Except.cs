@@ -246,6 +246,39 @@ namespace ReLibrary.Model
             return bookNumber;
         }
 
+        public string HandleBookNumberExcep_Borrowt(string bookNumber)
+        {
+            bool isError = true;
+            int count = 0; // 문자열에서 각 문자가 숫자면 1씩 더함 
+
+            while (isError)
+            {
+                foreach (char num in bookNumber)
+                {
+                    if (0x30 <= num && num <= 0x39)
+                    {
+                        count++;
+                    }
+                }
+
+                if (count == bookNumber.Length)
+                {
+                    isError = false;
+                }
+
+                else
+                {
+                    Screen screen = new Screen();
+                    Console.Clear();
+                    screen.PrintGuideBorrowBook();
+                    screen.PrintBookNumberError(null);
+                    bookNumber = Console.ReadLine();
+                }
+            }
+
+            return bookNumber;
+        }
+
         public int HandleSearchBookMenuExcept(string check)
         {
             int menu = Constants.RESET;
@@ -298,6 +331,38 @@ namespace ReLibrary.Model
             }
 
             return menu;
+        }
+
+        public string HandleBNumberExcept(string number)
+        {
+            bool isError = true;
+            int count = 0; // 문자열에서 각 문자가 숫자면 1씩 더함 
+
+            while (isError)
+            {
+                foreach (char num in number)
+                {
+                    if (0x30 <= num && num <= 0x39)
+                    {
+                        count++;
+                    }
+                }
+
+                if (count == number.Length)
+                {
+                    isError = false;
+                }
+
+                else
+                {
+                    Screen screen = new Screen();
+                    Console.Clear();                   
+                    screen.PrintBookNumberError(null);
+                    number = Console.ReadLine();
+                }
+            }
+
+            return number;
         }
     }
 
