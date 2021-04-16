@@ -131,6 +131,30 @@ namespace ReLibrary.Model
             return phoneNumber;
         }
 
+        public string HandleIdExcept(string name, string phoneNumber, string address, string id)
+        {
+            bool isError = true;
+            Screen screen = new Screen();
+
+            while(isError)
+            {
+                if(id.Length >= 8)
+                {
+                    isError = Constants.NOERROR;
+                }
+
+                else
+                {
+                    screen.PrintSignUpName(name);
+                    screen.PrintSignUpPhoneNumber(phoneNumber);
+                    screen.PrintSignUpAddress(address);
+                    screen.PrintIdError(name,phoneNumber,address);
+                    id = Console.ReadLine();
+                }
+            }
+
+            return id;
+        }
     }
 
 }
