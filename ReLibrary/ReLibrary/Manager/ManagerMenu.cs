@@ -58,18 +58,23 @@ namespace ReLibrary.Manager
                     break;
 
                 case Constants.BOOK_REGISTER:
-                    break;
-
-                case Constants.BOOK_REVISE:
+                    BookRegister bookRegister = new BookRegister(userList,bookList);
+                    bookRegister.RegisterBook();
                     break;
 
                 case Constants.BOOK_DELET:
+                    BookDelet bookDelet = new BookDelet(userList,bookList);
+                    bookDelet.DeletBook();
                     break;
 
                 case Constants.BOOK_SHOWALL:
+                    ShowingBook showingBook = new ShowingBook(userList, bookList);
+                    showingBook.ShowAllBook();
                     break;
 
                 case Constants.BOOK_SEARCH:
+                    ShowingBook showingBook1 = new ShowingBook(userList, bookList);
+                    showingBook1.LoadSearchBookMenu();
                     break;
 
                 case Constants.MANGER_BACK:
