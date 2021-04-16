@@ -87,13 +87,13 @@ namespace ReLibrary
         public void PrintSignUpId(string id)
         {
             Console.WriteLine("\n");
-            Console.Write("                    아이디 : {0}", id);
+            Console.Write("                    아이디(8자리 이상) : {0}", id);
         }
 
-        public void PrintSignUpId()
+        public void PrintSignUpPassword()
         {
             Console.WriteLine("\n");
-            Console.Write("                    비밀번호 : {0}");
+            Console.Write("                    비밀번호 : ");
         }
 
         public void PrintNameError()
@@ -118,11 +118,20 @@ namespace ReLibrary
 
         }
 
-        public void PrintIdError()
+        public void PrintIdError(string name,string phoneNumber,string address)
         {
+            Console.Clear();
+            PrintSignUpName(name);
+            PrintSignUpPhoneNumber(phoneNumber);
+            PrintSignUpAddress(address);
+            Console.WriteLine("");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("8자이상 입력해주세요");
+            Console.WriteLine("                    올바르지 않은 형식입니다.");
             Console.ForegroundColor = ConsoleColor.White;
-        } 
+            Console.Write("                    아이디(8자리 이상) : ");
+
+        }
+
+
     }
 }
