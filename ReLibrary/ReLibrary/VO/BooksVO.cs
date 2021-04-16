@@ -12,6 +12,7 @@ namespace ReLibrary.VO
         private string title;
         private string author;
         private string publisher;
+        public bool isOk; 
 
         public BooksVO(string bookNumber,string title, string author, string publisher)
         {
@@ -19,6 +20,7 @@ namespace ReLibrary.VO
             this.title = title;
             this.author = author;
             this.publisher = publisher;
+            this.isOk = true;
         }
 
         public string BookNumber
@@ -42,5 +44,12 @@ namespace ReLibrary.VO
             get { return publisher; }
             set { publisher = value; }
         }
+
+        
+
+        public override string ToString() => $"{bookNumber}  {title}  {author}  {publisher}\n"+
+           "============================================================";
+        
+
     }
 }
