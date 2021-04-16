@@ -38,7 +38,12 @@ namespace ReLibrary.Model
         public const int MANGER_BACK = 8;
         public const int SEARCHBYNAME = 1;
         public const int SEARCHBYID = 2;
-        public const int SEARCH_BACK = 3; 
+        public const int SEARCH_BACK = 3;
+
+        // 도서 검색 메뉴
+        public const int SEARCH_BY_TITLE = 1;
+        public const int SEARCH_BY_AUTHOR = 2;
+
 
         // 기타
         public const bool NOERROR = false;
