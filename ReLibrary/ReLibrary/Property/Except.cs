@@ -21,7 +21,6 @@ namespace ReLibrary.Model
                 else
                 {
                     Console.Clear();
-                    Console.Clear();
                     screen.PrintLabel();
                     screen.PrintFirstPage();
                     screen.PrintPageError();
@@ -214,6 +213,7 @@ namespace ReLibrary.Model
 
             return id;
         }
+        
         public string HandleBookNumberExcept(string bookNumber)
         {
             bool isError = true;
@@ -244,6 +244,60 @@ namespace ReLibrary.Model
             }
 
             return bookNumber;
+        }
+
+        public int HandleSearchBookMenuExcept(string check)
+        {
+            int menu = Constants.RESET;
+            bool isError = true;
+            Screen screen = new Screen();
+
+            while (isError)
+            {
+                if (check == "1" || check == "2" || check == "3")
+                {
+                    menu = int.Parse(check);
+                    isError = Constants.NOERROR;
+                }
+
+                else
+                {
+                    Console.Clear();
+                    screen.PrintSearchBookMenu();
+                    screen.PrintPageError();
+                    screen.PrintInput();
+                    check = Console.ReadLine();
+                }
+            }
+
+            return menu;
+        }
+
+        public int HandleUserBookMenuExcept(string check)
+        {
+            int menu = Constants.RESET;
+            bool isError = true;
+            Screen screen = new Screen();
+
+            while (isError)
+            {
+                if (check == "1" || check == "2" || check == "3" || check == "4")
+                {
+                    menu = int.Parse(check);
+                    isError = Constants.NOERROR;
+                }
+
+                else
+                {
+                    Console.Clear();
+                    screen.PrintUserBookMenu();
+                    screen.PrintPageError();
+                    screen.PrintInput();
+                    check = Console.ReadLine();
+                }
+            }
+
+            return menu;
         }
     }
 
