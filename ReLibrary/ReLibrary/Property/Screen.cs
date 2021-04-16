@@ -75,6 +75,25 @@ namespace ReLibrary
             Console.WriteLine("============================================================");
         }
 
+        public void PrintSearchBookMenu()
+        {
+            Console.WriteLine("============================================================");
+            Console.WriteLine("                    [1] 제목 검색                           ");
+            Console.WriteLine("                    [2] 저자 검색                          ");
+            Console.WriteLine("                    [3] 뒤로 가기                           ");
+            Console.WriteLine("============================================================");
+        }
+
+        public void PrintUserBookMenu()
+        {
+            Console.WriteLine("============================================================");
+            Console.WriteLine("                    [1] 도서 검색                           ");
+            Console.WriteLine("                    [2] 도서 대여                          ");
+            Console.WriteLine("                    [3] 도서 반납                           ");
+            Console.WriteLine("                    [4] 뒤로 가기                           ");
+            Console.WriteLine("============================================================");
+        }
+
         // 회원가입 화면에 쓸 함수
         public void PrintSignUpName(string name)
         {
