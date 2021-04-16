@@ -10,9 +10,10 @@ namespace ReLibrary.Controller
     class Login
     {
         List<UserVO> userList;
-
-        public Login(List<UserVO> userList)
+        List<BooksVO> bookList;
+        public Login(List<UserVO> userList, List<BooksVO> bookList)
         {
+            this.bookList = bookList;
             this.userList = userList;
         }
         
@@ -54,7 +55,7 @@ namespace ReLibrary.Controller
                 Console.WriteLine("           아이디 혹은 비밀번호가 일치하지않습니다.");
                 Console.ForegroundColor = ConsoleColor.White;
                 Console.ReadKey();
-                UserLoginPage userLogin = new UserLoginPage(userList);
+                UserLoginPage userLogin = new UserLoginPage(userList,bookList);
                 userLogin.GoUserLoginNextMenu();
             }
         }

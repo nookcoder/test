@@ -12,14 +12,12 @@ namespace ReLibrary.Controller
 {
     class UserLoginPage
     {
+        List<BooksVO> bookList;
         List<UserVO> userList;
-        public UserLoginPage(List<UserVO> userList)
+        public UserLoginPage(List<UserVO> userList,List<BooksVO> bookList)
         {
+            this.bookList = bookList;
             this.userList = userList;
-            if(this.userList.Count == 0)
-            {
-                this.userList.Add(new UserVO("김현욱", "01050477361", "사우", "kimhw9821", "qwe123","김포고"));
-            }
         }
 
         public void GoUserLoginNextMenu()
@@ -46,13 +44,13 @@ namespace ReLibrary.Controller
             {
 
                 case Constants.USER_LOGIN:
-                    Login login = new Login(userList);
+                    Login login = new Login(userList, bookList);
                     login.TryLogin();
                     break;
 
 
                 case Constants.USER_SIGNUP:
-                    SignUp signUp = new SignUp(userList);
+                    SignUp signUp = new SignUp(userList, bookList);
                     signUp.CreateUser();
                     break;
 
@@ -60,13 +58,13 @@ namespace ReLibrary.Controller
                     break;
 
                 case Constants.USER_WITHDRAW:
-                    Secession secession = new Secession(userList);
+                    Secession secession = new Secession(userList, bookList);
                     secession.TrySecession();
                     break;
 
                 case Constants.USER_BACK:
                     Console.Clear();
-                    FirstPage first = new FirstPage(this.userList);
+                    FirstPage first = new FirstPage(userList,bookList);
                     break;
             }
         }

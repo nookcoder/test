@@ -12,18 +12,16 @@ namespace ReLibrary.Controller
 {
     class SignUp
     {
+        List<BooksVO> bookList;
         List<UserVO> userList;
 
         private string name;
         private string phoneNumber;
-        private string address;
-        private string id;
-        private string password;
-        
 
 
-        public SignUp(List<UserVO> userList)
+        public SignUp(List<UserVO> userList, List<BooksVO> bookList)
         {
+            this.bookList = bookList;
             this.userList = userList;
         }
 
@@ -36,7 +34,7 @@ namespace ReLibrary.Controller
             string password;
             string hint;
 
-            UserLoginPage userLoginPage = new UserLoginPage(this.userList);
+            UserLoginPage userLoginPage = new UserLoginPage(userList,bookList);
             
             name = InputName();
             phoneNumber = InputNumber(name);
@@ -131,7 +129,7 @@ namespace ReLibrary.Controller
                     Console.Write("\b \b");
                 }
 
-                else;
+                else
                 {
                     password.AppendChar(i.KeyChar);
                     Console.Write("*");
