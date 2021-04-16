@@ -4,14 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ReLibrary.Model;
+using ReLibrary.VO;
+using System.Security;
 
 namespace ReLibrary.Controller
 {
     class FirstPage
     {
-        public FirstPage()
+        List<UserVO> userList;
+        public FirstPage(List<UserVO> userList)
         {
+            this.userList = userList;
             Console.SetWindowSize(60, 30);
+            ShowFirstPage();
+        }
+
+        public void ShowFirstPage()
+        {
             Screen screen = new Screen();
             screen.PrintLabel();
             screen.PrintFirstPage();
@@ -22,15 +31,33 @@ namespace ReLibrary.Controller
         public void GoSecondPage()
         {
             Except except = new Except();
-            Guide guide = new Guide();
 
             string check;
             int menu;
 
             check = Console.ReadLine();
             menu = except.HandleFirstMenuExcept(check);
-            guide.GuideFirstPageMenu(menu);
+            GuideFirstPageMenu(menu);
         }
+
+        public void GuideFirstPageMenu(int menu)
+        {
+            UserLogin userLogin = new UserLogin(this.userList);
+            switch (menu)
+            {
+                case Constants.USER_MENU:
+                    userLogin.GoUserLoginNextMenu();
+                    break;
+
+                case Constants.MANAGER_MENU:
+                    break;
+
+                case Constants.QUIT:
+                    Environment.Exit(0);
+                    break;
+            }
+        }
+
     }
 
 }
