@@ -8,6 +8,7 @@ namespace ReLibrary
 {
     class Screen
     {
+        // 메뉴 목록 출력
         public void PrintLabel()
         {
             Console.ForegroundColor = ConsoleColor.DarkBlue;
@@ -41,14 +42,6 @@ namespace ReLibrary
             Console.WriteLine("                    [4] 탈퇴하기                            ");
             Console.WriteLine("                    [5] 뒤로 가기                           ");
             Console.WriteLine("============================================================");
-        }
-
-        public void PrintUser()
-        {
-            Console.Clear();
-            PrintLabel();
-            PrintUserLoginPage();
-            PrintInput();
         }
 
         public void PrintInput()
@@ -100,7 +93,19 @@ namespace ReLibrary
         public void PrintSignUpPassword()
         {
             Console.WriteLine("\n");
-            Console.Write("         비밀번호(8자리이상 12자리 이하) : ");
+            Console.Write("                    비밀번호 : ");
+        }
+
+        public void PrintSignUpHint()
+        {
+            Console.WriteLine("\n");
+            Console.Write("   출신 고등학교(아이디 찾기/탈퇴에 사용됩니다) : ");
+        }
+
+        public void PrintAskHint()
+        {
+            Console.WriteLine("\n");
+            Console.Write("                    출신 고등학교 : ");
         }
 
         public void PrintNameError()
