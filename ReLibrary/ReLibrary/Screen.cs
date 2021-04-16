@@ -90,10 +90,17 @@ namespace ReLibrary
             Console.Write("                    아이디(8자리 이상) : {0}", id);
         }
 
+        public void PrintLoginId(string id)
+        {
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.Write("                    아이디 : {0}", id);
+        }
+
         public void PrintSignUpPassword()
         {
             Console.WriteLine("\n");
-            Console.Write("                    비밀번호 : ");
+            Console.Write("         비밀번호(8자리이상 12자리 이하) : ");
         }
 
         public void PrintNameError()
