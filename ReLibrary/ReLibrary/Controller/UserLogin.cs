@@ -7,6 +7,7 @@ using System.Security;
 using ReLibrary.Model;
 using ReLibrary.VO;
 
+
 namespace ReLibrary.Controller
 {
     class UserLogin
@@ -14,7 +15,11 @@ namespace ReLibrary.Controller
         List<UserVO> userList;
         public UserLogin(List<UserVO> userList)
         {
-            this.userList = userList; 
+            this.userList = userList;
+            if(this.userList.Count == 0)
+            {
+                this.userList.Add(new UserVO("김현욱", "01050477361", "사우", "kimhw9821", "qwe123"));
+            }
         }
 
         public void GoUserLoginNextMenu()
@@ -38,17 +43,17 @@ namespace ReLibrary.Controller
         public void GuideUserLoginMenu(int menu)
         {
 
-
             switch (menu)
             {
 
                 case Constants.USER_LOGIN:
-                    Console.WriteLine(userList[0]);
+                    Login login = new Login(userList);
+                    login.TryLogin();
                     break;
 
 
                 case Constants.USER_SIGNUP:
-                    LoadSingUpPage();
+                    CreateUser();
                     break;
 
                 case Constants.USER_FIND:
@@ -64,7 +69,7 @@ namespace ReLibrary.Controller
             }
         }
 
-        public void LoadSingUpPage()
+        public void CreateUser()
         {
             string name;
             string phoneNumber;
