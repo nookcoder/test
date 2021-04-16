@@ -13,6 +13,7 @@ namespace ReLibrary.Manager
         List<UserVO> userList;
         List<BooksVO> bookList;
 
+        // 관리자가 회원을 조회할 때 나올 화면 
         public SearchUser(List<UserVO> userList, List<BooksVO> bookList)
         {
             this.userList = userList;
@@ -65,7 +66,6 @@ namespace ReLibrary.Manager
             {
                 if(name == userList[index].Name)
                 {
-                    ManagerMenu managerMenu = new ManagerMenu(userList, bookList);
                     Console.WriteLine(" ");
                     Console.WriteLine(userList[index]);
                 }

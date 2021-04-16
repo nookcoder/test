@@ -13,6 +13,7 @@ namespace ReLibrary.Manager
         List<UserVO> userList;
         List<BooksVO> bookList;
 
+        // 관리자가 유저 회원 등록을 할 때 나올 화면 
         public UserRegister(List<UserVO> userList, List<BooksVO> bookList)
         {
             this.userList = userList;

@@ -25,6 +25,7 @@ namespace ReLibrary.Controller
             this.userList = userList;
         }
 
+        // 회원가입 선택 시 나올 화면 
         public void CreateUser()
         {
             string name;

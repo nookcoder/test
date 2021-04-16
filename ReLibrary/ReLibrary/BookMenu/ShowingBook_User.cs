@@ -15,6 +15,7 @@ namespace ReLibrary.BookMenu
         List<UserVO> userList;
         List<BooksVO> bookList;
 
+        // 회원이 도서 검색할 때 나올 화면
         public ShowingBook_User(List<UserVO> userList, List<BooksVO> bookList)
         {
             this.userList = userList;

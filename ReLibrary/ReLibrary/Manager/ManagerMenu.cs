@@ -15,6 +15,7 @@ namespace ReLibrary.Manager
         List<UserVO> userList;
         List<BooksVO> bookList;
 
+        // 관리자 로그인 시 나올 화면 
         public ManagerMenu(List<UserVO> userList, List<BooksVO> bookList)
         {
             this.userList = userList;

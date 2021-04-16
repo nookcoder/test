@@ -19,6 +19,7 @@ namespace ReLibrary.Manager
             this.bookList = bookList;
         }
 
+        // 관리자가 도서 등록할 때 나올 화면 
         public void RegisterBook()
         {
             string bookNumber;

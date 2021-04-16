@@ -13,6 +13,7 @@ namespace ReLibrary.Model
         List<UserVO> userList;
         List<BooksVO> bookList;
         
+        // 초기 설정 
         public Set()
         {
             this.userList = new List<UserVO>();

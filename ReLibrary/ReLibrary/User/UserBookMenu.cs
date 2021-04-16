@@ -22,6 +22,7 @@ namespace ReLibrary.User
             this.bookList = bookList;
         }
 
+        // 유저가 로그인 했을 때 나올 도서관련 메뉴 
         public void LoadUserBookMenu()
         {
             string temp;
@@ -44,10 +45,13 @@ namespace ReLibrary.User
                     break;
 
                 case Constants.BORROW_BOOK:
+                    BookService bookService = new BookService(userList, bookList);
+                    bookService.LoadBorrowBookSet();
                     break;
 
                 case Constants.RETURN_BOOK:
-                    
+                    BookService bookService1 = new BookService(userList, bookList);
+                    bookService1.LoadReturnBook();
                     break;
 
                 case Constants.BOOK_BACk:

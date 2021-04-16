@@ -19,6 +19,7 @@ namespace ReLibrary.Manager
             this.bookList = bookList;
         }
         
+        // 관리자가 도서 삭제 시 나올 화면 
         public void DeletBook()
         {
             string target;
@@ -52,6 +53,10 @@ namespace ReLibrary.Manager
             {
                 Console.WriteLine("\n");
                 Console.WriteLine("                    해당 도서를 찾지 못하였습니다. ");
+                Console.ReadKey();
+                Console.Clear();
+                ManagerMenu managerMenu = new ManagerMenu(userList, bookList);
+                managerMenu.LoadMangerMenu();
             }
         }
     }

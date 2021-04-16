@@ -10,6 +10,7 @@ namespace ReLibrary.Controller
     {
         List<BooksVO> bookList;
         List<UserVO> userList;
+
         public FirstPage(List<UserVO> userList, List<BooksVO> bookList)
         {
             this.bookList = bookList;
@@ -19,6 +20,7 @@ namespace ReLibrary.Controller
             ShowFirstPage();
         }
 
+        // 첫번째 메뉴 화면
         public void ShowFirstPage()
         {
             Screen screen = new Screen();
@@ -28,6 +30,8 @@ namespace ReLibrary.Controller
             GoSecondPage();
         }
 
+
+        // 다음 메뉴화면으로 넘어가는 함수 
         public void GoSecondPage()
         {
             Except except = new Except();

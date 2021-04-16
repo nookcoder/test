@@ -15,6 +15,7 @@ namespace ReLibrary.Controller
         List<BooksVO> bookList;
         List<UserVO> userList;
 
+        // 회원 탈퇴 선택 시 나올 화면 
         public Secession(List<UserVO> userList, List<BooksVO> bookList)
         {
             this.bookList = bookList; 

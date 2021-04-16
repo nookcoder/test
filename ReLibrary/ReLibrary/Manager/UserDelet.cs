@@ -13,6 +13,7 @@ namespace ReLibrary.Manager
         List<UserVO> userList;
         List<BooksVO> bookList;
 
+        // 관리자가 회원을 삭제 시킬 때 나올 화면 
         public UserDelet(List<UserVO> userList, List<BooksVO> bookList)
         {
             this.userList = userList;

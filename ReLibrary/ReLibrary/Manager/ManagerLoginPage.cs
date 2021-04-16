@@ -16,6 +16,7 @@ namespace ReLibrary.Manager
             this.bookList = bookList;
         }
 
+        // 관리자 로그인 화면 
         public void TryManagerLogin()
         {
             string Id;
@@ -34,7 +35,8 @@ namespace ReLibrary.Manager
         {
             if (id == "En#" && password == "21")
             {
-                //
+                ManagerMenu managerMenu = new ManagerMenu(userList, bookList);
+                managerMenu.LoadMangerMenu();
             }
 
             else

@@ -62,6 +62,6 @@ namespace ReLibrary.VO
             get { return hint; }
             set { hint = value; }
         }
-        public override string ToString() => $"{name} {phoneNumber} {address} {id}.{password}";
+        public override string ToString() => $"             {name} {phoneNumber} {address} {id}                    ";
     }
 }
