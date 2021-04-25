@@ -17,6 +17,18 @@ namespace LectureTimeTable2.VOs
             this.password = password; 
         }
 
+        public string StudentId
+        {
+            get { return studentId; }
+            set { studentId = value; }
+        }
+
+        public string Password
+        {
+            get { return password; }
+            set { password = value; }
+        }
+
         public override string ToString()
         {
             return $"{studentId} {password}";
