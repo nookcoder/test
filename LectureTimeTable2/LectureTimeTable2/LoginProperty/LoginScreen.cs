@@ -50,6 +50,7 @@ namespace LectureTimeTable2.Login
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(String.Format("{0,46}", "다시입력해주세요"));
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
             Console.Write(String.Format("{0,39}", " "));
             Console.Write($"학번 : ");
         }
@@ -61,6 +62,7 @@ namespace LectureTimeTable2.Login
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(String.Format("{0,53}", "8자리이상 12자리 이하 숫자/영어조합만 입력해주세요"));
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
             Console.Write(String.Format("{0,39}", " "));
             Console.Write($"비밀번호 : ");
         }
@@ -72,6 +74,7 @@ namespace LectureTimeTable2.Login
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(String.Format("{0,50}","가입하지 않은 아이디이거나,잘못된 비밀번호입니다."));
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
             Console.WriteLine(String.Format("{0,50}","계속 진행하시려면 아무키나 눌러주세요."));
         }
 
@@ -122,6 +125,7 @@ namespace LectureTimeTable2.Login
             Console.Write(String.Format("{0,41}", " "));
             Console.WriteLine("잘못 입력하셨습니다.");
             Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
             Console.Write(String.Format("{0,41}", " "));
             Console.Write("입력 : ");
         }
