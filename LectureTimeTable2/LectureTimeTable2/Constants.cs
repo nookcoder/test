@@ -22,5 +22,19 @@ namespace LectureTimeTable2
         public const int CHECKINGTIMETABLE = 5;
         public const int Exit = 6;
 
+        // LectureTimeTableMenu Constants
+        public const int MAJOR = 1;
+        public const int LECTURENUMBER = 2;
+        public const int SUBJECTNAME = 3;
+        public const int GRADE = 4;
+        public const int PROFESSOR = 5;
+        public const int BACK_TO_INITIALMENU = 6;
+
+        // MajorMenu Constants
+        public const int COMPUTER = 1;
+        public const int INTELLIGENCE = 2;
+        public const int ENGINEERING = 3;
+        public const int BACK_TO_LECTURETABLEMENU = 4;
+
     }
 }
