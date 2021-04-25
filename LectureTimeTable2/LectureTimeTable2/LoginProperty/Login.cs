@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LectureTimeTable2.VOs;
+using LectureTimeTable2.LectureProperty;
 
 namespace LectureTimeTable2.Login
 {
-    class LoginPractice : LoginScreen
+    class Login : LoginScreen
     {
         private List<StudentsVO> students;
-        private List<CoursesVO> courses;
+        private List<LecturesVO> courses;
         private List<StudentCourseVO> studentCourses;
         
         private string id;
@@ -19,7 +20,7 @@ namespace LectureTimeTable2.Login
         private string password;
         private string passwordChecker;
 
-        public LoginPractice(List<StudentsVO> students, List<CoursesVO> courses, List<StudentCourseVO> studentCourses)
+        public Login(List<StudentsVO> students, List<LecturesVO> courses, List<StudentCourseVO> studentCourses)
         {
             this.students = students;
             this.courses = courses;
@@ -58,6 +59,7 @@ namespace LectureTimeTable2.Login
                 if (id == students[index].StudentId && password == students[index].Password )
                 {
                     InitialMenu initialMenu = new InitialMenu(students, courses, studentCourses);
+                    initialMenu.RunInitialMenu();
                     isNone = Constants.FIND;
                 }
             }
@@ -72,40 +74,44 @@ namespace LectureTimeTable2.Login
         }
     }
 
+    // 초기 메뉴 화면 관련 클래스 
     class InitialMenu: LoginScreen
     {
         private List<StudentsVO> students;
-        private List<CoursesVO> courses;
+        private List<LecturesVO> lectures;
         private List<StudentCourseVO> studentCourses;
-
-        public InitialMenu(List<StudentsVO> students, List<CoursesVO> courses, List<StudentCourseVO> studentCourses)
+        private LoginException loginException;
+        
+        public InitialMenu(List<StudentsVO> students, List<LecturesVO> lectures, List<StudentCourseVO> studentCourses)
         {
             this.students = students;
-            this.courses = courses;
+            this.lectures = lectures;
             this.studentCourses = studentCourses;
-            RunInitialMenu();
+
+            this.loginException = new LoginException();
         }
 
+        // 초기 메뉴 실행 
         public void RunInitialMenu()
-        {
-            LoginException loginException = new LoginException();
+        { 
 
+            LectureMenu lectureMenu = new LectureMenu(students, lectures, studentCourses);
+            
             int menu;
             string menuCheck;
 
+            // 메뉴 입력 받기
             PrintInitialMenu();
             PrintInitialMenuInput();
             menuCheck = Console.ReadLine();
             menu = Convert.ToInt32(loginException.HandleInitialMenu(menuCheck));
-            //ExecuteMenu(menu);
-        }
-
-        public void ExecuteMenu(int menu)
-        {
+            
+            // 해당 메뉴로 이동 
             switch(menu)
             {
+
                 case Constants.LECTURETIMETABLE:
-                    
+                    lectureMenu.RunLectureTableMenu();
                     break;
 
                 case Constants.Exit:
