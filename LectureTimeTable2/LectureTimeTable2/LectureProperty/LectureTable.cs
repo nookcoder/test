@@ -11,22 +11,25 @@ namespace LectureTimeTable2.LectureProperty
 {
     class LectureTable
     {
-        LectureScreen LectureScreen;
-        LectureMenu LectureMenu;
+        private LectureScreen LectureScreen;
+        private Excel.Application application;
+        private Excel.Workbook workbook;
+        private Excel.Sheets sheets;
+        private Excel.Worksheet worksheet;
 
         public LectureTable()
         {
             this.LectureScreen = new LectureScreen();
+            this.application = new Application();
+            this.workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\2021년도 1학기 강의시간표.xlsx");
+            this.sheets = workbook.Sheets;
+            this.worksheet = sheets["Sheet1"] as Excel.Worksheet;
         }
 
         public void LoadComputeMajor()
         {
             try
             {
-                Excel.Application application = new Application();
-                Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\2021년도 1학기 강의시간표.xlsx");
-                Excel.Sheets sheets = workbook.Sheets;
-                Excel.Worksheet worksheet = sheets["Sheet1"] as Excel.Worksheet;
                 Excel.Range cellRange = worksheet.get_Range("B2", "L104") as Excel.Range;
                 Array data = (Array)cellRange.Cells.Value2;
 
@@ -71,10 +74,6 @@ namespace LectureTimeTable2.LectureProperty
         {
             try
             {
-                Excel.Application application = new Application();
-                Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\2021년도 1학기 강의시간표.xlsx");
-                Excel.Sheets sheets = workbook.Sheets;
-                Excel.Worksheet worksheet = sheets["Sheet1"] as Excel.Worksheet;
                 Excel.Range cellRange = worksheet.get_Range("B105", "L152") as Excel.Range;
                 Array data = (Array)cellRange.Cells.Value2;
 
@@ -120,10 +119,6 @@ namespace LectureTimeTable2.LectureProperty
         {
             try
             {
-                Excel.Application application = new Application();
-                Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\2021년도 1학기 강의시간표.xlsx");
-                Excel.Sheets sheets = workbook.Sheets;
-                Excel.Worksheet worksheet = sheets["Sheet1"] as Excel.Worksheet;
                 Excel.Range cellRange = worksheet.get_Range("B153", "L169") as Excel.Range;
                 Array data = (Array)cellRange.Cells.Value2;
 
