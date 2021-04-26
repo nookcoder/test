@@ -57,7 +57,7 @@ namespace LectureTimeTable2.LectureProperty
                     break;
 
                 case Constants.SUBJECTNAME:
-                    //SearchBySubjectName();
+                    SearchBySubjectName();
                     break;
 
                 case Constants.GRADE:
@@ -132,6 +132,19 @@ namespace LectureTimeTable2.LectureProperty
             loadingCourse.LoadCourseByCourseNumber(courseNumber, distribution);
             Console.SetWindowSize(100, 40);
             RunLectureTableMenu();
+        }
+
+        // 교과명 검색 
+        public void SearchBySubjectName()
+        {
+            string subjectNameCheck;
+            string subjectName;
+
+            Console.Clear();
+            courseScreen.PrintGetSubjectName();
+            subjectNameCheck = Console.ReadLine();
+            subjectName = courseException.HandleGetSubjectName(subjectNameCheck);
+            loadingCourse.LoadCourseBySubjectName(subjectName);
         }
 
         // 교수명으로 강의 찾기
