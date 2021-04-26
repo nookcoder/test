@@ -164,6 +164,36 @@ namespace LectureTimeTable2.LectureProperty
             }
         }
 
+        public void LoadCourseBySubjectName(string subjectName)
+        {
+            bool isFound = Constants.NONE;
+            index = 0;
+            int courseIndex = 1;
+
+            while (index < 169)
+            {
+                if (course[index].Title.Contains(subjectName))
+                {
+                    isFound = Constants.FIND;
+                    Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
+                    ShowCourse(index);
+                    courseIndex++;
+                }
+
+                index++;
+            }
+
+            if (isFound)
+            {
+                Console.Clear();
+                courseScreen.PrintNoFoundLecture();
+            }
+
+            courseScreen.PrintProgressNotice();
+            Console.ReadKey();
+        }
+        
+        // 교수명으로 강의 출력 
         public void LoadCourseByProfessorName(string professor)
         {
             bool isFound = Constants.NONE;
@@ -192,6 +222,7 @@ namespace LectureTimeTable2.LectureProperty
             courseScreen.PrintProgressNotice();
             Console.ReadKey();
         }
+
 
         // 강의 시간표 한줄 출력
         public void ShowCourse(int index)
