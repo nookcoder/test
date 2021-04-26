@@ -97,6 +97,14 @@ namespace LectureTimeTable2.LectureProperty
             Console.Write("분반 : ");
         }
 
+        // 과목명 입력 출력
+        public void PrintGetSubjectName()
+        {
+            Console.WriteLine("\n");
+            Console.Write(String.Format("{0,41}", " "));
+            Console.Write("과목 명 : ");
+        }
+
         // 교수명 입력 출력 
         public void PrintGetProfessor()
         {
