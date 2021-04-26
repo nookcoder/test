@@ -9,9 +9,9 @@ namespace LectureTimeTable2.VOs
     class StudentCourseVO
     {
         List<StudentsVO> studentsVOs;
-        List<LecturesVO> lecturesVOs;
+        List<CourseVO> lecturesVOs;
 
-        public StudentCourseVO(List<StudentsVO> studentsVOs, List<LecturesVO> coursesVOs)
+        public StudentCourseVO(List<StudentsVO> studentsVOs, List<CourseVO> coursesVOs)
         {
             this.studentsVOs = studentsVOs;
             this.lecturesVOs = coursesVOs;
@@ -22,7 +22,7 @@ namespace LectureTimeTable2.VOs
             this.studentsVOs = studentsVOs;
         }
 
-        public StudentCourseVO(List<LecturesVO> lecturesVOs)
+        public StudentCourseVO(List<CourseVO> lecturesVOs)
         {
             this.lecturesVOs = lecturesVOs;
         }
