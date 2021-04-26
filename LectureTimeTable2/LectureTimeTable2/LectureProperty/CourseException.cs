@@ -144,5 +144,28 @@ namespace LectureTimeTable2.LectureProperty
 
             return professorCheck;
         }
+
+        public string HandleGetSubjectName(string subjectCheck)
+        {
+            Regex regex = new Regex(@"^[a-zA-Z가-힣]{2,}$");
+
+            while (Constants.ERROR)
+            {
+                if (regex.IsMatch(subjectCheck))
+                {
+                    break;
+                }
+
+                else
+                {
+                    Console.Clear();
+                    courseScreen.PrintProfessorNameError();
+                    courseScreen.PrintGetSubjectName();
+                    subjectCheck = Console.ReadLine();
+                }
+            }
+
+            return subjectCheck;
+        }
     }
 }
