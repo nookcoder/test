@@ -13,7 +13,7 @@ namespace LectureTimeTable2.LectureProperty
         CourseScreen courseScreen;
         private List<StudentsVO> students;
         private List<CourseVO> courses;
-        private List<StudentCourseVO> studentCourses;
+        private List<AttentionVO> studentCourses;
         public CourseException()
         {
             this.courseScreen = new CourseScreen();
@@ -166,6 +166,30 @@ namespace LectureTimeTable2.LectureProperty
             }
 
             return subjectCheck;
+        }
+        
+        // 학년 입력 예외처리 
+        public string HandleGetGrade(string grade)
+        {
+            Regex regex = new Regex(@"^[1-4]{1}$");
+
+            while (Constants.ERROR)
+            {
+                if (regex.IsMatch(grade))
+                {
+                    break;
+                }
+
+                else
+                {
+                    Console.Clear();
+                    courseScreen.PrintGradeError();
+                    courseScreen.PrintGetGrade();
+                    grade = Console.ReadLine();
+                }
+            }
+
+            return grade;
         }
     }
 }
