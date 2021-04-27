@@ -12,7 +12,7 @@ namespace LectureTimeTable2.LectureProperty
     {
         private List<StudentsVO> students;
         private List<CourseVO> courses;
-        private List<StudentCourseVO> studentCourses;
+        private List<AttentionVO> attention;
 
         private CourseException courseException;
         private CourseScreen courseScreen;
@@ -20,15 +20,15 @@ namespace LectureTimeTable2.LectureProperty
 
         private LoadingCourse loadingCourse;
 
-        public CourseMenu(List<StudentsVO> students, List<CourseVO> courses, List<StudentCourseVO> studentCourses)
+        public CourseMenu(List<StudentsVO> students, List<CourseVO> courses, List<AttentionVO> attention)
         {
             this.students = students;
             this.courses = courses;
-            this.studentCourses = studentCourses;
+            this.attention = attention;
             
             this.courseException = new CourseException();
             this.courseScreen = new CourseScreen();
-            this.initialMenu = new InitialMenu(this.students, this.courses,this.studentCourses);
+            this.initialMenu = new InitialMenu(this.students, this.courses,this.attention);
 
             this.loadingCourse = new LoadingCourse(courses);
         }
@@ -61,7 +61,7 @@ namespace LectureTimeTable2.LectureProperty
                     break;
 
                 case Constants.GRADE:
-                    //SearchByGrade
+                    SearchByGrade();
                     break;
 
                 case Constants.PROFESSOR:
@@ -145,6 +145,24 @@ namespace LectureTimeTable2.LectureProperty
             subjectNameCheck = Console.ReadLine();
             subjectName = courseException.HandleGetSubjectName(subjectNameCheck);
             loadingCourse.LoadCourseBySubjectName(subjectName);
+            Console.SetWindowSize(100, 40);
+            RunLectureTableMenu();
+        }
+
+        // 학년으로 검색 
+        public void SearchByGrade()
+        {
+            string gradeCheck;
+            string grade;
+
+            Console.Clear();
+            courseScreen.PrintGetGrade();
+            gradeCheck = Console.ReadLine();
+            grade = courseException.HandleGetGrade(gradeCheck);
+            Console.Clear(); 
+            loadingCourse.LoadCourseByGrade(grade);
+            Console.SetWindowSize(100, 40);
+            RunLectureTableMenu();
         }
 
         // 교수명으로 강의 찾기
