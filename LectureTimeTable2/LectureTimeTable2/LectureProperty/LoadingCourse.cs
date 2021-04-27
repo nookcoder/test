@@ -107,8 +107,9 @@ namespace LectureTimeTable2.LectureProperty
                 {
                     index = 0;
 
+                    courseScreen.PrintCourseLabel();
                     // 입력된 학수 번호와 일치하는 강좌 출력
-                    while(index < 169)
+                    while (index < 169)
                     {
                         if (courseNumber == course[index].CourseNumber)
                         {
@@ -164,12 +165,14 @@ namespace LectureTimeTable2.LectureProperty
             }
         }
 
+        // 교과목 명으로 강의 출력 
         public void LoadCourseBySubjectName(string subjectName)
         {
             bool isFound = Constants.NONE;
             index = 0;
             int courseIndex = 1;
 
+            courseScreen.PrintCourseLabel();
             while (index < 169)
             {
                 if (course[index].Title.Contains(subjectName))
@@ -192,7 +195,39 @@ namespace LectureTimeTable2.LectureProperty
             courseScreen.PrintProgressNotice();
             Console.ReadKey();
         }
-        
+
+        // 학년으로 강의 출력
+        public void LoadCourseByGrade(string grade)
+        {
+            bool isFound = Constants.NONE;
+            index = 0;
+            int courseIndex = 1;
+
+            courseScreen.PrintCourseLabel();
+            while (index < 169)
+            {
+                if (course[index].Grade.Contains(grade))
+                {
+                    isFound = Constants.FIND;
+                    Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
+                    ShowCourse(index);
+                    courseIndex++;
+                }
+                 
+                index++;
+            }
+
+            if (isFound)
+            {
+                Console.Clear();
+                courseScreen.PrintNoFoundLecture();
+            }
+
+            courseScreen.PrintProgressNotice();
+            Console.ReadKey();
+        }
+
+
         // 교수명으로 강의 출력 
         public void LoadCourseByProfessorName(string professor)
         {
@@ -200,7 +235,8 @@ namespace LectureTimeTable2.LectureProperty
             index = 0;
             int courseIndex = 1;
 
-            while(index < 169 )
+            courseScreen.PrintCourseLabel();
+            while (index < 169 )
             {
                 if(course[index].Professor.Contains(professor))
                 {
@@ -229,9 +265,9 @@ namespace LectureTimeTable2.LectureProperty
         {
             Console.SetWindowSize(160, 40);
             Console.Write(" " + course[index].Major.PadRight(20 - course[index].Major.Length) + " ");
-            Console.Write(course[index].CourseNumber.PadRight(2, ' ') + " ");
-            Console.Write(course[index].Distribution + " ");
-            Console.Write(course[index].Title + " ");
+            Console.Write(course[index].CourseNumber.PadRight(2) + " ");
+            Console.Write(course[index].Distribution.PadRight(2) + " ");
+            Console.Write(course[index].Title.PadRight(34- course[index].Title.Length) + " ");
             Console.Write(course[index].Sortation + " ");
             Console.Write(course[index].Grade + " ");
             Console.Write(course[index].Score + " ");
