@@ -13,6 +13,8 @@ namespace LectureTimeTable2.LectureProperty
             Console.Clear();
             Console.WriteLine("\n");
             Console.WriteLine("No  개설학과전공         학수번호 분반 교과목명                           이수구분 학년 학점 요일 및 강의시간        강의실        메인교수명  언어");
+            Console.Write("====================================================================================================================================================");
+            Console.WriteLine("\n");
         }
         public void PrintCourseTimeTableMenu()
         {
@@ -105,6 +107,14 @@ namespace LectureTimeTable2.LectureProperty
             Console.Write("과목 명 : ");
         }
 
+        // 학년 입력 출력 
+        public void PrintGetGrade()
+        {
+            Console.WriteLine("\n");
+            Console.Write(String.Format("{0,41}", " "));
+            Console.Write("학년 : ");
+        }
+
         // 교수명 입력 출력 
         public void PrintGetProfessor()
         {
@@ -128,6 +138,16 @@ namespace LectureTimeTable2.LectureProperty
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write(String.Format("{0,41}", " "));
             Console.WriteLine("잘못 입력하셨습니다.");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        // 학년 예외 문자열 입력 시 출력문
+        public void PrintGradeError()
+        {
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(String.Format("{0,41}", " "));
+            Console.WriteLine("1~4 만 입력해주세요.");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
