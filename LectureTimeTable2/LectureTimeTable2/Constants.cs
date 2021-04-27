@@ -25,7 +25,7 @@ namespace LectureTimeTable2
         // LectureTimeTableMenu Constants
         public const int MAJOR = 1;
         public const int LECTURENUMBER = 2;
-        public const int SUBJECTNAME = 3;
+        public const int SUBJECTNAME = 3; 
         public const int GRADE = 4;
         public const int PROFESSOR = 5;
         public const int BACK_TO_INITIALMENU = 6;
@@ -36,5 +36,9 @@ namespace LectureTimeTable2
         public const int ENGINEERING = 3;
         public const int BACK_TO_LECTURETABLEMENU = 4;
 
+        // 관심과목 담기 메뉴 
+        public const int ADD = 1;
+        public const int INQUIRY = 2;
+        public const int BACK = 3;
     }
 }
