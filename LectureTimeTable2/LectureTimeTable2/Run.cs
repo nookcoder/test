@@ -14,7 +14,8 @@ namespace LectureTimeTable2
     {
         public List<StudentsVO> students;
         public List<CourseVO> courses;
-        public List<StudentCourseVO> studentCourses;
+        public List<AttentionVO> attention;
+        public List<RegistrationVO> registrations;
 
         private CourseScreen LectureScreen = new CourseScreen();
 
@@ -24,7 +25,8 @@ namespace LectureTimeTable2
 
             this.students = new List<StudentsVO>();
             this.courses = new List<CourseVO>();
-            this.studentCourses = new List<StudentCourseVO>();
+            this.attention = new List<AttentionVO>();
+            this.registrations = new List<RegistrationVO>();
             students.Add(new StudentsVO("18011250", "ensharp21"));
 
             InputLectureInVO();
@@ -32,14 +34,16 @@ namespace LectureTimeTable2
 
         public void RunProgram()
         {
-            Login.Login login = new Login.Login(students, courses, studentCourses);
+            Login.Login login = new Login.Login(students, courses, attention, registrations);
             login.RunLogin();
         }
         
         public void InputLectureInVO()
         {
+            string excelPath = Environment.CurrentDirectory;
+         
             Excel.Application application = new Excel.Application();
-            Excel.Workbook workbook = application.Workbooks.Open(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\2021년도 1학기 강의시간표.xlsx");
+            Excel.Workbook workbook = application.Workbooks.Open(excelPath + "\\2021년도 1학기 강의시간표.xlsx");
             Excel.Sheets sheets = workbook.Sheets;
             Excel.Worksheet worksheet = sheets["Sheet1"] as Excel.Worksheet;
             Excel.Range cellRange = worksheet.get_Range("B2", "L170") as Excel.Range;
