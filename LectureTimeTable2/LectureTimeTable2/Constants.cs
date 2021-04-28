@@ -17,7 +17,7 @@ namespace LectureTimeTable2
         // InitialMenu Constants
         public const int LECTURETIMETABLE = 1;
         public const int ATTENTION = 2;
-        public const int APPLICATION = 3;
+        public const int REGISTRATION = 3;
         public const int CHECKINGCOURSE = 4;
         public const int CHECKINGTIMETABLE = 5;
         public const int Exit = 6;
@@ -28,7 +28,8 @@ namespace LectureTimeTable2
         public const int SUBJECTNAME = 3; 
         public const int GRADE = 4;
         public const int PROFESSOR = 5;
-        public const int BACK_TO_INITIALMENU = 6;
+        public const int ALL = 6;
+        public const int BACK_TO_INITIALMENU = 7;
 
         // MajorMenu Constants
         public const int COMPUTER = 1;
@@ -40,5 +41,8 @@ namespace LectureTimeTable2
         public const int ADD = 1;
         public const int INQUIRY = 2;
         public const int BACK = 3;
+
+        public const int ATTENTIONREGISTER = 1;
+
     }
 }
