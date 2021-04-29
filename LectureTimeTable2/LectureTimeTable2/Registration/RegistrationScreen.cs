@@ -107,6 +107,14 @@ namespace LectureTimeTable2.Registeration
             Console.WriteLine(String.Format("{0,50}", "수강신청이 완료되었습니다."));
         }
 
+        public void PrintTimeOverlap()
+        {
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(String.Format("{0,50}", "시간이 겹치는 강의가 있습니다"));
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public void PrintNoFoundLecture()
         {
             Console.WriteLine("\n");
