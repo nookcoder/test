@@ -20,6 +20,7 @@ namespace LectureTimeTable2.AttentionProperty
             this.course = course;
             this.attentions = attentions;
             this.students = students;
+            this.registrations = registrations;
             this.AttentionScreen = new AttentionScreen();
             this.AttentionException = new AttentionException();
         }
@@ -207,7 +208,7 @@ namespace LectureTimeTable2.AttentionProperty
             {
                 RunAttentionMenu();
             }
-        }
+        }  
 
         // 관심과목 조회 
         public void ShowAttentionCourse()
@@ -305,10 +306,10 @@ namespace LectureTimeTable2.AttentionProperty
         public void ShowAttentionCourse(int index)
         {
             Console.SetWindowSize(160, 40);
-            Console.Write(" " + course[index].Major.PadRight(20 - course[index].Major.Length) + " ");
+            Console.Write(" " + attentions[index].Major.PadRight(20 - attentions[index].Major.Length) + " ");
             Console.Write(attentions[index].CourseNumber.PadRight(2) + " ");
             Console.Write(attentions[index].Distribution.PadRight(2) + " ");
-            Console.Write(attentions[index].Title.PadRight(34 - course[index].Title.Length) + " ");
+            Console.Write(attentions[index].Title.PadRight(34 - attentions[index].Title.Length) + " ");
             Console.Write(attentions[index].Sortation + " ");
             Console.Write(attentions[index].Grade + " ");
             Console.Write(attentions[index].Score + " ");
