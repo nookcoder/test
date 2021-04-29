@@ -24,7 +24,7 @@ namespace LectureTimeTable2.Registration
         public bool IsRegister(List<RegistrationVO> registrations, string courseTime)
         {
             bool isFound = Constants.DAY_NOFIND;
-            bool isRegister = Constants.NO_REGISTER;
+            bool isRegister = Constants.DO_REGISTER;
 
             for (int indexOfRegistrations = 0; indexOfRegistrations < registrations?.Count; indexOfRegistrations++)
             {
@@ -83,9 +83,6 @@ namespace LectureTimeTable2.Registration
                 }
             }
 
-
-
-
             return isRegister;
         }
 
@@ -106,7 +103,7 @@ namespace LectureTimeTable2.Registration
 
         public bool IsRegisterWithOneOne(string existingTimeString, string lastestTimeString)
         {
-            bool isRegister = Constants.NO_REGISTER;
+            bool isRegister = Constants.DO_REGISTER;
 
             // 수강 신청이 된 강의와 수강신청을 할 강의의 시간을 다룰 변수
             int exstingTime = Convert.ToInt32(existingTimeString);
@@ -118,23 +115,10 @@ namespace LectureTimeTable2.Registration
             int lastestStartTime = lastestTime / 10000;
             int lastestEndTime = lastestTime % 10000;
 
-            // 수강신청되어있는 강의가 수강신청할 강의보다 늦게 시작할 때 
-            if (exstingStartTime > lastestStartTime)
+            if ((exstingStartTime <= lastestStartTime && lastestStartTime <= exstingEndTime) ||
+                (exstingStartTime <= lastestEndTime && lastestEndTime <= exstingEndTime))
             {
-                // 수강 신청할 강의가 수강신청되어있는 강의시작 시간보다 늦을 때 
-                if (exstingStartTime >= lastestEndTime)
-                {
-                    isRegister = Constants.DO_REGISTER;
-                }
-            }
-
-            // 수강신청되어있는 강의가 수강신청할 강의보다 먼저 시작할 때 
-            else
-            {
-                if (exstingEndTime <= lastestStartTime)
-                {
-                    isRegister = Constants.DO_REGISTER;
-                }
+                isRegister = Constants.NO_REGISTER;
             }
 
             return isRegister;
@@ -143,7 +127,7 @@ namespace LectureTimeTable2.Registration
         // 시간 한개와 시간 두개 일 때 
         public bool IsRegisterWithOneTwo(string existingTimeString, string lastestTimeString)
         {
-            bool isRegister = Constants.NO_REGISTER;
+            bool isRegister = Constants.DO_REGISTER;
 
             // 시간 정보가 두 개일 때 두개로 나눠서 저장 
             string existingTimeStringFirst = existingTimeString.Substring(0, 8);
@@ -162,33 +146,23 @@ namespace LectureTimeTable2.Registration
             int lastestStartTime = lastestTime / 10000;
             int lastestEndTime = lastestTime % 10000;
 
-            // 두 강의 모두 추가할 강의보다 먼저 시작할 때
-            if (exstingStartTimeFirst <= lastestStartTime && exstingStartTimeSecond <= lastestStartTime)
+            if (exstingTimeFirst < exstingTimeSecond)
             {
-                // 수강 신청할 강의가 수강신청되어있는 강의시작 시간보다 늦을 때 
-                if (exstingEndTimeFirst <= lastestEndTime && exstingEndTimeSecond <= lastestEndTime)
+                if((lastestStartTime <= exstingEndTimeFirst && exstingStartTimeSecond <= lastestEndTime) ||
+                    (lastestStartTime <= exstingStartTimeFirst && exstingStartTimeFirst <= lastestEndTime) || 
+                    (exstingStartTimeSecond <= lastestStartTime && lastestStartTime <= exstingEndTimeSecond))
                 {
-                    isRegister = Constants.DO_REGISTER;
+                    isRegister = Constants.NO_REGISTER; ;
                 }
             }
 
-            // 한 강의는 먼저 시작하고 나머지 강의는 늦게 시작할 때
-            else if ((exstingStartTimeFirst >= lastestStartTime && exstingStartTimeSecond <= lastestStartTime) ||
-                (exstingStartTimeFirst <= lastestStartTime && exstingStartTimeSecond >= lastestStartTime))
+            else if(exstingTimeFirst >= exstingTimeSecond )
             {
-                if ((exstingEndTimeFirst <= lastestStartTime && exstingStartTimeSecond >= lastestEndTime) ||
-                    (exstingEndTimeFirst >= lastestStartTime && exstingStartTimeSecond <= lastestEndTime))
+                if ((lastestStartTime <= exstingEndTimeSecond && exstingStartTimeFirst <= lastestEndTime) ||
+                    (lastestStartTime <= exstingStartTimeSecond && exstingStartTimeSecond <= lastestEndTime) ||
+                    (exstingStartTimeFirst <= lastestStartTime && lastestStartTime <= exstingEndTimeFirst))
                 {
-                    isRegister = Constants.DO_REGISTER;
-                }
-            }
-
-            // 두 강의 모두 늦게 추가할 강의보다 늦게 시작할 때
-            else
-            {
-                if (exstingStartTimeFirst >= lastestEndTime && exstingStartTimeSecond >= lastestEndTime)
-                {
-                    isRegister = Constants.DO_REGISTER;
+                    isRegister = Constants.NO_REGISTER; ;
                 }
             }
 
@@ -198,7 +172,7 @@ namespace LectureTimeTable2.Registration
         // 시간 한개와 시간 두개 일 때 
         public bool IsRegisterWithTwoTwo(string existingTimeString, string lastestTimeString)
         {
-            bool isRegister = Constants.NO_REGISTER;
+            bool isRegister = Constants.DO_REGISTER;
 
             // 시간 정보가 두 개일 때 두개로 나눠서 저장 
             string existingTimeStringFirst = existingTimeString.Substring(0, 8);
