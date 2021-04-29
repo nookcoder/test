@@ -113,7 +113,7 @@ namespace LectureTimeTable2.Registeration
 
             else
             {
-                // 강의가 겹치는 지 확인 76
+                // 똑같은 강의를 신청했는 지 확인 
                 if(IsAlreayHave(courseIndex))
                 {
                     registrationScreen.PrintOverlapCourse();
@@ -125,13 +125,26 @@ namespace LectureTimeTable2.Registeration
 
                 else
                 {
-                    registrations.Add(new RegistrationVO(attentions[courseIndex - 1].Major, attentions[courseIndex - 1].CourseNumber, attentions[courseIndex - 1].Distribution, attentions[courseIndex - 1].Title, attentions[courseIndex - 1].Sortation,
-                                 attentions[courseIndex - 1].Grade, attentions[courseIndex - 1].Score, attentions[courseIndex - 1].CourseTime, attentions[courseIndex - 1].ClassRoom, attentions[courseIndex - 1].Professor, attentions[courseIndex - 1].Language));
-                    registrationScreen.PrintAddNotice();
-                    registrationScreen.PrintProgressNotice();
-                    Console.ReadKey();
-                    Console.SetWindowSize(100, 40);
-                    RunRegisterMenu();
+                    // 강의시간이 겹치지 않을 때 
+                    if (IsTimeOverlap(courseIndex))
+                    {
+                        registrations.Add(new RegistrationVO(attentions[courseIndex - 1].Major, attentions[courseIndex - 1].CourseNumber, attentions[courseIndex - 1].Distribution, attentions[courseIndex - 1].Title, attentions[courseIndex - 1].Sortation,
+                                   attentions[courseIndex - 1].Grade, attentions[courseIndex - 1].Score, attentions[courseIndex - 1].CourseTime, attentions[courseIndex - 1].ClassRoom, attentions[courseIndex - 1].Professor, attentions[courseIndex - 1].Language));
+                        registrationScreen.PrintAddNotice();
+                        registrationScreen.PrintProgressNotice();
+                        Console.ReadKey();
+                        Console.SetWindowSize(100, 40);
+                        RunRegisterMenu();
+                    }
+
+                    else
+                    {
+                        registrationScreen.PrintTimeOverlap();
+                        registrationScreen.PrintProgressNotice();
+                        Console.ReadKey();
+                        Console.SetWindowSize(100, 40);
+                        RunRegisterMenu();
+                    }
                 }
             }
 
@@ -174,9 +187,14 @@ namespace LectureTimeTable2.Registeration
         }
 
         // 시간이 겹치는 지 확인
-        public void IsTimeOverlap()
+        public bool IsTimeOverlap(int index)
         {
+            bool isRegister = Constants.DO_REGISTER;
 
+            JugementOfOverlapedTime jugementOfOverlapedTime = new JugementOfOverlapedTime();
+            isRegister = jugementOfOverlapedTime.IsRegister(registrations, attentions[index-1].CourseTime);
+
+            return isRegister;
         }
         
         // 강의 출력
@@ -194,7 +212,6 @@ namespace LectureTimeTable2.Registeration
             Console.Write(attentions[index].Professor + " ");
             Console.Write(attentions[index].Language + " ");
             Console.WriteLine("\n");
-
         }
     }
 }
