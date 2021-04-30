@@ -57,6 +57,14 @@ namespace LectureTimeTable2.Registeration
                     RegisterCourseFromAttention();
                     break;
 
+                case Constants.REGISTERBYSEARCH:
+                    RegisterCourseFromTitle();
+                    break;
+
+                case Constants.REVISE_REGISTRATION:
+                    RunReviseRegistrationCourse();
+                    break;
+
                 case Constants.REGISTER_BACK:
                     InitialMenu initialMenu = new InitialMenu(students, course, attentions, registrations);
                     initialMenu.RunInitialMenu();
@@ -64,6 +72,8 @@ namespace LectureTimeTable2.Registeration
             }
         }
 
+
+        // 관심 과목 조회 / 추가 
         // 관심과목 불러오기 
         public void LoadAttentionCourse()
         {
@@ -72,8 +82,308 @@ namespace LectureTimeTable2.Registeration
             Console.SetWindowSize(160, 40);
             for (int index = 0; index < attentions.Count; index++)
             {
-                Console.Write(index+1 < 10 ? $"00{index+1}" : $"0{index+1}");
-                ShowCourse(index);
+                Console.Write(index + 1 < 10 ? $"00{index + 1}" : $"0{index + 1}");
+                ShowAttentionCourse(index);
+            }
+        }
+
+        // 수강 신청 과목 불러오기 
+        public void LoadRegistrationCourse()
+        {
+            int credit = 0;
+
+            registrationScreen.PrintRegisterListLabel();
+            registrationScreen.PrintCourseLabel();
+            Console.SetWindowSize(160, 40);
+
+            for (int index = 0; index < registrations.Count; index++)
+            {
+                Console.Write(index + 1 < 10 ? $"00{index + 1}" : $"0{index + 1}");
+                ShowRegistrationCourse(index);
+            }
+
+            registrationScreen.PrintCreditLabel();
+            for (int index = 0; index < registrations?.Count; index++)
+            {
+                credit += Convert.ToInt32(registrations[index].Credit);
+            }
+            Console.WriteLine(credit);
+
+        }
+
+
+        // 검색해서 수강신청하기 
+        public void RegisterCourseFromAttention()
+        {
+            string courseIndexString;
+            int courseIndex;
+
+            LoadAttentionCourse();
+            if (registrations?.Count != 0)
+            {
+                LoadRegistrationCourse();
+            }
+
+            courseIndexString = GetRegisterIndex();
+
+            // 종료 버튼이 입력 됐을 때 
+            if (courseIndexString == "q")
+            {
+                RunRegisterMenu();
+            }
+
+            // 강의 번호를 입력했을 때 
+            else
+            {
+                courseIndex = Convert.ToInt32(courseIndexString);
+
+                // 수강 신청 가능 학점을 넘었는 지 확인 
+                if (IsOverCredit())
+                {
+                    registrationScreen.PrintTooMuchCredit();
+                    registrationScreen.PrintProgressNotice();
+                    Console.ReadKey();
+                    Console.SetWindowSize(100, 40);
+                    RunRegisterMenu();
+                }
+
+                else
+                {
+                    // 똑같은 강의를 신청했는 지 확인 
+                    if (IsAlreayHaveForAll(courseIndex))
+                    {
+                        registrationScreen.PrintOverlapCourse();
+                        registrationScreen.PrintProgressNotice();
+                        Console.ReadKey();
+                        Console.SetWindowSize(100, 40);
+                        RunRegisterMenu();
+                    }
+
+                    else
+                    {
+                        // 강의시간이 겹치지 않을 때 
+                        if (IsTimeOverlapForAll(courseIndex))
+                        {
+                            registrations.Add(new RegistrationVO(attentions[courseIndex - 1].Major, attentions[courseIndex - 1].CourseNumber, attentions[courseIndex - 1].Distribution, attentions[courseIndex - 1].Title, attentions[courseIndex - 1].Sortation,
+                                       attentions[courseIndex - 1].Grade, attentions[courseIndex - 1].Score, attentions[courseIndex - 1].CourseTime, attentions[courseIndex - 1].ClassRoom, attentions[courseIndex - 1].Professor, attentions[courseIndex - 1].Language));
+                            registrationScreen.PrintAddNotice();
+                            registrationScreen.PrintProgressNotice();
+                            Console.ReadKey();
+                            Console.SetWindowSize(100, 40);
+                            RunRegisterMenu();
+                        }
+
+                        else
+                        {
+                            registrationScreen.PrintTimeOverlap();
+                            registrationScreen.PrintProgressNotice();
+                            Console.ReadKey();
+                            Console.SetWindowSize(100, 40);
+                            RunRegisterMenu();
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+        // 강의 검색 / 추가   
+        // 교과목명 입력 받기(교과목 이름으로 검색)
+        public string GetCourseTitle()
+        {
+            string courseTitleCheck;
+            string courseTitle;
+
+            Console.Clear();
+            registrationScreen.PrintGetCourseTitle();
+            courseTitleCheck = Console.ReadLine();
+            courseTitle = registrationException.HandleRegisterCourseTitle(courseTitleCheck);
+
+            return courseTitle;
+        }
+
+        // 검색 과목 출력하기 
+        public bool IsHaveCourseByTitle()
+        {
+            string courseTitle;
+            bool IsHave = Constants.NONE;
+
+            courseTitle = GetCourseTitle();
+            registrationScreen.PrintCourseLabel();
+            Console.SetWindowSize(160, 40);
+            for (int Index = 0; Index < 169; Index++)
+            {
+                if (course[Index].Title.Contains(courseTitle))
+                {
+                    IsHave = Constants.FIND;
+                    Console.Write(Index < 10 ? $"00{Index} " : Index < 100 ? $"0{Index} " : $"{Index} ");
+                    ShowALLCourse(Index);
+                }
+
+            }
+
+            if (IsHave)
+            {
+                Console.Clear();
+                registrationScreen.PrintNoFoundCourse();
+                registrationScreen.PrintProgressNotice();
+                Console.ReadKey();
+            }
+
+            return IsHave;
+        }
+
+        // 관심과목에서 수강신청하기 
+        public void RegisterCourseFromTitle()
+        {
+            string courseIndexString;
+            int courseIndex;
+            bool isHave;
+
+            isHave = IsHaveCourseByTitle();
+            if (isHave)
+            {
+                Console.SetWindowSize(100, 40);
+                RunRegisterMenu();
+            }
+
+            else
+            {
+                courseIndexString = GetRegisterIndex();
+
+                // 종료 버튼이 입력 됐을 때 
+                if (courseIndexString == "q")
+                {
+                    Console.SetWindowSize(100, 40);
+                    RunRegisterMenu();
+                }
+
+                // 강의 번호를 입력했을 때 
+                else
+                {
+                    courseIndex = Convert.ToInt32(courseIndexString);
+
+                    // 수강 신청 가능 학점을 넘었는 지 확인 
+                    if (IsOverCredit())
+                    {
+                        registrationScreen.PrintTooMuchCredit();
+                        registrationScreen.PrintProgressNotice();
+                        Console.ReadKey();
+                        Console.SetWindowSize(100, 40);
+                        RunRegisterMenu();
+                    }
+
+                    else
+                    {
+                        // 똑같은 강의를 신청했는 지 확인 
+                        if (IsAlreayHaveForAll(courseIndex))
+                        {
+                            registrationScreen.PrintOverlapCourse();
+                            registrationScreen.PrintProgressNotice();
+                            Console.ReadKey();
+                            Console.SetWindowSize(100, 40);
+                            RunRegisterMenu();
+                        }
+
+                        else
+                        {
+                            // 강의시간이 겹치지 않을 때 
+                            if (IsTimeOverlapForAll(courseIndex))
+                            {
+                                registrations.Add(new RegistrationVO(course[courseIndex - 1].Major, course[courseIndex - 1].CourseNumber, course[courseIndex - 1].Distribution, course[courseIndex - 1].Title, course[courseIndex - 1].Sortation,
+                                           course[courseIndex - 1].Grade, course[courseIndex - 1].Score, course[courseIndex - 1].CourseTime, course[courseIndex - 1].ClassRoom, course[courseIndex - 1].Professor, course[courseIndex - 1].Language));
+                                registrationScreen.PrintAddNotice();
+                                registrationScreen.PrintProgressNotice();
+                                Console.ReadKey();
+                                Console.SetWindowSize(100, 40);
+                                RunRegisterMenu();
+                            }
+
+                            else
+                            {
+                                registrationScreen.PrintTimeOverlap();
+                                registrationScreen.PrintProgressNotice();
+                                Console.ReadKey();
+                                Console.SetWindowSize(100, 40);
+                                RunRegisterMenu();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        //강의 조회/삭제 
+        public void RunReviseRegistrationCourse()
+        {
+            if (registrations.Count != 0)
+            {
+                Console.Clear();
+                LoadRegistrationCourse();
+                DeletRegistrationCourse();
+            }
+
+            else
+            {
+                registrationScreen.PrintNoRegistration();
+                registrationScreen.PrintProgressNotice();
+                Console.ReadKey();
+                Console.SetWindowSize(100, 40);
+                RunRegisterMenu();
+            }
+        }
+
+        // 삭제하고 싶은 강의 물어보기 
+        public string GetDeletIndex()
+        {
+            string courseIndexCheck;
+            string courseIndex;
+
+            registrationScreen.PrintGetRegisterCourseNumber();
+            courseIndexCheck = Console.ReadLine();
+            courseIndex = registrationException.HandleGetDeletCourse(courseIndexCheck);
+
+            return courseIndex;
+        }
+
+        // 수강 신청 강의 삭제하기 
+        public void DeletRegistrationCourse()
+        {
+            string courseIndexString;
+            int courseIndex;
+
+            courseIndexString = GetDeletIndex();
+
+            if (courseIndexString == "q")
+            {
+                Console.SetWindowSize(100, 40);
+                RunRegisterMenu();
+            }
+
+            else
+            {
+                courseIndex = Convert.ToInt32(courseIndexString);
+
+                if (registrations.Count >= courseIndex)
+                {
+                    registrations.RemoveAt(courseIndex - 1);
+                    registrationScreen.PrintDeletNotice();
+                    registrationScreen.PrintProgressNotice();
+                    Console.ReadLine();
+                    Console.SetWindowSize(100, 40);
+                    RunRegisterMenu();
+                }
+
+                else
+                {
+                    registrationScreen.PrintNoFoundLecture();
+                    registrationScreen.PrintProgressNotice();
+                    Console.ReadLine();
+                    Console.SetWindowSize(100, 40);
+                    RunRegisterMenu();
+                }
             }
         }
 
@@ -85,69 +395,9 @@ namespace LectureTimeTable2.Registeration
 
             registrationScreen.PrintGetRegisterCourseNumber();
             courseIndexCheck = Console.ReadLine();
-            courseIndex = registrationException.HandleGetReviseAttentionCourse(courseIndexCheck);
+            courseIndex = registrationException.HandleRegisterCourseIndexByTitle(courseIndexCheck);
 
             return courseIndex;
-        }
-
-        // 관심과목에서 수강신청하기 
-        public void RegisterCourseFromAttention()
-        {
-            string courseIndexString;
-            int courseIndex;
-
-            LoadAttentionCourse();
-
-            courseIndexString = GetRegisterIndex();
-            courseIndex = Convert.ToInt32(courseIndexString);
-            
-            // 수강 신청 가능 학점을 넘었는 지 확인 
-            if(IsOverCredit())
-            {
-                registrationScreen.PrintTooMuchCredit();
-                registrationScreen.PrintProgressNotice();
-                Console.ReadKey();
-                Console.SetWindowSize(100, 40);
-                RunRegisterMenu();
-            }
-
-            else
-            {
-                // 똑같은 강의를 신청했는 지 확인 
-                if(IsAlreayHave(courseIndex))
-                {
-                    registrationScreen.PrintOverlapCourse();
-                    registrationScreen.PrintProgressNotice();
-                    Console.ReadKey();
-                    Console.SetWindowSize(100, 40);
-                    RunRegisterMenu();
-                }
-
-                else
-                {
-                    // 강의시간이 겹치지 않을 때 
-                    if (IsTimeOverlap(courseIndex))
-                    {
-                        registrations.Add(new RegistrationVO(attentions[courseIndex - 1].Major, attentions[courseIndex - 1].CourseNumber, attentions[courseIndex - 1].Distribution, attentions[courseIndex - 1].Title, attentions[courseIndex - 1].Sortation,
-                                   attentions[courseIndex - 1].Grade, attentions[courseIndex - 1].Score, attentions[courseIndex - 1].CourseTime, attentions[courseIndex - 1].ClassRoom, attentions[courseIndex - 1].Professor, attentions[courseIndex - 1].Language));
-                        registrationScreen.PrintAddNotice();
-                        registrationScreen.PrintProgressNotice();
-                        Console.ReadKey();
-                        Console.SetWindowSize(100, 40);
-                        RunRegisterMenu();
-                    }
-
-                    else
-                    {
-                        registrationScreen.PrintTimeOverlap();
-                        registrationScreen.PrintProgressNotice();
-                        Console.ReadKey();
-                        Console.SetWindowSize(100, 40);
-                        RunRegisterMenu();
-                    }
-                }
-            }
-
         }
 
         // 학점 초과인지 확인 
@@ -156,12 +406,12 @@ namespace LectureTimeTable2.Registeration
             int credit = 0;
             bool isOver = false;
 
-            for(int index = 0; index < registrations?.Count; index++)
+            for (int index = 0; index < registrations?.Count; index++)
             {
-                credit += Convert.ToInt32(registrations[index].Credit); 
+                credit += Convert.ToInt32(registrations[index].Credit);
             }
 
-            if(credit >= 21)
+            if (credit >= 21)
             {
                 isOver = true;
             }
@@ -170,14 +420,30 @@ namespace LectureTimeTable2.Registeration
         }
 
         // 중복된 과목인지 확인
-        public bool IsAlreayHave(int index)
+        public bool IsAlreayHaveForAttention(int index)
         {
             bool isHave = false;
             for (int registerIndex = 0; registerIndex < registrations?.Count; registerIndex++)
             {
-                if (registrations[registerIndex].Major == attentions[index-1].Major &&
-                    registrations[registerIndex].CourseNumber == attentions[index-1].CourseNumber &&
-                    registrations[registerIndex].Sortation == attentions[index-1].Sortation)
+                if (registrations[registerIndex].Major == attentions[index - 1].Major &&
+                    registrations[registerIndex].CourseNumber == attentions[index - 1].CourseNumber &&
+                    registrations[registerIndex].Sortation == attentions[index - 1].Sortation)
+                {
+                    isHave = true;
+                }
+            }
+
+            return isHave;
+        }
+
+        public bool IsAlreayHaveForAll(int index)
+        {
+            bool isHave = false;
+            for (int registerIndex = 0; registerIndex < registrations?.Count; registerIndex++)
+            {
+                if (registrations[registerIndex].Major == course[index - 1].Major &&
+                    registrations[registerIndex].CourseNumber == course[index - 1].CourseNumber &&
+                    registrations[registerIndex].Sortation == course[index - 1].Sortation)
                 {
                     isHave = true;
                 }
@@ -187,18 +453,45 @@ namespace LectureTimeTable2.Registeration
         }
 
         // 시간이 겹치는 지 확인
-        public bool IsTimeOverlap(int index)
+        public bool IsTimeOverlapForAttention(int index)
         {
             bool isRegister = Constants.DO_REGISTER;
 
             JugementOfOverlapedTime jugementOfOverlapedTime = new JugementOfOverlapedTime();
-            isRegister = jugementOfOverlapedTime.IsRegister(registrations, attentions[index-1].CourseTime);
+            isRegister = jugementOfOverlapedTime.IsRegister(registrations, attentions[index - 1].CourseTime);
 
             return isRegister;
         }
-        
-        // 강의 출력
-        public void ShowCourse(int index)
+
+        public bool IsTimeOverlapForAll(int index)
+        {
+            bool isRegister = Constants.DO_REGISTER;
+
+            JugementOfOverlapedTime jugementOfOverlapedTime = new JugementOfOverlapedTime();
+            isRegister = jugementOfOverlapedTime.IsRegister(registrations, course[index - 1].CourseTime);
+
+            return isRegister;
+        }
+
+        // 전체 강의 출력 
+        public void ShowALLCourse(int index)
+        {
+            Console.Write(" " + course[index].Major.PadRight(20 - course[index].Major.Length) + " ");
+            Console.Write(course[index].CourseNumber.PadRight(2) + " ");
+            Console.Write(course[index].Distribution.PadRight(2) + " ");
+            Console.Write(course[index].Title.PadRight(34 - course[index].Title.Length) + " ");
+            Console.Write(course[index].Sortation + " ");
+            Console.Write(course[index].Grade + " ");
+            Console.Write(course[index].Score + " ");
+            Console.Write(course[index].CourseTime + " ");
+            Console.Write(course[index].ClassRoom + " ");
+            Console.Write(course[index].Professor + " ");
+            Console.Write(course[index].Language + " ");
+            Console.WriteLine("\n");
+        }
+
+        // 관심 과목 강의 출력
+        public void ShowAttentionCourse(int index)
         {
             Console.Write(" " + attentions[index].Major.PadRight(20 - attentions[index].Major.Length) + " ");
             Console.Write(attentions[index].CourseNumber.PadRight(2) + " ");
@@ -213,5 +506,22 @@ namespace LectureTimeTable2.Registeration
             Console.Write(attentions[index].Language + " ");
             Console.WriteLine("\n");
         }
+
+        // 수강 신청 강의 출력
+        public void ShowRegistrationCourse(int index)
+        {
+            Console.Write(" " + registrations[index].Major.PadRight(20 - registrations[index].Major.Length) + " ");
+            Console.Write(registrations[index].CourseNumber.PadRight(2) + " ");
+            Console.Write(registrations[index].Distribution.PadRight(2) + " ");
+            Console.Write(registrations[index].Title.PadRight(34 - registrations[index].Title.Length) + " ");
+            Console.Write(registrations[index].Sortation + " ");
+            Console.Write(registrations[index].Grade + " ");
+            Console.Write(registrations[index].Credit + " ");
+            Console.Write(registrations[index].CourseTime + " ");
+            Console.Write(registrations[index].ClassRoom + " ");
+            Console.Write(registrations[index].Professor + " ");
+            Console.Write(registrations[index].Language + " ");
+            Console.WriteLine("\n");
+        }
     }
-}
+} 
