@@ -43,6 +43,8 @@ namespace LectureTimeTable2
 
         // 수강 신청 메뉴 
         public const int ATTENTIONREGISTER = 1;
+        public const int REGISTERBYSEARCH = 2;
+        public const int REVISE_REGISTRATION = 3;
         public const int REGISTER_BACK = 4; 
 
         // 시간이 겹치는 지 판단
