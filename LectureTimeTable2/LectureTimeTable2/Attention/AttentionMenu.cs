@@ -12,8 +12,8 @@ namespace LectureTimeTable2.AttentionProperty
         private List<AttentionVO> attentions;
         private List<RegistrationVO> registrations;
 
-        private AttentionScreen AttentionScreen;
-        private AttentionException AttentionException;
+        private AttentionScreen attentionScreen;
+        private AttentionException attentionException;
 
         public AttentionMenu(List<StudentsVO> students, List<CourseVO> course, List<AttentionVO> attentions, List<RegistrationVO> registrations)
         {
@@ -21,8 +21,8 @@ namespace LectureTimeTable2.AttentionProperty
             this.attentions = attentions;
             this.students = students;
             this.registrations = registrations;
-            this.AttentionScreen = new AttentionScreen();
-            this.AttentionException = new AttentionException();
+            this.attentionScreen = new AttentionScreen();
+            this.attentionException = new AttentionException();
         }
 
         // 메뉴 입력 받기
@@ -31,10 +31,10 @@ namespace LectureTimeTable2.AttentionProperty
             string menuCheck;
             int menu;
 
-            AttentionScreen.PrintAttentionSearchMenu();
-            AttentionScreen.PrintMenuInput();
+            attentionScreen.PrintAttentionSearchMenu();
+            attentionScreen.PrintMenuInput();
             menuCheck = Console.ReadLine();
-            menu = AttentionException.HandleAttentionMenuInupt(menuCheck);
+            menu = attentionException.HandleAttentionMenuInupt(menuCheck);
 
             return menu;
         }
@@ -71,9 +71,9 @@ namespace LectureTimeTable2.AttentionProperty
             string courseTitle;
 
             Console.Clear();
-            AttentionScreen.PrintGetCourseTitle();
+            attentionScreen.PrintGetCourseTitle();
             courseTitleCheck = Console.ReadLine();
-            courseTitle = AttentionException.HandleAttentionCourseTitle(courseTitleCheck);
+            courseTitle = attentionException.HandleAttentionCourseTitle(courseTitleCheck);
 
             return courseTitle;
         }
@@ -100,8 +100,8 @@ namespace LectureTimeTable2.AttentionProperty
             if (isFound)
             {
                 Console.Clear();
-                AttentionScreen.PrintNoFoundLecture();
-                AttentionScreen.PrintProgressNotice();
+                attentionScreen.PrintNoFoundLecture();
+                attentionScreen.PrintProgressNotice();
                 Console.ReadKey();
             }
 
@@ -131,9 +131,9 @@ namespace LectureTimeTable2.AttentionProperty
             string courseIndexCheck;
             string courseIndex;
 
-            AttentionScreen.PrintGetAttentionCourseNumber();
+            attentionScreen.PrintGetAttentionCourseNumber();
             courseIndexCheck = Console.ReadLine();
-            courseIndex = AttentionException.HandleAttentionCourseIndex(courseIndexCheck);
+            courseIndex = attentionException.HandleAttentionCourseIndex(courseIndexCheck);
 
             return courseIndex;
         }
@@ -177,16 +177,16 @@ namespace LectureTimeTable2.AttentionProperty
                         attentions.Add(new AttentionVO(course[courseIndex - 1].Major, course[courseIndex - 1].CourseNumber, course[courseIndex - 1].Distribution, course[courseIndex - 1].Title, course[courseIndex - 1].Sortation,
                                  course[courseIndex - 1].Grade, course[courseIndex - 1].Score, course[courseIndex - 1].CourseTime, course[courseIndex - 1].ClassRoom, course[courseIndex - 1].Professor, course[courseIndex - 1].Language));
 
-                        AttentionScreen.PrintAddNotice();
-                        AttentionScreen.PrintProgressNotice();
+                        attentionScreen.PrintAddNotice();
+                        attentionScreen.PrintProgressNotice();
                         Console.ReadKey();
                         Console.SetWindowSize(100, 40);
                     }
 
                     else
                     {
-                        AttentionScreen.PrintOverlapCourse();
-                        AttentionScreen.PrintProgressNotice();
+                        attentionScreen.PrintOverlapCourse();
+                        attentionScreen.PrintProgressNotice();
                         Console.ReadKey();
                         Console.SetWindowSize(100, 40);
                     }
@@ -195,8 +195,8 @@ namespace LectureTimeTable2.AttentionProperty
                 // 수강가능학점을 초과 했을 때 
                 else
                 {
-                    AttentionScreen.PrintTooMuchCredit();
-                    AttentionScreen.PrintProgressNotice();
+                    attentionScreen.PrintTooMuchCredit();
+                    attentionScreen.PrintProgressNotice();
                     Console.ReadKey();
                     Console.SetWindowSize(100, 40); 
                 }
@@ -215,7 +215,7 @@ namespace LectureTimeTable2.AttentionProperty
         {
             bool isFound = Constants.NONE;
 
-            AttentionScreen.PrintCourseLabel();
+            attentionScreen.PrintCourseLabel();
             
             for(int index = 0; index < attentions.Count; index++)
             {
@@ -227,7 +227,7 @@ namespace LectureTimeTable2.AttentionProperty
             if(isFound)
             {
                 Console.SetWindowSize(160, 40);
-                AttentionScreen.PrintProgressNotice();
+                attentionScreen.PrintProgressNotice();
                 Console.ReadKey();
                 RunAttentionMenu();
             }
@@ -239,9 +239,9 @@ namespace LectureTimeTable2.AttentionProperty
             string attentionCourseIndexCheck;
             string attentionCourseIndex;
 
-            AttentionScreen.PrintGetReviseAttentionCourse();
+            attentionScreen.PrintGetReviseAttentionCourse();
             attentionCourseIndexCheck = Console.ReadLine();
-            attentionCourseIndex = AttentionException.HandleGetReviseAttentionCourse(attentionCourseIndexCheck);
+            attentionCourseIndex = attentionException.HandleGetReviseAttentionCourse(attentionCourseIndexCheck);
 
             return attentionCourseIndex;
         }
@@ -266,16 +266,16 @@ namespace LectureTimeTable2.AttentionProperty
                 if(attentions.Count >= attentionCourseindex)
                 {
                     attentions.RemoveAt(attentionCourseindex - 1);
-                    AttentionScreen.PrintProgressNotice();
-                    AttentionScreen.PrintDeletNotice();
+                    attentionScreen.PrintDeletNotice();
+                    attentionScreen.PrintProgressNotice();
                     Console.ReadLine();
                     RunAttentionMenu();
                 }
 
                 else
                 {
-                    AttentionScreen.PrintNoFoundLecture();
-                    AttentionScreen.PrintProgressNotice();
+                    attentionScreen.PrintNoFoundLecture();
+                    attentionScreen.PrintProgressNotice();
                     Console.ReadLine();
                     RunAttentionMenu();
                 }
