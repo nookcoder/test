@@ -169,7 +169,7 @@ namespace LectureTimeTable2.LectureProperty
         public void LoadCourseBySubjectName(string subjectName)
         {
             bool isFound = Constants.NONE;
-            index = 0;
+            int index = 0;
             int courseIndex = 1;
 
             courseScreen.PrintCourseLabel();
@@ -262,7 +262,9 @@ namespace LectureTimeTable2.LectureProperty
         public void LoadAllCourse()
         {
             int courseIndex = 1;
+            int index ; 
             courseScreen.PrintCourseLabel();
+            index = 0;
             while (index < 169)
             {
                 Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
