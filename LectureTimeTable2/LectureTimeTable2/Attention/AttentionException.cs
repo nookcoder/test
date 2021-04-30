@@ -52,7 +52,7 @@ namespace LectureTimeTable2.AttentionProperty
 
         public string HandleAttentionCourseIndex(string courseIndexCheck)
         {
-            Regex regex = new Regex(@"^[1-9]{1,3}$");
+            Regex regex = new Regex(@"^[0-9]{1,3}$");
 
             // 종료(q)를 입력받았을 때
             if (courseIndexCheck == "q")
@@ -81,7 +81,7 @@ namespace LectureTimeTable2.AttentionProperty
 
         public string HandleGetReviseAttentionCourse(string attentionCourseNubmerCheck)
         {
-            Regex regex = new Regex(@"^[q1-9]{1,2}$");
+            Regex regex = new Regex(@"^[q0-9]{1,2}$");
 
             while(!regex.IsMatch(attentionCourseNubmerCheck))
             {
