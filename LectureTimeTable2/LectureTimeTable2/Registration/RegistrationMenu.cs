@@ -291,8 +291,8 @@ namespace LectureTimeTable2.Registeration
                             // 강의시간이 겹치지 않을 때 
                             if (IsTimeOverlapForAll(courseIndex))
                             {
-                                registrations.Add(new RegistrationVO(course[courseIndex - 1].Major, course[courseIndex - 1].CourseNumber, course[courseIndex - 1].Distribution, course[courseIndex - 1].Title, course[courseIndex - 1].Sortation,
-                                           course[courseIndex - 1].Grade, course[courseIndex - 1].Score, course[courseIndex - 1].CourseTime, course[courseIndex - 1].ClassRoom, course[courseIndex - 1].Professor, course[courseIndex - 1].Language));
+                                registrations.Add(new RegistrationVO(course[courseIndex].Major, course[courseIndex].CourseNumber, course[courseIndex].Distribution, course[courseIndex].Title, course[courseIndex].Sortation,
+                                           course[courseIndex].Grade, course[courseIndex].Score, course[courseIndex].CourseTime, course[courseIndex].ClassRoom, course[courseIndex].Professor, course[courseIndex].Language));
                                 registrationScreen.PrintAddNotice();
                                 registrationScreen.PrintProgressNotice();
                                 Console.ReadKey();

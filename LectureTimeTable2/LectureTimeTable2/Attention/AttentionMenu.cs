@@ -174,8 +174,8 @@ namespace LectureTimeTable2.AttentionProperty
                     // 담지 않은 과목이면 AttentionsVO 에 추가 
                     if (isFound)
                     {
-                        attentions.Add(new AttentionVO(course[courseIndex - 1].Major, course[courseIndex - 1].CourseNumber, course[courseIndex - 1].Distribution, course[courseIndex - 1].Title, course[courseIndex - 1].Sortation,
-                                 course[courseIndex - 1].Grade, course[courseIndex - 1].Score, course[courseIndex - 1].CourseTime, course[courseIndex - 1].ClassRoom, course[courseIndex - 1].Professor, course[courseIndex - 1].Language));
+                        attentions.Add(new AttentionVO(course[courseIndex].Major, course[courseIndex].CourseNumber, course[courseIndex].Distribution, course[courseIndex].Title, course[courseIndex].Sortation,
+                                 course[courseIndex].Grade, course[courseIndex].Score, course[courseIndex].CourseTime, course[courseIndex].ClassRoom, course[courseIndex].Professor, course[courseIndex].Language));
 
                         attentionScreen.PrintAddNotice();
                         attentionScreen.PrintProgressNotice();
