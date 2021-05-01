@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Excel = Microsoft.Office.Interop.Excel;
 using LectureTimeTable2.VOs;
+using System.Text.RegularExpressions;
 
 namespace LectureTimeTable2.LectureProperty
 {
@@ -29,7 +30,7 @@ namespace LectureTimeTable2.LectureProperty
             Console.WriteLine("\n");
             for (index = 0; index < 103; index++)
             {
-                Console.Write(index < 10 ? $"00{index}" : index < 100 ? $"0{index}" : $"{index}");
+                Console.Write(index < 10 ? $"00{index} " : index < 100 ? $"0{index} " : $"{index} ");
                 ShowCourse(index);
             }
             courseScreen.PrintProgressNotice();
@@ -40,54 +41,43 @@ namespace LectureTimeTable2.LectureProperty
         // 지능기전 전공 강의 출력 
         public void LoadIntelligenceMajor()
         {
-            try
-            {
-                Console.SetWindowSize(160, 40);
 
-                courseScreen.PrintCourseLabel();
-                Console.WriteLine("\n");
-                for (index = 0; index <= 48; index++)
-                {
-                    Console.Write(index < 10 ? $"00{index}" : index < 100 ? $"0{index}" : $"{index}");
-                    ShowCourse(index);
-                }
-                courseScreen.PrintProgressNotice();
-                Console.ReadLine();
-                Console.SetWindowSize(100, 40);
-                Console.SetWindowSize(100, 40);
-            }
+            Console.SetWindowSize(160, 40);
 
-            catch (SystemException e)
+            courseScreen.PrintCourseLabel();
+            Console.WriteLine("\n");
+            for (index = 0; index <= 48; index++)
             {
-                Console.WriteLine(e.Message);
+                Console.Write(index < 10 ? $"00{index} " : index < 100 ? $"0{index} " : $"{index} ");
+                ShowCourse(index);
             }
+            courseScreen.PrintProgressNotice();
+            Console.ReadLine();
+            Console.SetWindowSize(100, 40);
+            Console.SetWindowSize(100, 40);
+
         }
 
         // 기계항공 전공 강의 출력 
         public void LoadEngineeringMajor()
         {
-            try
+
+            Console.SetWindowSize(160, 40);
+
+            courseScreen.PrintCourseLabel();
+            Console.WriteLine("\n");
+            for (index = 0; index <= 18; index++)
             {
-                Console.SetWindowSize(160, 40);
-
-                courseScreen.PrintCourseLabel();
-                Console.WriteLine("\n");
-                for (index = 0; index <= 18; index++)
-                {
-                    Console.Write(index < 10 ? $"00{index}" : index < 100 ? $"0{index}" : $"{index}");
-                    ShowCourse(index);
-                }
-                courseScreen.PrintProgressNotice();
-                Console.ReadLine();
-
-                Console.SetWindowSize(100, 40);
+                Console.Write(index < 10 ? $"00{index} " : index < 100 ? $"0{index} " : $"{index} ");
+                ShowCourse(index);
             }
+            courseScreen.PrintProgressNotice();
+            Console.ReadLine();
 
-            catch (SystemException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            Console.SetWindowSize(100, 40);
         }
+
+
 
         // 학수 번호로 강의 출력 -> 종료 기능 다시 만들기 
         public void LoadCourseByCourseNumber(string courseNumber, string distribution)
@@ -114,7 +104,7 @@ namespace LectureTimeTable2.LectureProperty
                         if (courseNumber == course[index].CourseNumber)
                         {
                             isFound = Constants.FIND;
-                            Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
+                            Console.Write(courseIndex < 10 ? $"00{courseIndex} " : index < 100 ? $"0{courseIndex} " : $"{courseIndex} ");
                             ShowCourse(index);
                             courseIndex++;
                         }
@@ -178,7 +168,7 @@ namespace LectureTimeTable2.LectureProperty
                 if (course[index].Title.Contains(subjectName))
                 {
                     isFound = Constants.FIND;
-                    Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
+                    Console.Write(courseIndex < 10 ? $"00{courseIndex} " : index < 99 ? $"0{courseIndex} " : $"{courseIndex} ");
                     ShowCourse(index);
                     courseIndex++;
                 }
@@ -209,7 +199,7 @@ namespace LectureTimeTable2.LectureProperty
                 if (course[index].Grade.Contains(grade))
                 {
                     isFound = Constants.FIND;
-                    Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
+                    Console.Write(courseIndex < 10 ? $"00{courseIndex} " : index < 100 ? $"0{courseIndex} " : $"{courseIndex} ");
                     ShowCourse(index);
                     courseIndex++;
                 }
@@ -241,7 +231,7 @@ namespace LectureTimeTable2.LectureProperty
                 if (course[index].Professor.Contains(professor))
                 {
                     isFound = Constants.FIND;
-                    Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
+                    Console.Write(courseIndex < 10 ? $"00{courseIndex} " : index < 100 ? $"0{courseIndex} " : $"{courseIndex} ");
                     ShowCourse(index);
                     courseIndex++;
                 }
@@ -262,12 +252,12 @@ namespace LectureTimeTable2.LectureProperty
         public void LoadAllCourse()
         {
             int courseIndex = 1;
-            int index ; 
+            int index;
             courseScreen.PrintCourseLabel();
             index = 0;
             while (index < 169)
             {
-                Console.Write(courseIndex < 10 ? $"00{courseIndex}" : index < 100 ? $"0{courseIndex}" : $"{courseIndex}");
+                Console.Write(courseIndex < 10 ? $"00{courseIndex} " : index < 99 ? $"0{courseIndex} " : $"{courseIndex} ");
                 ShowCourse(index);
                 courseIndex++;
                 index++;
@@ -279,19 +269,8 @@ namespace LectureTimeTable2.LectureProperty
         // 강의 시간표 한줄 출력
         public void ShowCourse(int index)
         {
-            Console.SetWindowSize(160, 40);
-            Console.Write(" " + course[index].Major.PadRight(20 - course[index].Major.Length) + " ");
-            Console.Write(course[index].CourseNumber.PadRight(2) + " ");
-            Console.Write(course[index].Distribution.PadRight(2) + " ");
-            Console.Write(course[index].Title.PadRight(34 - course[index].Title.Length) + " ");
-            Console.Write(course[index].Sortation + " ");
-            Console.Write(course[index].Grade + " ");
-            Console.Write(course[index].Score + " ");
-            Console.Write(course[index].CourseTime + " ");
-            Console.Write(course[index].ClassRoom + " ");
-            Console.Write(course[index].Professor + " ");
-            Console.Write(course[index].Language + " ");
-            Console.WriteLine("\n");
+            PrintingCourse printingCourse = new PrintingCourse();
+            printingCourse.PrintCourse(course[index].Major, course[index].CourseNumber, course[index].Distribution, course[index].Title, course[index].Sortation, course[index].Grade, course[index].Score, course[index].CourseTime, course[index].ClassRoom, course[index].Professor,course[index].Language);
         }
     }
 }

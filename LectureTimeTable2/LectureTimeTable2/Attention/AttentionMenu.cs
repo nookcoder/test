@@ -2,6 +2,7 @@
 using LectureTimeTable2.VOs;
 using System;
 using System.Collections.Generic;
+using LectureTimeTable2.TimeTable;
 
 namespace LectureTimeTable2.AttentionProperty
 {
@@ -14,6 +15,7 @@ namespace LectureTimeTable2.AttentionProperty
 
         private AttentionScreen attentionScreen;
         private AttentionException attentionException;
+        private UserTimeTable userTimeTable;
 
         public AttentionMenu(List<StudentsVO> students, List<CourseVO> course, List<AttentionVO> attentions, List<RegistrationVO> registrations)
         {
@@ -165,7 +167,7 @@ namespace LectureTimeTable2.AttentionProperty
                     // 이미 담은 과목인지 확인
                     for(int index = 0; index < attentions.Count;index++)
                     {
-                        if(course[courseIndex - 1].CourseNumber == attentions[index].CourseNumber && course[courseIndex - 1].Distribution == attentions[index].Distribution)
+                        if(course[courseIndex].CourseNumber == attentions[index].CourseNumber)
                         {
                             isFound = Constants.FIND; 
                         }
@@ -229,6 +231,7 @@ namespace LectureTimeTable2.AttentionProperty
                 Console.SetWindowSize(160, 40);
                 attentionScreen.PrintProgressNotice();
                 Console.ReadKey();
+                Console.SetWindowSize(100, 40);
                 RunAttentionMenu();
             }
         }
@@ -256,6 +259,7 @@ namespace LectureTimeTable2.AttentionProperty
             
             if(attentionCourseindexString == "q")
             {
+                Console.SetWindowSize(100, 40);
                 RunAttentionMenu();
             }
 
@@ -269,6 +273,7 @@ namespace LectureTimeTable2.AttentionProperty
                     attentionScreen.PrintDeletNotice();
                     attentionScreen.PrintProgressNotice();
                     Console.ReadLine();
+                    Console.SetWindowSize(100, 40);
                     RunAttentionMenu();
                 }
 
@@ -277,7 +282,7 @@ namespace LectureTimeTable2.AttentionProperty
                     attentionScreen.PrintNoFoundLecture();
                     attentionScreen.PrintProgressNotice();
                     Console.ReadLine();
-                    RunAttentionMenu();
+                    Console.SetWindowSize(100, 40);RunAttentionMenu();
                 }
             }
         }
@@ -286,38 +291,16 @@ namespace LectureTimeTable2.AttentionProperty
         // 강의 출력 
         public void ShowCourse(int index)
         {
-            Console.SetWindowSize(160, 40);
-            Console.Write(" " + course[index].Major.PadRight(20 - course[index].Major.Length) + " ");
-            Console.Write(course[index].CourseNumber.PadRight(2) + " ");
-            Console.Write(course[index].Distribution.PadRight(2) + " ");
-            Console.Write(course[index].Title.PadRight(34 - course[index].Title.Length) + " ");
-            Console.Write(course[index].Sortation + " ");
-            Console.Write(course[index].Grade + " ");
-            Console.Write(course[index].Score + " ");
-            Console.Write(course[index].CourseTime + " ");
-            Console.Write(course[index].ClassRoom + " ");
-            Console.Write(course[index].Professor + " ");
-            Console.Write(course[index].Language + " ");
-            Console.WriteLine("\n");
-
+            PrintingCourse printingCourse = new PrintingCourse();
+            printingCourse.PrintCourse(course[index].Major, course[index].CourseNumber, course[index].Distribution, course[index].Title, course[index].Sortation, course[index].Grade, course[index].Score, course[index].CourseTime, course[index].ClassRoom, course[index].Professor, course[index].Language);
         }
 
         // 관심 과목 강의 출력 
         public void ShowAttentionCourse(int index)
         {
-            Console.SetWindowSize(160, 40);
-            Console.Write(" " + attentions[index].Major.PadRight(20 - attentions[index].Major.Length) + " ");
-            Console.Write(attentions[index].CourseNumber.PadRight(2) + " ");
-            Console.Write(attentions[index].Distribution.PadRight(2) + " ");
-            Console.Write(attentions[index].Title.PadRight(34 - attentions[index].Title.Length) + " ");
-            Console.Write(attentions[index].Sortation + " ");
-            Console.Write(attentions[index].Grade + " ");
-            Console.Write(attentions[index].Score + " ");
-            Console.Write(attentions[index].CourseTime + " ");
-            Console.Write(attentions[index].ClassRoom + " ");
-            Console.Write(attentions[index].Professor + " ");
-            Console.Write(attentions[index].Language + " ");
-            Console.WriteLine("\n");
+            PrintingCourse printingCourse = new PrintingCourse();
+            printingCourse.PrintCourse(attentions[index].Major, attentions[index].CourseNumber, attentions[index].Distribution, attentions[index].Title, attentions[index].Sortation, attentions[index].Grade, attentions[index].Score.ToString(), attentions[index].CourseTime, attentions[index].ClassRoom, attentions[index].Professor, attentions[index].Language);
+
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using LectureTimeTable2.VOs;
 using LectureTimeTable2.Login;
+using LectureTimeTable2.TimeTable;
 
 namespace LectureTimeTable2.LectureProperty
 {
@@ -18,6 +19,7 @@ namespace LectureTimeTable2.LectureProperty
         private CourseException courseException;
         private CourseScreen courseScreen;
         private InitialMenu initialMenu;
+        private UserTimeTable userTimeTable;
 
         private LoadingCourse loadingCourse;
 
@@ -72,7 +74,7 @@ namespace LectureTimeTable2.LectureProperty
                     break;
 
                 case Constants.ALL:
-                    SearchALL();
+                    SearchALL ();
                     break;
 
                 case Constants.BACK_TO_INITIALMENU:

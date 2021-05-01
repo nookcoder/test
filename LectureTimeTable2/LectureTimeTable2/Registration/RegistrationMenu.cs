@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LectureTimeTable2.VOs;
 using LectureTimeTable2.Login;
 using LectureTimeTable2.Registration;
+using LectureTimeTable2.TimeTable;
 
 namespace LectureTimeTable2.Registeration
 {
@@ -18,6 +19,7 @@ namespace LectureTimeTable2.Registeration
 
         private RegistrationException registrationException;
         private RegistrationScreen registrationScreen;
+        private UserTimeTable userTimeTable;
 
         public RegistrationMenu(List<StudentsVO> students, List<CourseVO> course, List<AttentionVO> attentions, List<RegistrationVO> registrations)
         {
@@ -476,52 +478,23 @@ namespace LectureTimeTable2.Registeration
         // 전체 강의 출력 
         public void ShowALLCourse(int index)
         {
-            Console.Write(" " + course[index].Major.PadRight(20 - course[index].Major.Length) + " ");
-            Console.Write(course[index].CourseNumber.PadRight(2) + " ");
-            Console.Write(course[index].Distribution.PadRight(2) + " ");
-            Console.Write(course[index].Title.PadRight(34 - course[index].Title.Length) + " ");
-            Console.Write(course[index].Sortation + " ");
-            Console.Write(course[index].Grade + " ");
-            Console.Write(course[index].Score + " ");
-            Console.Write(course[index].CourseTime + " ");
-            Console.Write(course[index].ClassRoom + " ");
-            Console.Write(course[index].Professor + " ");
-            Console.Write(course[index].Language + " ");
-            Console.WriteLine("\n");
+            PrintingCourse printingCourse = new PrintingCourse();
+            printingCourse.PrintCourse(course[index].Major, course[index].CourseNumber, course[index].Distribution, course[index].Title, course[index].Sortation, course[index].Grade, course[index].Score, course[index].CourseTime, course[index].ClassRoom, course[index].Professor, course[index].Language);
         }
 
         // 관심 과목 강의 출력
         public void ShowAttentionCourse(int index)
         {
-            Console.Write(" " + attentions[index].Major.PadRight(20 - attentions[index].Major.Length) + " ");
-            Console.Write(attentions[index].CourseNumber.PadRight(2) + " ");
-            Console.Write(attentions[index].Distribution.PadRight(2) + " ");
-            Console.Write(attentions[index].Title.PadRight(34 - attentions[index].Title.Length) + " ");
-            Console.Write(attentions[index].Sortation + " ");
-            Console.Write(attentions[index].Grade + " ");
-            Console.Write(attentions[index].Score + " ");
-            Console.Write(attentions[index].CourseTime + " ");
-            Console.Write(attentions[index].ClassRoom + " ");
-            Console.Write(attentions[index].Professor + " ");
-            Console.Write(attentions[index].Language + " ");
-            Console.WriteLine("\n");
+            PrintingCourse printingCourse = new PrintingCourse();
+            printingCourse.PrintCourse(attentions[index].Major, attentions[index].CourseNumber, attentions[index].Distribution, attentions[index].Title, attentions[index].Sortation, attentions[index].Grade, attentions[index].Score.ToString(), attentions[index].CourseTime, attentions[index].ClassRoom, attentions[index].Professor, attentions[index].Language);
         }
 
         // 수강 신청 강의 출력
         public void ShowRegistrationCourse(int index)
         {
-            Console.Write(" " + registrations[index].Major.PadRight(20 - registrations[index].Major.Length) + " ");
-            Console.Write(registrations[index].CourseNumber.PadRight(2) + " ");
-            Console.Write(registrations[index].Distribution.PadRight(2) + " ");
-            Console.Write(registrations[index].Title.PadRight(34 - registrations[index].Title.Length) + " ");
-            Console.Write(registrations[index].Sortation + " ");
-            Console.Write(registrations[index].Grade + " ");
-            Console.Write(registrations[index].Credit + " ");
-            Console.Write(registrations[index].CourseTime + " ");
-            Console.Write(registrations[index].ClassRoom + " ");
-            Console.Write(registrations[index].Professor + " ");
-            Console.Write(registrations[index].Language + " ");
-            Console.WriteLine("\n");
+            PrintingCourse printingCourse = new PrintingCourse();
+            printingCourse.PrintCourse(registrations[index].Major, registrations[index].CourseNumber, registrations[index].Distribution, registrations[index].Title, registrations[index].Sortation, registrations[index].Grade, registrations[index].Credit.ToString(), registrations[index].CourseTime, registrations[index].ClassRoom, registrations[index].Professor, registrations[index].Language);
+
         }
     }
 } 
