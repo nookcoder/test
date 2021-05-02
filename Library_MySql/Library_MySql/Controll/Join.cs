@@ -39,11 +39,33 @@ namespace Library_MySql.Controll
         {
             string nameCheck;
             string name;
-            Initialization.screen.PrintGetPassword();
+            Initialization.screen.PrintGetName();
             nameCheck = Console.ReadLine();
-            name = Initialization.exception.HandleGetPassword(nameCheck);
+            name = Initialization.exception.HandleGetName(nameCheck);
 
             return name;
+        }
+
+        public string GetPhoneNumber()
+        {
+            string phoneNumberCheck;
+            string phoneNumber;
+            Initialization.screen.PrintGetPhoneNumber();
+            phoneNumberCheck = Console.ReadLine();
+            phoneNumber = Initialization.exception.HandleGetPhoneNumber(phoneNumberCheck);
+
+            return phoneNumber;
+        }
+
+        public string GetAddress()
+        {
+            string addressCheck;
+            string address;
+            Initialization.screen.PrintGetAddress();
+            addressCheck = Console.ReadLine();
+            address = Initialization.exception.HandleGetAddress(addressCheck);
+
+            return address;
         }
     }
 }
