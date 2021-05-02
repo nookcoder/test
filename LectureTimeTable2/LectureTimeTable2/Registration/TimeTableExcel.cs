@@ -174,97 +174,6 @@ namespace LectureTimeTable2.TimeTable
             application.Quit();
         }
 
-        // 해당 시간에 맞는 위치에 과목이름 추가 하기 
-        /*public void AddRegistrationCourse(string day, List<RegistrationVO> registrations, int index)
-        {
-            if (registrations[index].CourseTime.Contains(day))
-            {
-                if (registrations[index].CourseTime.Contains("9:00~10:30"))
-                {
-                    worksheet.Cells[3, 2] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 3] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 4] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("10:30~12:00"))
-                {
-                    worksheet.Cells[3, 5] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 6] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 7] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("12:00~13:30"))
-                {
-                    worksheet.Cells[3, 8] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 9] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 10] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("13:30~15:00"))
-                {
-                    worksheet.Cells[3, 11] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 12] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 13] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("15:00~16:30"))
-                {
-                    worksheet.Cells[3, 14] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 15] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 16] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("16:30~18:00"))
-                {
-                    worksheet.Cells[3, 17] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 18] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 19] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("16:30~18:30"))
-                {
-                    worksheet.Cells[3, 17] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 18] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 19] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 20] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("18:30~19:30"))
-                {
-                    worksheet.Cells[3, 21] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 22] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("18:30~20:30"))
-                {
-                    worksheet.Cells[3, 21] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 22] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 23] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 24] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("18:00~20:00"))
-                {
-                    worksheet.Cells[3, 20] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 21] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 22] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 23] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("18:00~19:00"))
-                {
-                    worksheet.Cells[3, 20] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 21] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-
-                else if (registrations[index].CourseTime.Contains("19:00~20:00"))
-                {
-                    worksheet.Cells[3, 22] = registrations[index].Title + registrations[index].ClassRoom;
-                    worksheet.Cells[3, 23] = registrations[index].Title + registrations[index].ClassRoom;
-                }
-            }
-        }*/
-
         public void AddRegistrationCourse(int day, string courseTime, List<RegistrationVO> registrations, int index)
         {
 
@@ -507,6 +416,20 @@ namespace LectureTimeTable2.TimeTable
             {
                 worksheet.Cells[22, day] = registrations[index].Title + registrations[index].ClassRoom;
                 worksheet.Cells[23, day] = registrations[index].Title + registrations[index].ClassRoom;
+            }
+        }
+
+        public void PrintTimeTable()
+        {
+            Excel.Range cellRange = worksheet.get_Range("A1", "Q24") as Excel.Range;
+            Array data = (Array)cellRange.Cells.Value2;
+            for(int col = 1; col <=24; col++)
+            {
+                for(int row = 1; row<=16; row++)
+                {
+                    Console.Write(data.GetValue(col, row));
+                }
+                Console.WriteLine("\n");
             }
         }
     }
