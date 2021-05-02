@@ -55,6 +55,9 @@ namespace LectureTimeTable2
         public const bool DO_REGISTER = true;
         public const bool NO_REGISTER = false;
 
-
+        // 시간표 조회 
+        public const int PRINTTIMETABLE= 1;
+        public const int SAVETIMETABLE = 2;
+        public const int BACK_TIMETABLE = 3; 
     }
 }
