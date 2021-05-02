@@ -68,7 +68,7 @@ namespace Library_MySql
         {
             Console.WriteLine("\n");
             Console.WriteLine("\n");
-            Console.Write("  비밀번호(영어,숫자만)  : ");
+            Console.Write("  비밀번호(영어,숫자만) : ");
         }
 
 
