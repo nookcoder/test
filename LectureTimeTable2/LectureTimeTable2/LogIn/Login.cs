@@ -7,6 +7,8 @@ using LectureTimeTable2.VOs;
 using LectureTimeTable2.LectureProperty;
 using LectureTimeTable2.AttentionProperty;
 using LectureTimeTable2.Registeration;
+using LectureTimeTable2.TimeTable;
+using System.IO;
 
 namespace LectureTimeTable2.Login
 {
@@ -80,7 +82,7 @@ namespace LectureTimeTable2.Login
     }
 
     // 초기 메뉴 화면 관련 클래스 
-    class InitialMenu: LoginScreen
+    class InitialMenu
     {
         private List<StudentsVO> students;
         private List<CourseVO> lectures;
@@ -90,6 +92,9 @@ namespace LectureTimeTable2.Login
         private LoginException loginException;
         private AttentionMenu AttentionMenu;
         private RegistrationMenu RegisterationMenu;
+        private LoginScreen loginScreen;
+
+
         public InitialMenu(List<StudentsVO> students, List<CourseVO> lectures, List<AttentionVO> attentions,List<RegistrationVO> registrations)
         {
             this.students = students;
@@ -100,6 +105,7 @@ namespace LectureTimeTable2.Login
             this.loginException = new LoginException();
             this.AttentionMenu = new AttentionMenu(students, lectures, attentions, this.registrations);
             this.RegisterationMenu = new RegistrationMenu(students, lectures, attentions, this.registrations);
+            this.loginScreen = new LoginScreen();
         }
 
         // 초기 메뉴 실행 
@@ -112,8 +118,8 @@ namespace LectureTimeTable2.Login
             string menuCheck;
 
             // 메뉴 입력 받기
-            PrintInitialMenu();
-            PrintInitialMenuInput();
+            loginScreen.PrintInitialMenu();
+            loginScreen.PrintInitialMenuInput();
             menuCheck = Console.ReadLine();
             menu = Convert.ToInt32(loginException.HandleInitialMenu(menuCheck));
             
@@ -132,11 +138,82 @@ namespace LectureTimeTable2.Login
                 case Constants.REGISTRATION:
                     RegisterationMenu.RunRegisterMenu();
                     break;
-               
+                
+                case Constants.CHECKINGTIMETABLE:
+                    RunTimeTableMenu();
+                    break; 
+
                 case Constants.Exit:
                     Environment.Exit(0);
                     break;
             }
+        }
+
+        public void LoadTimeTable()
+        {
+            TimeTableExcel timeTableExcel = new TimeTableExcel();
+            timeTableExcel.InitializeTimeTableExcel();
+            timeTableExcel.RunAddRegistrationCourse(registrations);
+            
+        }
+
+        public int GetPrintOrSave()
+        {
+            string menuCheck;
+            int menu;
+
+            loginScreen.PrintGetPrintOrSvae();
+            loginScreen.PrintInitialMenuInput();
+            menuCheck = Console.ReadLine();
+            menu = Convert.ToInt32(loginException.HandleGetPrintOrSave(menuCheck));
+
+            return menu;
+        }
+            
+
+        public void RunTimeTableMenu()
+        {
+            int menu;
+            menu = GetPrintOrSave();
+            
+            switch (menu)
+            {
+                case Constants.PRINTTIMETABLE:
+                    PrintTimeTableInConsole();
+                    break;
+
+                case Constants.SAVETIMETABLE:
+                    SaveTimeTableInConsole();
+                    break;
+
+                case Constants.BACK_TIMETABLE:
+                    RunInitialMenu();
+                    break;
+            }
+        }
+
+        public void PrintTimeTableInConsole()
+        {
+            TimeTableExcel timeTableExcel = new TimeTableExcel();
+            timeTableExcel.InitializeTimeTableExcel();
+            timeTableExcel.RunAddRegistrationCourse(registrations);
+            Console.SetWindowSize(180, 40);
+            timeTableExcel.PrintTimeTable();
+            loginScreen.PrintProgressNotice();
+            Console.ReadLine();
+            Console.SetWindowSize(100, 40);
+            RunInitialMenu();
+        }
+
+        public void SaveTimeTableInConsole()
+        {
+            TimeTableExcel timeTableExcel = new TimeTableExcel();
+            timeTableExcel.InitializeTimeTableExcel();
+            timeTableExcel.RunAddRegistrationCourse(registrations);
+            timeTableExcel.SaveTimeTableExccel(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "시간표.xlsx"));
+            loginScreen.PrintProgressNotice();
+            Console.ReadLine();
+            RunInitialMenu();
         }
     }
 }
