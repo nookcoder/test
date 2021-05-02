@@ -85,5 +85,21 @@ namespace LectureTimeTable2.Login
             return menuCheck;
         }
 
+        public string HandleGetPrintOrSave(string menuCheck)
+        {
+            while (Constants.ERROR)
+            {
+                if (Regex.IsMatch(menuCheck, @"^[1-3]$"))
+                {
+                    break;
+                }
+
+                PrintInitialMenu();
+                PrintMenuError();
+                menuCheck = Console.ReadLine();
+            }
+
+            return menuCheck;
+        }
     }
 }
