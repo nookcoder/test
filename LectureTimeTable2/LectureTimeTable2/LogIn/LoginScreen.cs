@@ -126,5 +126,32 @@ namespace LectureTimeTable2.Login
             Console.Write(String.Format("{0,41}", " "));
             Console.Write("입력 : ");
         }
+
+        public void PrintGetPrintOrSvae()
+        {
+            Console.Clear();
+            Console.WriteLine("\n");
+            Console.Write(String.Format("{0,20}", " "));
+            Console.Write("============================================================");
+            Console.WriteLine("\n");
+            Console.Write(String.Format("{0,41}", " "));
+            Console.WriteLine("[1] 콘솔에서 출력하기");
+            Console.WriteLine("\n");
+            Console.Write(String.Format("{0,41}", " "));
+            Console.WriteLine("[2] 바탕화면에 저장하기");
+            Console.WriteLine("\n");
+            Console.Write(String.Format("{0,41}", " "));
+            Console.WriteLine("[3] 뒤로 가기");
+            Console.WriteLine("\n");
+            Console.Write(String.Format("{0,20}", " "));
+            Console.Write("============================================================");
+        }
+
+        public void PrintProgressNotice()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine(String.Format("{0,50}", "계속 진행하시려면 아무키나 눌러주세요."));
+        }
+
     }
 }
