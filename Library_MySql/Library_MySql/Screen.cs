@@ -53,7 +53,6 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-
         /// <summary>
         /// 회원가입 관련 화면 
         /// </summary>
@@ -106,12 +105,80 @@ namespace Library_MySql
         }
 
         /// <summary>
+        /// 도서 등록 화면 
+        /// </summary>
+        public void PrintGetBookId()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  도서 번호 : ");
+        }
+
+        public void PrintBookIdDuplicationError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("  중복된 도서 번호입니다!! ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+
+        public void PrintGetBookTitle()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  도서 제목: ");
+        }
+
+        public void PrintTitleDuplicationError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("  이미 있는 도서입니다!! ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void PrintGetBookPublisher()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  출판사 : ");
+        }
+
+        public void PrintGetBookAuthor()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  도서 저자 : ");
+        }
+
+        public void PrintGetBookPrice()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  도서 가격 : ");
+        }
+
+        public void PrintGetBookCount()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  등록 권수 : ");
+        }
+
+        /// <summary>
         /// 프로그램 전반적으로 쓰는 화면 
         /// </summary>
         public void PrintInputError()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("  다시 입력해주세요!! ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void PrintInput()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "입력 : ");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
