@@ -161,5 +161,36 @@ namespace Library_MySql
             return check;
         }
 
+        public string HandleGetBookUd(string check, BookData bookData)
+        {
+            Regex regex = new Regex(@"^[0-9]{,7}$");
+            while (!regex.IsMatch(check) || bookData.IsBookIdDuplication(check))
+            {
+                Console.SetCursorPosition(0, 3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 0);
+                Initialization.screen.PrintGetBookId();
+                Console.SetCursorPosition(0, 5);
+
+                if (!regex.IsMatch(check))
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if (bookData.IsBookIdDuplication(check))
+                {
+                    Initialization.screen.PrintBookIdDuplicationError();
+                }
+
+                Console.SetCursorPosition(14, 4);
+                check = Console.ReadLine();
+            }
+            Console.SetCursorPosition(0, 5);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 4);
+
+            return check;
+        }
+
     }
 }
