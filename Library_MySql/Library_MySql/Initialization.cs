@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library_MySql
 {
+    // 싱글턴 사용, Constants 관리 
     class Initialization
     {
         public static Screen screen = Screen.Instance();
@@ -19,7 +20,7 @@ namespace Library_MySql
             EXIT
         }
 
-
-
+        public const bool FIND = true;
+        public const bool NOFIND = false;
     }
 }
