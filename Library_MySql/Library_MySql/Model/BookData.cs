@@ -18,9 +18,9 @@ namespace Library_MySql.Model
             this.connection = new MySqlConnection(this.mySqlConnection);
         }
 
-        public void InsertMemberData(string bookId, string bookTitle, string bookPublisher, string bookAuthor, string bookPrice, string bookCount)
+        public void InsertBookData(string bookId, string bookTitle, string bookPublisher, string bookAuthor, string bookPrice, string bookCount)
         {
-            string insertQuery = "INSERT INTO member(bookId,bookTitle,bookPublisher,bookAuthor,bookPrice,bookCount) VALUES(@bookId,@bookTitle,@bookPublisher,@bookAuthor,@bookPrice,@bookCount)";
+            string insertQuery = "INSERT INTO book(bookId,bookTitle,bookPublisher,bookAuthor,bookPrice,bookCount) VALUES(@bookId,@bookTitle,@bookPublisher,@bookAuthor,@bookPrice,@bookCount)";
 
             connection.Open();
 
@@ -53,7 +53,7 @@ namespace Library_MySql.Model
             DataSet dataset = new DataSet();
             bool isFind = Initialization.NOFIND;
 
-            string selectQuert = "SELECT bookId FROM member";
+            string selectQuert = "SELECT bookId FROM book";
             MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
             adapter.Fill(dataset, "book");
 
@@ -75,7 +75,7 @@ namespace Library_MySql.Model
         {
             DataSet dataset = new DataSet();
             bool isFind = Initialization.NOFIND;
-            string selectQuert = "SELECT bookTitle FROM member";
+            string selectQuert = "SELECT bookTitle FROM book";
             
             MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
             
@@ -85,7 +85,7 @@ namespace Library_MySql.Model
             {
                 foreach (DataRow row in dataset.Tables[0].Rows)
                 {
-                    if (bookTitle == row["bookId"].ToString())
+                    if (bookTitle == row["bookTitle"].ToString())
                     {
                         isFind = Initialization.FIND;
                     }
