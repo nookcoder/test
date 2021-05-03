@@ -10,12 +10,17 @@ namespace Library_MySql.Controll
     class Registration
     {
         private MemberData memberData;
+        private BookData bookData;
 
         public Registration()
         {
             this.memberData = new MemberData();
+            this.bookData = new BookData();
         }
 
+        /// <summary>
+        /// 회원 가입 관련 함수 
+        /// </summary>
         public void RunRegisterMember()
         {
             string id, password, name, phoneNumber, address;
@@ -81,6 +86,51 @@ namespace Library_MySql.Controll
             address = Initialization.exception.HandleGetAddress(addressCheck);
 
             return address;
+        }
+
+        public void RunRegisterBook()
+        {
+            string bookid;
+            string bookTitle;
+            string bookPublisher;
+            string bookAuthor;
+            string bookPrice;
+
+            /*bookid =  //GetBookId();
+            bookTitle =  //GetBookId();
+            bookPublisher = //GetBookId();
+            bookAuthor = //GetBookId();
+            bookPrice = //GetBookId();*/
+        }
+
+        public void GetBookId()
+        {
+            string bookIdCheck;
+            string bookId;
+
+            Initialization.screen.PrintGetBookId();
+            bookIdCheck = Console.ReadLine();
+            bookId = Initialization.exception.HandleGetBookUd(bookIdCheck,book); 
+        }
+
+        public void GetBookTitle()
+        {
+
+        }
+
+        public void GetBookPublisher()
+        {
+
+        }
+
+        public void GetBookAuthor()
+        {
+
+        }
+
+        public void GetBookPrice()
+        {
+
         }
     }
 }
