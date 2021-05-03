@@ -20,6 +20,34 @@ namespace Library_MySql
             EXIT
         }
 
+        public enum ManagerMenu
+        {
+            INQUIRYMEMBER = 1,
+            MODIFYMEMBER,
+            ELIMINATEMEMBER,
+            INQUIRYBOOK,
+            REGISTERBOO,
+            MODIFYBOOK,
+            ELIMINATEBOOK,
+            BACK
+        }
+
+        public enum ModifyBookMenu
+        {
+            PRICE = 1,
+            COUNT,
+            BACK
+        }
+
+        public enum SearchBookMenu
+        {
+            TITLE= 1,
+            PUBLISHER,
+            AUTHOR,
+            ALL,
+            BACK
+        }
+
         public const bool FIND = true;
         public const bool NOFIND = false;
     }
