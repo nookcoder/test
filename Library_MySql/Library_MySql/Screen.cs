@@ -38,10 +38,6 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
         }
-
-        /// <summary>
-        /// 회원가입 관련 화면 
-        /// </summary>
         public void PrintInitalMenu()
         {
             Console.WriteLine(new String(' ', 20) + "[1] 회원 접속");
@@ -57,6 +53,10 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+
+        /// <summary>
+        /// 회원가입 관련 화면 
+        /// </summary>
         public void PrintGetId()
         {
             Console.WriteLine("\n");
@@ -70,7 +70,6 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.Write("  비밀번호(영어,숫자만) : ");
         }
-
 
         public void PrintGetName()
         {
@@ -92,12 +91,29 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.Write("  주소(OO시 OO대로/로/길) : ");
         }
+        public void PrintIdDuplicationError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("  중복된 아이디입니다!! ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
 
+        public void PrintPhoneNumberDuplicationError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("  중복된 전화번호입니다!! ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        /// <summary>
+        /// 프로그램 전반적으로 쓰는 화면 
+        /// </summary>
         public void PrintInputError()
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("  다시 입력해주세요!! ");
             Console.ForegroundColor = ConsoleColor.White;
         }
+
     }
 }
