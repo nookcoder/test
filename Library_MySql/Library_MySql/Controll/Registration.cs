@@ -95,42 +95,88 @@ namespace Library_MySql.Controll
             string bookPublisher;
             string bookAuthor;
             string bookPrice;
+            string bookCount; 
 
-            /*bookid =  //GetBookId();
-            bookTitle =  //GetBookId();
-            bookPublisher = //GetBookId();
-            bookAuthor = //GetBookId();
-            bookPrice = //GetBookId();*/
+            bookid =  GetBookId();
+            bookTitle =  GetBookTitle();
+            bookPublisher = GetBookPublisher();
+            bookAuthor = GetBookAuthor();
+            bookPrice = GetBookPrice();
+            bookCount = GetBookCount();
+
+            bookData.InsertBookData(bookid, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
         }
 
-        public void GetBookId()
+        public string GetBookId()
         {
             string bookIdCheck;
             string bookId;
 
             Initialization.screen.PrintGetBookId();
             bookIdCheck = Console.ReadLine();
-            bookId = Initialization.exception.HandleGetBookUd(bookIdCheck,book); 
+            bookId = Initialization.exception.HandleGetBookUd(bookIdCheck, bookData);
+
+            return bookId; 
         }
 
-        public void GetBookTitle()
+        public string GetBookTitle()
         {
+            string bookTitleCheck;
+            string bookTitle;
 
+            Initialization.screen.PrintGetBookTitle();
+            bookTitleCheck = Console.ReadLine();
+            bookTitle = Initialization.exception.HandleGetBookTitle(bookTitleCheck, bookData);
+
+            return bookTitle;
         }
 
-        public void GetBookPublisher()
+        public string GetBookPublisher()
         {
+            string bookPublisherCheck;
+            string bookPublisher;
 
+            Initialization.screen.PrintGetBookPublisher();
+            bookPublisherCheck = Console.ReadLine();
+            bookPublisher = Initialization.exception.HandleGetPublisher(bookPublisherCheck);
+
+            return bookPublisher;
         }
 
-        public void GetBookAuthor()
+        public string GetBookAuthor()
         {
+            string bookAuthorCheck;
+            string bookAuthor;
 
+            Initialization.screen.PrintGetBookAuthor();
+            bookAuthorCheck = Console.ReadLine();
+            bookAuthor = Initialization.exception.HandleGetBookAuthor(bookAuthorCheck);
+
+            return bookAuthor;
         }
 
-        public void GetBookPrice()
+        public string GetBookPrice()
         {
+            string bookPriceCheck;
+            string bookPrice;
 
+            Initialization.screen.PrintGetBookPrice();
+            bookPriceCheck = Console.ReadLine();
+            bookPrice = Initialization.exception.HandleGetBookPrice(bookPriceCheck);
+
+            return bookPrice;
+        }
+
+        public string GetBookCount()
+        {
+            string bookCountCheck;
+            string bookCount;
+
+            Initialization.screen.PrintGetBookCount();
+            bookCountCheck = Console.ReadLine();
+            bookCount = Initialization.exception.HandleGetBookCount(bookCountCheck);
+
+            return bookCount;
         }
     }
 }
