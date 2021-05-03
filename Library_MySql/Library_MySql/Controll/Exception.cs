@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Library_MySql.Model;
 
 namespace Library_MySql
 {
@@ -23,21 +24,33 @@ namespace Library_MySql
             return exception;
         }
 
-        public string HandleGetId(string check)
+        public string HandleGetId(string check, MemberData memberData)
         {
             Regex regex = new Regex(@"^[0-9a-zA-Z]");
 
-            while (!regex.IsMatch(check) || check?.Length == 0)
+            // 숫자 영어 로만 이루어진 아이디인지, 중복되는 아이디가 없는 지 확인
+            while (!regex.IsMatch(check) || check?.Length == 0 || memberData.IsMemberIdDuplication(check))
             {
                 Console.SetCursorPosition(0, 3);
                 Console.Write(new String(' ', 1000));
                 Console.SetCursorPosition(0, 0);
                 Initialization.screen.PrintGetId();
                 Console.SetCursorPosition(0, 5);
-                Initialization.screen.PrintInputError();
+                
+                if(!regex.IsMatch(check) || check?.Length == 0)
+                { 
+                    Initialization.screen.PrintInputError();
+                }
+                
+                else if(memberData.IsMemberIdDuplication(check))
+                {
+                    Initialization.screen.PrintIdDuplicationError();
+                }
+                
                 Console.SetCursorPosition(24, 4);
                 check = Console.ReadLine();
             }
+
             Console.SetCursorPosition(0, 5);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 4);
@@ -45,6 +58,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 비밀번호 예외처리 
         public string HandleGetPassword(string check)
         {
             Regex regex = new Regex(@"^[0-9a-zA-Z]");
@@ -67,9 +81,10 @@ namespace Library_MySql
             return check;
         }
 
+        // 이름 예외처리 
         public string HandleGetName(string check)
         {
-            Regex regex = new Regex(@"^[가-힣a-zA-Z]{2,}");
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]{2,}$");
 
             while (!regex.IsMatch(check) || check == null)
             {
@@ -88,18 +103,30 @@ namespace Library_MySql
 
             return check;
         }
-        public string HandleGetPhoneNumber(string check)
+
+        // 전화번호 예외처리 (중복 방지) 
+        public string HandleGetPhoneNumber(string check, MemberData memberData)
         {
             Regex regex = new Regex(@"^(010)(\d{4})(\d)");
             Regex regex1 = new Regex(@"^(011)(\d{4})(\d)");
-            while (!regex.IsMatch(check) || regex1.IsMatch(check))
+            while (!regex.IsMatch(check) || regex1.IsMatch(check) || memberData.IsMemberPhoneNumberDuplication(check))
             {
                 Console.SetCursorPosition(0, 15);
                 Console.Write(new String(' ', 1000));
                 Console.SetCursorPosition(0, 12);
                 Initialization.screen.PrintGetPhoneNumber();
                 Console.SetCursorPosition(0, 17);
-                Initialization.screen.PrintInputError();
+                
+                if(!regex.IsMatch(check) || regex1.IsMatch(check))
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if(memberData.IsMemberPhoneNumberDuplication(check))
+                {
+                    Initialization.screen.PrintPhoneNumberDuplicationError();
+                }
+                
                 Console.SetCursorPosition(23, 16);
                 check = Console.ReadLine();
             }
@@ -110,6 +137,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 주소 예외처리 
         public string HandleGetAddress(string check)
         {
             Regex regex = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)대로");
