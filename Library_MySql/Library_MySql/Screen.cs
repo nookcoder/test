@@ -59,7 +59,9 @@ namespace Library_MySql
         public void PrintGetId()
         {
             Console.WriteLine("\n");
-            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("  종료 : q 입력");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("  아이디(영어,숫자만) : ");
         }
 
@@ -103,6 +105,15 @@ namespace Library_MySql
             Console.Write("  중복된 전화번호입니다!! ");
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+        public void PrintJoinSuccess()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.WriteLine("  회원 가입 성공!!");
+            Console.WriteLine("  계속 진행하시려면 아무키나 눌러주세요 ");
+        }
+
 
         /// <summary>
         /// 도서 등록 화면 
@@ -178,6 +189,67 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void PrintSuccessRegisterBook()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.WriteLine("  성공!!");
+            Console.WriteLine("  계속 진행하시려면 아무키나 눌러주세요 ");
+        }
+
+        /// <summary>
+        /// 관리자 화면 출력 
+        /// </summary>
+        public void PrintManagerMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(new String(' ', 20) + "[2] 회원 조회");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 회원 정보 수정");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 회원 삭제");
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(new String(' ', 20) + "[4] 도서 조회");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[5] 도서 등록");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[6] 도서 수정");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[7] 도서 삭제");
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(new String(' ', 20) + "[8] 뒤로 가기");
+        }
+
+        public void PrintModifyBookMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(new String(' ', 20) + "[1] 도서 가격 수정");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 도서 수량 수정");
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(new String(' ', 20) + "[3] 뒤로 가기");
+        }
+
+        public void PrintSearchBookMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(new String(' ', 20) + "[1] 도서명 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 출판사 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 저자 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[4] 전체 조회"); 
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
+
+        }
+
+
         /// <summary>
         /// 프로그램 전반적으로 쓰는 화면 
         /// </summary>
@@ -192,9 +264,17 @@ namespace Library_MySql
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "입력 : ");
+            Console.Write(new String(' ', 20) + "입력 : ");
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+        public void PrintMenuInputError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(new String(' ', 20) + "다시 입력해주세요!!");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
 
     }
 }
