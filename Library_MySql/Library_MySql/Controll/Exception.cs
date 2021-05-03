@@ -163,7 +163,7 @@ namespace Library_MySql
 
         public string HandleGetBookUd(string check, BookData bookData)
         {
-            Regex regex = new Regex(@"^[0-9]{,7}$");
+            Regex regex = new Regex(@"^[0-9]{1,7}$");
             while (!regex.IsMatch(check) || bookData.IsBookIdDuplication(check))
             {
                 Console.SetCursorPosition(0, 3);
@@ -188,6 +188,148 @@ namespace Library_MySql
             Console.SetCursorPosition(0, 5);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 4);
+
+            return check;
+        }
+
+        public string HandleGetBookTitle(string check, BookData bookData)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z0-9]");
+
+            while (!regex.IsMatch(check) || check == null || bookData.IsBookTitleDuplication(check))
+            {
+                Console.SetCursorPosition(0, 7);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 4);
+                Initialization.screen.PrintGetBookTitle();
+                Console.SetCursorPosition(0, 9);
+                
+                if (!regex.IsMatch(check) || check == null)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if(bookData.IsBookTitleDuplication(check))
+                {
+                    Initialization.screen.PrintTitleDuplicationError();
+                }
+                Console.SetCursorPosition(13, 8);
+                check = Console.ReadLine();
+            }
+            Console.SetCursorPosition(0, 9);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 8);
+
+            return check;
+        }
+
+        public string HandleGetPublisher(string check)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+
+            while (!regex.IsMatch(check) || check == null)
+            {
+                Console.SetCursorPosition(0, 11);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 8);
+                Initialization.screen.PrintGetBookPublisher();
+                Console.SetCursorPosition(0, 13);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(11, 12);
+                check = Console.ReadLine();
+            }
+           
+            Console.SetCursorPosition(0, 13);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 12);
+
+            return check;
+        }
+
+        public string HandleGetBookAuthor(string check)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+
+            while (!regex.IsMatch(check) || check == null)
+            {
+                Console.SetCursorPosition(0, 15);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 12);
+                Initialization.screen.PrintGetBookAuthor();
+                Console.SetCursorPosition(0, 17);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(13, 16);
+                check = Console.ReadLine();
+            }
+           
+            Console.SetCursorPosition(0, 17);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 16);
+
+            return check;
+        }
+        public string HandleGetBookPrice(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]");
+
+            while (!regex.IsMatch(check) || check == null || check.Length > 6)
+            {
+                Console.SetCursorPosition(0, 19);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 16);
+                Initialization.screen.PrintGetBookPrice();
+                Console.SetCursorPosition(0, 21);
+                
+                if(!regex.IsMatch(check) || check == null)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+                
+                else if(check.Length > 6)
+                {
+                    Initialization.screen.PrintBookPriceError();
+                }
+                
+                Console.SetCursorPosition(14, 20);
+                check = Console.ReadLine();
+            }
+            
+            Console.SetCursorPosition(0, 21);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 20);
+
+            return check;
+        }
+
+        public string HandleGetBookCount(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]");
+
+            while (!regex.IsMatch(check) || check == null || check.Length > 2)
+            {
+                Console.SetCursorPosition(0, 23);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 20);
+                Initialization.screen.PrintGetBookPrice();
+                Console.SetCursorPosition(0, 25);
+
+                if (!regex.IsMatch(check) || check == null)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if(check.Length > 3)
+                {
+                    Initialization.screen.PrintBookCountError();
+                }
+
+                Console.SetCursorPosition(13, 24);
+                check = Console.ReadLine();
+            }
+
+            Console.SetCursorPosition(0, 25);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 24);
 
             return check;
         }
