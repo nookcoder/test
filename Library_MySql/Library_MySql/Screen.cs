@@ -92,6 +92,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.Write("  주소(OO시 OO대로/로/길) : ");
         }
+     
         public void PrintIdDuplicationError()
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -131,7 +132,6 @@ namespace Library_MySql
             Console.Write("  중복된 도서 번호입니다!! ");
             Console.ForegroundColor = ConsoleColor.White;
         }
-
 
         public void PrintGetBookTitle()
         {
@@ -193,7 +193,7 @@ namespace Library_MySql
         {
             Console.WriteLine("\n");
             Console.WriteLine("\n");
-            Console.WriteLine("  성공!!");
+            Console.WriteLine("  도서 등록 성공!!");
             Console.WriteLine("  계속 진행하시려면 아무키나 눌러주세요 ");
         }
 
@@ -249,6 +249,12 @@ namespace Library_MySql
 
         }
 
+        // 도서 검색 관련 화면 
+        public void PrintShowBookLabel()
+        {
+            //Console.Write(String.Format());
+        }
+
 
         /// <summary>
         /// 프로그램 전반적으로 쓰는 화면 
@@ -275,6 +281,36 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void PrintBar()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(new string('=', 150));
+            Console.ForegroundColor = ConsoleColor.White;
+        }
 
+        public void PrintBookLabel()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(" NO");
+            Console.Write(new String(' ', 7) + "도서 제목");
+            Console.Write(new String(' ', 46) + "출판사");
+            Console.Write(new String(' ', 19) + "도서 저자");
+            Console.Write(new String(' ', 31) + "도서 가격");
+            Console.Write(new String(' ', 3) + "권수");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
+        }
+
+        public void PrintNext()
+        {
+            Console.WriteLine("  계속 진행하시려면 아무키나 눌러주세요 ");
+        }
+
+        public void PrintExit()
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("  종료는 q 입력하면 되요");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
     }
 }
