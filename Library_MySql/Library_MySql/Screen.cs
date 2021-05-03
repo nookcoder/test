@@ -157,11 +157,25 @@ namespace Library_MySql
             Console.Write("  도서 가격 : ");
         }
 
+        public void PrintBookPriceError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("  너무 비싸지 않나요..? ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public void PrintGetBookCount()
         {
             Console.WriteLine("\n");
             Console.WriteLine("\n");
             Console.Write("  등록 권수 : ");
+        }
+
+        public void PrintBookCountError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("  너무 많지 않나요..? ");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         /// <summary>
