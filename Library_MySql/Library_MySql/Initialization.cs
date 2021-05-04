@@ -57,12 +57,22 @@ namespace Library_MySql
 
         public enum SearchBookMenu
         {
-            TITLE= 1,
+            TITLE = 1,
             PUBLISHER,
             AUTHOR,
             ALL,
             BACK
         }
+
+        public enum MemberMenu
+        {
+            INQUIRTBOOK = 1,
+            BORROW,
+            RETURN,
+            INQUIRTMEMBER,
+            BACK
+        }
+
 
         public const bool FIND = true;
         public const bool NOFIND = false;
