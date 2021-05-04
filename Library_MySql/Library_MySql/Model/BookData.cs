@@ -52,7 +52,7 @@ namespace Library_MySql.Model
         }
         
         // 책 데이터 변경
-        public void UpdateBookdate(string bookId ,string price)
+        public void UpdateBookPricedate(string bookId ,string price)
         {
             string updateQuery = "UPDATE book SET bookPrice=@bookPrice WHERE bookId=@bookId";
 
@@ -66,6 +66,27 @@ namespace Library_MySql.Model
             updateCommand.Parameters.Add("@bookId", MySqlDbType.VarChar, 10);
 
             updateCommand.Parameters[0].Value = price;
+            updateCommand.Parameters[1].Value = bookId;
+
+            updateCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+        public void UpdateBookCountdate(string bookId, string count)
+        {
+            string updateQuery = "UPDATE book SET bookCount=@bookCount WHERE bookId=@bookId";
+
+            connection.Open();
+
+            MySqlCommand updateCommand = new MySqlCommand();
+            updateCommand.Connection = connection;
+            updateCommand.CommandText = updateQuery;
+
+            updateCommand.Parameters.Add("@bookCount", MySqlDbType.VarChar, 20);
+            updateCommand.Parameters.Add("@bookId", MySqlDbType.VarChar, 10);
+
+            updateCommand.Parameters[0].Value = count;
             updateCommand.Parameters[1].Value = bookId;
 
             updateCommand.ExecuteNonQuery();
