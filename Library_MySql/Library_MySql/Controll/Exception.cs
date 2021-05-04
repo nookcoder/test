@@ -63,6 +63,27 @@ namespace Library_MySql
             return check;
         }
 
+        // 수정 도서 번호 예외 처리 
+        public string HandleGetIdInDelete(string check)
+        {
+            Regex regex = new Regex(@"^[0-9a-zA-Z]");
+            while (!regex.IsMatch(check) && check != "q")
+            {
+                Console.SetCursorPosition(0, 3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetDeleteId();
+                Console.SetCursorPosition(0, 7);
+                Initialization.screen.PrintInputError();
+
+                Console.SetCursorPosition(11, 6);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
+        // 회원 수정시 아이디 예외처리
         public string HandleGetIdInModifing(string check)
         {
             Regex regex = new Regex(@"^[0-9a-zA-Z]");
@@ -82,6 +103,31 @@ namespace Library_MySql
                 }
 
                 Console.SetCursorPosition(11, 6);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
+        public string HandleGetIdInLogin(string check)
+        {
+            Regex regex = new Regex(@"^[0-9a-zA-Z]");
+
+            // 숫자 영어 로만 이루어진 아이디인지 확인
+            while ((!regex.IsMatch(check) || check?.Length == 0) && check != "q")
+            {
+                Console.SetCursorPosition(0, 3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetLoginId();
+                Console.SetCursorPosition(0, 6);
+
+                if (!regex.IsMatch(check) || check?.Length == 0)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                Console.SetCursorPosition(24, 5);
                 check = Console.ReadLine();
             }
 
@@ -110,6 +156,26 @@ namespace Library_MySql
 
             return check;
         }
+
+        public string HandleGetPasswordInLogin(string check)
+        {
+            Regex regex = new Regex(@"^[0-9a-zA-Z]");
+
+            while (!regex.IsMatch(check) || check == null)
+            {
+                Console.SetCursorPosition(0, 7);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 6);
+                Initialization.screen.PrintGetPassword();
+                Console.SetCursorPosition(0, 11);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(27, 10);
+                check = Console.ReadLine();
+            }
+            
+            return check;
+        }
+
 
         // 이름 조회 예외처리 
         public string HandleGetName(string check)
