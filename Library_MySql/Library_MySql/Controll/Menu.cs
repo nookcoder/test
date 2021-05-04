@@ -15,6 +15,7 @@ namespace Library_MySql.Controll
         private Elimination elimination;
         private BookData bookdata;
         private MemberData memberData;
+        private LogIn login;
 
         public Menu()
         {
@@ -25,8 +26,8 @@ namespace Library_MySql.Controll
             this.bookdata = new BookData();
             this.elimination = new Elimination();
             this.memberData = new MemberData();
-            //RunMenu(registration);
-            RunManagerMenu();
+            this.login = new LogIn();
+            RunMenu(registration);
         }
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Library_MySql.Controll
             switch (menu)
             {
                 case (int)Initialization.InitalMenu.MEMBERLOGIN:
-
+                    RunMemberLogin(login);
                     break;
 
                 case (int)Initialization.InitalMenu.JOIN:
@@ -55,11 +56,75 @@ namespace Library_MySql.Controll
                     break;
 
                 case (int)Initialization.InitalMenu.MANAGERLOGIN:
+                    RunManagerLogin(login);
                     break;
 
                 case (int)Initialization.InitalMenu.EXIT:
                     Environment.Exit(0);
                     break;
+            }
+        }
+        
+        public void RunMemberLogin(LogIn logIn)
+        {
+            bool isSuccess;
+            Console.Clear();
+            isSuccess = logIn.RunCheckMember(memberData);
+            if(isSuccess)
+            {
+               RunMemberMenu();
+            }
+
+            else
+            {
+                RunMenu(registration);
+            }
+        }
+
+        public void RunManagerLogin(LogIn logIn)
+        {
+            bool isSuccess;
+            isSuccess = logIn.RunCheckManager();
+            if(isSuccess)
+            {
+                RunManagerMenu();
+            }
+
+            else
+            {
+                RunMenu(registration);
+            }
+        }
+
+        public void RunMemberMenu()
+        {
+            int menu;
+
+            Console.Clear();
+            Initialization.screen.PrintLabel();
+            Initialization.screen.PrintMemberMenu();
+            Initialization.screen.PrintInput();
+
+            menu = GetFiveMenu();
+
+            switch(menu)
+            {
+                case (int)Initialization.MemberMenu.INQUIRTBOOK:
+                    break;
+
+                case (int)Initialization.MemberMenu.BORROW:
+                    break;
+
+                case (int)Initialization.MemberMenu.RETURN:
+                    break;
+
+                case (int)Initialization.MemberMenu.INQUIRTMEMBER:
+                    break;
+
+                case (int)Initialization.MemberMenu.BACK:
+                    RunMenu(registration);
+                    break;
+
             }
         }
 
@@ -85,6 +150,7 @@ namespace Library_MySql.Controll
                     break;
 
                 case (int)Initialization.ManagerMenu.ELIMINATEMEMBER:
+                    RunDeleteMemberMenu(elimination);
                     break;
 
                 case (int)Initialization.ManagerMenu.INQUIRYBOOK:
@@ -98,7 +164,7 @@ namespace Library_MySql.Controll
 
                 case (int)Initialization.ManagerMenu.MODIFYBOOK:
                     RunModifyBookMenu(modification);
-                    
+
                     break;
 
                 case (int)Initialization.ManagerMenu.ELIMINATEBOOK:
@@ -122,9 +188,9 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintInquiryMemberMenu();
             Initialization.screen.PrintInput();
-            menu = GetFourMenu();
+            menu = GetFiveMenu();
 
-            switch(menu)
+            switch (menu)
             {
                 case (int)Initialization.InquiryMemberMenu.NAME:
                     inquiry.ShowMemberByName();
@@ -164,11 +230,11 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintInput();
             menu = GetThreeMenu();
 
-            switch(menu)
+            switch (menu)
             {
                 case (int)Initialization.ModifyMember.PHONENUMBER:
                     modification.RunModifyMemberPhoneNumber(memberData);
-                    RunManagerMenu(); 
+                    RunManagerMenu();
                     break;
 
                 case (int)Initialization.ModifyMember.ADDRESS:
@@ -181,7 +247,14 @@ namespace Library_MySql.Controll
                     break;
             }
             modification.RunModifyMemberPhoneNumber(memberData);
-            
+
+        }
+
+        // 회원 삭제 메뉴
+        public void RunDeleteMemberMenu(Elimination elimination)
+        {
+                elimination.RunDeleteMember(memberData);
+                RunManagerMenu();
         }
 
         // 도서 조회 메뉴
