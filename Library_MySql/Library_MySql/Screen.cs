@@ -53,6 +53,22 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void PrintMemberMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(new String(' ', 20) + "[1] 도서 조회");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 도서 대출");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 도서 반납");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[4] 내 정보");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         /// <summary>
         /// 회원가입 관련 화면 
         /// </summary>
@@ -63,6 +79,20 @@ namespace Library_MySql
             Console.WriteLine("  종료 : q 입력");
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("  아이디(영어,숫자만) : ");
+        }
+
+        public void PrintGetLoginId()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  아이디(영어,숫자만) : ");
+        }
+
+        public void PrintGetManagerCode()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  관리자 코드(\"*\" 입력하면 됩니다!!) : ");
         }
 
         public void PrintGetPassword()
@@ -113,6 +143,14 @@ namespace Library_MySql
             Console.Write("  중복된 전화번호입니다!! ");
             Console.ForegroundColor = ConsoleColor.White;
         }
+
+        public void PrintLoginError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("  잘못된 아이디/비밀번호입니다.");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
 
         public void PrintAgeError()
         {
@@ -312,7 +350,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[3] 저자 검색");
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[4] 전체 조회"); 
+            Console.WriteLine(new String(' ', 20) + "[4] 전체 조회");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
@@ -380,6 +418,14 @@ namespace Library_MySql
             Console.WriteLine("  삭제하려는 도서번호를 입력해주세요");
             Console.WriteLine("\n");
             Console.Write("  도서 번호 : ");
+        }
+
+        public void PrintGetDeleteId()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  삭제하려는 회원 아이디를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  아이디 : ");
         }
 
         /// <summary>
@@ -484,15 +530,37 @@ namespace Library_MySql
 
         public void PrintNoFindBookNOtice()
         {
-            Initialization.screen.PrintNoFindBook();
-            Initialization.screen.PrintNext();
+            PrintNoFindBook();
+            PrintNext();
             Console.ReadKey();
         }
 
         public void PrintNoFindMemberNOtice()
         {
-            Initialization.screen.PrintNoFIndMember();
-            Initialization.screen.PrintNext();
+            PrintNoFIndMember();
+            PrintNext();
+            Console.ReadKey();
+        }
+
+        // 로그인 화면 
+        public void PrintFailLogin()
+        {
+            PrintLoginError();
+            PrintNext();
+            Console.ReadKey();
+        }
+
+        public void PrintLogin()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("  로그인 성공!!");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void PrintLoginSuccess()
+        {
+            PrintLogin();
+            PrintNext();
             Console.ReadKey();
         }
     }
