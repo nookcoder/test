@@ -23,14 +23,20 @@ namespace Library_MySql.Controll
         /// </summary>
         public void RunRegisterMember()
         {
-            string id, password, name, phoneNumber, address;
+            string id, password, name, phoneNumber, address,age;
+
+            Console.Clear();
             id = GetMemberid();
             password = GetMemberPassword();
             name = GetMemberName();
             phoneNumber = GetMemberPhoneNumber();
             address = GetMemberAddress();
+            age = GetMemberAge();
 
-            memberData.InsertMemberData(id, password, name, phoneNumber, address, null);
+            memberData.InsertMemberData(id, password, name, phoneNumber, address, age);
+
+            Initialization.screen.PrintJoinSuccess();
+            Console.ReadKey();
         }
 
         public string GetMemberid()
@@ -88,6 +94,20 @@ namespace Library_MySql.Controll
             return address;
         }
 
+        public string GetMemberAge()
+        {
+            string ageCheck;
+            string age;
+            Initialization.screen.PrintGetAge();
+            ageCheck = Console.ReadLine();
+            age = Initialization.exception.HandleGetAge(ageCheck);
+
+            return ageCheck;
+        }
+
+        /// <summary>
+        /// 도서 등록 관련 함수 
+        /// </summary>
         public void RunRegisterBook()
         {
             string bookid;
@@ -95,8 +115,9 @@ namespace Library_MySql.Controll
             string bookPublisher;
             string bookAuthor;
             string bookPrice;
-            string bookCount; 
+            string bookCount;
 
+            Console.Clear();
             bookid =  GetBookId();
             bookTitle =  GetBookTitle();
             bookPublisher = GetBookPublisher();
@@ -105,6 +126,9 @@ namespace Library_MySql.Controll
             bookCount = GetBookCount();
 
             bookData.InsertBookData(bookid, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
+
+            Initialization.screen.PrintSuccessRegisterBook();
+            Console.ReadKey();
         }
 
         public string GetBookId()
