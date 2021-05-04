@@ -16,13 +16,13 @@ namespace Library_MySql.Model
 
         public MemberData()
         {
-            this.mySqlConnection = "Server=localhost;Database=member;Uid=root;Pwd=0000;Charset=utf8";
+            this.mySqlConnection = "Server=localhost;Database=member;Uid=root;Pwd=0000;Charset=utf8;Allow User Variables=True";
             this.connection = new MySqlConnection(this.mySqlConnection);
         }
 
-        public void InsertMemberData(string id, string password, string name, string phoneNumber, string address, string book)
+        public void InsertMemberData(string id, string password, string name, string phoneNumber, string address, string age)
         {
-            string insertQuery = "INSERT INTO member(Id,password,name,phoneNumber,address,book) VALUES(@id,@password,@name,@phoneNumber,@address,@book)";
+            string insertQuery = "INSERT INTO member(Id,password,name,phoneNumber,address,age) VALUES(@id,@password,@name,@phoneNumber,@address,@age)";
 
             connection.Open();
 
@@ -35,7 +35,7 @@ namespace Library_MySql.Model
             insertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 45);
             insertCommand.Parameters.Add("@phoneNumber", MySqlDbType.VarChar, 45);
             insertCommand.Parameters.Add("@address", MySqlDbType.VarChar, 45);
-            insertCommand.Parameters.Add("@book", MySqlDbType.VarChar, 45);
+            insertCommand.Parameters.Add("@age", MySqlDbType.VarChar, 45);
 
 
             insertCommand.Parameters[0].Value = id;
@@ -43,7 +43,7 @@ namespace Library_MySql.Model
             insertCommand.Parameters[2].Value = name;
             insertCommand.Parameters[3].Value = phoneNumber;
             insertCommand.Parameters[4].Value = address;
-            insertCommand.Parameters[5].Value = book;
+            insertCommand.Parameters[5].Value = age;
 
             insertCommand.ExecuteNonQuery();
 
@@ -119,7 +119,7 @@ namespace Library_MySql.Model
         // 책 데이터 삭제
         public void DeletMemberData(string id)
         {
-            string deleteQuery = "DELETE FROM member WHERE id=@id;";
+            string deleteQuery = "DELETE FROM member WHERE Id=@id;";
 
             connection.Open();
 
@@ -127,7 +127,7 @@ namespace Library_MySql.Model
             deleteCommand.Connection = connection;
             deleteCommand.CommandText = deleteQuery;
 
-            deleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 10);
+            deleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 45);
             deleteCommand.Parameters[0].Value = id;
 
             deleteCommand.ExecuteNonQuery();
@@ -162,8 +162,8 @@ namespace Library_MySql.Model
         {
             DataSet dataset = new DataSet();
             bool isFind = Initialization.NOFIND;
-
             string selectQuert = "SELECT phoneNumber FROM member";
+
             MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
             adapter.Fill(dataset, "member");
 
@@ -177,6 +177,40 @@ namespace Library_MySql.Model
                     }
                 }
             }
+
+            connection.Close();
+
+            return isFind;
+        }
+
+        public bool IsMemberPasswordDuplication(string id, string password)
+        {
+            DataSet dataset = new DataSet();
+            bool isFind = Initialization.NOFIND;
+
+            string selectQuery = "SELECT password FROM member WHERE Id =@id" ;
+
+            connection.Open();
+
+            MySqlCommand selectCommand = new MySqlCommand();
+            selectCommand.Connection = connection;
+            selectCommand.CommandText = selectQuery;
+
+            selectCommand.Parameters.Add("@id", MySqlDbType.VarChar, 45);
+            selectCommand.Parameters[0].Value = id;
+
+            MySqlDataReader reader = selectCommand.ExecuteReader();
+
+            while(reader.Read())
+            {
+                if(password == reader["password"].ToString())
+                {
+                    isFind = Initialization.FIND;
+                }
+            }
+
+            reader.Close();
+            connection.Close();
 
             return isFind;
         }
