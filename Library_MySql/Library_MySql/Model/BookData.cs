@@ -12,12 +12,15 @@ namespace Library_MySql.Model
     {
         private string mySqlConnection;
         private MySqlConnection connection;
+       
         public BookData()
         {
             this.mySqlConnection = "Server=localhost;Database=member;Uid=root;Pwd=0000;Charset=utf8";
             this.connection = new MySqlConnection(this.mySqlConnection);
         }
 
+
+        // 도서 데이터베이스에 넣기 
         public void InsertBookData(string bookId, string bookTitle, string bookPublisher, string bookAuthor, string bookPrice, string bookCount)
         {
             string insertQuery = "INSERT INTO book(bookId,bookTitle,bookPublisher,bookAuthor,bookPrice,bookCount) VALUES(@bookId,@bookTitle,@bookPublisher,@bookAuthor,@bookPrice,@bookCount)";
@@ -47,7 +50,44 @@ namespace Library_MySql.Model
 
             connection.Close();
         }
+        
+        public void UpdateBookdate(string bookId ,string price)
+        {
+            string updateQuery = "UPDATE book SET bookPrice=@bookPrice WHERE bookId=@bookId";
 
+            connection.Open();
+
+            MySqlCommand updateCommand = new MySqlCommand();
+            updateCommand.Connection = connection;
+            updateCommand.CommandText = updateQuery;
+
+            updateCommand.Parameters.Add("@bookPrice", MySqlDbType.VarChar, 20);
+            updateCommand.Parameters.Add("@bookId", MySqlDbType.VarChar, 10);
+
+            updateCommand.Parameters[0].Value = price;
+            updateCommand.Parameters[1].Value = bookId;
+
+            updateCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+        public void DeletBookdata(string bookid)
+        {
+            string deleteQuery = "DELETE FROM test WHERE bookId=@bookId";
+
+            connection.Open();
+
+            MySqlCommand deleteCommand = new MySqlCommand();
+            deleteCommand.Connection = connection;
+            deleteCommand.CommandText = deleteQuery;
+
+            deleteCommand.Parameters.Clear();
+
+            connection.Close();
+        }
+
+        // 중복되는 도서 번호가 있는 지 확인 
         public bool IsBookIdDuplication(string bookid)
         {
             DataSet dataset = new DataSet();
@@ -71,6 +111,7 @@ namespace Library_MySql.Model
             return isFind;
         }
 
+        // 중복되는 도서명이 있는 지 확인 
         public bool IsBookTitleDuplication(string bookTitle)
         {
             DataSet dataset = new DataSet();
