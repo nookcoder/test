@@ -115,6 +115,33 @@ namespace Library_MySql
             Console.WriteLine("  계속 진행하시려면 아무키나 눌러주세요 ");
         }
 
+        /// <summary>
+        /// 회원 정보 수정 관련 화면 
+        /// </summary>
+        public void PrintGetModifingMemberId()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  수정하려는 회원 아이디를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  아이디 : ");
+        }
+
+        public void PrintGetModifingPhoneNumber()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  수정된 회원 전화번호를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  전화번호('-' 제외) : ");
+        }
+
+        public void PrintGetModifingAddress()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  수정된 회원 주소를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  주소(OO시 OO대로/로/길) : ");
+        }
+
 
         /// <summary>
         /// 도서 등록 화면 
@@ -203,9 +230,9 @@ namespace Library_MySql
         public void PrintManagerMenu()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(new String(' ', 20) + "[2] 회원 조회");
+            Console.WriteLine(new String(' ', 20) + "[1] 회원 조회");
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[3] 회원 정보 수정");
+            Console.WriteLine(new String(' ', 20) + "[2] 회원 정보 수정");
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[3] 회원 삭제");
             Console.WriteLine("\n");
@@ -248,6 +275,19 @@ namespace Library_MySql
             Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
 
         }
+
+        public void PrintModifyMemberMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(new String(' ', 20) + "[1] 회원 전화번호 수정");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 회원 주소 수정");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 뒤로 가기");
+            Console.WriteLine("\n");
+        }
+
 
         // 도서 수정 관련
         public void PrintGetModifingBookId()
@@ -347,6 +387,13 @@ namespace Library_MySql
             Console.WriteLine("\n");
         }
 
+        public void PrintNoFIndMember()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  해당 회원은 존재하지 않습니다.");
+            Console.WriteLine("\n");
+        }
+
         public void PrintModifingNotice()
         {
 
@@ -366,6 +413,13 @@ namespace Library_MySql
         public void PrintNoFindBookNOtice()
         {
             Initialization.screen.PrintNoFindBook();
+            Initialization.screen.PrintNext();
+            Console.ReadKey();
+        }
+
+        public void PrintNoFindMemberNOtice()
+        {
+            Initialization.screen.PrintNoFIndMember();
             Initialization.screen.PrintNext();
             Console.ReadKey();
         }
