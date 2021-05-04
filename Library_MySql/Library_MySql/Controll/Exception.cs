@@ -27,7 +27,7 @@ namespace Library_MySql
         /// <summary>
         /// 회원가입 예외처리 함수
         /// </summary>
-        
+
         // 아이디 예외처리 
         public string HandleGetId(string check, MemberData memberData)
         {
@@ -41,17 +41,17 @@ namespace Library_MySql
                 Console.SetCursorPosition(0, 0);
                 Initialization.screen.PrintGetId();
                 Console.SetCursorPosition(0, 5);
-                
-                if(!regex.IsMatch(check) || check?.Length == 0)
-                { 
+
+                if (!regex.IsMatch(check) || check?.Length == 0)
+                {
                     Initialization.screen.PrintInputError();
                 }
-                
-                else if(memberData.IsMemberIdDuplication(check))
+
+                else if (memberData.IsMemberIdDuplication(check))
                 {
                     Initialization.screen.PrintIdDuplicationError();
                 }
-                
+
                 Console.SetCursorPosition(24, 3);
                 check = Console.ReadLine();
             }
@@ -121,17 +121,17 @@ namespace Library_MySql
                 Console.SetCursorPosition(0, 12);
                 Initialization.screen.PrintGetPhoneNumber();
                 Console.SetCursorPosition(0, 17);
-                
-                if(!regex.IsMatch(check) || !regex1.IsMatch(check))
+
+                if (!regex.IsMatch(check) || !regex1.IsMatch(check))
                 {
                     Initialization.screen.PrintInputError();
                 }
 
-                else if(memberData.IsMemberPhoneNumberDuplication(check))
+                else if (memberData.IsMemberPhoneNumberDuplication(check))
                 {
                     Initialization.screen.PrintPhoneNumberDuplicationError();
                 }
-                
+
                 Console.SetCursorPosition(23, 16);
                 check = Console.ReadLine();
             }
@@ -169,7 +169,7 @@ namespace Library_MySql
         /// <summary>
         /// 도서 예외처리
         /// </summary>
-        
+
         // 도서 번호 예외처리 
         public string HandleGetBookUd(string check, BookData bookData)
         {
@@ -215,7 +215,7 @@ namespace Library_MySql
                 Console.SetCursorPosition(0, 4);
                 Initialization.screen.PrintGetBookTitle();
                 Console.SetCursorPosition(0, 9);
-                
+
                 if (!regex.IsMatch(check) || check == null)
                 {
                     Initialization.screen.PrintInputError();
@@ -223,13 +223,36 @@ namespace Library_MySql
 
 
                 // 도서 중복막기
-                else if(bookData.IsBookTitleDuplication(check))
+                else if (bookData.IsBookTitleDuplication(check))
                 {
                     Initialization.screen.PrintTitleDuplicationError();
                 }
                 Console.SetCursorPosition(13, 8);
                 check = Console.ReadLine();
             }
+            Console.SetCursorPosition(0, 9);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 8);
+
+            return check;
+        }
+
+        public string HandleGetTitle(string check)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z0-9]");
+
+            while (!regex.IsMatch(check) || check == null)
+            {
+                Console.SetCursorPosition(0, 0);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 0);
+                Initialization.screen.PrintGetBookTitle();
+                Console.SetCursorPosition(0, 2);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(13, 4);
+                check = Console.ReadLine();
+            }
+
             Console.SetCursorPosition(0, 9);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 8);
@@ -253,10 +276,29 @@ namespace Library_MySql
                 Console.SetCursorPosition(11, 12);
                 check = Console.ReadLine();
             }
-           
+
             Console.SetCursorPosition(0, 13);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 12);
+
+            return check;
+        }
+
+        public string HandleGetPublisherInInquiry(string check)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+
+            while (!regex.IsMatch(check) || check == null)
+            {
+                Console.SetCursorPosition(0, 4);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetBookPublisher();
+                Console.SetCursorPosition(0, 4);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(11, 5);
+                check = Console.ReadLine();
+            }
 
             return check;
         }
@@ -277,13 +319,33 @@ namespace Library_MySql
                 Console.SetCursorPosition(13, 16);
                 check = Console.ReadLine();
             }
-           
+
             Console.SetCursorPosition(0, 17);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 16);
 
             return check;
         }
+
+        public string HandleGetAuthorInInquiry(string check)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+
+            while (!regex.IsMatch(check) || check == null)
+            {
+                Console.SetCursorPosition(0, 4);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetBookAuthor();
+                Console.SetCursorPosition(0, 4);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(11, 5);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
 
         // 도서 가격 예외처리 
         public string HandleGetBookPrice(string check)
@@ -297,22 +359,22 @@ namespace Library_MySql
                 Console.SetCursorPosition(0, 16);
                 Initialization.screen.PrintGetBookPrice();
                 Console.SetCursorPosition(0, 21);
-                
-                if(!regex.IsMatch(check) || check == null)
+
+                if (!regex.IsMatch(check) || check == null)
                 {
                     Initialization.screen.PrintInputError();
                 }
-                
+
                 // 7자리 정수면 막기
-                else if(check.Length > 6)
+                else if (check.Length > 6)
                 {
                     Initialization.screen.PrintBookPriceError();
                 }
-                
+
                 Console.SetCursorPosition(14, 20);
                 check = Console.ReadLine();
             }
-            
+
             Console.SetCursorPosition(0, 21);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 20);
@@ -338,7 +400,7 @@ namespace Library_MySql
                     Initialization.screen.PrintInputError();
                 }
 
-                else if(check.Length > 3)
+                else if (check.Length > 3)
                 {
                     Initialization.screen.PrintBookCountError();
                 }
@@ -362,7 +424,7 @@ namespace Library_MySql
         public string HandleGetFourMenu(string check)
         {
             Regex regex = new Regex("^[1-4]$");
-            while(!regex.IsMatch(check))
+            while (!regex.IsMatch(check))
             {
                 Console.SetCursorPosition(0, 23);
                 Console.Write(new String(' ', 1000));
@@ -416,7 +478,7 @@ namespace Library_MySql
         public string HandleManagerMenuInput(string check)
         {
             Regex regex = new Regex("^[1-8]$");
-            
+
             while (!regex.IsMatch(check))
             {
                 Console.SetCursorPosition(0, 35);
@@ -431,6 +493,19 @@ namespace Library_MySql
 
             return check;
         }
+
+        public int FindHangle(string str)
+        {
+            int length;
+            string str2;
+            string english;
+
+            length = str.Length;
+            
+            str2 = Regex.Replace(str, @"\s", "");
+            english = Regex.Replace(str, @"[^a-zA-Z0-9\.]", "");
+
+            return length - str2.Length + english.Length;
+        }
     }
 }
-    
