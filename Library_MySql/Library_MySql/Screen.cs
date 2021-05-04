@@ -92,7 +92,14 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.Write("  주소(OO시 OO대로/로/길) : ");
         }
-     
+
+        public void PrintGetAge()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("\n");
+            Console.Write("  나이 : ");
+        }
+
         public void PrintIdDuplicationError()
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -104,6 +111,13 @@ namespace Library_MySql
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Write("  중복된 전화번호입니다!! ");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void PrintAgeError()
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("  엥? ");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -142,6 +156,35 @@ namespace Library_MySql
             Console.Write("  주소(OO시 OO대로/로/길) : ");
         }
 
+        /// <summary>
+        /// 회원 조회 화면 
+        /// </summary>
+
+        // 회원 이름 검색 
+        public void PrintGetInquiringName()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  검색할 회원 이름을 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  이름 : ");
+        }
+
+        // 회원 나이 검색 
+        public void PrintGetInquiringAge()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  검색할 회원 나이를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  나이 : ");
+        }
+
+        public void PrintGetInquiringAddress()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  검색할 회원 주소를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  주소(OO시 OO대로/로/길) : ");
+        }
 
         /// <summary>
         /// 도서 등록 화면 
@@ -288,6 +331,22 @@ namespace Library_MySql
             Console.WriteLine("\n");
         }
 
+        public void PrintInquiryMemberMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(new String(' ', 20) + "[1] 회원 이름 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 회원 나이 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 회원 주소 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[4] 회원 전체 조회");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
+            Console.WriteLine("\n");
+        }
+
 
         // 도서 수정 관련
         public void PrintGetModifingBookId()
@@ -367,6 +426,19 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
         }
+
+        public void PrintMemberLabel()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(" ID");
+            Console.Write(new String(' ', 16) + "이름");
+            Console.Write(new String(' ', 22) + "전화 번호");
+            Console.Write(new String(' ', 17) + "주소");
+            Console.Write(new String(' ', 22) + "나이");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
+        }
+
 
         public void PrintNext()
         {
