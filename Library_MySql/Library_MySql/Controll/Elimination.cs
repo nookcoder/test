@@ -54,5 +54,44 @@ namespace Library_MySql.Controll
 
             else { }
         }
+
+        public string GetMemberId()
+        {
+            string IdCheck;
+            string Id;
+
+            Console.Clear();
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintGetDeleteId();
+            IdCheck = Console.ReadLine();
+            Id = Initialization.exception.HandleGetIdInDelete(IdCheck);
+
+            return Id;
+        }
+
+        public void RunDeleteMember(MemberData memberData)
+        {
+            string Id;
+
+            Id = GetMemberId();
+
+            if (Id != "q")
+            {
+                if (memberData.IsMemberIdDuplication(Id))
+                {
+                    memberData.DeletMemberData(Id);
+                    Initialization.screen.PrintDeletingNotice();
+                    Initialization.screen.PrintNext();
+                    Console.ReadKey();
+                }
+
+                else
+                {
+                    Initialization.screen.PrintNoFindMemberNOtice();
+                }
+            }
+
+            else { }
+        }
     }
 }
