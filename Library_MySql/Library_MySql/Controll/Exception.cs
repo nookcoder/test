@@ -111,7 +111,7 @@ namespace Library_MySql
             return check;
         }
 
-        // 이름 예외처리 
+        // 이름 조회 예외처리 
         public string HandleGetName(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z]{2,}$");
@@ -130,6 +130,74 @@ namespace Library_MySql
             Console.SetCursorPosition(0, 13);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 12);
+
+            return check;
+        }
+
+        public string HandleGetNameInInquiry(string check)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+
+            while ((!regex.IsMatch(check) || check == null) && check != "q")
+            {
+                Console.SetCursorPosition(0, 3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetInquiringName();
+                Console.SetCursorPosition(0, 7);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(8, 6);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
+        public string HandleGetAgeInInquiry(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]");
+
+            while ((!regex.IsMatch(check) || check == null) && check != "q")
+            {
+                Console.SetCursorPosition(0, 3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetInquiringAge();
+                Console.SetCursorPosition(0, 7);
+                if (!regex.IsMatch(check))
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if (check == "0" || Convert.ToInt32(check) >= 150)
+                {
+                    Initialization.screen.PrintAgeError();
+                }
+
+                Console.SetCursorPosition(8, 6);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
+        public string HandleGetAddressInInquiry(string check)
+        {
+            Regex regex = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)대로");
+            Regex regex1 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)로");
+            Regex regex2 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)길");
+
+            while (!regex.IsMatch(check) && !regex1.IsMatch(check) && !regex2.IsMatch(check) && check != "q")
+            {
+                Console.SetCursorPosition(0, 3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetInquiringAddress();
+                Console.SetCursorPosition(0, 7);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(28, 6);
+                check = Console.ReadLine();
+            }
 
             return check;
         }
@@ -167,6 +235,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 회원 전화번호 수정 예외처리 
         public string HandleGetPhoneNumberInModification(string check, MemberData memberData)
         {
             Regex regex = new Regex(@"^(010)(\d{4})(\d)");
@@ -226,7 +295,7 @@ namespace Library_MySql
             Regex regex = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)대로");
             Regex regex1 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)로");
             Regex regex2 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)길");
-            while ((!regex.IsMatch(check) && !regex1.IsMatch(check) && !regex2.IsMatch(check)) && check !="q")
+            while ((!regex.IsMatch(check) && !regex1.IsMatch(check) && !regex2.IsMatch(check)) && check != "q")
             {
                 Console.SetCursorPosition(0, 3);
                 Console.Write(new String(' ', 1000));
@@ -237,6 +306,38 @@ namespace Library_MySql
                 Console.SetCursorPosition(28, 6);
                 check = Console.ReadLine();
             }
+
+            return check;
+        }
+
+        // 회원 나이 예외처리 
+        public string HandleGetAge(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]{1,3}$");
+            while (!regex.IsMatch(check) || check == "0" || Convert.ToInt32(check) >= 150)
+            {
+                Console.SetCursorPosition(0, 23);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 20);
+                Initialization.screen.PrintGetAge();
+                Console.SetCursorPosition(0, 25);
+
+                if (!regex.IsMatch(check))
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if (check == "0" || Convert.ToInt32(check) >= 150)
+                {
+                    Initialization.screen.PrintAgeError();
+                }
+
+                Console.SetCursorPosition(9, 24);
+                check = Console.ReadLine();
+            }
+            Console.SetCursorPosition(0, 26);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 25);
 
             return check;
         }
@@ -278,6 +379,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 수정 도서 번호 예외 처리 
         public string HandleGetBookIdInModification(string check)
         {
             Regex regex = new Regex(@"^[0-9]{1,7}$");
@@ -300,6 +402,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 도서 가격 수정 예외처리 
         public string HandleGetBookPriceInModification(string check)
         {
             Regex regex = new Regex(@"^[0-9]{3,}");
@@ -368,6 +471,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 도서 제목 예외처리
         public string HandleGetTitle(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z0-9]");
@@ -415,6 +519,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 도서 출판사 조회 예외처리
         public string HandleGetPublisherInInquiry(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z]");
@@ -458,6 +563,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 도서 저자 조회 예외처리 
         public string HandleGetAuthorInInquiry(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z]");
@@ -476,7 +582,6 @@ namespace Library_MySql
 
             return check;
         }
-
 
         // 도서 가격 예외처리 
         public string HandleGetBookPrice(string check)
@@ -547,6 +652,7 @@ namespace Library_MySql
             return check;
         }
 
+        // 도서 수량 수정 예외처리 
         public string HandleGetBookCountInModification(string check)
         {
             Regex regex = new Regex(@"^[0-9]");
