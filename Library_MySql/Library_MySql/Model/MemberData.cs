@@ -13,6 +13,7 @@ namespace Library_MySql.Model
 
         private string mySqlConnection;
         private MySqlConnection connection;
+
         public MemberData()
         {
             this.mySqlConnection = "Server=localhost;Database=member;Uid=root;Pwd=0000;Charset=utf8";
@@ -64,35 +65,97 @@ namespace Library_MySql.Model
             MySqlDataAdapter da = new MySqlDataAdapter(selectQuery, connection);
             da.Fill(ds);
 
-            foreach(DataRow row in ds.Tables[0].Rows)
+            foreach (DataRow row in ds.Tables[0].Rows)
             {
                 Console.WriteLine(String.Format("이름 : {0} 아이디 : {1} 주소 : {2}", row["name"], row["Id"], row["address"]));
             }
- 
+
+            connection.Close();
+        }
+
+        // 회원 데이터 변경
+        public void UpdateMemberPhoneNumber(string Id, string phoneNumber)
+        {
+            string updateQuery = "UPDATE member SET phoneNumber=@phoneNumber WHERE Id=@Id";
+
+            connection.Open();
+
+            MySqlCommand updateCommand = new MySqlCommand();
+            updateCommand.Connection = connection;
+            updateCommand.CommandText = updateQuery;
+
+            updateCommand.Parameters.Add("@phoneNumber", MySqlDbType.VarChar, 20);
+            updateCommand.Parameters.Add("@Id", MySqlDbType.VarChar, 10);
+
+            updateCommand.Parameters[0].Value = phoneNumber;
+            updateCommand.Parameters[1].Value = Id;
+
+            updateCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+        public void UpdateMemberAddress(string Id, string address)
+        {
+            string updateQuery = "UPDATE member SET address=@address WHERE Id=@Id";
+
+            connection.Open();
+
+            MySqlCommand updateCommand = new MySqlCommand();
+            updateCommand.Connection = connection;
+            updateCommand.CommandText = updateQuery;
+
+            updateCommand.Parameters.Add("@address", MySqlDbType.VarChar, 20);
+            updateCommand.Parameters.Add("@Id", MySqlDbType.VarChar, 10);
+
+            updateCommand.Parameters[0].Value = address;
+            updateCommand.Parameters[1].Value = Id;
+
+            updateCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+        // 책 데이터 삭제
+        public void DeletMemberData(string id)
+        {
+            string deleteQuery = "DELETE FROM member WHERE id=@id;";
+
+            connection.Open();
+
+            MySqlCommand deleteCommand = new MySqlCommand();
+            deleteCommand.Connection = connection;
+            deleteCommand.CommandText = deleteQuery;
+
+            deleteCommand.Parameters.Add("@id", MySqlDbType.VarChar, 10);
+            deleteCommand.Parameters[0].Value = id;
+
+            deleteCommand.ExecuteNonQuery();
+
             connection.Close();
         }
 
         public bool IsMemberIdDuplication(string id)
         {
             DataSet dataset = new DataSet();
-            bool isFind = Initialization.NOFIND; 
+            bool isFind = Initialization.NOFIND;
 
             string selectQuert = "SELECT id FROM member";
             MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
             adapter.Fill(dataset, "member");
-            
-            if(dataset.Tables.Count>0)
+
+            if (dataset.Tables.Count > 0)
             {
                 foreach (DataRow row in dataset.Tables[0].Rows)
                 {
-                    if(id == row["id"].ToString())
+                    if (id == row["id"].ToString())
                     {
-                        isFind = Initialization.FIND; 
+                        isFind = Initialization.FIND;
                     }
                 }
             }
 
-            return isFind; 
+            return isFind;
         }
 
         public bool IsMemberPhoneNumberDuplication(string id)
