@@ -249,12 +249,39 @@ namespace Library_MySql
 
         }
 
-        // 도서 검색 관련 화면 
-        public void PrintShowBookLabel()
+        // 도서 수정 관련
+        public void PrintGetModifingBookId()
         {
-            //Console.Write(String.Format());
+            Console.WriteLine("\n");
+            Console.WriteLine("  수정하려는 도서번호를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  도서 번호 : ");
         }
 
+        public void PrintGetModifingBookPrice()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  수정하려는 도서 가격 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  도서 가격 : ");
+        }
+
+        public void PrintGetModifingBookCount()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  수정하려는 도서 권수 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  도서 권수 : ");
+        }
+
+        // 도서 삭제 관련
+        public void PrintGetDeleteBookId()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  삭제하려는 도서번호를 입력해주세요");
+            Console.WriteLine("\n");
+            Console.Write("  도서 번호 : ");
+        }
 
         /// <summary>
         /// 프로그램 전반적으로 쓰는 화면 
@@ -311,6 +338,36 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("  종료는 q 입력하면 되요");
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void PrintNoFindBook()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  해당 도서는 존재하지 않습니다.");
+            Console.WriteLine("\n");
+        }
+
+        public void PrintModifingNotice()
+        {
+
+            Console.WriteLine("\n");
+            Console.WriteLine("  성공적으로 변경되었습니다!!.");
+            Console.WriteLine("\n");
+        }
+
+        public void PrintDeletingNotice()
+        {
+
+            Console.WriteLine("\n");
+            Console.WriteLine("  성공적으로 삭제되었습니다!!.");
+            Console.WriteLine("\n");
+        }
+
+        public void PrintNoFindBookNOtice()
+        {
+            Initialization.screen.PrintNoFindBook();
+            Initialization.screen.PrintNext();
+            Console.ReadKey();
         }
     }
 }
