@@ -51,6 +51,7 @@ namespace Library_MySql.Model
             connection.Close();
         }
         
+        // 책 데이터 변경
         public void UpdateBookdate(string bookId ,string price)
         {
             string updateQuery = "UPDATE book SET bookPrice=@bookPrice WHERE bookId=@bookId";
@@ -72,9 +73,10 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
+        // 책 데이터 삭제
         public void DeletBookdata(string bookid)
         {
-            string deleteQuery = "DELETE FROM test WHERE bookId=@bookId";
+            string deleteQuery = "DELETE FROM book WHERE bookId=@bookId;";
 
             connection.Open();
 
@@ -82,7 +84,10 @@ namespace Library_MySql.Model
             deleteCommand.Connection = connection;
             deleteCommand.CommandText = deleteQuery;
 
-            deleteCommand.Parameters.Clear();
+            deleteCommand.Parameters.Add("@bookId", MySqlDbType.VarChar, 10);
+            deleteCommand.Parameters[0].Value = bookid;
+
+            deleteCommand.ExecuteNonQuery();
 
             connection.Close();
         }
