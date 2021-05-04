@@ -32,6 +32,13 @@ namespace Library_MySql
             BACK
         }
 
+        public enum ModifyMember
+        {
+            PHONENUMBER = 1,
+            ADDRESS,
+            BACK
+        }
+
         public enum ModifyBookMenu
         {
             PRICE = 1,
