@@ -203,6 +203,62 @@ namespace Library_MySql
             return check;
         }
 
+        public string HandleGetBookIdInModification(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]{1,7}$");
+            while (!regex.IsMatch(check) && check != "q")
+            {
+                Console.SetCursorPosition(0, 4);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 2);
+                Initialization.screen.PrintGetBookId();
+                Console.SetCursorPosition(0, 7);
+                Initialization.screen.PrintInputError();
+
+                Console.SetCursorPosition(14, 6);
+                check = Console.ReadLine();
+            }
+            Console.SetCursorPosition(0, 6);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 5);
+
+            return check;
+        }
+
+        public string HandleGetBookPriceInModification(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]");
+
+            while ((!regex.IsMatch(check) || check == null || check.Length > 6) && check != "q")
+            {
+                Console.SetCursorPosition(0, 4);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 2);
+                Initialization.screen.PrintGetBookPrice();
+                Console.SetCursorPosition(0, 7);
+
+                if (!regex.IsMatch(check) || check == null)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                // 7자리 정수면 막기
+                else if (check.Length > 6)
+                {
+                    Initialization.screen.PrintGetModifingBookPrice();
+                }
+
+                Console.SetCursorPosition(14, 6);
+                check = Console.ReadLine();
+            }
+
+            Console.SetCursorPosition(0, 6);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 5);
+
+            return check;
+        }
+
         // 도서 제목 등록 예외처리 
         public string HandleGetBookTitle(string check, BookData bookData)
         {
@@ -416,6 +472,39 @@ namespace Library_MySql
             return check;
         }
 
+        public string HandleGetBookCountInModification(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]");
+
+            while ((!regex.IsMatch(check) || check == null || check.Length > 2) && check != "q")
+            {
+                Console.SetCursorPosition(0, 3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, 1);
+                Initialization.screen.PrintGetModifingBookCount();
+                Console.SetCursorPosition(0, 7);
+
+                if (!regex.IsMatch(check) || check == null)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if (check.Length > 3)
+                {
+                    Initialization.screen.PrintBookCountError();
+                }
+
+                Console.SetCursorPosition(13, 6);
+                check = Console.ReadLine();
+            }
+
+            Console.SetCursorPosition(0, 6);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, 5);
+
+            return check;
+        }
+
         /// <summary>
         /// 메뉴 예외 처리
         /// </summary>
@@ -501,7 +590,7 @@ namespace Library_MySql
             string english;
 
             length = str.Length;
-            
+
             str2 = Regex.Replace(str, @"\s", "");
             english = Regex.Replace(str, @"[^a-zA-Z0-9\.]", "");
 
