@@ -32,6 +32,15 @@ namespace Library_MySql
             BACK
         }
 
+        public enum InquiryMemberMenu
+        {
+            NAME = 1,
+            AGE,
+            ADDRESS,
+            ALL,
+            BACK
+        }
+
         public enum ModifyMember
         {
             PHONENUMBER = 1,
