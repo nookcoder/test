@@ -44,22 +44,23 @@ namespace Library_MySql
             return text;
         }
 
-        public void PrintBookInformation(string text,int count)
+        public void PrintBookInformation(string text, int count)
         {
             string title;
             string author;
             string price;
             string publisher;
             string publishDate;
-            int bookCount = 0 ;
+            int bookCount = 0;
             string isbn;
             string description;
 
             JObject jobject = JObject.Parse(text);
             JToken jToken = jobject["items"];
-            foreach(JToken items in jToken)
+            Console.SetWindowSize(150, 45);
+            foreach (JToken items in jToken)
             {
-                if(bookCount != count)
+                if (bookCount != count)
                 {
                     title = items["title"].ToString();
                     author = items["author"].ToString();
@@ -72,11 +73,11 @@ namespace Library_MySql
                     Initialization.screen.PrintBar();
                     Console.WriteLine($"제목      : {title}");
                     Console.WriteLine($"저자      : {author}");
-                    Console.WriteLine($"가격      : {price}" );
+                    Console.WriteLine($"가격      : {price}");
                     Console.WriteLine($"출판사    : {publisher}");
                     Console.WriteLine($"출판 날짜 : {publishDate}");
                     Console.WriteLine($"ISBN      : {isbn}");
-                    Console.WriteLine($"상세설명  :{description}");
+                    Console.WriteLine($"상세설명  : {description}");
                     Initialization.screen.PrintBar();
 
                     Console.WriteLine("\n");
