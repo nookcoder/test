@@ -419,13 +419,14 @@ namespace Library_MySql
         public string HandleGetBookUd(string check, BookData bookData)
         {
             Regex regex = new Regex(@"^[0-9]{1,7}$");
-            while (!regex.IsMatch(check) || bookData.IsBookIdDuplication(check))
+            int positionY = Console.GetCursorPosition().Top;
+            while (!regex.IsMatch(check) || bookData.IsBookIdDuplication(check) && check !="q")
             {
-                Console.SetCursorPosition(0, 3);
+                Console.SetCursorPosition(0, positionY-1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 0);
+                Console.SetCursorPosition(0, positionY-5);
                 Initialization.screen.PrintGetBookId();
-                Console.SetCursorPosition(0, 5);
+                Console.SetCursorPosition(0, positionY+1);
 
                 if (!regex.IsMatch(check))
                 {
@@ -438,12 +439,12 @@ namespace Library_MySql
                     Initialization.screen.PrintBookIdDuplicationError();
                 }
 
-                Console.SetCursorPosition(14, 4);
+                Console.SetCursorPosition(14, positionY-1);
                 check = Console.ReadLine();
             }
-            Console.SetCursorPosition(0, 5);
+            Console.SetCursorPosition(0, positionY+1);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 4);
+            Console.SetCursorPosition(0, positionY);
 
             return check;
         }
@@ -472,21 +473,22 @@ namespace Library_MySql
         public string HandleGetBookIdInModification(string check)
         {
             Regex regex = new Regex(@"^[0-9]{1,7}$");
+            int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) && check != "q")
             {
-                Console.SetCursorPosition(0, 4);
+                Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 2);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetBookId();
-                Console.SetCursorPosition(0, 7);
+                Console.SetCursorPosition(0, positionY + 1);
                 Initialization.screen.PrintInputError();
 
-                Console.SetCursorPosition(14, 6);
+                Console.SetCursorPosition(14, positionY - 1);
                 check = Console.ReadLine();
             }
-            Console.SetCursorPosition(0, 6);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 5);
+            Console.SetCursorPosition(0, positionY - 1);
 
             return check;
         }
@@ -495,14 +497,14 @@ namespace Library_MySql
         public string HandleGetBookPriceInModification(string check)
         {
             Regex regex = new Regex(@"^[0-9]{3,}");
-
+            int positionY = Console.GetCursorPosition().Top;
             while ((!regex.IsMatch(check) || check == null || check.Length > 6) && check != "q")
             {
-                Console.SetCursorPosition(0, 4);
+                Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 2);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetBookPrice();
-                Console.SetCursorPosition(0, 7);
+                Console.SetCursorPosition(0, positionY + 1);
 
                 if (!regex.IsMatch(check) || check == null)
                 {
@@ -515,13 +517,13 @@ namespace Library_MySql
                     Initialization.screen.PrintGetModifingBookPrice();
                 }
 
-                Console.SetCursorPosition(14, 6);
+                Console.SetCursorPosition(14, positionY - 1);
                 check = Console.ReadLine();
             }
 
-            Console.SetCursorPosition(0, 6);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 5);
+            Console.SetCursorPosition(0, positionY - 1);
 
             return check;
         }
@@ -530,14 +532,16 @@ namespace Library_MySql
         public string HandleGetBookTitle(string check, BookData bookData)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z0-9]");
+            int positionX = Console.GetCursorPosition().Left;
+            int positionY = Console.GetCursorPosition().Top;
 
-            while (!regex.IsMatch(check) || check == null || bookData.IsBookTitleDuplication(check))
+            while (!regex.IsMatch(check) || check == null || bookData.IsBookTitleDuplication(check) && check != "q")
             {
-                Console.SetCursorPosition(0, 7);
+                Console.SetCursorPosition(0, positionY-1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 4);
+                Console.SetCursorPosition(0, positionY-5);
                 Initialization.screen.PrintGetBookTitle();
-                Console.SetCursorPosition(0, 9);
+                Console.SetCursorPosition(0, positionY+1);
 
                 if (!regex.IsMatch(check) || check == null)
                 {
@@ -550,12 +554,12 @@ namespace Library_MySql
                 {
                     Initialization.screen.PrintTitleDuplicationError();
                 }
-                Console.SetCursorPosition(13, 8);
+                Console.SetCursorPosition(13, positionY-1);
                 check = Console.ReadLine();
             }
-            Console.SetCursorPosition(0, 9);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 8);
+            Console.SetCursorPosition(0, positionY-1);
 
             return check;
         }
@@ -588,22 +592,22 @@ namespace Library_MySql
         public string HandleGetPublisher(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z]");
-
+            int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null)
             {
-                Console.SetCursorPosition(0, 11);
+                Console.SetCursorPosition(0, positionY-1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 8);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetBookPublisher();
-                Console.SetCursorPosition(0, 13);
+                Console.SetCursorPosition(0, positionY + 1);
                 Initialization.screen.PrintInputError();
-                Console.SetCursorPosition(11, 12);
+                Console.SetCursorPosition(11, positionY - 1);
                 check = Console.ReadLine();
             }
 
-            Console.SetCursorPosition(0, 13);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 12);
+            Console.SetCursorPosition(0, positionY - 1);
 
             return check;
         }
@@ -632,22 +636,22 @@ namespace Library_MySql
         public string HandleGetBookAuthor(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z]");
-
+            int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null)
             {
-                Console.SetCursorPosition(0, 15);
+                Console.SetCursorPosition(0, positionY -1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 12);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetBookAuthor();
-                Console.SetCursorPosition(0, 17);
+                Console.SetCursorPosition(0, positionY + 1);
                 Initialization.screen.PrintInputError();
-                Console.SetCursorPosition(13, 16);
+                Console.SetCursorPosition(13, positionY - 1);
                 check = Console.ReadLine();
             }
 
-            Console.SetCursorPosition(0, 17);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 16);
+            Console.SetCursorPosition(0, positionY-1);
 
             return check;
         }
@@ -656,16 +660,16 @@ namespace Library_MySql
         public string HandleGetAuthorInInquiry(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z]");
-
+            int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null)
             {
-                Console.SetCursorPosition(0, 4);
+                Console.SetCursorPosition(0, positionY -1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 1);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetBookAuthor();
-                Console.SetCursorPosition(0, 4);
+                Console.SetCursorPosition(0, positionY + 1);
                 Initialization.screen.PrintInputError();
-                Console.SetCursorPosition(11, 5);
+                Console.SetCursorPosition(11, positionY - 1);
                 check = Console.ReadLine();
             }
 
@@ -676,14 +680,14 @@ namespace Library_MySql
         public string HandleGetBookPrice(string check)
         {
             Regex regex = new Regex(@"^[0-9]{3,}");
-
+            int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null || check.Length > 6)
             {
-                Console.SetCursorPosition(0, 19);
+                Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 16);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetBookPrice();
-                Console.SetCursorPosition(0, 21);
+                Console.SetCursorPosition(0, positionY + 1);
 
                 if (!regex.IsMatch(check) || check == null)
                 {
@@ -696,13 +700,13 @@ namespace Library_MySql
                     Initialization.screen.PrintBookPriceError();
                 }
 
-                Console.SetCursorPosition(14, 20);
+                Console.SetCursorPosition(14, positionY -1);
                 check = Console.ReadLine();
             }
 
-            Console.SetCursorPosition(0, 21);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 20);
+            Console.SetCursorPosition(0, positionY - 1);
 
             return check;
         }
@@ -711,14 +715,14 @@ namespace Library_MySql
         public string HandleGetBookCount(string check)
         {
             Regex regex = new Regex(@"^[0-9]");
-
+            int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null || check.Length > 2)
             {
-                Console.SetCursorPosition(0, 23);
+                Console.SetCursorPosition(0, positionY -1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 20);
+                Console.SetCursorPosition(0, positionY -5);
                 Initialization.screen.PrintGetBookCount();
-                Console.SetCursorPosition(0, 25);
+                Console.SetCursorPosition(0, positionY +1);
 
                 if (!regex.IsMatch(check) || check == null)
                 {
@@ -730,13 +734,13 @@ namespace Library_MySql
                     Initialization.screen.PrintBookCountError();
                 }
 
-                Console.SetCursorPosition(13, 24);
+                Console.SetCursorPosition(13, positionY -1 );
                 check = Console.ReadLine();
             }
 
-            Console.SetCursorPosition(0, 25);
+            Console.SetCursorPosition(0, positionY );
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 24);
+            Console.SetCursorPosition(0, positionY -1);
 
             return check;
         }
@@ -774,6 +778,47 @@ namespace Library_MySql
 
             return check;
         }
+
+        // 도서 출력 갯수 예외처리 
+        public string HandleGetCountForShow(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]{1,2}$");
+            int positionY = Console.GetCursorPosition().Top;
+
+            while (!regex.IsMatch(check) || int.Parse(check) > 10 || int.Parse(check) == 0 && check != "q")
+            {
+                Console.SetCursorPosition(0, positionY-1);
+                Console.WriteLine(new String(' ',1000));
+                Console.SetCursorPosition(0, positionY-3);
+                Initialization.screen.PrintGetCountForShow();
+                Console.SetCursorPosition(0, positionY);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(34, positionY-1);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
+        // 도서 제목 예외처리
+        public string HandleGetTitleForShow(string check)
+        {
+            Regex regex = new Regex(@"^[가-힣a-zA-Z0-9]");
+            int positionY = Console.GetCursorPosition().Top;
+            while (!regex.IsMatch(check) || check == null && check != "q")
+            {
+                Console.SetCursorPosition(0, positionY - 1);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY - 3);
+                Initialization.screen.PrintGetTitleForShow();
+                Console.SetCursorPosition(0, positionY);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(25, positionY-1);
+                check = Console.ReadLine();
+            }
+            return check;
+        }
+
 
         /// <summary>
         /// 메뉴 예외 처리
@@ -888,6 +933,12 @@ namespace Library_MySql
             english = Regex.Replace(str, @"[^a-zA-Z0-9\.]", "");
 
             return length - str2.Length + english.Length;
+        }
+
+        public string  DeleteB(string text)
+        {
+            text = Regex.Replace(text, @"^[<|b|\\|>]", "");
+            return text;
         }
     }
 }
