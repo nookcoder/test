@@ -10,7 +10,10 @@ namespace Library_MySql
 {
     class Exception
     {
-        private Exception() { }
+        private Exception() 
+        {
+
+        }
 
         private static Exception exception = null;
 
@@ -825,6 +828,29 @@ namespace Library_MySql
                 Console.SetCursorPosition(0, 25);
                 Initialization.screen.PrintMenuInputError();
                 Console.SetCursorPosition(27, 26);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+        public string HandleGetSixMenu(string check)
+        {
+            int positionX;
+            int positionY;
+
+            positionY = Console.GetCursorPosition().Top;
+            positionX = Console.GetCursorPosition().Left;
+
+            Regex regex = new Regex("^[1-6]$");
+            while (!regex.IsMatch(check))
+            {
+                Console.SetCursorPosition(0, positionY-1);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY-3);
+                Initialization.screen.PrintInput();
+                Console.SetCursorPosition(0, positionY);
+                Initialization.screen.PrintMenuInputError();
+                Console.SetCursorPosition(27, positionY-1);
                 check = Console.ReadLine();
             }
 
