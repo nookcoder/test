@@ -38,20 +38,19 @@ namespace Library_MySql.Controll
                     MySqlDataReader reader = command.ExecuteReader();
 
                     Console.SetWindowSize(150, 45);
-                    Initialization.screen.PrintBar();
-                    Initialization.screen.PrintBookLabel();
 
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
                         if (reader["bookTitle"].ToString().Contains(title))
                         {
+                            Initialization.screen.PrintBar();
                             ShowBook(reader);
+                            Initialization.screen.PrintBar();
+                            Console.WriteLine("\n");
                         }
                     }
 
-                    Console.WriteLine("\n");
-                    Initialization.screen.PrintBar();
                     reader.Close();
                     connection.Close();
 
@@ -84,20 +83,19 @@ namespace Library_MySql.Controll
                     MySqlDataReader reader = command.ExecuteReader();
 
                     Console.SetWindowSize(150, 45);
-                    Initialization.screen.PrintBar();
-                    Initialization.screen.PrintBookLabel();
 
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
                         if (reader["bookPublisher"].ToString().Contains(publisher))
                         {
+                            Initialization.screen.PrintBar();
                             ShowBook(reader);
+                            Initialization.screen.PrintBar();
+                            Console.WriteLine("\n");
                         }
                     }
 
-                    Console.WriteLine("\n");
-                    Initialization.screen.PrintBar();
                     reader.Close();
                     connection.Close();
 
@@ -131,20 +129,19 @@ namespace Library_MySql.Controll
                     MySqlDataReader reader = command.ExecuteReader();
 
                     Console.SetWindowSize(150, 45);
-                    Initialization.screen.PrintBar();
-                    Initialization.screen.PrintBookLabel();
 
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
                         if (reader["bookAuthor"].ToString().Contains(author))
                         {
+                            Initialization.screen.PrintBar();
                             ShowBook(reader);
+                            Initialization.screen.PrintBar();
+                            Console.WriteLine("\n");
                         }
                     }
 
-                    Console.WriteLine("\n");
-                    Initialization.screen.PrintBar();
                     reader.Close();
                     connection.Close();
 
@@ -167,15 +164,14 @@ namespace Library_MySql.Controll
                 MySqlDataReader reader = command.ExecuteReader();
 
                 Console.SetWindowSize(150, 45);
-                Initialization.screen.PrintBar();
-                Initialization.screen.PrintBookLabel();
                 while (reader.Read())
                 {
+                    Initialization.screen.PrintBar();
                     ShowBook(reader);
+                    Initialization.screen.PrintBar();
+                    Console.WriteLine("\n");
                 }
 
-                Console.WriteLine("\n");
-                Initialization.screen.PrintBar();
                 reader.Close();
 
                 Initialization.screen.PrintNext();
@@ -188,18 +184,22 @@ namespace Library_MySql.Controll
         {
             string title;
             string bookInformation;
+            int count;
 
             title = GetTitle();
-            
+            count = Convert.ToInt32(Console.ReadLine());
+
             // 종료할 때 
             if (title == "q") { }
-            
+
             // 검색어를 입력했을 때 
             else
             {
-                bookInformation = api.GetBookInformation(title);
                 Console.SetWindowSize(150, 45);
-                Console.WriteLine(bookInformation);
+
+                bookInformation = api.GetBookInformation(title);
+                api.PrintBookInformation(bookInformation, count);
+
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
                 Console.SetWindowSize(60, 45);
@@ -209,22 +209,21 @@ namespace Library_MySql.Controll
         // 도서 출력 함수 
         public void ShowBook(MySqlDataReader reader)
         {
-            int titleLenght;
-            int publisherLenght;
-            int authorLength;
-
-            titleLenght = Initialization.exception.FindHangle(reader["bookTitle"].ToString());
-            publisherLenght = Initialization.exception.FindHangle(reader["bookPublisher"].ToString());
-            authorLength = Initialization.exception.FindHangle(reader["bookAuthor"].ToString());
-
-
             Console.WriteLine("\n");
-            Console.Write(String.Format(reader["bookId"].ToString().PadRight(10, ' ')));
+            Console.WriteLine($"도서 번호 : {reader["bookId"].ToString()}");
+            Console.WriteLine($"도서 제목 : {reader["bookTitle"].ToString()}");
+            Console.WriteLine($"출판사    : {reader["bookPublisher"].ToString()}");
+            Console.WriteLine($"저자      : {reader["bookAuthor"]}");
+            Console.WriteLine($"도서 가격 : {reader["bookPrice"]}원");
+            Console.WriteLine($"도서 권수 : {reader["bookCount"].ToString()}권");
+
+            /*Console.Write(String.Format(reader["bookId"].ToString().PadRight(10, ' ')));
             Console.Write(String.Format(reader["bookTitle"].ToString().PadRight(55 - reader["bookTitle"].ToString().Length + titleLenght), ' '));
             Console.Write(String.Format(reader["bookPublisher"].ToString().PadRight(25 - reader["bookPublisher"].ToString().Length + publisherLenght, ' ')));
             Console.Write(String.Format(reader["bookAuthor"].ToString().PadRight(40 - reader["bookAuthor"].ToString().Length + authorLength, ' ')));
             Console.Write(String.Format(reader["bookPrice"].ToString().PadRight(12, ' ')));
-            Console.Write(String.Format(reader["bookCount"].ToString().PadRight(8, ' ')));
+            Console.Write(String.Format(reader["bookCount"].ToString().PadRight(8, ' ')));*/
+
         }
 
         // 회원 이름 검색
@@ -250,20 +249,17 @@ namespace Library_MySql.Controll
                     MySqlDataReader reader = command.ExecuteReader();
 
                     Console.SetWindowSize(150, 45);
-                    Initialization.screen.PrintBar();
-                    Initialization.screen.PrintMemberLabel();
-
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
                         if (reader["name"].ToString().Contains(name))
                         {
+                            Initialization.screen.PrintBar();
                             ShowMember(reader);
+                            Initialization.screen.PrintBar();
+                            Console.WriteLine("\n");
                         }
                     }
-
-                    Console.WriteLine("\n");
-                    Initialization.screen.PrintBar();
                     reader.Close();
                     connection.Close();
 
@@ -297,20 +293,17 @@ namespace Library_MySql.Controll
                     MySqlDataReader reader = command.ExecuteReader();
 
                     Console.SetWindowSize(150, 45);
-                    Initialization.screen.PrintBar();
-                    Initialization.screen.PrintMemberLabel();
-
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
                         if (reader["age"].ToString().Contains(age))
                         {
+                            Initialization.screen.PrintBar();
                             ShowMember(reader);
+                            Initialization.screen.PrintBar();
+                            Console.WriteLine("\n");
                         }
                     }
-
-                    Console.WriteLine("\n");
-                    Initialization.screen.PrintBar();
                     reader.Close();
                     connection.Close();
 
@@ -344,20 +337,18 @@ namespace Library_MySql.Controll
                     MySqlDataReader reader = command.ExecuteReader();
 
                     Console.SetWindowSize(150, 45);
-                    Initialization.screen.PrintBar();
-                    Initialization.screen.PrintMemberLabel();
-
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
                         if (reader["address"].ToString().Contains(address))
                         {
+                            Initialization.screen.PrintBar();
                             ShowMember(reader);
+                            Initialization.screen.PrintBar();
+                            Console.WriteLine("\n");
+
                         }
                     }
-
-                    Console.WriteLine("\n");
-                    Initialization.screen.PrintBar();
                     reader.Close();
                     connection.Close();
 
@@ -381,15 +372,13 @@ namespace Library_MySql.Controll
                 MySqlDataReader reader = command.ExecuteReader();
 
                 Console.SetWindowSize(150, 45);
-                Initialization.screen.PrintBar();
-                Initialization.screen.PrintMemberLabel();
                 while (reader.Read())
                 {
+                    Initialization.screen.PrintBar();
                     ShowMember(reader);
+                    Initialization.screen.PrintBar();
+                    Console.WriteLine("\n");
                 }
-
-                Console.WriteLine("\n");
-                Initialization.screen.PrintBar();
                 reader.Close();
 
                 Initialization.screen.PrintNext();
@@ -400,23 +389,18 @@ namespace Library_MySql.Controll
 
         public void ShowMember(MySqlDataReader reader)
         {
-            int idLenght;
-            int nameLenght;
-            int phoneLength;
-            int addressLength;
+            Console.WriteLine($"회원 아이디 : {reader["Id"].ToString()}");
+            Console.WriteLine($"회원 이름   : {reader["name"].ToString()}");
+            Console.WriteLine($"전화 번호   : {reader["phoneNumber"].ToString()}");
+            Console.WriteLine($"주소        : {reader["address"].ToString()}");
+            Console.WriteLine($"나이        : {reader["age"].ToString()}세");
 
-            idLenght = Initialization.exception.FindHangle(reader["Id"].ToString());
-            nameLenght = Initialization.exception.FindHangle(reader["name"].ToString());
-            phoneLength = Initialization.exception.FindHangle(reader["phoneNumber"].ToString());
-            addressLength = Initialization.exception.FindHangle(reader["address"].ToString());
-
-
-            Console.WriteLine("\n");
+            /*Console.WriteLine("\n");
             Console.Write(String.Format(reader["Id"].ToString().PadRight(20 - reader["Id"].ToString().Length + idLenght, ' ')));
             Console.Write(String.Format(reader["name"].ToString().PadRight(26 - reader["name"].ToString().Length + nameLenght), ' '));
             Console.Write(String.Format(reader["phoneNumber"].ToString().PadRight(25 - reader["phoneNumber"].ToString().Length + phoneLength, ' ')));
             Console.Write(String.Format(reader["address"].ToString().PadRight(26 - reader["address"].ToString().Length + addressLength, ' ')));
-            Console.Write(String.Format(reader["age"].ToString().PadRight(12, ' ')));
+            Console.Write(String.Format(reader["age"].ToString().PadRight(12, ' ')));*/
         }
 
         public string GetTitle()
