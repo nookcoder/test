@@ -10,23 +10,29 @@ namespace Library_MySql.Controll
     class Menu
     {
         private Registration registration;
-        private Inquiry inquiry;
+        private Search inquiry;
         private Modification modification;
         private Elimination elimination;
         private BookData bookdata;
         private MemberData memberData;
         private LogIn login;
+        private Borrowing borrowing;
+        private BorrowingData borrowingData;
+        private Api api;
 
         public Menu()
         {
             Console.SetWindowSize(60, 45);
             this.registration = new Registration();
-            this.inquiry = new Inquiry();
+            this.inquiry = new Search();
             this.modification = new Modification();
             this.bookdata = new BookData();
             this.elimination = new Elimination();
             this.memberData = new MemberData();
-            this.login = new LogIn();
+            this.login = new LogIn();;
+            this.borrowing = new Borrowing();
+            this.borrowingData = new BorrowingData();
+            this.api = new Api();
             RunMenu(registration);
         }
 
@@ -67,12 +73,11 @@ namespace Library_MySql.Controll
         
         public void RunMemberLogin(LogIn logIn)
         {
-            bool isSuccess;
+            var isSuccess = logIn.RunCheckMember(memberData); ;
             Console.Clear();
-            isSuccess = logIn.RunCheckMember(memberData);
-            if(isSuccess)
+            if(isSuccess.Item1)
             {
-               RunMemberMenu();
+               RunMemberMenu(isSuccess.Item2);
             }
 
             else
@@ -96,7 +101,7 @@ namespace Library_MySql.Controll
             }
         }
 
-        public void RunMemberMenu()
+        public void RunMemberMenu(string id)
         {
             int menu;
 
@@ -110,15 +115,21 @@ namespace Library_MySql.Controll
             switch(menu)
             {
                 case (int)Initialization.MemberMenu.INQUIRTBOOK:
+                    RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.MemberMenu.BORROW:
+                    RunBorrowing(borrowing,id);
+                    RunMemberMenu(id);
                     break;
 
                 case (int)Initialization.MemberMenu.RETURN:
+                    RunReturn(borrowing, id);
+                    RunMemberMenu(id);
                     break;
 
                 case (int)Initialization.MemberMenu.INQUIRTMEMBER:
+                    RunModifyMemberM(modification, id);
                     break;
 
                 case (int)Initialization.MemberMenu.BACK:
@@ -126,6 +137,44 @@ namespace Library_MySql.Controll
                     break;
 
             }
+        }
+
+        public void RunModifyMemberM(Modification modification,string id)
+        {
+            int menu;
+
+            Console.Clear();
+            Initialization.screen.PrintLabel();
+            Initialization.screen.PrintModifyMemberMenu();
+            Initialization.screen.PrintInput();
+            menu = GetThreeMenu();
+
+            switch (menu)
+            {
+                case (int)Initialization.ModifyMember.PHONENUMBER:
+                    modification.RunModifyMemberPhoneNumber(memberData);
+                    RunMemberMenu(id);
+                    break;
+
+                case (int)Initialization.ModifyMember.ADDRESS:
+                    modification.RunModifyMemberAddress(memberData);
+                    RunMemberMenu(id);
+                    break;
+
+                case (int)Initialization.ModifyMember.BACK:
+                    RunMemberMenu(id);
+                    break;
+            }
+        }
+
+        public void RunBorrowing(Borrowing borrowing, string id)
+        {
+            borrowing.BorrowBook(inquiry, id, borrowingData, bookdata);
+        }
+
+        public void RunReturn(Borrowing borrowing, string id)
+        {
+            borrowing.ReturnBook(id,borrowingData);
         }
 
         // 관리자 메뉴
@@ -141,7 +190,7 @@ namespace Library_MySql.Controll
 
             switch (menu)
             {
-                case (int)Initialization.ManagerMenu.INQUIRYMEMBER:
+                case (int)Initialization.ManagerMenu.SEARCHMEMBER:
                     RunInquiryMemberMenu(inquiry);
                     break;
 
@@ -153,12 +202,12 @@ namespace Library_MySql.Controll
                     RunDeleteMemberMenu(elimination);
                     break;
 
-                case (int)Initialization.ManagerMenu.INQUIRYBOOK:
-                    RunInquiryBookMenu(inquiry);
+                case (int)Initialization.ManagerMenu.SEARCHBOOK:
+                    RunSearchBookMenu(inquiry);
                     break;
 
                 case (int)Initialization.ManagerMenu.REGISTERBOO:
-                    registration.RunRegisterBook();
+                    RunGetMethodOfRegister();
                     RunManagerMenu();
                     break;
 
@@ -180,7 +229,7 @@ namespace Library_MySql.Controll
         }
 
         // 회원 조회 메뉴
-        public void RunInquiryMemberMenu(Inquiry inquiry)
+        public void RunInquiryMemberMenu(Search inquiry)
         {
             int menu;
 
@@ -246,8 +295,6 @@ namespace Library_MySql.Controll
                     RunManagerMenu();
                     break;
             }
-            modification.RunModifyMemberPhoneNumber(memberData);
-
         }
 
         // 회원 삭제 메뉴
@@ -257,8 +304,66 @@ namespace Library_MySql.Controll
                 RunManagerMenu();
         }
 
+        // 도서 등록 메뉴
+
+        public void RunGetMethodOfRegister()
+        {
+            int menu;
+            menu = GetThreeMenu();
+            switch (menu)
+            {
+
+            }
+            
+        }
+
         // 도서 조회 메뉴
-        public void RunInquiryBookMenu(Inquiry inquiry)
+        public void RunSearchBookMenu(Search search)
+        {
+            int menu;
+
+            Console.Clear();
+            Initialization.screen.PrintLabel();
+            Initialization.screen.PrintSearchBookMenu();
+            Initialization.screen.PrintInput();
+            menu = GetSixMenu();
+
+            switch (menu)
+            {
+                case (int)Initialization.SearchBookMenu.TITLE:
+                    inquiry.ShowBookyTitle();
+                    Console.SetWindowSize(60, 45);
+                    RunSearchBookMenu(inquiry);
+                    break;
+
+                case (int)Initialization.SearchBookMenu.PUBLISHER:
+                    inquiry.ShowBookByPublisher();
+                    RunSearchBookMenu(inquiry);
+                    break;
+
+                case (int)Initialization.SearchBookMenu.AUTHOR:
+                    inquiry.ShowBookByAuthor();
+                    RunSearchBookMenu(inquiry);
+                    break;
+
+                case (int)Initialization.SearchBookMenu.NAVERAPI:
+                    inquiry.ShowBookByNaverApi(api);
+                    RunSearchBookMenu(inquiry);
+                    break;
+
+
+                case (int)Initialization.SearchBookMenu.ALL:
+                    inquiry.ShowAllBook();
+                    RunSearchBookMenu(inquiry);
+                    break;
+
+                case (int)Initialization.SearchBookMenu.BACK:
+                    RunManagerMenu();
+                    break;
+            }
+        }
+
+        public void RunInquiryBookMenuInMember(Search inquiry,string id)
         {
             int menu;
 
@@ -272,30 +377,31 @@ namespace Library_MySql.Controll
             {
                 case (int)Initialization.SearchBookMenu.TITLE:
                     inquiry.ShowBookyTitle();
-                    RunInquiryBookMenu(inquiry);
+                    Console.SetWindowSize(60, 45);
+                    RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenu.PUBLISHER:
                     inquiry.ShowBookByPublisher();
-                    RunInquiryBookMenu(inquiry);
+                    RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenu.AUTHOR:
                     inquiry.ShowBookByAuthor();
-                    RunInquiryBookMenu(inquiry);
+                    RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenu.ALL:
                     inquiry.ShowAllBook();
-                    RunInquiryBookMenu(inquiry);
+                    RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenu.BACK:
-                    RunManagerMenu();
+                    RunMemberMenu(id);
                     break;
             }
         }
-        
+
         // 도서 수정 메뉴
         public void RunModifyBookMenu(Modification modification)
         {
@@ -362,6 +468,18 @@ namespace Library_MySql.Controll
 
             menucheck = Console.ReadLine();
             menu = Convert.ToInt32(Initialization.exception.HandleGetFiveMenu(menucheck));
+
+            return menu;
+        }
+
+        public int GetSixMenu()
+        {
+
+            string menucheck;
+            int menu;
+
+            menucheck = Console.ReadLine();
+            menu = Convert.ToInt32(Initialization.exception.HandleGetSixMenu(menucheck));
 
             return menu;
         }
