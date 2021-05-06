@@ -172,7 +172,7 @@ namespace Library_MySql
                 Console.SetCursorPosition(27, 10);
                 check = Console.ReadLine();
             }
-            
+
             return check;
         }
 
@@ -441,6 +441,26 @@ namespace Library_MySql
             Console.SetCursorPosition(0, 5);
             Console.Write(new String(' ', 1000));
             Console.SetCursorPosition(0, 4);
+
+            return check;
+        }
+
+        public string HandleGetBookUdInBorrowing(string check)
+        {
+            int positionY = Console.GetCursorPosition().Top;
+            int positionX = Console.GetCursorPosition().Left;
+            Regex regex = new Regex(@"^[0-9]{1,7}$");
+            while (!regex.IsMatch(check))
+            {
+                Console.SetCursorPosition(0, positionY - 2);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY - 3);
+                Initialization.screen.PrintGetBorrowBookNumber();
+                Console.SetCursorPosition(0, positionY );
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(35, positionY-1);
+                check = Console.ReadLine();
+            }
 
             return check;
         }
