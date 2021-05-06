@@ -387,6 +387,34 @@ namespace Library_MySql
             Console.WriteLine("\n");
         }
 
+        public void PrintMethodRegister()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(new String(' ', 20) + "[1] 바로 추가하기");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 검색 후 추가하기");
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(new String(' ', 20) + "[3] 뒤로 가기");
+        }
+
+        public void PrintGetCountForShow()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  출력할 권수(숫자만/최대 10권) : ");
+        }
+
+        public void PrintGetTitleForShow()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  검색하려는 도서 제목 : ");
+        }
+
+        public void PrintNoticeRegister()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  등록하려는 책의 정보를 입력해주세요(종료는 q 입력해주세요)");
+        }
 
         // 도서 수정 관련
         public void PrintGetModifingBookId()
@@ -609,6 +637,13 @@ namespace Library_MySql
         {
             Console.WriteLine("\n");
             Console.Write("  반납되었습니다");
+        }
+
+        public void PrintNextProccess()
+        {
+            PrintNext();
+            Console.ReadKey();
+            Console.SetWindowSize(65, 45);
         }
     }
 }
