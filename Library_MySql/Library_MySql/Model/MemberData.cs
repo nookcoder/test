@@ -50,10 +50,9 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
-        // 회원 데이터 변경
-        public void UpdateMemberPhoneNumber(string Id, string phoneNumber)
+        public void UpdateMember(string Id,string target,string infomation)
         {
-            string updateQuery = "UPDATE member SET phoneNumber=@phoneNumber WHERE Id=@Id";
+            string updateQuery = "UPDATE member SET "+ target +"=@"+ target + " WHERE Id=@Id";
 
             connection.Open();
 
@@ -61,31 +60,10 @@ namespace Library_MySql.Model
             updateCommand.Connection = connection;
             updateCommand.CommandText = updateQuery;
 
-            updateCommand.Parameters.Add("@phoneNumber", MySqlDbType.VarChar, 20);
+            updateCommand.Parameters.Add("@"+ target, MySqlDbType.VarChar, 20);
             updateCommand.Parameters.Add("@Id", MySqlDbType.VarChar, 10);
 
-            updateCommand.Parameters[0].Value = phoneNumber;
-            updateCommand.Parameters[1].Value = Id;
-
-            updateCommand.ExecuteNonQuery();
-
-            connection.Close();
-        }
-
-        public void UpdateMemberAddress(string Id, string address)
-        {
-            string updateQuery = "UPDATE member SET address=@address WHERE Id=@Id";
-
-            connection.Open();
-
-            MySqlCommand updateCommand = new MySqlCommand();
-            updateCommand.Connection = connection;
-            updateCommand.CommandText = updateQuery;
-
-            updateCommand.Parameters.Add("@address", MySqlDbType.VarChar, 20);
-            updateCommand.Parameters.Add("@Id", MySqlDbType.VarChar, 10);
-
-            updateCommand.Parameters[0].Value = address;
+            updateCommand.Parameters[0].Value = infomation;
             updateCommand.Parameters[1].Value = Id;
 
             updateCommand.ExecuteNonQuery();
@@ -110,6 +88,29 @@ namespace Library_MySql.Model
             deleteCommand.ExecuteNonQuery();
 
             connection.Close();
+        }
+
+        public bool IsDuplication(string id, string target)
+        {
+            DataSet dataset = new DataSet();
+            bool isFind = Initialization.NOFIND;
+
+            string selectQuert = "SELECT "+ target + " FROM member";
+            MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
+            adapter.Fill(dataset, "member");
+
+            if (dataset.Tables.Count > 0)
+            {
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    if (id == row["\""+target+"\""].ToString())
+                    {
+                        isFind = Initialization.FIND;
+                    }
+                }
+            }
+
+            return isFind;
         }
 
         public bool IsMemberIdDuplication(string id)
