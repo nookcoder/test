@@ -74,6 +74,13 @@ namespace Library_MySql
             BACK
         }
 
+        public enum RegisterBook
+        {
+            DIRECTION = 1,
+            SEARCH, 
+            BACK
+        }
+
 
         public const bool FIND = true;
         public const bool NOFIND = false;
