@@ -207,8 +207,7 @@ namespace Library_MySql.Controll
                     break;
 
                 case (int)Initialization.ManagerMenu.REGISTERBOO:
-                    RunGetMethodOfRegister();
-                    RunManagerMenu();
+                    RunGetMethodOfRegister(registration);
                     break;
 
                 case (int)Initialization.ManagerMenu.MODIFYBOOK:
@@ -306,12 +305,27 @@ namespace Library_MySql.Controll
 
         // 도서 등록 메뉴
 
-        public void RunGetMethodOfRegister()
+        public void RunGetMethodOfRegister(Registration registration)
         {
             int menu;
+            Console.Clear();
+            Initialization.screen.PrintLabel();
+            Initialization.screen.PrintMethodRegister();
+            Initialization.screen.PrintInput();
             menu = GetThreeMenu();
             switch (menu)
             {
+                case (int)Initialization.RegisterBook.DIRECTION:
+                    registration.RunRegisterBook();
+                    RunGetMethodOfRegister(registration);
+                    break;
+                case (int)Initialization.RegisterBook.SEARCH:
+                    registration.RunRegisterBookFromSearch(api);
+                    RunGetMethodOfRegister(registration);
+                    break;
+                case (int)Initialization.RegisterBook.BACK:
+                    RunManagerMenu();
+                    break;
 
             }
             
