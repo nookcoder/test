@@ -35,7 +35,6 @@ namespace Library_MySql
                 Stream stream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 text = reader.ReadToEnd();
-                //Console.WriteLine(text);
             }
             else
             {
@@ -45,6 +44,52 @@ namespace Library_MySql
             return text;
         }
 
+        public void PrintBookInformation(string text,int count)
+        {
+            string title;
+            string author;
+            string price;
+            string publisher;
+            string publishDate;
+            int bookCount = 0 ;
+            string isbn;
+            string description;
 
+            JObject jobject = JObject.Parse(text);
+            JToken jToken = jobject["items"];
+            foreach(JToken items in jToken)
+            {
+                if(bookCount != count)
+                {
+                    title = items["title"].ToString();
+                    author = items["author"].ToString();
+                    price = items["price"].ToString();
+                    publisher = items["publisher"].ToString();
+                    publishDate = items["pubdate"].ToString();
+                    isbn = items["isbn"].ToString();
+                    description = items["description"].ToString();
+
+                    Initialization.screen.PrintBar();
+                    Console.WriteLine($"제목      : {title}");
+                    Console.WriteLine($"저자      : {author}");
+                    Console.WriteLine($"가격      : {price}" );
+                    Console.WriteLine($"출판사    : {publisher}");
+                    Console.WriteLine($"출판 날짜 : {publishDate}");
+                    Console.WriteLine($"ISBN      : {isbn}");
+                    Console.WriteLine($"상세설명  :{description}");
+                    Initialization.screen.PrintBar();
+
+                    Console.WriteLine("\n");
+
+                    bookCount++;
+                }
+
+                else
+                {
+                    break;
+                }
+            }
+
+        }
     }
 }
