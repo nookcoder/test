@@ -50,29 +50,6 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
-        public void SelectMemberData()
-        {
-            string selectQuery = "SELECT * FROM member";
-
-
-            connection.Open();
-
-            MySqlCommand selectCommand = new MySqlCommand();
-            selectCommand.Connection = connection;
-            selectCommand.CommandText = selectQuery;
-
-            DataSet ds = new DataSet();
-            MySqlDataAdapter da = new MySqlDataAdapter(selectQuery, connection);
-            da.Fill(ds);
-
-            foreach (DataRow row in ds.Tables[0].Rows)
-            {
-                Console.WriteLine(String.Format("이름 : {0} 아이디 : {1} 주소 : {2}", row["name"], row["Id"], row["address"]));
-            }
-
-            connection.Close();
-        }
-
         // 회원 데이터 변경
         public void UpdateMemberPhoneNumber(string Id, string phoneNumber)
         {
