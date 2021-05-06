@@ -11,14 +11,15 @@ namespace Library_MySql.Controll
 {
     class Borrowing
     {
-        private Inquiry Inquiry;
-
+        private Search Inquiry;
+        private MySqlConnection connection;
         public Borrowing()
         {
-            this.Inquiry = new Inquiry();
+            this.Inquiry = new Search();
+            this.connection = new MySqlConnection(Initialization.connection);
         }
 
-        public void BorrowBook(Inquiry inquiry, string id, BorrowingData borrowingData, BookData bookData)
+        public void BorrowBook(Search inquiry, string id, BorrowingData borrowingData, BookData bookData)
         {
             using (MySqlConnection connection = new MySqlConnection(Initialization.connection))
             {
@@ -98,42 +99,71 @@ namespace Library_MySql.Controll
 
         }
 
-        public void ReturnBook(string id, BorrowingData borrowingData)
+        // 책 반납 함수 
+        public bool ShowBookForReturn(string id)
         {
-            bool isFind = false;
-            string bookTitle;
+            bool isFind = true;
             Console.Clear();
             using (MySqlConnection connection = new MySqlConnection(Initialization.connection))
             {
-        
                 connection.Open();
                 string selectQuery = "SELECT * FROM borrowing WHERE id='" + id + "'";
                 MySqlCommand command = new MySqlCommand(selectQuery, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
-                Console.SetWindowSize(150, 45);
-                Initialization.screen.PrintBar();
-                Initialization.screen.PrintMemberLabel();
-                while (reader.Read())
+
+                if (reader["book1"] == null && reader["book2"] == null && reader["book3"] == null)
                 {
-                    ShowBorrowing(reader);
+                    isFind = false;
+                    Initialization.screen.PrintNoReturnBookNotice();
+                    Initialization.screen.PrintNextProccess();
                 }
+                else
+                {
+                    Console.SetWindowSize(60, 45);
+                    Initialization.screen.PrintMiniBar();
+                    while (reader.Read())
+                    {
+                        if (reader["book1"] != null)
+                        {
+                            ShowBorrowing(reader, 1);
+                        }
 
-                Console.WriteLine("\n");
-                Initialization.screen.PrintBar();
-                reader.Close();
-                connection.Close();
+                        if (reader["book2"] != null)
+                        {
+                            ShowBorrowing(reader, 2);
+                        }
 
-                connection.Open();
+                        if (reader["book3"] != null)
+                        {
+                            ShowBorrowing(reader, 3);
+                        }
+                    }
+                    Console.WriteLine("\n");
+                    Initialization.screen.PrintMiniBar();
+                    reader.Close();
+                    connection.Close();
+                }
+            }
 
-                string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
+            return isFind;
+        }
+
+        public void ReturnBook(string id,BorrowingData borrowingData)
+        {
+            string bookTitle;
+            string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
+         
+
+            bookTitle = GetBookTitle();
+            if (bookTitle != "q")
+            {
                 MySqlCommand borrowCommand = new MySqlCommand(sql, connection);
                 MySqlDataReader borrowTable = borrowCommand.ExecuteReader();
+                connection.Open();
                 borrowTable.Read();
 
-                Initialization.screen.PrintReturn();
-                bookTitle = Console.ReadLine();
-                if (borrowTable["book1"].ToString() == bookTitle)
+                if (borrowTable["book1"].ToString().Contains(bookTitle))
                 {
                     borrowingData.ReturnBook("1", id);
                     Initialization.screen.PrintReturnNotice();
@@ -141,7 +171,7 @@ namespace Library_MySql.Controll
                     Console.ReadKey();
                 }
 
-                else if(borrowTable["book2"].ToString() == bookTitle)
+                else if (borrowTable["book2"].ToString().Contains(bookTitle))
                 {
                     borrowingData.ReturnBook("2", id);
                     Initialization.screen.PrintReturnNotice();
@@ -149,7 +179,7 @@ namespace Library_MySql.Controll
                     Console.ReadKey();
                 }
 
-                else if (borrowTable["book3"].ToString() == bookTitle)
+                else if (borrowTable["book3"].ToString().Contains(bookTitle))
                 {
                     borrowingData.ReturnBook("3", id);
                     Initialization.screen.PrintReturnNotice();
@@ -166,79 +196,53 @@ namespace Library_MySql.Controll
 
                 connection.Close();
             }
+
+            else { }
+
         }
-        
 
-        /*Initialization.screen.PrintNext();
-        Console.ReadKey();
-        Console.SetWindowSize(60, 45);*/
+        public string GetBookTitle()
+        {
+            string bookTitleCheck;
+            string bookTItle;
 
-    
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintReturn();
+            bookTitleCheck = Console.ReadLine();
+            bookTItle = Initialization.exception.HandleGetTitle(bookTitleCheck);
 
-    public string GetBorrowBookNumber()
-    {
-        string bookNumberCheck;
-        string bookNumber;
-        Initialization.screen.PrintGetBorrowBookNumber();
-        bookNumberCheck = Console.ReadLine();
-        bookNumber = Initialization.exception.HandleGetBookUdInBorrowing(bookNumberCheck);
+            return bookTItle;
+        }
 
-        return bookNumber;
+        public string GetBorrowBookNumber()
+        {
+            string bookNumberCheck;
+            string bookNumber;
+            Initialization.screen.PrintGetBorrowBookNumber();
+            bookNumberCheck = Console.ReadLine();
+            bookNumber = Initialization.exception.HandleGetBookUdInBorrowing(bookNumberCheck);
+
+            return bookNumber;
+        }
+
+        public string GetReturnBookNumber()
+        {
+            string bookNumberCheck;
+            string bookNumber;
+            Initialization.screen.PrintReturn();
+            bookNumberCheck = Console.ReadLine();
+            bookNumber = Initialization.exception.HandleGetBookUdInBorrowing(bookNumberCheck);
+
+            return bookNumber;
+        }
+
+        public void ShowBorrowing(MySqlDataReader reader, int number)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("빌린 도서  : " + reader["book" + number].ToString());
+            Console.WriteLine("대출일     : " + reader["book" + number + "BorrowTime"].ToString());
+            Console.WriteLine("반납일     : " + reader["book" + number + "ReturnTime"].ToString());
+
+        }
     }
-
-    public string GetReturnBookNumber()
-    {
-        string bookNumberCheck;
-        string bookNumber;
-        Initialization.screen.PrintReturn();
-        bookNumberCheck = Console.ReadLine();
-        bookNumber = Initialization.exception.HandleGetBookUdInBorrowing(bookNumberCheck);
-
-        return bookNumber;
-    }
-
-    public void ShowBorrowing(MySqlDataReader reader)
-    {
-        int idLenght;
-        int nameLenght;
-        int phoneLength;
-        int book1;
-        int book1BorrowTIme;
-        int book1ReturnTIme;
-        int book2;
-        int book2BorrowTIme;
-        int book2ReturnTIme;
-        int book3;
-        int book3BorrowTIme;
-        int book3ReturnTIme;
-
-        idLenght = Initialization.exception.FindHangle(reader["Id"].ToString());
-        nameLenght = Initialization.exception.FindHangle(reader["name"].ToString());
-        phoneLength = Initialization.exception.FindHangle(reader["phoneNumber"].ToString());
-        book1 = Initialization.exception.FindHangle(reader["book1"].ToString());
-        book1BorrowTIme = Initialization.exception.FindHangle(reader["book1BorrowTIme"].ToString());
-        book1ReturnTIme = Initialization.exception.FindHangle(reader["book1ReturnTIme"].ToString());
-        book2 = Initialization.exception.FindHangle(reader["book2"].ToString());
-        book2BorrowTIme = Initialization.exception.FindHangle(reader["book2BorrowTIme"].ToString());
-        book2ReturnTIme = Initialization.exception.FindHangle(reader["book2ReturnTIme"].ToString());
-        book3 = Initialization.exception.FindHangle(reader["book3"].ToString());
-        book3BorrowTIme = Initialization.exception.FindHangle(reader["book3BorrowTIme"].ToString());
-        book3ReturnTIme = Initialization.exception.FindHangle(reader["book3ReturnTIme"].ToString());
-
-        Console.WriteLine("\n");
-        Console.Write(String.Format(reader["Id"].ToString().PadRight(20 - reader["Id"].ToString().Length + idLenght, ' ')));
-        Console.Write(String.Format(reader["name"].ToString().PadRight(26 - reader["name"].ToString().Length + nameLenght), ' '));
-        Console.Write(String.Format(reader["phoneNumber"].ToString().PadRight(25 - reader["phoneNumber"].ToString().Length + phoneLength, ' ')));
-        Console.WriteLine(String.Format(reader["book1"].ToString().PadRight(25 - reader["book1"].ToString().Length + book1, ' ')));
-        Console.WriteLine(String.Format(reader["book1BorrowTime"].ToString().PadLeft(98 - reader["book1BorrowTime"].ToString().Length + book1BorrowTIme, ' ')));
-        Console.WriteLine(String.Format(reader["book1ReturnTime"].ToString().PadLeft(98 - reader["book1ReturnTime"].ToString().Length + book1ReturnTIme, ' ')));
-        Console.WriteLine(String.Format(reader["book2"].ToString().PadLeft(98 - reader["book2"].ToString().Length + book1, ' ')));
-        Console.WriteLine(String.Format(reader["book2BorrowTime"].ToString().PadLeft(98 - reader["book2BorrowTime"].ToString().Length + book1BorrowTIme, ' ')));
-        Console.WriteLine(String.Format(reader["book2ReturnTime"].ToString().PadLeft(98 - reader["book2ReturnTime"].ToString().Length + book1ReturnTIme, ' ')));
-        Console.WriteLine(String.Format(reader["book3"].ToString().PadRight(98 - reader["book3"].ToString().Length + book1, ' ')));
-        Console.WriteLine(String.Format(reader["book3BorrowTime"].ToString().PadLeft(98 - reader["book3BorrowTime"].ToString().Length + book1BorrowTIme, ' ')));
-        Console.WriteLine(String.Format(reader["book3ReturnTime"].ToString().PadLeft(98 - reader["book3ReturnTime"].ToString().Length + book1ReturnTIme, ' ')));
-
-    }
-}
 }
