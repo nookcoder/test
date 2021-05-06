@@ -490,6 +490,13 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public void PrintMiniBar()
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine(new string('=', 60));
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
         public void PrintBookLabel()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
@@ -630,7 +637,7 @@ namespace Library_MySql
         public void PrintReturn()
         {
             Console.WriteLine("\n");
-            Console.Write("  반납할 도서 제목를 입력해주세요ㅓ ");
+            Console.Write("  반납할 도서 제목를 입력해주세요 : ");
         }
 
         public void PrintReturnNotice()
@@ -644,6 +651,12 @@ namespace Library_MySql
             PrintNext();
             Console.ReadKey();
             Console.SetWindowSize(65, 45);
+        }
+
+        public void PrintNoReturnBookNotice()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  반납할 도서가 없습니다!!!!");
         }
     }
 }
