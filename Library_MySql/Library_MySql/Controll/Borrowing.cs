@@ -104,56 +104,54 @@ namespace Library_MySql.Controll
         {
             bool isFind = true;
             Console.Clear();
-            using (MySqlConnection connection = new MySqlConnection(Initialization.connection))
+            connection.Open();
+            string selectQuery = "SELECT * FROM borrowing WHERE id='" + id + "'";
+            MySqlCommand command = new MySqlCommand(selectQuery, connection);
+            MySqlDataReader reader = command.ExecuteReader();
+
+            Console.SetWindowSize(60, 45);
+            reader.Read();
+
+            if (reader["book1"].ToString().Length == 0 && reader["book2"].ToString().Length == 0 && reader["book3"].ToString().Length == 0)
             {
-                connection.Open();
-                string selectQuery = "SELECT * FROM borrowing WHERE id='" + id + "'";
-                MySqlCommand command = new MySqlCommand(selectQuery, connection);
-                MySqlDataReader reader = command.ExecuteReader();
-
-
-                if (reader["book1"] == null && reader["book2"] == null && reader["book3"] == null)
-                {
-                    isFind = false;
-                    Initialization.screen.PrintNoReturnBookNotice();
-                    Initialization.screen.PrintNextProccess();
-                }
-                else
-                {
-                    Console.SetWindowSize(60, 45);
-                    Initialization.screen.PrintMiniBar();
-                    while (reader.Read())
-                    {
-                        if (reader["book1"] != null)
-                        {
-                            ShowBorrowing(reader, 1);
-                        }
-
-                        if (reader["book2"] != null)
-                        {
-                            ShowBorrowing(reader, 2);
-                        }
-
-                        if (reader["book3"] != null)
-                        {
-                            ShowBorrowing(reader, 3);
-                        }
-                    }
-                    Console.WriteLine("\n");
-                    Initialization.screen.PrintMiniBar();
-                    reader.Close();
-                    connection.Close();
-                }
+                Initialization.screen.PrintNoReturnBookNotice();
+                Initialization.screen.PrintNextProccess();
+                isFind = false;
             }
+            else
+            {
+                Initialization.screen.PrintMiniBar();
+                if (reader["book1"].ToString().Length != 0)
+                {
+                    ShowBorrowing(reader, 1);
+                }
+
+
+                if (reader["book2"].ToString().Length != 0)
+                {
+                    ShowBorrowing(reader, 2);
+                }
+
+
+                if (reader["book3"].ToString().Length != 0)
+                {
+                    ShowBorrowing(reader, 3);
+                }
+                Console.WriteLine("\n");
+                Initialization.screen.PrintMiniBar();
+            }
+
+            reader.Close();
+            connection.Close();
 
             return isFind;
         }
 
-        public void ReturnBook(string id,BorrowingData borrowingData)
+        public void ReturnBook(string id, BorrowingData borrowingData)
         {
             string bookTitle;
             string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
-         
+
 
             bookTitle = GetBookTitle();
             if (bookTitle != "q")
@@ -208,6 +206,7 @@ namespace Library_MySql.Controll
 
             Initialization.screen.PrintExit();
             Initialization.screen.PrintReturn();
+            Initialization.screen.PrintGetBookTitle();
             bookTitleCheck = Console.ReadLine();
             bookTItle = Initialization.exception.HandleGetTitle(bookTitleCheck);
 
