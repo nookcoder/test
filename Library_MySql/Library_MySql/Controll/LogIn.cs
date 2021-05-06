@@ -51,13 +51,14 @@ namespace Library_MySql.Controll
             return code;
         }
 
-        public bool RunCheckMember(MemberData memberData)
+        public Tuple<bool,string> RunCheckMember(MemberData memberData)
         {
             string id;
             string password;
 
             bool isSuccess = false;
 
+            Console.Clear();
             id = GetId();
 
             if (id != "q")
@@ -91,8 +92,8 @@ namespace Library_MySql.Controll
 
             else { }
 
-
-            return isSuccess;
+            var result = Tuple.Create<bool, string>(isSuccess, id);
+            return result;
         }
 
         public bool RunCheckManager()
@@ -101,8 +102,8 @@ namespace Library_MySql.Controll
             string code;
 
             code = GetManagerCode();
-           
-            if(code == "*")
+
+            if (code == "*")
             {
                 isRight = true;
                 Initialization.screen.PrintLoginSuccess();
