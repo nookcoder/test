@@ -568,22 +568,22 @@ namespace Library_MySql
         public string HandleGetTitle(string check)
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z0-9]");
-
+            int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null)
             {
-                Console.SetCursorPosition(0, 0);
+                Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 0);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetBookTitle();
-                Console.SetCursorPosition(0, 2);
+                Console.SetCursorPosition(0, positionY + 1);
                 Initialization.screen.PrintInputError();
-                Console.SetCursorPosition(13, 4);
+                Console.SetCursorPosition(13, positionY - 1);
                 check = Console.ReadLine();
             }
 
-            Console.SetCursorPosition(0, 9);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 8);
+            Console.SetCursorPosition(0, positionY - 1);
 
             return check;
         }
