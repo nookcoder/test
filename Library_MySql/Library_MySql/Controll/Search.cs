@@ -209,20 +209,12 @@ namespace Library_MySql.Controll
         // 도서 출력 함수 
         public void ShowBook(MySqlDataReader reader)
         {
-            Console.WriteLine("\n");
             Console.WriteLine($"도서 번호 : {reader["bookId"].ToString()}");
             Console.WriteLine($"도서 제목 : {reader["bookTitle"].ToString()}");
             Console.WriteLine($"출판사    : {reader["bookPublisher"].ToString()}");
             Console.WriteLine($"저자      : {reader["bookAuthor"]}");
             Console.WriteLine($"도서 가격 : {reader["bookPrice"]}원");
             Console.WriteLine($"도서 권수 : {reader["bookCount"].ToString()}권");
-
-            /*Console.Write(String.Format(reader["bookId"].ToString().PadRight(10, ' ')));
-            Console.Write(String.Format(reader["bookTitle"].ToString().PadRight(55 - reader["bookTitle"].ToString().Length + titleLenght), ' '));
-            Console.Write(String.Format(reader["bookPublisher"].ToString().PadRight(25 - reader["bookPublisher"].ToString().Length + publisherLenght, ' ')));
-            Console.Write(String.Format(reader["bookAuthor"].ToString().PadRight(40 - reader["bookAuthor"].ToString().Length + authorLength, ' ')));
-            Console.Write(String.Format(reader["bookPrice"].ToString().PadRight(12, ' ')));
-            Console.Write(String.Format(reader["bookCount"].ToString().PadRight(8, ' ')));*/
 
         }
 
