@@ -11,11 +11,13 @@ namespace Library_MySql.Controll
     {
         private MemberData memberData;
         private BookData bookData;
+        private BorrowingData borrowingData;
 
         public Registration()
         {
             this.memberData = new MemberData();
             this.bookData = new BookData();
+            this.borrowingData = new BorrowingData();
         }
 
         /// <summary>
@@ -34,7 +36,7 @@ namespace Library_MySql.Controll
             age = GetMemberAge();
 
             memberData.InsertMemberData(id, password, name, phoneNumber, address, age);
-
+            borrowingData.InsertBorrowingData(id, name, phoneNumber, null, null, null, null, null, null, null, null, null);
             Initialization.screen.PrintJoinSuccess();
             Console.ReadKey();
         }
@@ -107,7 +109,54 @@ namespace Library_MySql.Controll
 
         /// <summary>
         /// 도서 등록 관련 함수 
-        /// </summary>
+        /// </summar>
+        
+        public void SearchForRegistration(Api api)
+        {
+            string title;
+            string information;
+            int count;
+
+            Console.Clear();
+            Initialization.screen.PrintExit();
+            title = GetTitleForShow(); ;
+            count = Convert.ToInt32(GetCountForShow());
+            information = api.GetBookInformation(title);
+            api.PrintBookInformation(information, count);
+        }
+
+        public void RunRegisterBookFromSearch(Api api)
+        {
+            string bookId;
+            string bookTitle;
+            string bookPublisher;
+            string bookAuthor;
+            string bookPrice;
+            string bookCount;
+
+            SearchForRegistration(api);
+            Initialization.screen.PrintNoticeRegister();
+            
+            bookId = GetBookId();
+            if(bookId != "q")
+            {
+                bookTitle = GetBookTitle();
+                bookPublisher = GetBookPublisher();
+                bookAuthor = GetBookAuthor();
+                bookPrice = GetBookPrice();
+                bookCount = GetBookCount();
+
+                bookData.InsertBookData(bookId, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
+                Initialization.screen.PrintSuccessRegisterBook();
+                Console.ReadKey();
+            }
+            else
+            {
+                Initialization.screen.PrintNextProccess();
+            }
+
+        }
+
         public void RunRegisterBook()
         {
             string bookid;
@@ -139,7 +188,6 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintGetBookId();
             bookIdCheck = Console.ReadLine();
             bookId = Initialization.exception.HandleGetBookUd(bookIdCheck, bookData);
-
             return bookId; 
         }
 
@@ -201,6 +249,30 @@ namespace Library_MySql.Controll
             bookCount = Initialization.exception.HandleGetBookCount(bookCountCheck);
 
             return bookCount;
+        }
+
+        public string GetTitleForShow()
+        {
+            string titleCheck;
+            string title;
+
+            Initialization.screen.PrintGetTitleForShow();
+            titleCheck = Console.ReadLine();
+            title = Initialization.exception.HandleGetTitleForShow(titleCheck);
+
+            return title;
+        }
+
+        public string GetCountForShow()
+        {
+            string countCheck;
+            string count;
+
+            Initialization.screen.PrintGetCountForShow();
+            countCheck = Console.ReadLine();
+            count = Initialization.exception.HandleGetCountForShow(countCheck);
+
+            return count;
         }
     }
 }
