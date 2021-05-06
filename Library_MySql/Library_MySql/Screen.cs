@@ -62,7 +62,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[3] 도서 반납");
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[4] 내 정보");
+            Console.WriteLine(new String(' ', 20) + "[4] 내 정보 수정");
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
@@ -350,10 +350,12 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[3] 저자 검색");
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[4] 전체 조회");
+            Console.WriteLine(new String(' ', 20) + "[4] 네이버 도서 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[5] 전체 조회");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
+            Console.WriteLine(new String(' ', 20) + "[6] 뒤로 가기");
 
         }
 
@@ -562,6 +564,51 @@ namespace Library_MySql
             PrintLogin();
             PrintNext();
             Console.ReadKey();
+        }
+
+        // 도서 대여 화면 
+        public void PrintGetBorrowBookNumber()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  대여할 도서 번호를 입력해주세요 : ");
+        }
+
+        public void PrintSuccessBorrowing()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  대출 되었습니다. ");
+        }
+
+        public void PrintFailBorrowing()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  대출권수를 초과하였습니다. ");
+        }
+
+        public void PrintTimeNotice()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  대출기한은 일주일입니다. ");
+        }
+
+        public void PrintBorrow()
+        {
+            PrintSuccessBorrowing();
+            PrintTimeNotice();
+            PrintNext();
+            Console.ReadKey();
+        }
+
+        public void PrintReturn()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  반납할 도서 제목를 입력해주세요ㅓ ");
+        }
+
+        public void PrintReturnNotice()
+        {
+            Console.WriteLine("\n");
+            Console.Write("  반납되었습니다");
         }
     }
 }
