@@ -271,8 +271,8 @@ namespace Library_MySql
         // 전화번호 예외처리 (중복 방지) 
         public string HandleGetPhoneNumber(string check, MemberData memberData)
         {
-            Regex regex = new Regex(@"^(010)(\d{4})(\d){11}");
-            Regex regex1 = new Regex(@"^(011)(\d{4})(\d){11}");
+            Regex regex = new Regex(@"^(010)(\d{4})(\d{4})$");
+            Regex regex1 = new Regex(@"^(011)(\d{4})(\d{4})$");
             while ((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check))
             {
                 Console.SetCursorPosition(0, 15);
@@ -304,8 +304,8 @@ namespace Library_MySql
         // 회원 전화번호 수정 예외처리 
         public string HandleGetPhoneNumberInModification(string check, MemberData memberData)
         {
-            Regex regex = new Regex(@"^(010)(\d{4})(\d){11}");
-            Regex regex1 = new Regex(@"^(011)(\d{4})(\d){11}");
+            Regex regex = new Regex(@"^(010)(\d{4})(\d{4})$");
+            Regex regex1 = new Regex(@"^(011)(\d{4})(\d{4})$");
             while (((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check)) && check != "q")
             {
                 Console.SetCursorPosition(0, 4);
@@ -326,6 +326,38 @@ namespace Library_MySql
 
 
                 Console.SetCursorPosition(23, 6);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
+        // 회원 전화번호 수정 예외처리 
+        public string HandleGetPhoneNumberInModificationBySelf(string check, MemberData memberData)
+        {
+            int positionY = Console.GetCursorPosition().Top;
+            Regex regex = new Regex(@"^(010)(\d{4})(\d{4})$");
+            Regex regex1 = new Regex(@"^(011)(\d{4})(\d{4})$");
+            while (((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check)) && check != "q")
+            {
+                Console.SetCursorPosition(0, positionY-1);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY-5);
+                Initialization.screen.PrintGetPhoneNumber();
+                Console.SetCursorPosition(0, positionY);
+
+                if (memberData.IsMemberPhoneNumberDuplication(check))
+                {
+                    Initialization.screen.PrintPhoneNumberDuplicationError();
+                }
+
+                else if (!regex.IsMatch(check) || !regex1.IsMatch(check))
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+
+                Console.SetCursorPosition(23, positionY-1);
                 check = Console.ReadLine();
             }
 
@@ -955,7 +987,7 @@ namespace Library_MySql
                 Initialization.screen.PrintInput();
                 Console.SetCursorPosition(0, positionY + 1);
                 Initialization.screen.PrintMenuInputError();
-                Console.SetCursorPosition(26, positionY - 1);
+                Console.SetCursorPosition(26, positionY);
                 check = Console.ReadLine();
             }
 
