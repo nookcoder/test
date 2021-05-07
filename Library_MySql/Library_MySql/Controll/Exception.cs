@@ -596,7 +596,7 @@ namespace Library_MySql
         // 도서 가격 수정 예외처리 
         public string HandleGetBookPriceInModification(string check)
         {
-            Regex regex = new Regex(@"^[0-9]{3,}");
+            Regex regex = new Regex(@"^(0-9{1,})(00)$");
             int positionY = Console.GetCursorPosition().Top;
             while ((!regex.IsMatch(check) || check == null || check.Length > 6) && check != "q")
             {
@@ -779,7 +779,7 @@ namespace Library_MySql
         // 도서 가격 예외처리 
         public string HandleGetBookPrice(string check)
         {
-            Regex regex = new Regex(@"^[0-9]{3,}");
+            Regex regex = new Regex(@"^[0-9](0)$");
             int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null || check.Length > 6)
             {
@@ -844,6 +844,40 @@ namespace Library_MySql
 
             return check;
         }
+
+        public string HandleGetShowBookCount(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]");
+            int positionY = Console.GetCursorPosition().Top;
+            while (!regex.IsMatch(check) || check == null || int.Parse(check) <= 0 || int.Parse(check) > 10)
+            {
+                Console.SetCursorPosition(0, positionY - 2);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY - 3);
+                Initialization.screen.PrintGetCountForShow();
+                Console.SetCursorPosition(0, positionY );
+
+                if (!regex.IsMatch(check) || check == null)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                else if (check.Length > 3)
+                {
+                    Initialization.screen.PrintBookCountError();
+                }
+
+                Console.SetCursorPosition(33, positionY - 1);
+                check = Console.ReadLine();
+            }
+
+            Console.SetCursorPosition(0, positionY);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, positionY - 1);
+
+            return check;
+        }
+
 
         // 도서 수량 수정 예외처리 
         public string HandleGetBookCountInModification(string check)
