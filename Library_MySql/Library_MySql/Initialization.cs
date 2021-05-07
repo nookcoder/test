@@ -64,6 +64,15 @@ namespace Library_MySql
             ALL,
             BACK
         }
+        public enum SearchBookMenuByMember
+        {
+            TITLE = 1,
+            PUBLISHER,
+            AUTHOR,
+            ALL,
+            BACK
+        }
+
 
         public enum MemberMenu
         {
@@ -84,7 +93,7 @@ namespace Library_MySql
 
         public const bool FIND = true;
         public const bool NOFIND = false;
-        public const string connection = "Server=localhost;Database=member;Uid=root;Pwd=0000;Charset=utf8;Allow User Variables=True";
+        public const string CONNECTION = "Server=localhost;Database=member;Uid=root;Pwd=0000;Charset=utf8;Allow User Variables=True";
         public const int MEMBER = 1;
         public const int MANAGER = 2;
         public const string NAVERURL = "https://openapi.naver.com/v1/search/book.json?query=";
