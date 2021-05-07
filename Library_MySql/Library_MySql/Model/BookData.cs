@@ -12,7 +12,7 @@ namespace Library_MySql.Model
     {
         private string mySqlConnection;
         private MySqlConnection connection;
-       
+
         public BookData()
         {
             this.mySqlConnection = "Server=localhost;Database=member;Uid=root;Pwd=0000;Charset=utf8";
@@ -50,9 +50,9 @@ namespace Library_MySql.Model
 
             connection.Close();
         }
-        
+
         // 책 데이터 변경
-        public void UpdateBookPricedate(string bookId ,string price)
+        public void UpdateBookPricedate(string bookId, string price)
         {
             string updateQuery = "UPDATE book SET bookPrice=@bookPrice WHERE bookId=@bookId";
 
@@ -94,30 +94,32 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
-        public void ModifyBookCountdate(string bookId,string type)
+        public void ModifyBookCountdate(string bookId, string type)
         {
             string findQuery = "SELECT bookCount FROM book WHERE bookId='" + bookId + "'";
             string updateQuery = "UPDATE book SET bookCount=@bookCount WHERE bookId='" + bookId + "'";
 
-            int currentBookCount;
+            int currentBookCount = 0;
 
             connection.Open();
 
             MySqlCommand findCommand = new MySqlCommand(findQuery, connection);
             MySqlDataReader reader = findCommand.ExecuteReader();
-            reader.Read();
-            currentBookCount = Convert.ToInt32(reader["bookCount"].ToString());
+            if (reader.Read())
+            {
+                currentBookCount = Convert.ToInt32(reader["bookCount"].ToString());
+            }
             connection.Close();
 
             connection.Open();
             MySqlCommand updateCommand = new MySqlCommand(updateQuery, connection);
-            
-            if(type == "DOWN")
+
+            if (type == "DOWN")
             {
                 currentBookCount = DownCount(currentBookCount);
             }
 
-            else if(type == "UP")
+            else if (type == "UP")
             {
                 currentBookCount = UpCount(currentBookCount);
             }
@@ -139,7 +141,7 @@ namespace Library_MySql.Model
 
         public int UpCount(int currentBookCount)
         {
-            currentBookCount--;
+            currentBookCount++;
 
             return currentBookCount;
         }
@@ -193,9 +195,9 @@ namespace Library_MySql.Model
             DataSet dataset = new DataSet();
             bool isFind = Initialization.NOFIND;
             string selectQuert = "SELECT bookTitle FROM book";
-            
+
             MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
-            
+
             adapter.Fill(dataset, "book");
 
             if (dataset.Tables.Count > 0)
