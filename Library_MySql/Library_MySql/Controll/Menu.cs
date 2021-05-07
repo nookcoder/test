@@ -1,6 +1,10 @@
 ﻿using Library_MySql.Model;
+using log4net;
+using log4net.Config;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,12 +33,14 @@ namespace Library_MySql.Controll
             this.bookdata = new BookData();
             this.elimination = new Elimination();
             this.memberData = new MemberData();
-            this.login = new LogIn();;
+            this.login = new LogIn(); ;
             this.borrowing = new Borrowing();
             this.borrowingData = new BorrowingData();
             this.api = new Api();
             RunMenu(registration);
         }
+
+
 
         /// <summary>
         /// 프로그램 시작 시 메뉴 화면 
@@ -141,40 +147,24 @@ namespace Library_MySql.Controll
 
         public void RunModifyMemberM(Modification modification,string id)
         {
-            int menu;
-
-            Console.Clear();
-            Initialization.screen.PrintLabel();
-            Initialization.screen.PrintModifyMemberMenu();
-            Initialization.screen.PrintInput();
-            menu = GetThreeMenu();
-
-            switch (menu)
-            {
-                case (int)Initialization.ModifyMember.PHONENUMBER:
-                    modification.RunModifyMemberPhoneNumber(memberData);
-                    RunMemberMenu(id);
-                    break;
-
-                case (int)Initialization.ModifyMember.ADDRESS:
-                    modification.RunModifyMemberAddress(memberData);
-                    RunMemberMenu(id);
-                    break;
-
-                case (int)Initialization.ModifyMember.BACK:
-                    RunMemberMenu(id);
-                    break;
-            }
+            modification.RunModifyMemberBySelf(id, memberData);
         }
 
         public void RunBorrowing(Borrowing borrowing, string id)
         {
-            borrowing.BorrowBook(inquiry, id, borrowingData, bookdata);
+            borrowing.RunBorrowing(id, borrowingData, bookdata);
         }
 
         public void RunReturn(Borrowing borrowing, string id)
         {
-            borrowing.ReturnBook(id,borrowingData);
+            bool isFind = true;
+            isFind = borrowing.ShowBookForReturn(id);
+            if(isFind)
+            {
+                borrowing.ReturnBook(id, borrowingData,bookdata);
+            }
+            
+            RunMemberMenu(id);
         }
 
         // 관리자 메뉴
@@ -304,7 +294,6 @@ namespace Library_MySql.Controll
         }
 
         // 도서 등록 메뉴
-
         public void RunGetMethodOfRegister(Registration registration)
         {
             int menu;
@@ -383,34 +372,33 @@ namespace Library_MySql.Controll
 
             Console.Clear();
             Initialization.screen.PrintLabel();
-            Initialization.screen.PrintSearchBookMenu();
+            Initialization.screen.PrintSearchBookByMember();
             Initialization.screen.PrintInput();
             menu = GetFiveMenu();
 
             switch (menu)
             {
-                case (int)Initialization.SearchBookMenu.TITLE:
+                case (int)Initialization.SearchBookMenuByMember.TITLE:
                     inquiry.ShowBookyTitle();
-                    Console.SetWindowSize(60, 45);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
-                case (int)Initialization.SearchBookMenu.PUBLISHER:
+                case (int)Initialization.SearchBookMenuByMember.PUBLISHER:
                     inquiry.ShowBookByPublisher();
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
-                case (int)Initialization.SearchBookMenu.AUTHOR:
+                case (int)Initialization.SearchBookMenuByMember.AUTHOR:
                     inquiry.ShowBookByAuthor();
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
-                case (int)Initialization.SearchBookMenu.ALL:
+                case (int)Initialization.SearchBookMenuByMember.ALL:
                     inquiry.ShowAllBook();
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
-                case (int)Initialization.SearchBookMenu.BACK:
+                case (int)Initialization.SearchBookMenuByMember.BACK:
                     RunMemberMenu(id);
                     break;
             }
