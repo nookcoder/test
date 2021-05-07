@@ -79,6 +79,7 @@ namespace Library_MySql
             BORROW,
             RETURN,
             SEARCHINFO,
+            WITHDARWING,
             BACK
         }
 
