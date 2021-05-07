@@ -779,7 +779,7 @@ namespace Library_MySql
         // 도서 가격 예외처리 
         public string HandleGetBookPrice(string check)
         {
-            Regex regex = new Regex(@"^[0-9](0)$");
+            Regex regex = new Regex(@"^(\d{1,})(0)$");
             int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null || check.Length > 6)
             {
