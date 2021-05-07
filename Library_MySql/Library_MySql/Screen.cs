@@ -81,6 +81,13 @@ namespace Library_MySql
             Console.Write("  아이디(영어,숫자만) : ");
         }
 
+        public void PrintGetIdForSearch()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  조회하려는 회원의 아이디를 입력해주세요");
+            Console.Write("  아이디(영어,숫자만) : ");
+        }
+
         public void PrintGetLoginId()
         {
             Console.WriteLine("\n");
@@ -391,14 +398,12 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(new String(' ', 20) + "[1] 회원 이름 검색");
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[2] 회원 나이 검색");
+            Console.WriteLine(new String(' ', 20) + "[2] 회원 아이디 검색");
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[3] 회원 주소 검색");
-            Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[4] 회원 전체 조회");
+            Console.WriteLine(new String(' ', 20) + "[3] 회원 전체 조회");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
+            Console.WriteLine(new String(' ', 20) + "[4] 뒤로 가기");
             Console.WriteLine("\n");
         }
 
