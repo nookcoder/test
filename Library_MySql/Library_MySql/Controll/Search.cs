@@ -17,60 +17,70 @@ namespace Library_MySql.Controll
         }
 
         // 도서 제목 검색 출력
-        public void ShowBookyTitle()
+        public void ShowBookyTitle(BookData bookData)
         {
             string title;
 
             title = GetTitle();
 
-            if (title == "q")
+            if (title != "q")
             {
-                // 이전 메뉴로 돌아감 
+                Console.Clear();
+                if (bookData.IsContain("bookTitle", title)) { ShowBookInfo("bookTitle", title); }
+                else
+                {
+                    Initialization.screen.PrintNoFindBook();
+                    Initialization.screen.PrintNextProccess();
+                }
             }
 
             else
             {
-                Console.Clear();
-                ShowBookInfo("title", title);
             }
         }
 
         // 도서 출판사 검색 출력
-        public void ShowBookByPublisher()
+        public void ShowBookByPublisher(BookData bookData)
         {
             string publisher;
 
             publisher = GetPublisher();
 
-            if (publisher == "q")
-            {
-                // 이전 메뉴로 돌아감 
-            }
-
-            else
+            if (publisher != "q")
             {
                 Console.Clear();
-                ShowBookInfo("publisher", publisher);
+                if (bookData.IsContain("bookPublisher", publisher)) { ShowBookInfo("bookPublisher", publisher); }
+
+                else
+                {
+                    Initialization.screen.PrintNoFindBook();
+                    Initialization.screen.PrintNextProccess();
+                }
             }
+
+            else { }
         }
 
         // 도서 저자 검색 출력
-        public void ShowBookByAuthor()
+        public void ShowBookByAuthor(BookData bookData)
         {
             string author;
 
             author = GetAuthor();
 
-            if (author == "q")
-            {
-                // 이전 메뉴로 돌아감 
-            }
-
-            else
+            if (author != "q")
             {
                 Console.Clear();
-                ShowBookInfo("author", author);
+                if (bookData.IsContain("bookAuthor", author)) { ShowBookInfo("bookAuthor", author); }
+
+                else
+                {
+                    Initialization.screen.PrintNoFindBook();
+                    Initialization.screen.PrintNextProccess();
+                }
             }
+
+            else { }
         }
 
         // 도서 전체 출력
@@ -107,7 +117,7 @@ namespace Library_MySql.Controll
             int count;
 
             title = GetTitle();
-            count = Convert.ToInt32(Console.ReadLine());
+            count = int.Parse(GetCount());
 
             // 종료할 때 
             if (title == "q") { }
@@ -241,6 +251,7 @@ namespace Library_MySql.Controll
             string titleCheck;
             string title;
             Console.Clear();
+            Initialization.screen.PrintExit();
             Initialization.screen.PrintGetBookTitle();
             titleCheck = Console.ReadLine();
             title = Initialization.exception.HandleGetTitle(titleCheck);
@@ -303,6 +314,18 @@ namespace Library_MySql.Controll
             return id;
         }
 
+        public string GetCount()
+        {
+            string countCheck;
+            string count;
+
+            Initialization.screen.PrintGetCountForShow();
+            countCheck = Console.ReadLine();
+            count = Initialization.exception.HandleGetShowBookCount(countCheck);
+
+            return count;
+        }
+
         public void ShowMemberInfo(string type, string input)
         {
             using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
@@ -343,9 +366,9 @@ namespace Library_MySql.Controll
                 {
                     if (reader[type].ToString().Contains(input))
                     {
-                        Initialization.screen.PrintBar();
+                        Initialization.screen.PrintMiniBar();
                         ShowBook(reader);
-                        Initialization.screen.PrintBar();
+                        Initialization.screen.PrintMiniBar();
                         Console.WriteLine("\n");
                     }
                 }
