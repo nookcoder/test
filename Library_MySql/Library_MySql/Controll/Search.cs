@@ -114,23 +114,26 @@ namespace Library_MySql.Controll
         {
             string title;
             string bookInformation;
+            string countString;
             int count;
 
             title = GetTitle();
-            count = int.Parse(GetCount());
-
             // 종료할 때 
             if (title == "q") { }
 
-            // 검색어를 입력했을 때 
             else
             {
+                countString  = GetCount();
+                if (countString != "q")
+                {
+                    count = int.Parse(countString);
+                    bookInformation = api.GetBookInformation(title);
+                    api.PrintBookInformation(bookInformation, count);
 
-                bookInformation = api.GetBookInformation(title);
-                api.PrintBookInformation(bookInformation, count);
-
-                Initialization.screen.PrintNext();
-                Console.ReadKey();
+                    Initialization.screen.PrintNext();
+                    Console.ReadKey();
+                }
+                else { }
             }
         }
 
@@ -180,8 +183,8 @@ namespace Library_MySql.Controll
                     ShowMemberInfo("id", id);
                 }
 
-                else 
-                { 
+                else
+                {
                     Initialization.screen.PrintNoFIndMember();
                     Initialization.screen.PrintNextProccess();
                 }
@@ -352,7 +355,7 @@ namespace Library_MySql.Controll
             Console.ReadKey();
         }
 
-        public void ShowBookInfo(string type,string input)
+        public void ShowBookInfo(string type, string input)
         {
             using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
             {
