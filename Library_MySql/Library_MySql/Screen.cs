@@ -695,5 +695,14 @@ namespace Library_MySql
             Console.WriteLine("  반납할 도서가 없습니다!!!!");
         }
 
+        public void PrintKindOfModifing()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  어떤 정보를 수정하시겠습니까? ");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[1] 전화 번호 변경");
+            Console.WriteLine(new String(' ', 20) + "[2] 주소 변경");
+            Console.WriteLine("\n");
+        }
     }
 }
