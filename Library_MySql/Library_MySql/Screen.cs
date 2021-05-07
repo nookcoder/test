@@ -605,25 +605,41 @@ namespace Library_MySql
         public void PrintGetBorrowBookNumber()
         {
             Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("  최대 대여가능 권수 3권 ");
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("  대여할 도서 번호를 입력해주세요 : ");
+        }
+
+        public void PrintAlreadyBorrowing()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  이미 대출한 책입니다. ");
+        }
+
+        public void PrintSorry()
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("  해당 도서는 모두 대출된 상태입니다. ");
+            Console.WriteLine("  해당 도서가 반납되면 연락드리겠습니다. ");
         }
 
         public void PrintSuccessBorrowing()
         {
             Console.WriteLine("\n");
-            Console.Write("  대출 되었습니다. ");
+            Console.WriteLine("  대출 되었습니다. ");
         }
 
         public void PrintFailBorrowing()
         {
             Console.WriteLine("\n");
-            Console.Write("  대출권수를 초과하였습니다. ");
+            Console.WriteLine("  대출권수를 초과하였습니다. ");
         }
 
         public void PrintTimeNotice()
         {
             Console.WriteLine("\n");
-            Console.Write("  대출기한은 일주일입니다. ");
+            Console.WriteLine("  대출기한은 일주일입니다. ");
         }
 
         public void PrintBorrow()
@@ -637,7 +653,7 @@ namespace Library_MySql
         public void PrintReturn()
         {
             Console.WriteLine("\n");
-            Console.Write("  반납할 도서 제목를 입력해주세요 : ");
+            Console.Write("  반납할 도서 제목를 입력해주세요");
         }
 
         public void PrintReturnNotice()
@@ -658,5 +674,6 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine("  반납할 도서가 없습니다!!!!");
         }
+
     }
 }
