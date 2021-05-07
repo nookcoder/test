@@ -147,12 +147,15 @@ namespace Library_MySql.Controll
             connection.Close();
         }
 
+        // 도서 대출 메뉴 실행 시 실행되는 함수 
         public void RunBorrowing(string id, BorrowingData borrowingData, BookData bookData)
         {
             string bookIdCheck;
             string bookId;
             
             Console.Clear();
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintGetBorrowBookNumber();
             bookIdCheck = Console.ReadLine();
             bookId = Initialization.exception.HandleGetBookIdInModification(bookIdCheck);
 
@@ -163,16 +166,30 @@ namespace Library_MySql.Controll
                     if (IsHaveBook(bookId))
                     {
                         BorrowBook(id, bookId, borrowingData, bookData);
-                        bookData.DownBookCountdate(bookId);
+                        bookData.ModifyBookCountdate(bookId,"DOWN");
                     }
 
-                    else { Console.WriteLine("으악"); }
+                    else 
+                    {
+                        Initialization.screen.PrintSorry();
+                        Initialization.screen.PrintNextProccess();
+
+                    }
                 }
 
-                else { Console.WriteLine("으악"); }
+                else 
+                { 
+                    Initialization.screen.PrintAlreadyBorrowing();
+                    Initialization.screen.PrintNextProccess();
+                }
             }
 
-            else { Console.Write("으악"); }
+            else 
+            {
+                Initialization.screen.PrintNoFindBook();
+                Initialization.screen.PrintNext();
+                Console.ReadKey();
+            }
         }
 
 
