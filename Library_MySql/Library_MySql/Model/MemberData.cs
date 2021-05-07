@@ -136,6 +136,29 @@ namespace Library_MySql.Model
             return isFind;
         }
 
+        public bool IsMemberIdContain(string id)
+        {
+            DataSet dataset = new DataSet();
+            bool isFind = Initialization.NOFIND;
+
+            string selectQuert = "SELECT id FROM borrowing";
+            MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
+            adapter.Fill(dataset, "borrowing");
+
+            if (dataset.Tables.Count > 0)
+            {
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    if (row["id"].ToString().Contains(id))
+                    {
+                        isFind = Initialization.FIND;
+                    }
+                }
+            }
+
+            return isFind;
+        }
+
         public bool IsMemberPhoneNumberDuplication(string id)
         {
             DataSet dataset = new DataSet();
