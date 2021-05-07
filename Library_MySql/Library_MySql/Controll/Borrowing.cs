@@ -19,83 +19,101 @@ namespace Library_MySql.Controll
             this.connection = new MySqlConnection(Initialization.connection);
         }
 
-        public void BorrowBook(Search inquiry, string id, BorrowingData borrowingData, BookData bookData)
+        // 도서관에 해당 책이 있는 지 확인해주는 함수./
+        public bool IsHaveBookInLibrary(string bookNumber)
         {
-            using (MySqlConnection connection = new MySqlConnection(Initialization.connection))
+            string findQuery = "SELECT * FROM book";
+            bool isHave = false;
+
+            DataSet data = new DataSet();
+            MySqlDataAdapter adapter = new MySqlDataAdapter(findQuery, connection);
+            adapter.Fill(data, "book");
+
+            foreach (DataRow row in data.Tables[0].Rows)
             {
-                string bookNumber;
-                string bookName;
-                string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
-                bool isFind = false;
-
-                inquiry.ShowBookyTitle();
-                Console.SetWindowSize(150, 45);
-                bookNumber = GetBorrowBookNumber();
-
-                string findSql = "SELECT * FROM book";
-                DataSet data = new DataSet();
-                MySqlDataAdapter adpt = new MySqlDataAdapter(findSql, connection);
-                adpt.Fill(data, "book");
-
-                foreach (DataRow row in data.Tables[0].Rows)
+                if (bookNumber == row["bookId"].ToString())
                 {
-                    if (bookNumber == row["bookId"].ToString())
-                    {
-                        isFind = true;
-                    }
+                    isHave = true;
+                }
+            }
+
+            return isHave;
+        }
+
+        public void BorrowBook(string id, BorrowingData borrowingData, BookData bookData)
+        {
+
+            string bookNumber;
+            string bookName;
+            string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
+            bool isFind = false;
+
+            bookNumber = GetBorrowBookNumber();
+
+            string findSql = "SELECT * FROM book";
+            DataSet data = new DataSet();
+            MySqlDataAdapter adpt = new MySqlDataAdapter(findSql, connection);
+            adpt.Fill(data, "book");
+
+            foreach (DataRow row in data.Tables[0].Rows)
+            {
+                if (bookNumber == row["bookId"].ToString())
+                {
+                    isFind = true;
+                }
+            }
+
+            if (isFind)
+            {
+
+                string sql2 = "SELECT * FROM book WHERE bookId='" + bookNumber + "'";
+                connection.Open();
+
+                MySqlCommand bookCommand = new MySqlCommand(sql2, connection);
+                MySqlDataReader bookTable = bookCommand.ExecuteReader();
+                bookTable.Read();
+                bookName = bookTable["bookTitle"].ToString();
+                connection.Close();
+
+                connection.Open();
+                MySqlCommand borrowCommand = new MySqlCommand(sql, connection);
+                MySqlDataReader borrowTable = borrowCommand.ExecuteReader();
+                borrowTable.Read();
+
+                if (borrowTable["book1"].ToString().Length == 0)
+                {
+                    borrowingData.BorrowBook(bookName, "1", id);
+                    Initialization.screen.PrintBorrow();
                 }
 
-                if (isFind)
+                else if (borrowTable["book2"].ToString().Length == 0)
                 {
+                    borrowingData.BorrowBook(bookName, "2", id);
+                    Initialization.screen.PrintBorrow();
+                }
 
-                    string sql2 = "SELECT * FROM book WHERE bookId='" + bookNumber + "'";
-                    connection.Open();
-
-                    MySqlCommand bookCommand = new MySqlCommand(sql2, connection);
-                    MySqlDataReader bookTable = bookCommand.ExecuteReader();
-                    bookTable.Read();
-                    bookName = bookTable["bookTitle"].ToString();
-                    connection.Close();
-
-                    connection.Open();
-                    MySqlCommand borrowCommand = new MySqlCommand(sql, connection);
-                    MySqlDataReader borrowTable = borrowCommand.ExecuteReader();
-                    borrowTable.Read();
-
-                    if (borrowTable["book1"].ToString().Length == 0)
-                    {
-                        borrowingData.BorrowBook(bookName, "1", id);
-                        Initialization.screen.PrintBorrow();
-                    }
-
-                    else if (borrowTable["book2"].ToString().Length == 0)
-                    {
-                        borrowingData.BorrowBook(bookName, "2", id);
-                        Initialization.screen.PrintBorrow();
-                    }
-
-                    else if (borrowTable["book3"].ToString().Length == 0)
-                    {
-                        borrowingData.BorrowBook(bookName, "3", id);
-                        Initialization.screen.PrintBorrow();
-                    }
-
-                    else
-                    {
-                        Initialization.screen.PrintFailBorrowing();
-                        Initialization.screen.PrintNext();
-                        Console.ReadKey();
-                    }
-
-                    connection.Close();
+                else if (borrowTable["book3"].ToString().Length == 0)
+                {
+                    borrowingData.BorrowBook(bookName, "3", id);
+                    Initialization.screen.PrintBorrow();
                 }
 
                 else
                 {
-                    Initialization.screen.PrintNoFindBook();
+                    Initialization.screen.PrintFailBorrowing();
+                    Initialization.screen.PrintNext();
                     Console.ReadKey();
                 }
+
+                connection.Close();
             }
+
+            else
+            {
+                Initialization.screen.PrintNoFindBook();
+                Console.ReadKey();
+            }
+
 
         }
 
