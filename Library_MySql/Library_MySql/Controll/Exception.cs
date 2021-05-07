@@ -109,6 +109,32 @@ namespace Library_MySql
             return check;
         }
 
+        public string HandleGetIdForSearch(string check)
+        {
+            Regex regex = new Regex(@"^[0-9a-zA-Z]");
+            int positionY = Console.GetCursorPosition().Top;
+
+            // 숫자 영어 로만 이루어진 아이디인지 확인
+            while ((!regex.IsMatch(check) || check?.Length == 0) && check != "q")
+            {
+                Console.SetCursorPosition(0, positionY -1);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY-4);
+                Initialization.screen.PrintGetIdForSearch();
+                Console.SetCursorPosition(0, positionY);
+
+                if (!regex.IsMatch(check) || check?.Length == 0)
+                {
+                    Initialization.screen.PrintInputError();
+                }
+
+                Console.SetCursorPosition(24, positionY-1);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
         public string HandleGetIdInLogin(string check)
         {
             Regex regex = new Regex(@"^[0-9a-zA-Z]");
@@ -402,6 +428,27 @@ namespace Library_MySql
                 Console.SetCursorPosition(0, 7);
                 Initialization.screen.PrintInputError();
                 Console.SetCursorPosition(28, 6);
+                check = Console.ReadLine();
+            }
+
+            return check;
+        }
+
+        public string HandleGetAddressInModificationBySelf(string check)
+        {
+            int positionY = Console.GetCursorPosition().Top;  
+            Regex regex = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)대로");
+            Regex regex1 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)로");
+            Regex regex2 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)길");
+            while ((!regex.IsMatch(check) && !regex1.IsMatch(check) && !regex2.IsMatch(check)) && check != "q")
+            {
+                Console.SetCursorPosition(0, positionY-3);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY-6);
+                Initialization.screen.PrintGetModifingAddress();
+                Console.SetCursorPosition(0, positionY);
+                Initialization.screen.PrintInputError();
+                Console.SetCursorPosition(28, positionY-1);
                 check = Console.ReadLine();
             }
 
