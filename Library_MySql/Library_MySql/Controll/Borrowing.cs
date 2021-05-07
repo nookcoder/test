@@ -43,34 +43,38 @@ namespace Library_MySql.Controll
         // 회원이 그 도서를 갖고 있는 지 확인하는 함수 (중복 대출 불가) 
         public bool IsHaveBookWithMember(string id, string bookId)
         {
-            string findQuery = "SELECT * FROM borrowing WHERE id='"+id+"'";
+            string findQuery = "SELECT * FROM borrowing WHERE id='" + id + "'";
             string findQueryBook = "SELECT bookTitle FROM book WHERE bookId='" + bookId + "'";
+            string bookTitle;
             bool isHave = false;
 
+            connection.Open();
             MySqlCommand findCommand = new(findQueryBook, connection);
             MySqlDataReader dataReader = findCommand.ExecuteReader();
+            dataReader.Read();
+            bookTitle = dataReader["bookTitle"].ToString();
+            connection.Close();
             DataSet data = new DataSet();
             MySqlDataAdapter adapter = new MySqlDataAdapter(findQuery, connection);
             adapter.Fill(data, "borrowing");
 
-            foreach(DataRow row in data.Tables[0].Rows)
+            foreach (DataRow row in data.Tables[0].Rows)
             {
-                if(row["book1"].ToString() == dataReader[0].ToString())
+                if (row["book1"].ToString() == bookTitle)
                 {
                     isHave = true;
                 }
 
-                if (row["book2"].ToString() == dataReader[0].ToString())
+                if (row["book2"].ToString() == bookTitle)
                 {
                     isHave = true;
                 }
 
-                if (row["book3"].ToString() == dataReader[0].ToString())
+                if (row["book3"].ToString() == bookTitle)
                 {
                     isHave = true;
                 }
             }
-
             return isHave;
         }
 
@@ -78,29 +82,88 @@ namespace Library_MySql.Controll
         public bool IsHaveBook(string bookId)
         {
             string findQuery = "SELECT bookCount FROM book where bookId='" + bookId + "'";
-            bool isOk = false; 
-            
+            bool isOk = false;
+
+            connection.Open();
             MySqlCommand findCommand = new(findQuery, connection);
             MySqlDataReader dataReader = findCommand.ExecuteReader();
-            
-            if(int.Parse(dataReader[0].ToString()) > 0 )
+            dataReader.Read();
+
+            if (int.Parse(dataReader["bookCount"].ToString()) > 0)
             {
                 isOk = true;
             }
 
+            connection.Close();
 
             return isOk;
         }
-
-        public void temp(string id , string bookId, BorrowingData borrowingData, BookData bookData)
+        
+        // 도서 대출 로직 
+        public void BorrowBook(string id, string bookNumber, BorrowingData borrowingData, BookData bookData)
         {
+
+            string bookName;
+            string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
+            string sql2 = "SELECT * FROM book WHERE bookId='" + bookNumber + "'";
+            connection.Open();
+
+            MySqlCommand bookCommand = new MySqlCommand(sql2, connection);
+            MySqlDataReader bookTable = bookCommand.ExecuteReader();
+            bookTable.Read();
+            bookName = bookTable["bookTitle"].ToString();
+            connection.Close();
+
+            connection.Open();
+            MySqlCommand borrowCommand = new MySqlCommand(sql, connection);
+            MySqlDataReader borrowTable = borrowCommand.ExecuteReader();
+            borrowTable.Read();
+
+            if (borrowTable["book1"].ToString().Length == 0)
+            {
+                borrowingData.BorrowBook(bookName, "1", id);
+                Initialization.screen.PrintBorrow();
+            }
+
+            else if (borrowTable["book2"].ToString().Length == 0)
+            {
+                borrowingData.BorrowBook(bookName, "2", id);
+                Initialization.screen.PrintBorrow();
+            }
+
+            else if (borrowTable["book3"].ToString().Length == 0)
+            {
+                borrowingData.BorrowBook(bookName, "3", id);
+                Initialization.screen.PrintBorrow();
+            }
+
+            else
+            {
+                Initialization.screen.PrintFailBorrowing();
+                Initialization.screen.PrintNext();
+                Console.ReadKey();
+            }
+
+            connection.Close();
+        }
+
+        public void RunBorrowing(string id, BorrowingData borrowingData, BookData bookData)
+        {
+            string bookIdCheck;
+            string bookId;
+            
+            Console.Clear();
+            bookIdCheck = Console.ReadLine();
+            bookId = Initialization.exception.HandleGetBookIdInModification(bookIdCheck);
+
             if (IsHaveBookInLibrary(bookId))
             {
-                if (IsHaveBookWithMember(id, bookId))
+                if (!IsHaveBookWithMember(id, bookId))
                 {
                     if (IsHaveBook(bookId))
                     {
-
+                        BorrowBook(id, bookId, borrowingData, bookData);
+                        bookData.DownBookCountdate(bookId);
                     }
 
                     else { Console.WriteLine("으악"); }
@@ -110,85 +173,8 @@ namespace Library_MySql.Controll
             }
 
             else { Console.Write("으악"); }
-
         }
 
-        public void BorrowBook(string id, BorrowingData borrowingData, BookData bookData)
-        {
-
-            string bookNumber;
-            string bookName;
-            string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
-            bool isFind = false;
-
-            bookNumber = GetBorrowBookNumber();
-
-            string findSql = "SELECT * FROM book";
-            DataSet data = new DataSet();
-            MySqlDataAdapter adpt = new MySqlDataAdapter(findSql, connection);
-            adpt.Fill(data, "book");
-
-            foreach (DataRow row in data.Tables[0].Rows)
-            {
-                if (bookNumber == row["bookId"].ToString())
-                {
-                    isFind = true;
-                }
-            }
-
-            if (isFind)
-            {
-
-                string sql2 = "SELECT * FROM book WHERE bookId='" + bookNumber + "'";
-                connection.Open();
-
-                MySqlCommand bookCommand = new MySqlCommand(sql2, connection);
-                MySqlDataReader bookTable = bookCommand.ExecuteReader();
-                bookTable.Read();
-                bookName = bookTable["bookTitle"].ToString();
-                connection.Close();
-
-                connection.Open();
-                MySqlCommand borrowCommand = new MySqlCommand(sql, connection);
-                MySqlDataReader borrowTable = borrowCommand.ExecuteReader();
-                borrowTable.Read();
-
-                if (borrowTable["book1"].ToString().Length == 0)
-                {
-                    borrowingData.BorrowBook(bookName, "1", id);
-                    Initialization.screen.PrintBorrow();
-                }
-
-                else if (borrowTable["book2"].ToString().Length == 0)
-                {
-                    borrowingData.BorrowBook(bookName, "2", id);
-                    Initialization.screen.PrintBorrow();
-                }
-
-                else if (borrowTable["book3"].ToString().Length == 0)
-                {
-                    borrowingData.BorrowBook(bookName, "3", id);
-                    Initialization.screen.PrintBorrow();
-                }
-
-                else
-                {
-                    Initialization.screen.PrintFailBorrowing();
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
-                }
-
-                connection.Close();
-            }
-
-            else
-            {
-                Initialization.screen.PrintNoFindBook();
-                Console.ReadKey();
-            }
-
-
-        }
 
         // 대출한 책 출력하는 함수 
         public bool ShowBookForReturn(string id)
@@ -248,9 +234,9 @@ namespace Library_MySql.Controll
             bookTitle = GetBookTitle();
             if (bookTitle != "q")
             {
+                connection.Open();
                 MySqlCommand borrowCommand = new MySqlCommand(sql, connection);
                 MySqlDataReader borrowTable = borrowCommand.ExecuteReader();
-                connection.Open();
                 borrowTable.Read();
 
                 if (borrowTable["book1"].ToString().Contains(bookTitle))
