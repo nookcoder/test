@@ -10,10 +10,7 @@ namespace Library_MySql
 {
     class Exception
     {
-        private Exception() 
-        {
-
-        }
+        private Exception() { } 
 
         private static Exception exception = null;
 
@@ -945,24 +942,24 @@ namespace Library_MySql
             return check;
         }
 
-        public int FindHangle(string str)
+        public string HandleGetTwoMenu(string check)
         {
-            int length;
-            string str2;
-            string english;
+            int positionY = Console.GetCursorPosition().Top;
+            Regex regex = new Regex("^[1-2]$");
+            
+            while(!regex.IsMatch(check) && check != "q")
+            {
+                Console.SetCursorPosition(0, positionY - 1);
+                Console.Write(new String(' ', 100));
+                Console.SetCursorPosition(0, positionY-3);
+                Initialization.screen.PrintInput();
+                Console.SetCursorPosition(0, positionY + 1);
+                Initialization.screen.PrintMenuInputError();
+                Console.SetCursorPosition(26, positionY - 1);
+                check = Console.ReadLine();
+            }
 
-            length = str.Length;
-
-            str2 = Regex.Replace(str, @"\s", "");
-            english = Regex.Replace(str, @"[^a-zA-Z0-9\.]", "");
-
-            return length - str2.Length + english.Length;
-        }
-
-        public string  DeleteB(string text)
-        {
-            text = Regex.Replace(text, @"^[<|b|\\|>]", "");
-            return text;
+            return check;
         }
     }
 }
