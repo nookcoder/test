@@ -356,8 +356,23 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[6] 뒤로 가기");
-
         }
+
+        public void PrintSearchBookByMember()
+        {
+            Console.ForegroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine(new String(' ', 20) + "[1] 도서명 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 출판사 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 저자 검색");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[4] 전체 조회");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
+        }
+
 
         public void PrintModifyMemberMenu()
         {
@@ -602,12 +617,17 @@ namespace Library_MySql
         }
 
         // 도서 대여 화면 
-        public void PrintGetBorrowBookNumber()
+        
+        public void PrintMaxinumBook()
         {
             Console.WriteLine("\n");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("  최대 대여가능 권수 3권 ");
+            Console.WriteLine("  최대 대여가능 권수 3권 ");
             Console.ForegroundColor = ConsoleColor.White;
+        }
+        public void PrintGetBorrowBookNumber()
+        {
+            Console.WriteLine("\n");
             Console.Write("  대여할 도서 번호를 입력해주세요 : ");
         }
 
