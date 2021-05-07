@@ -98,7 +98,7 @@ namespace Library_MySql.Controll
 
             return isOk;
         }
-        
+
         // 도서 대출 로직 
         public bool BorrowBook(string id, string bookNumber, BorrowingData borrowingData, BookData bookData)
         {
@@ -155,7 +155,7 @@ namespace Library_MySql.Controll
         {
             string bookIdCheck;
             string bookId;
-            
+
             Console.Clear();
             Initialization.screen.PrintExit();
             Initialization.screen.PrintMaxinumBook();
@@ -173,27 +173,27 @@ namespace Library_MySql.Controll
                     if (IsHaveBook(bookId))
                     {
                         // 해당 도서 대출 (만약 3권이상이면 대출 불가능)
-                        if(BorrowBook(id, bookId, borrowingData, bookData))
+                        if (BorrowBook(id, bookId, borrowingData, bookData))
                         {
-                            bookData.ModifyBookCountdate(bookId,"DOWN");
-                        }    
+                            bookData.ModifyBookCountdate(bookId, "DOWN");
+                        }
                     }
 
-                    else 
+                    else
                     {
                         Initialization.screen.PrintSorry();
                         Initialization.screen.PrintNextProccess();
                     }
                 }
 
-                else 
-                { 
+                else
+                {
                     Initialization.screen.PrintAlreadyBorrowing();
                     Initialization.screen.PrintNextProccess();
                 }
             }
 
-            else 
+            else
             {
                 Initialization.screen.PrintNoFindBook();
                 Initialization.screen.PrintNext();
@@ -250,15 +250,17 @@ namespace Library_MySql.Controll
         }
 
         // 도서 반납 함수 
-        public void ReturnBook(string id, BorrowingData borrowingData)
+        public void ReturnBook(string id, BorrowingData borrowingData, BookData bookData)
         {
             string bookTitle;
             string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
-
+            string bookId;
+            string bookTitleCheck;
 
             bookTitle = GetBookTitle();
             if (bookTitle != "q")
             {
+                
                 connection.Open();
                 MySqlCommand borrowCommand = new MySqlCommand(sql, connection);
                 MySqlDataReader borrowTable = borrowCommand.ExecuteReader();
@@ -267,6 +269,10 @@ namespace Library_MySql.Controll
                 if (borrowTable["book1"].ToString().Contains(bookTitle))
                 {
                     borrowingData.ReturnBook("1", id);
+                    bookTitleCheck = borrowTable["book1"].ToString();
+                    borrowTable.Close();
+                    bookId = FindBookId(bookTitleCheck);
+                    bookData.ModifyBookCountdate(bookId, "UP");
                     Initialization.screen.PrintReturnNotice();
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
@@ -275,6 +281,10 @@ namespace Library_MySql.Controll
                 else if (borrowTable["book2"].ToString().Contains(bookTitle))
                 {
                     borrowingData.ReturnBook("2", id);
+                    bookTitleCheck = borrowTable["book2"].ToString();
+                    borrowTable.Close();
+                    bookId = FindBookId(bookTitleCheck);
+                    bookData.ModifyBookCountdate(bookId, "UP");
                     Initialization.screen.PrintReturnNotice();
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
@@ -283,6 +293,10 @@ namespace Library_MySql.Controll
                 else if (borrowTable["book3"].ToString().Contains(bookTitle))
                 {
                     borrowingData.ReturnBook("3", id);
+                    bookTitleCheck = borrowTable["book3"].ToString();
+                    borrowTable.Close();
+                    bookId = FindBookId(bookTitleCheck); 
+                    bookData.ModifyBookCountdate(bookId, "UP");
                     Initialization.screen.PrintReturnNotice();
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
@@ -306,15 +320,14 @@ namespace Library_MySql.Controll
         public string FindBookId(string bookTitle)
         {
             string sql = "SELECT bookId FROM book WHERE bookTitle='" + bookTitle + "'";
-            string bookId; 
-            
-            connection.Open();
-            MySqlCommand FindCommand = new MySqlCommand(sql, connection);
-            MySqlDataReader table = FindCommand.ExecuteReader();
+            string bookId;
+
+            MySqlCommand findCommand = new MySqlCommand(sql, connection);
+            MySqlDataReader table = findCommand.ExecuteReader();
             table.Read();
-
             bookId = table["bookId"].ToString();
-
+            connection.Close();
+            
             return bookId;
         }
 
