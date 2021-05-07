@@ -192,5 +192,28 @@ namespace Library_MySql.Model
 
             return isFind;
         }
+
+        public void ShowMyData(string id)
+        {
+            string selecQuery = "SELECT * FROM member WHERE id='" + id + "'";
+
+            Console.Clear();
+
+            connection.Open();
+            MySqlCommand selectCommand = new MySqlCommand(selecQuery, connection);
+            MySqlDataReader reader = selectCommand.ExecuteReader();
+            reader.Read();
+
+            Initialization.screen.PrintMiniBar();
+            Console.WriteLine($" 회원 아이디 : {reader["Id"].ToString()}");
+            Console.WriteLine($" 회원 이름   : {reader["name"].ToString()}");
+            Console.WriteLine($" 전화 번호   : {reader["phoneNumber"].ToString()}");
+            Console.WriteLine($" 주소        : {reader["address"].ToString()}");
+            Console.WriteLine($" 나이        : {reader["age"].ToString()}");
+            Initialization.screen.PrintMiniBar();
+
+            reader.Close();
+            connection.Close();
+        }
     }
 }
