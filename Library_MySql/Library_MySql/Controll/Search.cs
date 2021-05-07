@@ -37,8 +37,6 @@ namespace Library_MySql.Controll
                     MySqlCommand command = new MySqlCommand(selectQuery, connection);
                     MySqlDataReader reader = command.ExecuteReader();
 
-                    Console.SetWindowSize(150, 45);
-
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
@@ -82,8 +80,6 @@ namespace Library_MySql.Controll
                     MySqlCommand command = new MySqlCommand(selectQuery, connection);
                     MySqlDataReader reader = command.ExecuteReader();
 
-                    Console.SetWindowSize(150, 45);
-
                     // 도서가 있으면 출력
                     while (reader.Read())
                     {
@@ -101,7 +97,6 @@ namespace Library_MySql.Controll
 
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
-                    Console.SetWindowSize(60, 45);
                 }
             }
         }
@@ -111,7 +106,7 @@ namespace Library_MySql.Controll
         {
             string author;
 
-            author = GetPublisher();
+            author = GetAuthor();
 
             if (author == "q")
             {
@@ -127,8 +122,6 @@ namespace Library_MySql.Controll
                     string selectQuery = "SELECT * FROM book";
                     MySqlCommand command = new MySqlCommand(selectQuery, connection);
                     MySqlDataReader reader = command.ExecuteReader();
-
-                    Console.SetWindowSize(150, 45);
 
                     // 도서가 있으면 출력
                     while (reader.Read())
@@ -147,7 +140,6 @@ namespace Library_MySql.Controll
 
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
-                    Console.SetWindowSize(60, 45);
                 }
             }
         }
@@ -163,7 +155,6 @@ namespace Library_MySql.Controll
                 MySqlCommand command = new MySqlCommand(selectQuery, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
-                Console.SetWindowSize(150, 45);
                 while (reader.Read())
                 {
                     Initialization.screen.PrintBar();
@@ -176,10 +167,10 @@ namespace Library_MySql.Controll
 
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
-                Console.SetWindowSize(60, 45);
             }
         }
 
+        // 네이버에서 검색하기 
         public void ShowBookByNaverApi(Api api)
         {
             string title;
@@ -195,14 +186,12 @@ namespace Library_MySql.Controll
             // 검색어를 입력했을 때 
             else
             {
-                Console.SetWindowSize(150, 45);
 
                 bookInformation = api.GetBookInformation(title);
                 api.PrintBookInformation(bookInformation, count);
 
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
-                Console.SetWindowSize(60, 45);
             }
         }
 
@@ -257,7 +246,6 @@ namespace Library_MySql.Controll
 
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
-                    Console.SetWindowSize(60, 45);
                 }
             }
         }
@@ -359,23 +347,21 @@ namespace Library_MySql.Controll
             using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
             {
                 connection.Open();
-                string selectQuery = "SELECT * FROM member";
+                string selectQuery = "SELECT * FROM borrowing";
                 MySqlCommand command = new MySqlCommand(selectQuery, connection);
                 MySqlDataReader reader = command.ExecuteReader();
 
-                Console.SetWindowSize(150, 45);
                 while (reader.Read())
                 {
-                    Initialization.screen.PrintBar();
+                    Initialization.screen.PrintMiniBar();
                     ShowMember(reader);
-                    Initialization.screen.PrintBar();
+                    Initialization.screen.PrintMiniBar();
                     Console.WriteLine("\n");
                 }
                 reader.Close();
 
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
-                Console.SetWindowSize(60, 45);
             }
         }
 
@@ -384,15 +370,31 @@ namespace Library_MySql.Controll
             Console.WriteLine($"회원 아이디 : {reader["Id"].ToString()}");
             Console.WriteLine($"회원 이름   : {reader["name"].ToString()}");
             Console.WriteLine($"전화 번호   : {reader["phoneNumber"].ToString()}");
-            Console.WriteLine($"주소        : {reader["address"].ToString()}");
-            Console.WriteLine($"나이        : {reader["age"].ToString()}세");
+            
+            if (reader["book1"].ToString().Length != 0)
+            {
+                ShowBorrowing(reader, 1);
+            }
 
-            /*Console.WriteLine("\n");
-            Console.Write(String.Format(reader["Id"].ToString().PadRight(20 - reader["Id"].ToString().Length + idLenght, ' ')));
-            Console.Write(String.Format(reader["name"].ToString().PadRight(26 - reader["name"].ToString().Length + nameLenght), ' '));
-            Console.Write(String.Format(reader["phoneNumber"].ToString().PadRight(25 - reader["phoneNumber"].ToString().Length + phoneLength, ' ')));
-            Console.Write(String.Format(reader["address"].ToString().PadRight(26 - reader["address"].ToString().Length + addressLength, ' ')));
-            Console.Write(String.Format(reader["age"].ToString().PadRight(12, ' ')));*/
+
+            if (reader["book2"].ToString().Length != 0)
+            {
+                ShowBorrowing(reader, 2);
+            }
+
+
+            if (reader["book3"].ToString().Length != 0)
+            {
+                ShowBorrowing(reader, 3);
+            }
+        }
+
+        public void ShowBorrowing(MySqlDataReader reader, int number)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("빌린 도서  : " + reader["book" + number].ToString());
+            Console.WriteLine("대출일     : " + reader["book" + number + "BorrowTime"].ToString());
+            Console.WriteLine("반납일     : " + reader["book" + number + "ReturnTime"].ToString());
         }
 
         public string GetTitle()
@@ -426,7 +428,7 @@ namespace Library_MySql.Controll
             string author;
             Console.Clear();
             Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetBookPublisher();
+            Initialization.screen.PrintGetBookAuthor();
             authorCheck = Console.ReadLine();
             author = Initialization.exception.HandleGetPublisherInInquiry(authorCheck);
 
