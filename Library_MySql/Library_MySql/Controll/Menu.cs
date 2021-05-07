@@ -148,6 +148,7 @@ namespace Library_MySql.Controll
         public void RunModifyMemberM(Modification modification,string id)
         {
             modification.RunModifyMemberBySelf(id, memberData);
+            RunMemberMenu(id);
         }
 
         public void RunBorrowing(Borrowing borrowing, string id)
@@ -235,13 +236,8 @@ namespace Library_MySql.Controll
                     RunInquiryMemberMenu(inquiry);
                     break;
 
-                case (int)Initialization.InquiryMemberMenu.AGE:
-                    inquiry.ShowMemberByAge();
-                    RunInquiryMemberMenu(inquiry);
-                    break;
-
-                case (int)Initialization.InquiryMemberMenu.ADDRESS:
-                    inquiry.ShowMemberByAddress();
+                case (int)Initialization.InquiryMemberMenu.ID:
+                    inquiry.ShowMemberById(memberData);
                     RunInquiryMemberMenu(inquiry);
                     break;
 
