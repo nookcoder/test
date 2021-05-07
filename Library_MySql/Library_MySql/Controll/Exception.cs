@@ -493,6 +493,30 @@ namespace Library_MySql
             return check;
         }
 
+        public string HandleGetBookIdInBorrowing(string check)
+        {
+            Regex regex = new Regex(@"^[0-9]{1,7}$");
+            int positionY = Console.GetCursorPosition().Top;
+            while (!regex.IsMatch(check) && check != "q")
+            {
+                Console.SetCursorPosition(0, positionY - 1);
+                Console.Write(new String(' ', 1000));
+                Console.SetCursorPosition(0, positionY-1);
+                Initialization.screen.PrintGetBorrowBookNumber();
+                Console.SetCursorPosition(0, positionY);
+                Initialization.screen.PrintInputError();
+
+                Console.SetCursorPosition(35, positionY - 1);
+                check = Console.ReadLine();
+            }
+            Console.SetCursorPosition(0, positionY);
+            Console.Write(new String(' ', 1000));
+            Console.SetCursorPosition(0, positionY - 1);
+
+            return check;
+        }
+
+
         // 도서 가격 수정 예외처리 
         public string HandleGetBookPriceInModification(string check)
         {
