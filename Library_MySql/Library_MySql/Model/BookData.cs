@@ -94,13 +94,12 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
-        public void DownBookCountdate(string bookId)
+        public void ModifyBookCountdate(string bookId,string type)
         {
             string findQuery = "SELECT bookCount FROM book WHERE bookId='" + bookId + "'";
             string updateQuery = "UPDATE book SET bookCount=@bookCount WHERE bookId='" + bookId + "'";
 
             int currentBookCount;
-            string updateBookCount;
 
             connection.Open();
 
@@ -112,9 +111,15 @@ namespace Library_MySql.Model
 
             connection.Open();
             MySqlCommand updateCommand = new MySqlCommand(updateQuery, connection);
-            if(currentBookCount >0)
+            
+            if(type == "DOWN")
             {
-                currentBookCount--;
+                currentBookCount = DownCount(currentBookCount);
+            }
+
+            else if(type == "UP")
+            {
+                currentBookCount = UpCount(currentBookCount);
             }
 
             updateCommand.Parameters.Add("@bookCount", MySqlDbType.VarChar, 20);
@@ -125,6 +130,19 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
+        public int DownCount(int currentBookCount)
+        {
+            currentBookCount--;
+
+            return currentBookCount;
+        }
+
+        public int UpCount(int currentBookCount)
+        {
+            currentBookCount--;
+
+            return currentBookCount;
+        }
 
         // 책 데이터 삭제
         public void DeletBookdata(string bookid)
