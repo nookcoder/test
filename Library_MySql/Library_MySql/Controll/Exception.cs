@@ -669,7 +669,7 @@ namespace Library_MySql
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z0-9]");
             int positionY = Console.GetCursorPosition().Top;
-            while (!regex.IsMatch(check) || check == null)
+            while (!regex.IsMatch(check) || check == null && check != "q")
             {
                 Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
@@ -849,7 +849,7 @@ namespace Library_MySql
         {
             Regex regex = new Regex(@"^[0-9]");
             int positionY = Console.GetCursorPosition().Top;
-            while (!regex.IsMatch(check) || check == null || int.Parse(check) <= 0 || int.Parse(check) > 10)
+            while (!regex.IsMatch(check) || check == null || int.Parse(check) <= 0 || int.Parse(check) > 10 && check != "q")
             {
                 Console.SetCursorPosition(0, positionY - 2);
                 Console.Write(new String(' ', 1000));
