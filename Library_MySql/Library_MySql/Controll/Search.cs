@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Library_MySql.Model;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,31 +31,7 @@ namespace Library_MySql.Controll
             else
             {
                 Console.Clear();
-                using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
-                {
-                    connection.Open();
-                    string selectQuery = "SELECT * FROM book";
-                    MySqlCommand command = new MySqlCommand(selectQuery, connection);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    // 도서가 있으면 출력
-                    while (reader.Read())
-                    {
-                        if (reader["bookTitle"].ToString().Contains(title))
-                        {
-                            Initialization.screen.PrintBar();
-                            ShowBook(reader);
-                            Initialization.screen.PrintBar();
-                            Console.WriteLine("\n");
-                        }
-                    }
-
-                    reader.Close();
-                    connection.Close();
-
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
-                }
+                ShowBookInfo("title", title);
             }
         }
 
@@ -73,31 +50,7 @@ namespace Library_MySql.Controll
             else
             {
                 Console.Clear();
-                using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
-                {
-                    connection.Open();
-                    string selectQuery = "SELECT * FROM book";
-                    MySqlCommand command = new MySqlCommand(selectQuery, connection);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    // 도서가 있으면 출력
-                    while (reader.Read())
-                    {
-                        if (reader["bookPublisher"].ToString().Contains(publisher))
-                        {
-                            Initialization.screen.PrintBar();
-                            ShowBook(reader);
-                            Initialization.screen.PrintBar();
-                            Console.WriteLine("\n");
-                        }
-                    }
-
-                    reader.Close();
-                    connection.Close();
-
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
-                }
+                ShowBookInfo("publisher", publisher);
             }
         }
 
@@ -116,31 +69,7 @@ namespace Library_MySql.Controll
             else
             {
                 Console.Clear();
-                using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
-                {
-                    connection.Open();
-                    string selectQuery = "SELECT * FROM book";
-                    MySqlCommand command = new MySqlCommand(selectQuery, connection);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    // 도서가 있으면 출력
-                    while (reader.Read())
-                    {
-                        if (reader["bookAuthor"].ToString().Contains(author))
-                        {
-                            Initialization.screen.PrintBar();
-                            ShowBook(reader);
-                            Initialization.screen.PrintBar();
-                            Console.WriteLine("\n");
-                        }
-                    }
-
-                    reader.Close();
-                    connection.Close();
-
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
-                }
+                ShowBookInfo("author", author);
             }
         }
 
@@ -222,119 +151,29 @@ namespace Library_MySql.Controll
             else
             {
                 Console.Clear();
-                using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
-                {
-                    connection.Open();
-                    string selectQuery = "SELECT * FROM member";
-                    MySqlCommand command = new MySqlCommand(selectQuery, connection);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    Console.SetWindowSize(150, 45);
-                    // 도서가 있으면 출력
-                    while (reader.Read())
-                    {
-                        if (reader["name"].ToString().Contains(name))
-                        {
-                            Initialization.screen.PrintBar();
-                            ShowMember(reader);
-                            Initialization.screen.PrintBar();
-                            Console.WriteLine("\n");
-                        }
-                    }
-                    reader.Close();
-                    connection.Close();
-
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
-                }
+                ShowMemberInfo("name", name);
             }
         }
 
-        // 회원 나이 검색
-        public void ShowMemberByAge()
+        // 회원 아이디 검색 
+        public void ShowMemberById(MemberData memberData)
         {
-            string age;
+            string id;
 
-            age = GetAge();
+            id = GetId();
 
-            if (age == "q")
+            if (id != "q")
             {
-                // 이전 메뉴로 돌아감 
-            }
-
-            else
-            {
-                Console.Clear();
-                using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
+                if (memberData.IsMemberIdContain(id))
                 {
-                    connection.Open();
-                    string selectQuery = "SELECT * FROM member";
-                    MySqlCommand command = new MySqlCommand(selectQuery, connection);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    Console.SetWindowSize(150, 45);
-                    // 도서가 있으면 출력
-                    while (reader.Read())
-                    {
-                        if (reader["age"].ToString().Contains(age))
-                        {
-                            Initialization.screen.PrintBar();
-                            ShowMember(reader);
-                            Initialization.screen.PrintBar();
-                            Console.WriteLine("\n");
-                        }
-                    }
-                    reader.Close();
-                    connection.Close();
-
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
-                    Console.SetWindowSize(60, 45);
+                    Console.Clear();
+                    ShowMemberInfo("id", id);
                 }
-            }
-        }
 
-        // 회원 주소 검색 
-        public void ShowMemberByAddress()
-        {
-            string address;
-
-            address = GetAddress();
-
-            if (address == "q")
-            {
-                // 이전 메뉴로 돌아감 
-            }
-
-            else
-            {
-                Console.Clear();
-                using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
-                {
-                    connection.Open();
-                    string selectQuery = "SELECT * FROM member";
-                    MySqlCommand command = new MySqlCommand(selectQuery, connection);
-                    MySqlDataReader reader = command.ExecuteReader();
-
-                    Console.SetWindowSize(150, 45);
-                    // 도서가 있으면 출력
-                    while (reader.Read())
-                    {
-                        if (reader["address"].ToString().Contains(address))
-                        {
-                            Initialization.screen.PrintBar();
-                            ShowMember(reader);
-                            Initialization.screen.PrintBar();
-                            Console.WriteLine("\n");
-
-                        }
-                    }
-                    reader.Close();
-                    connection.Close();
-
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
-                    Console.SetWindowSize(60, 45);
+                else 
+                { 
+                    Initialization.screen.PrintNoFIndMember();
+                    Initialization.screen.PrintNextProccess();
                 }
             }
         }
@@ -370,7 +209,7 @@ namespace Library_MySql.Controll
             Console.WriteLine($"회원 아이디 : {reader["Id"].ToString()}");
             Console.WriteLine($"회원 이름   : {reader["name"].ToString()}");
             Console.WriteLine($"전화 번호   : {reader["phoneNumber"].ToString()}");
-            
+
             if (reader["book1"].ToString().Length != 0)
             {
                 ShowBorrowing(reader, 1);
@@ -450,34 +289,73 @@ namespace Library_MySql.Controll
             return name;
         }
 
-        public string GetAge()
+        public string GetId()
         {
-            string ageCheck;
-            string age;
-            Console.Clear();
+            string idCheck;
+            string id;
 
             Console.Clear();
             Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetInquiringAge();
-            ageCheck = Console.ReadLine();
-            age = Initialization.exception.HandleGetAgeInInquiry(ageCheck);
+            Initialization.screen.PrintGetIdForSearch();
+            idCheck = Console.ReadLine();
+            id = Initialization.exception.HandleGetIdForSearch(idCheck);
 
-            return age;
+            return id;
         }
 
-        public string GetAddress()
+        public void ShowMemberInfo(string type, string input)
         {
-            string addressCheck;
-            string address;
-            Console.Clear();
+            using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
+            {
+                connection.Open();
+                string selectQuery = "SELECT * FROM borrowing";
+                MySqlCommand command = new MySqlCommand(selectQuery, connection);
+                MySqlDataReader reader = command.ExecuteReader();
 
-            Console.Clear();
-            Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetInquiringAddress();
-            addressCheck = Console.ReadLine();
-            address = Initialization.exception.HandleGetAddressInInquiry(addressCheck);
+                while (reader.Read())
+                {
+                    if (reader[type].ToString().Contains(input))
+                    {
+                        Initialization.screen.PrintMiniBar();
+                        ShowMember(reader);
+                        Initialization.screen.PrintMiniBar();
+                        Console.WriteLine("\n");
+                    }
+                }
+                reader.Close();
+                connection.Close();
+            }
+            Initialization.screen.PrintNext();
+            Console.ReadKey();
+        }
 
-            return address;
+        public void ShowBookInfo(string type,string input)
+        {
+            using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
+            {
+                connection.Open();
+                string selectQuery = "SELECT * FROM book";
+                MySqlCommand command = new MySqlCommand(selectQuery, connection);
+                MySqlDataReader reader = command.ExecuteReader();
+
+                // 도서가 있으면 출력
+                while (reader.Read())
+                {
+                    if (reader[type].ToString().Contains(input))
+                    {
+                        Initialization.screen.PrintBar();
+                        ShowBook(reader);
+                        Initialization.screen.PrintBar();
+                        Console.WriteLine("\n");
+                    }
+                }
+
+                reader.Close();
+                connection.Close();
+
+                Initialization.screen.PrintNext();
+                Console.ReadKey();
+            }
         }
     }
 }
