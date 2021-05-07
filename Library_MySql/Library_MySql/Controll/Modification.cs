@@ -136,40 +136,21 @@ namespace Library_MySql.Controll
         /// 회원 정보 수정 관련 함수 
         /// </summary>
         /// <param name="memberData"></param>
-        public void RunModifyMemberPhoneNumber(MemberData memberData)
+        
+        public void RunModifyMemberBySelf(string id,MemberData memberData)
         {
-            string memberId;
-            string memeberPhoneNumber;
+            string menuCheck;
+            int menu; 
 
-            memberId = GetMemberId();
-
-            // 종류 아닐 때 
-            if (memberId != "q")
+            memberData.ShowMyData(id);
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintKindOfModifing();
+            Initialization.screen.PrintInput();
+            menuCheck = Console.ReadLine();
+            if(menuCheck == "q")
             {
-                // 해당 되는 회원 아이디가 있을 때
-                if(memberData.IsMemberIdDuplication(memberId))
-                {
-                    memeberPhoneNumber = GetMemberPhoneNumber();
-                 
-                    // 종료 아닐 때 
-                    if (memeberPhoneNumber != "q")
-                    {
-                        memberData.UpdateMemberPhoneNumber(memberId,memeberPhoneNumber);
-                        Initialization.screen.PrintModifingNotice();
-                        Initialization.screen.PrintNext();
-                        Console.ReadKey();
-                    }
-
-                    else { }
-                }
-
-                else 
-                {
-                    Initialization.screen.PrintNoFindMemberNOtice();
-                }
             }
-
-            else { }
+            menu = Convert.ToInt32(Initialization.exception.HandleGetTwoMenu(menuCheck));
         }
 
         public void RunModifyMemberAddress(MemberData memberData)
@@ -190,7 +171,7 @@ namespace Library_MySql.Controll
                     // 종료 아닐 때 
                     if (memeberAddress != "q")
                     {
-                        memberData.UpdateMemberAddress(memberId, memeberAddress);
+                        memberData.UpdateMember(memberId,"address" ,memeberAddress);
                         Initialization.screen.PrintModifingNotice();
                         Initialization.screen.PrintNext();
                         Console.ReadKey();
