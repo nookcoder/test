@@ -104,6 +104,40 @@ namespace Library_MySql.Controll
             else { }
         }
 
+        public bool RunWithdraw(MemberData memberData, string id)
+        {
+            string password;
+            string decision;
+            bool isDone = false;
+
+            Console.Clear();
+            Initialization.screen.PrintExit();
+            password = GetPassword();
+            if (password != "q")
+            {
+                if (memberData.IsMemberPasswordDuplication(id, password))
+                {
+                    decision = GetDecision();
+                    if (decision == "1")
+                    {
+                        memberData.DeletMemberData(id);
+                        isDone = true;
+                        Initialization.screen.PrintDeletingNotice();
+                        Initialization.screen.PrintNextProccess();
+                        
+                    }
+                }
+
+                else
+                {
+                    Initialization.screen.PrintLoginError();
+                    Initialization.screen.PrintNextProccess();
+                }
+            }
+
+            return isDone;
+        }
+
         public string GetDecision()
         {
             string decisionCheck;
@@ -114,6 +148,18 @@ namespace Library_MySql.Controll
             decision = Initialization.exception.HandleGetDecision(decisionCheck);
 
             return decision;
+        }
+
+        public string GetPassword()
+        {
+            string passwordCheck;
+            string password;
+
+            Initialization.screen.PrintGetPassword();
+            passwordCheck = Console.ReadLine();
+            password = Initialization.exception.HandleGetPassword(passwordCheck);
+
+            return password;
         }
     }
 }
