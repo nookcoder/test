@@ -139,7 +139,7 @@ namespace Library_MySql.Controll
                     break;
               
                 case (int)Initialization.MemberMenu.WITHDARWING:
-                    //RunWithdarw();
+                    RunWithdrawMenu(elimination,id,registration);
                     break;
 
                 case (int)Initialization.MemberMenu.BACK:
@@ -170,6 +170,19 @@ namespace Library_MySql.Controll
             }
             
             RunMemberMenu(id);
+        }
+
+        public void RunWithdrawMenu(Elimination elimination,string id,Registration registration)
+        {
+            if(elimination.RunWithdraw(memberData,id))
+            {
+                RunMenu(registration);
+            }
+
+            else
+            {
+                RunMemberMenu(id);
+            }
         }
 
         // 관리자 메뉴
