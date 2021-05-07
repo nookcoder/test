@@ -78,7 +78,7 @@ namespace Library_MySql
             INQUIRTBOOK = 1,
             BORROW,
             RETURN,
-            INQUIRTMEMBER,
+            SEARCHINFO,
             BACK
         }
 
