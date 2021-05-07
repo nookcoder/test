@@ -155,7 +155,7 @@ namespace Library_MySql.Controll
                         break;
 
                     case (int)Initialization.ModifyMember.ADDRESS:
-                        
+                        ModifyAddress(id, memberData);
                         break;
                 }
             }
@@ -170,12 +170,29 @@ namespace Library_MySql.Controll
             phoneNumber = GetMemberPhoneNumber();
             if(phoneNumber != "q")
             {
-                memberData.UpdateMember(id, "phoneNumber", phoneNumber);
-                Initialization.screen.PrintModifingNotice();
-                Initialization.screen.PrintNextProccess();
+                Modify(id, phoneNumber, "phoneNumber");
             }
         }
 
+        public void ModifyAddress(string id, MemberData member)
+        {
+            string address;
+
+            address = GetMemberAddressBySelf();
+            if(address != "q")
+            {
+                Modify(id, address, "address");    
+            }
+        }
+
+        // 수정해주는 함수 
+        public void Modify(string id, string input, string type)
+        {
+            memberData.UpdateMember(id, type, input);
+            Initialization.screen.PrintModifingNotice();
+            Initialization.screen.PrintNextProccess();
+        }
+        
         public void RunModifyMemberAddress(MemberData memberData)
         {
             string memberId;
@@ -299,6 +316,18 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintGetModifingAddress();
             addressCheck = Console.ReadLine();
             address = Initialization.exception.HandleGetAddressInModification(addressCheck);
+
+            return address;
+        }
+
+        public string GetMemberAddressBySelf()
+        {
+            string addressCheck;
+            string address;
+
+            Initialization.screen.PrintGetModifingAddress();
+            addressCheck = Console.ReadLine();
+            address = Initialization.exception.HandleGetAddressInModificationBySelf(addressCheck);
 
             return address;
         }
