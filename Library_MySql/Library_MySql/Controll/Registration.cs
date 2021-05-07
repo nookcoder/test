@@ -54,6 +54,8 @@ namespace Library_MySql.Controll
 
         public string GetMemberPassword()
         {
+            int positionX = Console.GetCursorPosition().Left;
+            int positionY = Console.GetCursorPosition().Top;
             string passwordCheck;
             string password;
             Initialization.screen.PrintGetPassword();

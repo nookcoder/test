@@ -691,7 +691,6 @@ namespace Library_MySql
         {
             PrintNext();
             Console.ReadKey();
-            Console.SetWindowSize(65, 45);
         }
 
         public void PrintNoReturnBookNotice()
@@ -703,7 +702,7 @@ namespace Library_MySql
         public void PrintKindOfModifing()
         {
             Console.WriteLine("\n");
-            Console.WriteLine("  어떤 정보를 수정하시겠습니까? ");
+            Console.WriteLine(new String(' ', 20) + "어떤 정보를 수정하시겠습니까? ");
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[1] 전화 번호 변경");
             Console.WriteLine(new String(' ', 20) + "[2] 주소 변경");

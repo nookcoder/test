@@ -16,7 +16,7 @@ namespace Library_MySql.Controll
         public Borrowing()
         {
             this.Inquiry = new Search();
-            this.connection = new MySqlConnection(Initialization.connection);
+            this.connection = new MySqlConnection(Initialization.CONNECTION);
         }
 
         // 도서관에 해당 책이 있는 지 확인해주는 함수
@@ -373,7 +373,6 @@ namespace Library_MySql.Controll
             Console.WriteLine("빌린 도서  : " + reader["book" + number].ToString());
             Console.WriteLine("대출일     : " + reader["book" + number + "BorrowTime"].ToString());
             Console.WriteLine("반납일     : " + reader["book" + number + "ReturnTime"].ToString());
-
         }
     }
 }
