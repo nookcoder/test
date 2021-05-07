@@ -100,9 +100,9 @@ namespace Library_MySql.Controll
         }
         
         // 도서 대출 로직 
-        public void BorrowBook(string id, string bookNumber, BorrowingData borrowingData, BookData bookData)
+        public bool BorrowBook(string id, string bookNumber, BorrowingData borrowingData, BookData bookData)
         {
-
+            bool isDone = true;
             string bookName;
             string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
             string sql2 = "SELECT * FROM book WHERE bookId='" + bookNumber + "'";
@@ -139,12 +139,15 @@ namespace Library_MySql.Controll
 
             else
             {
+                isDone = false;
                 Initialization.screen.PrintFailBorrowing();
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
             }
 
             connection.Close();
+
+            return isDone;
         }
 
         // 도서 대출 메뉴 실행 시 실행되는 함수 
@@ -155,25 +158,31 @@ namespace Library_MySql.Controll
             
             Console.Clear();
             Initialization.screen.PrintExit();
+            Initialization.screen.PrintMaxinumBook();
             Initialization.screen.PrintGetBorrowBookNumber();
             bookIdCheck = Console.ReadLine();
-            bookId = Initialization.exception.HandleGetBookIdInModification(bookIdCheck);
+            bookId = Initialization.exception.HandleGetBookIdInBorrowing(bookIdCheck);
 
+            // 해당 도서가 도서관에 있는 지 확인
             if (IsHaveBookInLibrary(bookId))
             {
+                // 해당 도서가 회원이 빌린 책인지 확인 
                 if (!IsHaveBookWithMember(id, bookId))
                 {
+                    // 해당 도서 권수가 충분한지 확인 
                     if (IsHaveBook(bookId))
                     {
-                        BorrowBook(id, bookId, borrowingData, bookData);
-                        bookData.ModifyBookCountdate(bookId,"DOWN");
+                        // 해당 도서 대출 (만약 3권이상이면 대출 불가능)
+                        if(BorrowBook(id, bookId, borrowingData, bookData))
+                        {
+                            bookData.ModifyBookCountdate(bookId,"DOWN");
+                        }    
                     }
 
                     else 
                     {
                         Initialization.screen.PrintSorry();
                         Initialization.screen.PrintNextProccess();
-
                     }
                 }
 
@@ -191,7 +200,6 @@ namespace Library_MySql.Controll
                 Console.ReadKey();
             }
         }
-
 
         // 대출한 책 출력하는 함수 
         public bool ShowBookForReturn(string id)
@@ -292,6 +300,22 @@ namespace Library_MySql.Controll
 
             else { }
 
+        }
+
+        // 도서 번호 찾는 함수 
+        public string FindBookId(string bookTitle)
+        {
+            string sql = "SELECT bookId FROM book WHERE bookTitle='" + bookTitle + "'";
+            string bookId; 
+            
+            connection.Open();
+            MySqlCommand FindCommand = new MySqlCommand(sql, connection);
+            MySqlDataReader table = FindCommand.ExecuteReader();
+            table.Read();
+
+            bookId = table["bookId"].ToString();
+
+            return bookId;
         }
 
         public string GetBookTitle()
