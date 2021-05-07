@@ -35,8 +35,7 @@ namespace Library_MySql
         public enum InquiryMemberMenu
         {
             NAME = 1,
-            AGE,
-            ADDRESS,
+            ID,
             ALL,
             BACK
         }
