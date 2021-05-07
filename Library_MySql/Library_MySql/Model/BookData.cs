@@ -94,6 +94,38 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
+        public void DownBookCountdate(string bookId)
+        {
+            string findQuery = "SELECT bookCount FROM book WHERE bookId='" + bookId + "'";
+            string updateQuery = "UPDATE book SET bookCount=@bookCount WHERE bookId='" + bookId + "'";
+
+            int currentBookCount;
+            string updateBookCount;
+
+            connection.Open();
+
+            MySqlCommand findCommand = new MySqlCommand(findQuery, connection);
+            MySqlDataReader reader = findCommand.ExecuteReader();
+            reader.Read();
+            currentBookCount = Convert.ToInt32(reader["bookCount"].ToString());
+            connection.Close();
+
+            connection.Open();
+            MySqlCommand updateCommand = new MySqlCommand(updateQuery, connection);
+            if(currentBookCount >0)
+            {
+                currentBookCount--;
+            }
+
+            updateCommand.Parameters.Add("@bookCount", MySqlDbType.VarChar, 20);
+            updateCommand.Parameters[0].Value = currentBookCount.ToString();
+
+            updateCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+
         // 책 데이터 삭제
         public void DeletBookdata(string bookid)
         {
