@@ -274,8 +274,8 @@ namespace Library_MySql
         // 전화번호 예외처리 (중복 방지) 
         public string HandleGetPhoneNumber(string check, MemberData memberData)
         {
-            Regex regex = new Regex(@"^(010)(\d{4})(\d)");
-            Regex regex1 = new Regex(@"^(011)(\d{4})(\d)");
+            Regex regex = new Regex(@"^(010)(\d{4})(\d){11}");
+            Regex regex1 = new Regex(@"^(011)(\d{4})(\d){11}");
             while ((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check))
             {
                 Console.SetCursorPosition(0, 15);
@@ -307,8 +307,8 @@ namespace Library_MySql
         // 회원 전화번호 수정 예외처리 
         public string HandleGetPhoneNumberInModification(string check, MemberData memberData)
         {
-            Regex regex = new Regex(@"^(010)(\d{4})(\d)");
-            Regex regex1 = new Regex(@"^(011)(\d{4})(\d)");
+            Regex regex = new Regex(@"^(010)(\d{4})(\d){11}");
+            Regex regex1 = new Regex(@"^(011)(\d{4})(\d){11}");
             while (((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check)) && check != "q")
             {
                 Console.SetCursorPosition(0, 4);
