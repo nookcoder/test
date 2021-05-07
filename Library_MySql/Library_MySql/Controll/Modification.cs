@@ -143,14 +143,37 @@ namespace Library_MySql.Controll
             int menu; 
 
             memberData.ShowMyData(id);
-            Initialization.screen.PrintExit();
-            Initialization.screen.PrintKindOfModifing();
-            Initialization.screen.PrintInput();
-            menuCheck = Console.ReadLine();
-            if(menuCheck == "q")
+            menuCheck = GetTwoMenu();
+            
+            if (menuCheck != "q")
             {
+                menu = int.Parse(menuCheck);
+                switch(menu)
+                {
+                    case (int)Initialization.ModifyMember.PHONENUMBER:
+                        ModifyPhoneNumber(id,memberData);
+                        break;
+
+                    case (int)Initialization.ModifyMember.ADDRESS:
+                        
+                        break;
+                }
             }
-            menu = Convert.ToInt32(Initialization.exception.HandleGetTwoMenu(menuCheck));
+
+            else { }
+        }
+
+        public void ModifyPhoneNumber(string id,MemberData memberData)
+        {
+            string phoneNumber;
+
+            phoneNumber = GetMemberPhoneNumber();
+            if(phoneNumber != "q")
+            {
+                memberData.UpdateMember(id, "phoneNumber", phoneNumber);
+                Initialization.screen.PrintModifingNotice();
+                Initialization.screen.PrintNextProccess();
+            }
         }
 
         public void RunModifyMemberAddress(MemberData memberData)
@@ -189,6 +212,42 @@ namespace Library_MySql.Controll
             else { }
         }
 
+        public void RunModifyMemberPhoneNumber(MemberData memberData)
+        {
+            string memberId;
+            string memeberPhoneNumber;
+
+            memberId = GetMemberId();
+
+            // 종류 아닐 때 
+            if (memberId != "q")
+            {
+                // 해당 되는 회원 아이디가 있을 때
+                if (memberData.IsMemberIdDuplication(memberId))
+                {
+                    memeberPhoneNumber = GetMemberAddress();
+
+                    // 종료 아닐 때 
+                    if (memeberPhoneNumber != "q")
+                    {
+                        memberData.UpdateMember(memberId,"phoneNumber" , memeberPhoneNumber);
+                        Initialization.screen.PrintModifingNotice();
+                        Initialization.screen.PrintNext();
+                        Console.ReadKey();
+                    }
+
+                    else { }
+                }
+
+                else
+                {
+                    Initialization.screen.PrintNoFindMemberNOtice();
+                }
+            }
+
+            else { }
+        }
+
         public string GetMemberId()
         {
             string memberIdCheck;
@@ -208,11 +267,24 @@ namespace Library_MySql.Controll
             string phoneNumberCheck;
             string phoneNumber;
 
+            Initialization.screen.PrintGetModifingPhoneNumber();
+            phoneNumberCheck = Console.ReadLine();
+            phoneNumber = Initialization.exception.HandleGetPhoneNumberInModificationBySelf(phoneNumberCheck,memberData);
+
+            return phoneNumber;
+        }
+
+        // 관리자 
+        public string GetMemberPhoneNumberM()
+        {
+            string phoneNumberCheck;
+            string phoneNumber;
+
             Console.Clear();
             Initialization.screen.PrintExit();
             Initialization.screen.PrintGetModifingPhoneNumber();
             phoneNumberCheck = Console.ReadLine();
-            phoneNumber = Initialization.exception.HandleGetPhoneNumberInModification(phoneNumberCheck,memberData);
+            phoneNumber = Initialization.exception.HandleGetPhoneNumberInModification(phoneNumberCheck, memberData);
 
             return phoneNumber;
         }
@@ -229,6 +301,19 @@ namespace Library_MySql.Controll
             address = Initialization.exception.HandleGetAddressInModification(addressCheck);
 
             return address;
+        }
+
+        public string GetTwoMenu()
+        {
+            string menuCheck;
+            string menu;
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintKindOfModifing();
+            Initialization.screen.PrintInput();
+            menuCheck = Console.ReadLine();
+            menu = Initialization.exception.HandleGetTwoMenu(menuCheck);
+
+            return menu;
         }
 
     }
