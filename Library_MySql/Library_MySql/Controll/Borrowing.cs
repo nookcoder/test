@@ -40,8 +40,8 @@ namespace Library_MySql.Controll
             return isHave;
         }
 
-        // 회원이 그 도서를 갖고 있는 지 확인하는 함수 ( 중복 대출 불가) 
-        public void IsHaveBookWithMember(string id, string bookId)
+        // 회원이 그 도서를 갖고 있는 지 확인하는 함수 (중복 대출 불가) 
+        public bool IsHaveBookWithMember(string id, string bookId)
         {
             string findQuery = "SELECT * FROM borrowing WHERE id='"+id+"'";
             string findQueryBook = "SELECT bookTitle FROM book WHERE bookId='" + bookId + "'";
@@ -72,6 +72,45 @@ namespace Library_MySql.Controll
             }
 
             return isHave;
+        }
+
+        // 도서 수량이 남아있는 지 확인 
+        public bool IsHaveBook(string bookId)
+        {
+            string findQuery = "SELECT bookCount FROM book where bookId='" + bookId + "'";
+            bool isOk = false; 
+            
+            MySqlCommand findCommand = new(findQuery, connection);
+            MySqlDataReader dataReader = findCommand.ExecuteReader();
+            
+            if(int.Parse(dataReader[0].ToString()) > 0 )
+            {
+                isOk = true;
+            }
+
+
+            return isOk;
+        }
+
+        public void temp(string id , string bookId, BorrowingData borrowingData, BookData bookData)
+        {
+            if (IsHaveBookInLibrary(bookId))
+            {
+                if (IsHaveBookWithMember(id, bookId))
+                {
+                    if (IsHaveBook(bookId))
+                    {
+
+                    }
+
+                    else { Console.WriteLine("으악"); }
+                }
+
+                else { Console.WriteLine("으악"); }
+            }
+
+            else { Console.Write("으악"); }
+
         }
 
         public void BorrowBook(string id, BorrowingData borrowingData, BookData bookData)
