@@ -214,6 +214,27 @@ namespace Library_MySql.Model
             return isFind;
         }
 
+        public bool IsContain(string type, string input)
+        {
+            DataSet dataset = new DataSet();
+            bool isFind = Initialization.NOFIND;
 
+            string selectQuert = "SELECT * FROM book";
+            MySqlDataAdapter adapter = new MySqlDataAdapter(selectQuert, connection);
+            adapter.Fill(dataset, "book");
+
+            if (dataset.Tables.Count > 0)
+            {
+                foreach (DataRow row in dataset.Tables[0].Rows)
+                {
+                    if (row[type].ToString().Contains(input))
+                    {
+                        isFind = Initialization.FIND;
+                    }
+                }
+            }
+
+            return isFind;
+        }
     }
 }
