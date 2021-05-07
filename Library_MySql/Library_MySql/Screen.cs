@@ -63,9 +63,11 @@ namespace Library_MySql
             Console.WriteLine(new String(' ', 20) + "[3] 도서 반납");
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[4] 내 정보 수정");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[5] 회원 탈퇴"); 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("\n");
-            Console.WriteLine(new String(' ', 20) + "[5] 뒤로 가기");
+            Console.WriteLine(new String(' ', 20) + "[6] 뒤로 가기");
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -708,5 +710,12 @@ namespace Library_MySql
             Console.WriteLine(new String(' ', 20) + "[2] 주소 변경");
             Console.WriteLine("\n");
         }
+
+        public void PrintGetDecision()
+        {
+            Console.WriteLine("  정말로 삭제하시겠습니까?([1] 확인 / [q] 취소)");
+            Console.Write("  입력 : ");
+        }
+
     }
 }

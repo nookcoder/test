@@ -116,7 +116,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintMemberMenu();
             Initialization.screen.PrintInput();
 
-            menu = GetFiveMenu();
+            menu = GetSixMenu();
 
             switch(menu)
             {
@@ -134,8 +134,12 @@ namespace Library_MySql.Controll
                     RunMemberMenu(id);
                     break;
 
-                case (int)Initialization.MemberMenu.INQUIRTMEMBER:
+                case (int)Initialization.MemberMenu.SEARCHINFO:
                     RunModifyMemberM(modification, id);
+                    break;
+              
+                case (int)Initialization.MemberMenu.WITHDARWING:
+                    //RunWithdarw();
                     break;
 
                 case (int)Initialization.MemberMenu.BACK:
