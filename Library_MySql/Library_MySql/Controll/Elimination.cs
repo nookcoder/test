@@ -9,7 +9,7 @@ namespace Library_MySql.Controll
 {
     class Elimination
     {
-        private BookData bookData; 
+        private BookData bookData;
 
         public Elimination()
         {
@@ -33,17 +33,23 @@ namespace Library_MySql.Controll
         public void RunDeletBook(BookData bookData)
         {
             string bookId;
-
+            string decision;
             bookId = GetBookId();
 
             if (bookId != "q")
             {
-                if(bookData.IsBookIdDuplication(bookId))
+                if (bookData.IsBookIdDuplication(bookId))
                 {
-                    bookData.DeletBookdata(bookId);
-                    Initialization.screen.PrintDeletingNotice();
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
+                    decision = GetDecision();
+                    if (decision == "1")
+                    {
+                        bookData.DeletBookdata(bookId);
+                        Initialization.screen.PrintDeletingNotice();
+                        Initialization.screen.PrintNext();
+                        Console.ReadKey();
+                    }
+                    else { }
+
                 }
 
                 else
@@ -72,17 +78,21 @@ namespace Library_MySql.Controll
         public void RunDeleteMember(MemberData memberData)
         {
             string Id;
-
+            string decision;
             Id = GetMemberId();
 
             if (Id != "q")
             {
                 if (memberData.IsMemberIdDuplication(Id))
                 {
-                    memberData.DeletMemberData(Id);
-                    Initialization.screen.PrintDeletingNotice();
-                    Initialization.screen.PrintNext();
-                    Console.ReadKey();
+                    decision = GetDecision();
+                    if (decision == "1")
+                    {
+                        memberData.DeletMemberData(Id);
+                        Initialization.screen.PrintDeletingNotice();
+                        Initialization.screen.PrintNext();
+                        Console.ReadKey();
+                    }
                 }
 
                 else
@@ -92,6 +102,18 @@ namespace Library_MySql.Controll
             }
 
             else { }
+        }
+
+        public string GetDecision()
+        {
+            string decisionCheck;
+            string decision;
+
+            Initialization.screen.PrintGetDecision();
+            decisionCheck = Console.ReadLine();
+            decision = Initialization.exception.HandleGetDecision(decisionCheck);
+
+            return decision;
         }
     }
 }
