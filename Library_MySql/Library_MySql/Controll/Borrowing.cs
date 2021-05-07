@@ -19,8 +19,8 @@ namespace Library_MySql.Controll
             this.connection = new MySqlConnection(Initialization.connection);
         }
 
-        // 도서관에 해당 책이 있는 지 확인해주는 함수./
-        public bool IsHaveBookInLibrary(string bookNumber)
+        // 도서관에 해당 책이 있는 지 확인해주는 함수
+        public bool IsHaveBookInLibrary(string bookId)
         {
             string findQuery = "SELECT * FROM book";
             bool isHave = false;
@@ -31,7 +31,41 @@ namespace Library_MySql.Controll
 
             foreach (DataRow row in data.Tables[0].Rows)
             {
-                if (bookNumber == row["bookId"].ToString())
+                if (bookId == row["bookId"].ToString())
+                {
+                    isHave = true;
+                }
+            }
+
+            return isHave;
+        }
+
+        // 회원이 그 도서를 갖고 있는 지 확인하는 함수 ( 중복 대출 불가) 
+        public void IsHaveBookWithMember(string id, string bookId)
+        {
+            string findQuery = "SELECT * FROM borrowing WHERE id='"+id+"'";
+            string findQueryBook = "SELECT bookTitle FROM book WHERE bookId='" + bookId + "'";
+            bool isHave = false;
+
+            MySqlCommand findCommand = new(findQueryBook, connection);
+            MySqlDataReader dataReader = findCommand.ExecuteReader();
+            DataSet data = new DataSet();
+            MySqlDataAdapter adapter = new MySqlDataAdapter(findQuery, connection);
+            adapter.Fill(data, "borrowing");
+
+            foreach(DataRow row in data.Tables[0].Rows)
+            {
+                if(row["book1"].ToString() == dataReader[0].ToString())
+                {
+                    isHave = true;
+                }
+
+                if (row["book2"].ToString() == dataReader[0].ToString())
+                {
+                    isHave = true;
+                }
+
+                if (row["book3"].ToString() == dataReader[0].ToString())
                 {
                     isHave = true;
                 }
@@ -117,7 +151,7 @@ namespace Library_MySql.Controll
 
         }
 
-        // 책 반납 함수 
+        // 대출한 책 출력하는 함수 
         public bool ShowBookForReturn(string id)
         {
             bool isFind = true;
@@ -165,6 +199,7 @@ namespace Library_MySql.Controll
             return isFind;
         }
 
+        // 도서 반납 함수 
         public void ReturnBook(string id, BorrowingData borrowingData)
         {
             string bookTitle;
