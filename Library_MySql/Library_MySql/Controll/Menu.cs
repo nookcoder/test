@@ -330,18 +330,17 @@ namespace Library_MySql.Controll
             switch (menu)
             {
                 case (int)Initialization.SearchBookMenu.TITLE:
-                    inquiry.ShowBookyTitle();
-                    Console.SetWindowSize(60, 45);
+                    inquiry.ShowBookyTitle(bookdata);
                     RunSearchBookMenu(inquiry);
                     break;
 
                 case (int)Initialization.SearchBookMenu.PUBLISHER:
-                    inquiry.ShowBookByPublisher();
+                    inquiry.ShowBookByPublisher(bookdata);
                     RunSearchBookMenu(inquiry);
                     break;
 
                 case (int)Initialization.SearchBookMenu.AUTHOR:
-                    inquiry.ShowBookByAuthor();
+                    inquiry.ShowBookByAuthor(bookdata);
                     RunSearchBookMenu(inquiry);
                     break;
 
@@ -375,17 +374,17 @@ namespace Library_MySql.Controll
             switch (menu)
             {
                 case (int)Initialization.SearchBookMenuByMember.TITLE:
-                    inquiry.ShowBookyTitle();
+                    inquiry.ShowBookyTitle(bookdata);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenuByMember.PUBLISHER:
-                    inquiry.ShowBookByPublisher();
+                    inquiry.ShowBookByPublisher(bookdata);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenuByMember.AUTHOR:
-                    inquiry.ShowBookByAuthor();
+                    inquiry.ShowBookByAuthor(bookdata);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
