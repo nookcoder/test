@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library_MySql.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Library_MySql
     {
         public static Screen screen = Screen.Instance();
         public static Exception exception = Exception.Instance();
-
+        public static Log log = Log.Instance();
         public enum InitalMenu
         {
             MEMBERLOGIN = 1,
