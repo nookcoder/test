@@ -335,8 +335,10 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine(new String(' ', 20) + "[7] 도서 삭제");
             Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[8] 활동 내역");
+            Console.WriteLine("\n");
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(new String(' ', 20) + "[8] 뒤로 가기");
+            Console.WriteLine(new String(' ', 20) + "[9] 뒤로 가기");
         }
 
         public void PrintModifyBookMenu()
@@ -418,6 +420,20 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine(new String(' ', 20) + "[3] 뒤로 가기");
+        }
+
+        public void PrintRecordMenu()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(new String(' ', 20) + "[1] 활동 내역 조회");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[2] 활동 내역 저장하기");
+            Console.WriteLine("\n");
+            Console.WriteLine(new String(' ', 20) + "[3] 활동 내역 초기화");
+            Console.WriteLine("\n");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(new String(' ', 20) + "[4] 뒤로 가기");
+            
         }
 
         public void PrintGetCountForShow()
