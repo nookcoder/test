@@ -37,6 +37,7 @@ namespace Library_MySql.Controll
 
             memberData.InsertMemberData(id, password, name, phoneNumber, address, age);
             borrowingData.InsertBorrowingData(id, name, phoneNumber, null, null, null, null, null, null, null, null, null);
+            Initialization.log.RecordWithNoBook(name, "회원가입");
             Initialization.screen.PrintJoinSuccess();
             Console.ReadKey();
         }
@@ -125,6 +126,7 @@ namespace Library_MySql.Controll
             count = Convert.ToInt32(GetCountForShow());
             information = api.GetBookInformation(title);
             api.PrintBookInformation(information, count);
+            Initialization.log.RecordWithNoBook("관리자", "네이버 검색");
         }
 
         public void RunRegisterBookFromSearch(Api api)
@@ -147,7 +149,7 @@ namespace Library_MySql.Controll
                 bookAuthor = GetBookAuthor();
                 bookPrice = GetBookPrice();
                 bookCount = GetBookCount();
-
+                Initialization.log.RecordWithBook("관리자", bookTitle, "등록");
                 bookData.InsertBookData(bookId, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
                 Initialization.screen.PrintSuccessRegisterBook();
                 Console.ReadKey();
@@ -175,6 +177,8 @@ namespace Library_MySql.Controll
             bookAuthor = GetBookAuthor();
             bookPrice = GetBookPrice();
             bookCount = GetBookCount();
+
+            Initialization.log.RecordWithBook("관리자", bookTitle, "등록");
 
             bookData.InsertBookData(bookid, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
 

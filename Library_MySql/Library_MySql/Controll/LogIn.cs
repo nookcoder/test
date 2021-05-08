@@ -71,6 +71,7 @@ namespace Library_MySql.Controll
                         if (memberData.IsMemberPasswordDuplication(id, password))
                         {
                             Initialization.screen.PrintLoginSuccess();
+                            Initialization.log.RecordWithNoBook(id, "로그인");
                             isSuccess = true;
                         }
 
@@ -106,6 +107,7 @@ namespace Library_MySql.Controll
             if (code == "*")
             {
                 isRight = true;
+                Initialization.log.RecordWithNoBook("관리자", "로그인");
                 Initialization.screen.PrintLoginSuccess();
             }
 

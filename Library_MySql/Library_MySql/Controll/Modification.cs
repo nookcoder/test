@@ -40,6 +40,7 @@ namespace Library_MySql.Controll
                     if (bookPrice != "q")
                     {
                         bookdata.UpdateBookPricedate(bookId, bookPrice);
+                        Initialization.log.RecordWithBookWithBookId("관리자", bookId, "수정");
                         Initialization.screen.PrintModifingNotice();
                         Initialization.screen.PrintNext();
                         Console.ReadKey();
@@ -75,6 +76,7 @@ namespace Library_MySql.Controll
                     if (bookCount != "q")
                     {
                         bookdata.UpdateBookCountdate(bookId, bookCount);
+                        Initialization.log.RecordWithBookWithBookId("관리자", bookId, "수정");
                         Initialization.screen.PrintModifingNotice();
                         Initialization.screen.PrintNext();
                         Console.ReadKey();
@@ -171,6 +173,7 @@ namespace Library_MySql.Controll
             if(phoneNumber != "q")
             {
                 Modify(id, phoneNumber, "phoneNumber");
+                Initialization.log.RecordWithNoBook(id, "전화번호 수정");
             }
         }
 
@@ -181,7 +184,9 @@ namespace Library_MySql.Controll
             address = GetMemberAddressBySelf();
             if(address != "q")
             {
-                Modify(id, address, "address");    
+                Modify(id, address, "address");
+                Initialization.log.RecordWithNoBook(id, "주소 수정");
+
             }
         }
 
@@ -212,6 +217,7 @@ namespace Library_MySql.Controll
                     if (memeberAddress != "q")
                     {
                         memberData.UpdateMember(memberId,"address" ,memeberAddress);
+                        Initialization.log.RecordWithBook("관리자", memberId, "수정");
                         Initialization.screen.PrintModifingNotice();
                         Initialization.screen.PrintNext();
                         Console.ReadKey();
@@ -248,6 +254,7 @@ namespace Library_MySql.Controll
                     if (memeberPhoneNumber != "q")
                     {
                         memberData.UpdateMember(memberId,"phoneNumber" , memeberPhoneNumber);
+                        Initialization.log.RecordWithBook("관리자", memberId, "수정");
                         Initialization.screen.PrintModifingNotice();
                         Initialization.screen.PrintNext();
                         Console.ReadKey();

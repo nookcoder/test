@@ -44,6 +44,7 @@ namespace Library_MySql.Controll
                     if (decision == "1")
                     {
                         bookData.DeletBookdata(bookId);
+                        Initialization.log.RecordWithBookWithBookId("관리자",bookId,"삭제");
                         Initialization.screen.PrintDeletingNotice();
                         Initialization.screen.PrintNext();
                         Console.ReadKey();
@@ -89,6 +90,7 @@ namespace Library_MySql.Controll
                     if (decision == "1")
                     {
                         memberData.DeletMemberData(Id);
+                        Initialization.log.RecordWithBook("관리자", Id, "삭제");
                         Initialization.screen.PrintDeletingNotice();
                         Initialization.screen.PrintNext();
                         Console.ReadKey();
@@ -104,7 +106,7 @@ namespace Library_MySql.Controll
             else { }
         }
 
-        public bool RunWithdraw(MemberData memberData, string id)
+        public bool RunWithdraw(MemberData memberData,BorrowingData borrowingData, string id)
         {
             string password;
             string decision;
@@ -121,6 +123,8 @@ namespace Library_MySql.Controll
                     if (decision == "1")
                     {
                         memberData.DeletMemberData(id);
+                        borrowingData.DeletMemberData(id);
+                        Initialization.log.RecordWithNoBook(id, "탈퇴");
                         isDone = true;
                         Initialization.screen.PrintDeletingNotice();
                         Initialization.screen.PrintNextProccess();

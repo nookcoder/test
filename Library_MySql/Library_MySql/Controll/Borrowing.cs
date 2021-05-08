@@ -104,6 +104,8 @@ namespace Library_MySql.Controll
         {
             bool isDone = true;
             string bookName;
+            string time1 = DateTime.Now.ToString("MM/dd/yyyy");
+            string time2 = DateTime.Now.AddDays(7).ToString("MM/dd/yyyy");
             string sql = "SELECT * FROM borrowing WHERE id='" + id + "'";
             string sql2 = "SELECT * FROM book WHERE bookId='" + bookNumber + "'";
             connection.Open();
@@ -121,19 +123,19 @@ namespace Library_MySql.Controll
 
             if (borrowTable["book1"].ToString().Length == 0)
             {
-                borrowingData.BorrowBook(bookName, "1", id);
+                borrowingData.BorrowBook(bookName, "1", id,time1,time2);
                 Initialization.screen.PrintBorrow();
             }
 
             else if (borrowTable["book2"].ToString().Length == 0)
             {
-                borrowingData.BorrowBook(bookName, "2", id);
+                borrowingData.BorrowBook(bookName, "2", id, time1, time2);
                 Initialization.screen.PrintBorrow();
             }
 
             else if (borrowTable["book3"].ToString().Length == 0)
             {
-                borrowingData.BorrowBook(bookName, "3", id);
+                borrowingData.BorrowBook(bookName, "3", id, time1, time2);
                 Initialization.screen.PrintBorrow();
             }
 
@@ -175,6 +177,7 @@ namespace Library_MySql.Controll
                         // 해당 도서 대출 (만약 3권이상이면 대출 불가능)
                         if (BorrowBook(id, bookId, borrowingData, bookData))
                         {
+                            Initialization.log.RecordWithBookWithBookId(id, bookId, "대출");
                             bookData.ModifyBookCountdate(bookId, "DOWN");
                         }
                     }
@@ -273,6 +276,7 @@ namespace Library_MySql.Controll
                     borrowTable.Close();
                     bookId = FindBookId(bookTitleCheck);
                     bookData.ModifyBookCountdate(bookId, "UP");
+                    Initialization.log.RecordWithBook(id, bookTitleCheck, "반납");
                     Initialization.screen.PrintReturnNotice();
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
@@ -285,6 +289,7 @@ namespace Library_MySql.Controll
                     borrowTable.Close();
                     bookId = FindBookId(bookTitleCheck);
                     bookData.ModifyBookCountdate(bookId, "UP");
+                    Initialization.log.RecordWithBook(id, bookTitleCheck, "반납");
                     Initialization.screen.PrintReturnNotice();
                     Initialization.screen.PrintNext();
                     Console.ReadKey();
@@ -297,6 +302,7 @@ namespace Library_MySql.Controll
                     borrowTable.Close();
                     bookId = FindBookId(bookTitleCheck); 
                     bookData.ModifyBookCountdate(bookId, "UP");
+                    Initialization.log.RecordWithBook(id, bookTitleCheck, "반납");
                     Initialization.screen.PrintReturnNotice();
                     Initialization.screen.PrintNext();
                     Console.ReadKey();

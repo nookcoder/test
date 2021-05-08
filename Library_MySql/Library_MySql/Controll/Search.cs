@@ -17,7 +17,7 @@ namespace Library_MySql.Controll
         }
 
         // 도서 제목 검색 출력
-        public void ShowBookyTitle(BookData bookData)
+        public void ShowBookyTitle(BookData bookData, string id)
         {
             string title;
 
@@ -37,10 +37,19 @@ namespace Library_MySql.Controll
             else
             {
             }
+            
+            if (id == "q")
+            {
+                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
+            }
+            else
+            {
+                Initialization.log.RecordWithNoBook(id, "도서 조회");
+            }
         }
 
         // 도서 출판사 검색 출력
-        public void ShowBookByPublisher(BookData bookData)
+        public void ShowBookByPublisher(BookData bookData,string id)
         {
             string publisher;
 
@@ -59,10 +68,19 @@ namespace Library_MySql.Controll
             }
 
             else { }
+
+            if (id == "q")
+            {
+                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
+            }
+            else
+            {
+                Initialization.log.RecordWithNoBook(id, "도서 조회");
+            }
         }
 
         // 도서 저자 검색 출력
-        public void ShowBookByAuthor(BookData bookData)
+        public void ShowBookByAuthor(BookData bookData,string id)
         {
             string author;
 
@@ -81,10 +99,19 @@ namespace Library_MySql.Controll
             }
 
             else { }
+
+            if (id == "q")
+            {
+                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
+            }
+            else
+            {
+                Initialization.log.RecordWithNoBook(id, "도서 조회");
+            }
         }
 
         // 도서 전체 출력
-        public void ShowAllBook()
+        public void ShowAllBook(string id)
         {
             Console.Clear();
             using (MySqlConnection connection = new MySqlConnection(mySqlConnection))
@@ -106,6 +133,15 @@ namespace Library_MySql.Controll
 
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
+
+                if(id == "q")
+                {
+                    Initialization.log.RecordWithNoBook("관리자", "도서 조회");
+                }
+                else
+                {
+                    Initialization.log.RecordWithNoBook(id, "도서 조회");
+                }
             }
         }
 
@@ -147,6 +183,7 @@ namespace Library_MySql.Controll
             Console.WriteLine($"도서 가격 : {reader["bookPrice"]}원");
             Console.WriteLine($"도서 권수 : {reader["bookCount"].ToString()}권");
 
+            Initialization.log.RecordWithNoBook("관리자", "도서 조회");
         }
 
         // 회원 이름 검색
@@ -239,6 +276,9 @@ namespace Library_MySql.Controll
             {
                 ShowBorrowing(reader, 3);
             }
+
+            Initialization.log.RecordWithNoBook("관리자","회원 조회");
+
         }
 
         public void ShowBorrowing(MySqlDataReader reader, int number)
