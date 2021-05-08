@@ -30,6 +30,7 @@ namespace Library_MySql
             REGISTERBOO,
             MODIFYBOOK,
             ELIMINATEBOOK,
+            RECORD,
             BACK
         }
 
@@ -91,6 +92,13 @@ namespace Library_MySql
             BACK
         }
 
+        public enum Record
+        {
+            SHOW = 1,
+            SAVE,
+            RESET,
+            BACK
+        }
 
         public const bool FIND = true;
         public const bool NOFIND = false;
