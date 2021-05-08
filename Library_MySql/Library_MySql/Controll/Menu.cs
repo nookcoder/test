@@ -139,7 +139,7 @@ namespace Library_MySql.Controll
                     break;
               
                 case (int)Initialization.MemberMenu.WITHDARWING:
-                    RunWithdrawMenu(elimination,id,registration);
+                    RunWithdrawMenu(elimination,id,registration,borrowingData);
                     break;
 
                 case (int)Initialization.MemberMenu.BACK:
@@ -172,9 +172,9 @@ namespace Library_MySql.Controll
             RunMemberMenu(id);
         }
 
-        public void RunWithdrawMenu(Elimination elimination,string id,Registration registration)
+        public void RunWithdrawMenu(Elimination elimination,string id,Registration registration,BorrowingData borrowingData)
         {
-            if(elimination.RunWithdraw(memberData,id))
+            if(elimination.RunWithdraw(memberData, borrowingData,id))
             {
                 RunMenu(registration);
             }
@@ -225,6 +225,10 @@ namespace Library_MySql.Controll
 
                 case (int)Initialization.ManagerMenu.ELIMINATEBOOK:
                     RunDeleteBookMenu(elimination);
+                    break;
+
+                case (int)Initialization.ManagerMenu.RECORD:
+                    RunRecordMenu();
                     break;
 
                 case (int)Initialization.ManagerMenu.BACK:
@@ -347,17 +351,17 @@ namespace Library_MySql.Controll
             switch (menu)
             {
                 case (int)Initialization.SearchBookMenu.TITLE:
-                    inquiry.ShowBookyTitle(bookdata);
+                    inquiry.ShowBookyTitle(bookdata,"q");
                     RunSearchBookMenu(inquiry);
                     break;
 
                 case (int)Initialization.SearchBookMenu.PUBLISHER:
-                    inquiry.ShowBookByPublisher(bookdata);
+                    inquiry.ShowBookByPublisher(bookdata, "q");
                     RunSearchBookMenu(inquiry);
                     break;
 
                 case (int)Initialization.SearchBookMenu.AUTHOR:
-                    inquiry.ShowBookByAuthor(bookdata);
+                    inquiry.ShowBookByAuthor(bookdata, "q");
                     RunSearchBookMenu(inquiry);
                     break;
 
@@ -368,7 +372,7 @@ namespace Library_MySql.Controll
 
 
                 case (int)Initialization.SearchBookMenu.ALL:
-                    inquiry.ShowAllBook();
+                    inquiry.ShowAllBook("q");
                     RunSearchBookMenu(inquiry);
                     break;
 
@@ -378,6 +382,40 @@ namespace Library_MySql.Controll
             }
         }
 
+        // 활동내역조회 메뉴
+        public void RunRecordMenu()
+        {
+            int menu;
+
+            Console.Clear();
+            Initialization.screen.PrintLabel();
+            Initialization.screen.PrintRecordMenu();
+            Initialization.screen.PrintInput();
+            menu = GetFourMenu();
+
+            switch(menu)
+            {
+                case (int)Initialization.Record.SHOW:
+                    Initialization.log.ShowRecord();
+                    RunRecordMenu();
+                    break;
+
+                case (int)Initialization.Record.SAVE:
+                    //Initialization.log.SaveRecord();
+                    break;
+
+                case (int)Initialization.Record.RESET:
+                    Initialization.log.ResetRecord();
+                    RunManagerMenu();
+                    break;
+
+                case (int)Initialization.Record.BACK:
+                    RunManagerMenu();
+                    break;
+            }
+        }
+
+        // 회원의 도서 조회 메뉴
         public void RunInquiryBookMenuInMember(Search inquiry,string id)
         {
             int menu;
@@ -391,22 +429,22 @@ namespace Library_MySql.Controll
             switch (menu)
             {
                 case (int)Initialization.SearchBookMenuByMember.TITLE:
-                    inquiry.ShowBookyTitle(bookdata);
+                    inquiry.ShowBookyTitle(bookdata,id);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenuByMember.PUBLISHER:
-                    inquiry.ShowBookByPublisher(bookdata);
+                    inquiry.ShowBookByPublisher(bookdata,id);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenuByMember.AUTHOR:
-                    inquiry.ShowBookByAuthor(bookdata);
+                    inquiry.ShowBookByAuthor(bookdata,id);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
                 case (int)Initialization.SearchBookMenuByMember.ALL:
-                    inquiry.ShowAllBook();
+                    inquiry.ShowAllBook(id);
                     RunInquiryBookMenuInMember(inquiry,id);
                     break;
 
