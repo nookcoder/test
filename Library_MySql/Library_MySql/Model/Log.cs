@@ -65,7 +65,7 @@ namespace Library_MySql.Model
 
             insertCommand.Parameters[0].Value = DateTime.Now.ToString("MM/dd/yyyy");
             insertCommand.Parameters[1].Value = "'" + name + "'님이";
-            insertCommand.Parameters[3].Value = content + "했습니다.";
+            insertCommand.Parameters[2].Value = content + "했습니다.";
 
             insertCommand.ExecuteNonQuery();
 
@@ -75,7 +75,6 @@ namespace Library_MySql.Model
         public void RecordWithBookWithBookId(string name, string bookId, string content)
         {
             string insertQuery = "INSERT INTO log(time,name,content) VALUES(@time,@name,@content)";
-            string title;
 
             string bookName;
             string sql2 = "SELECT * FROM book WHERE bookId='" + bookId + "'";
