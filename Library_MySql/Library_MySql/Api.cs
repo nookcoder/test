@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using Library_MySql.Model;
 
 namespace Library_MySql
 {
@@ -36,6 +37,7 @@ namespace Library_MySql
                 StreamReader reader = new StreamReader(stream, Encoding.UTF8);
                 text = reader.ReadToEnd();
             }
+
             else
             {
                 Console.WriteLine("ERROR 발생=" + status);
@@ -57,7 +59,7 @@ namespace Library_MySql
 
             JObject jobject = JObject.Parse(text);
             JToken jToken = jobject["items"];
-            Console.SetWindowSize(150, 45);
+
             foreach (JToken items in jToken)
             {
                 if (bookCount != count)
@@ -70,15 +72,15 @@ namespace Library_MySql
                     isbn = items["isbn"].ToString();
                     description = items["description"].ToString();
 
-                    Initialization.screen.PrintBar();
+                    Initialization.screen.PrintMiniBar();
                     Console.WriteLine($"제목      : {title}");
                     Console.WriteLine($"저자      : {author}");
-                    Console.WriteLine($"가격      : {price}");
+                    Console.WriteLine($"가격      : {price}원");
                     Console.WriteLine($"출판사    : {publisher}");
                     Console.WriteLine($"출판 날짜 : {publishDate}");
                     Console.WriteLine($"ISBN      : {isbn}");
                     Console.WriteLine($"상세설명  : {description}");
-                    Initialization.screen.PrintBar();
+                    Initialization.screen.PrintMiniBar();
 
                     Console.WriteLine("\n");
 
@@ -89,6 +91,32 @@ namespace Library_MySql
                 {
                     break;
                 }
+            }
+        }
+
+        public void InsertBookFromNaver(string text, string isbn, BookData bookData)
+        {
+            JObject jobject = JObject.Parse(text);
+            JToken jToken = jobject["items"];
+            bool isFind = false;
+            string bookId;
+            string bookCount;
+            foreach (JToken items in jToken)
+            {
+                if (isbn == items["isbn"].ToString())
+                {
+                    bookId = Console.ReadLine();
+                    bookCount = Console.ReadLine();
+                    bookData.InsertBookData(bookId, items["title"].ToString(), items["publisher"].ToString(), items["author"].ToString(), items["price"].ToString(), bookCount);
+                    Initialization.log.RecordWithBook("관리자", items["title"].ToString(), "등록");
+                    isFind = true;
+                }
+            }
+
+            if(!isFind)
+            {
+                Initialization.screen.PrintNoFindBook();
+                Initialization.screen.PrintNextProccess();
             }
 
         }
