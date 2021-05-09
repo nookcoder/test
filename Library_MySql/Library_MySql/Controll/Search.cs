@@ -37,15 +37,8 @@ namespace Library_MySql.Controll
             else
             {
             }
-            
-            if (id == "q")
-            {
-                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
-            }
-            else
-            {
-                Initialization.log.RecordWithNoBook(id, "도서 조회");
-            }
+
+            SelectLog(id);
         }
 
         // 도서 출판사 검색 출력
@@ -69,14 +62,7 @@ namespace Library_MySql.Controll
 
             else { }
 
-            if (id == "q")
-            {
-                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
-            }
-            else
-            {
-                Initialization.log.RecordWithNoBook(id, "도서 조회");
-            }
+            SelectLog(id);
         }
 
         // 도서 저자 검색 출력
@@ -100,14 +86,7 @@ namespace Library_MySql.Controll
 
             else { }
 
-            if (id == "q")
-            {
-                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
-            }
-            else
-            {
-                Initialization.log.RecordWithNoBook(id, "도서 조회");
-            }
+            SelectLog(id);
         }
 
         // 도서 전체 출력
@@ -123,9 +102,9 @@ namespace Library_MySql.Controll
 
                 while (reader.Read())
                 {
-                    Initialization.screen.PrintBar();
+                    Initialization.screen.PrintMiniBar();
                     ShowBook(reader);
-                    Initialization.screen.PrintBar();
+                    Initialization.screen.PrintMiniBar();
                     Console.WriteLine("\n");
                 }
 
@@ -134,14 +113,7 @@ namespace Library_MySql.Controll
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
 
-                if(id == "q")
-                {
-                    Initialization.log.RecordWithNoBook("관리자", "도서 조회");
-                }
-                else
-                {
-                    Initialization.log.RecordWithNoBook(id, "도서 조회");
-                }
+                SelectLog(id);
             }
         }
 
@@ -170,6 +142,8 @@ namespace Library_MySql.Controll
                     Console.ReadKey();
                 }
                 else { }
+                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
+
             }
         }
 
@@ -182,8 +156,6 @@ namespace Library_MySql.Controll
             Console.WriteLine($"저자      : {reader["bookAuthor"]}");
             Console.WriteLine($"도서 가격 : {reader["bookPrice"]}원");
             Console.WriteLine($"도서 권수 : {reader["bookCount"].ToString()}권");
-
-            Initialization.log.RecordWithNoBook("관리자", "도서 조회");
         }
 
         // 회원 이름 검색
@@ -203,6 +175,7 @@ namespace Library_MySql.Controll
                 Console.Clear();
                 ShowMemberInfo("name", name);
             }
+            Initialization.log.RecordWithNoBook("관리자", "회원 조회");
         }
 
         // 회원 아이디 검색 
@@ -225,6 +198,7 @@ namespace Library_MySql.Controll
                     Initialization.screen.PrintNoFIndMember();
                     Initialization.screen.PrintNextProccess();
                 }
+                Initialization.log.RecordWithNoBook("관리자", "회원 조회");
             }
         }
 
@@ -248,7 +222,7 @@ namespace Library_MySql.Controll
                     Console.WriteLine("\n");
                 }
                 reader.Close();
-
+                Initialization.log.RecordWithNoBook("관리자", "회원 조회");
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
             }
@@ -276,8 +250,6 @@ namespace Library_MySql.Controll
             {
                 ShowBorrowing(reader, 3);
             }
-
-            Initialization.log.RecordWithNoBook("관리자","회원 조회");
 
         }
 
@@ -421,6 +393,18 @@ namespace Library_MySql.Controll
 
                 Initialization.screen.PrintNext();
                 Console.ReadKey();
+            }
+        }
+
+        public void SelectLog(string id)
+        {
+            if (id == "q")
+            {
+                Initialization.log.RecordWithNoBook("관리자", "도서 조회");
+            }
+            else
+            {
+                Initialization.log.RecordWithNoBook(id, "도서 조회");
             }
         }
     }
