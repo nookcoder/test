@@ -401,7 +401,8 @@ namespace Library_MySql.Controll
                     break;
 
                 case (int)Initialization.Record.SAVE:
-                    //Initialization.log.SaveRecord();
+                    Initialization.log.SaveRecord();
+                    RunRecordMenu();
                     break;
 
                 case (int)Initialization.Record.RESET:
