@@ -41,7 +41,7 @@ namespace Library_MySql.Model
             insertCommand.Parameters.Add("@title", MySqlDbType.VarChar, 45);
             insertCommand.Parameters.Add("@content", MySqlDbType.VarChar, 45);
 
-            insertCommand.Parameters[0].Value = DateTime.Now.ToString("MM/dd/yyyy");
+            insertCommand.Parameters[0].Value = DateTime.Now.ToString("MM/dd/yyyy H:mm");
             insertCommand.Parameters[1].Value = "'" + name + "'님이";
             insertCommand.Parameters[2].Value = title + "을";
             insertCommand.Parameters[3].Value = content + "을 했습니다.";
@@ -65,7 +65,7 @@ namespace Library_MySql.Model
             insertCommand.Parameters.Add("@name", MySqlDbType.VarChar, 45);
             insertCommand.Parameters.Add("@content", MySqlDbType.VarChar, 45);
 
-            insertCommand.Parameters[0].Value = DateTime.Now.ToString("MM/dd/yyyy");
+            insertCommand.Parameters[0].Value = DateTime.Now.ToString("MM/dd/yyyy H:mm");
             insertCommand.Parameters[1].Value = "'" + name + "'님이";
             insertCommand.Parameters[2].Value = content + "했습니다.";
 
@@ -78,14 +78,16 @@ namespace Library_MySql.Model
         {
             string insertQuery = "INSERT INTO log(time,name,content) VALUES(@time,@name,@content)";
 
-            string bookName;
+            string bookName ="";
             string sql2 = "SELECT * FROM book WHERE bookId='" + bookId + "'";
             connection.Open();
 
             MySqlCommand bookCommand = new MySqlCommand(sql2, connection);
-            MySqlDataReader bookTable = bookCommand.ExecuteReader();
-            bookTable.Read();
-            bookName = bookTable["bookTitle"].ToString();
+            MySqlDataReader reader = bookCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                bookName = reader["bookTitle"].ToString();
+            }
             connection.Close();
 
             connection.Open();
@@ -99,7 +101,7 @@ namespace Library_MySql.Model
             insertCommand.Parameters.Add("@title", MySqlDbType.VarChar, 45);
             insertCommand.Parameters.Add("@content", MySqlDbType.VarChar, 45);
 
-            insertCommand.Parameters[0].Value = DateTime.Now.ToString("MM/dd/yyyy");
+            insertCommand.Parameters[0].Value = DateTime.Now.ToString("MM/dd/yyyy H:mm");
             insertCommand.Parameters[1].Value = "'" + name + "'님이";
             insertCommand.Parameters[2].Value = bookName + "을";
             insertCommand.Parameters[3].Value = content + "했습니다.";
@@ -117,15 +119,15 @@ namespace Library_MySql.Model
 
             MySqlCommand command = new MySqlCommand(selectQuery, connection);
             MySqlDataReader reader = command.ExecuteReader();
-            
-            while(reader.Read())
+
+            while (reader.Read())
             {
                 Initialization.screen.PrintMiniBar();
                 if (reader["title"].ToString().Length == 0)
                 {
                     Console.WriteLine($"  {reader["time"]} {reader["name"].ToString()} {reader["content"].ToString()}\n");
                 }
-                
+
                 else
                 {
                     Console.WriteLine($"  {reader["time"]} {reader["name"].ToString()} {reader["title"].ToString()} {reader["content"].ToString()}\n");
@@ -133,34 +135,8 @@ namespace Library_MySql.Model
                 Initialization.screen.PrintMiniBar();
             }
 
+            connection.Close();
             Initialization.screen.PrintNextProccess();
-        }
-
-        public void SaveRecord()
-        {
-            DataSet table = new DataSet();
-
-            string selectQuery = "SELECT * FROM log";
-            connection.Open();
-
-            MySqlDataAdapter adapt = new MySqlDataAdapter();
-            adapt.SelectCommand = new MySqlCommand(selectQuery, connection);
-            adapt.Fill(table);
-
-
-            string[] rowString = new string[table.Tables[0].Rows.Count];
-            int i = 0;
-            foreach(DataRow row in table.Tables[0].Rows)
-            {
-                rowString[i] = row.ItemArray.GetValue(0).ToString() + ",";
-                rowString[i] += row.ItemArray.GetValue(1).ToString() + ",";
-                rowString[i] += row.ItemArray.GetValue(2).ToString();
-                i++;
-            }
-
-            File.WriteAllLines(@"C:\Users\Username\Desktop", rowString);
-
-       //     ExcelDocument workbook = new ExcelDocument(1);
         }
 
         public void ResetRecord()
@@ -178,6 +154,35 @@ namespace Library_MySql.Model
             connection.Close();
 
             Console.WriteLine("  초기화가 완료되었습니다.");
+            Initialization.screen.PrintNextProccess();
+        }
+
+        public void SaveRecord()
+        {
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop).ToString() + "\\test.txt";
+            string selectQuery = "SELECT * FROM log";
+            string textValue = "";
+
+            connection.Open();
+            MySqlCommand cmd = new MySqlCommand(selectQuery, connection);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            while (reader.Read())
+            {
+                if (reader["title"].ToString().Length == 0)
+                {
+                    textValue += reader["time"] + " " + reader["name"] + " " + reader["content"] + "\n";
+                }
+
+                else
+                {
+                    textValue += reader["time"] + " " + reader["name"] + " " + reader["title"] + " " + reader["content"] + "\n";
+                }
+            }
+            File.WriteAllText(path, textValue, Encoding.Default);
+
+            connection.Close();
+            Initialization.screen.PrintSaveNotice();
             Initialization.screen.PrintNextProccess();
         }
 
