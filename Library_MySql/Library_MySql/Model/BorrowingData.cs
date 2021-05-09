@@ -13,7 +13,7 @@ namespace Library_MySql.Model
 
         public BorrowingData()
         {
-            this.connection = new MySqlConnection(Initialization.connection);
+            this.connection = new MySqlConnection(Initialization.CONNECTION);
         }
 
         public void InsertBorrowingData(string id,string name, string phoneNumber, string book1, string book1BorrowTime,string book1ReturnTime, string book2, string book2BorrowTime, string book2ReturnTime, string book3, string book3BorrowTime, string book3ReturnTime)
@@ -57,7 +57,7 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
-        public void BorrowBook(string bookname,string number, string id)
+        public void BorrowBook(string bookname,string number, string id, string time1, string time2)
         {
             string insertQuery = "UPDATE borrowing SET book" + number + "=@book" + number + ",book" + number + "BorrowTime=@book" + number + "BorrowTime,book" + number + "ReturnTime = @book" + number + "ReturnTime WHERE id=@id";
 
@@ -72,8 +72,8 @@ namespace Library_MySql.Model
             insertCommand.Parameters.Add("@id", MySqlDbType.VarChar, 45);
 
             insertCommand.Parameters[0].Value = bookname;
-            insertCommand.Parameters[1].Value = DateTime.Now.ToString("MM/dd/yyyy");
-            insertCommand.Parameters[2].Value = DateTime.Now.AddDays(7).ToString("MM/dd/yyyy");
+            insertCommand.Parameters[1].Value = time1;
+            insertCommand.Parameters[2].Value = time2;
             insertCommand.Parameters[3].Value = id;
 
             insertCommand.ExecuteNonQuery();
@@ -100,6 +100,21 @@ namespace Library_MySql.Model
             updateCommand.Parameters[3].Value = id;
 
             updateCommand.ExecuteNonQuery();
+
+            connection.Close();
+        }
+
+        public void DeletMemberData(string id)
+        {
+            string deleteQuery = "DELETE FROM borrowing WHERE Id='"+id+"'";
+
+            connection.Open();
+
+            MySqlCommand deleteCommand = new MySqlCommand();
+            deleteCommand.Connection = connection;
+            deleteCommand.CommandText = deleteQuery;
+
+            deleteCommand.ExecuteNonQuery();
 
             connection.Close();
         }
