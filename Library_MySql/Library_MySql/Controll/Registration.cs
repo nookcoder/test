@@ -28,23 +28,35 @@ namespace Library_MySql.Controll
             string id, password, name, phoneNumber, address, age;
 
             Console.Clear();
-            id = GetMemberid();
+            Initialization.screen.PrintGetId();
+            id = GetWithMemberData(Initialization.exception.HandleGetId);
+
             if (id != "q")
-            { 
-                password = GetMemberPassword();
+            {
+                Initialization.screen.PrintGetPassword();
+                password = Get(Initialization.exception.HandleGetPassword);
+
                 if (password != "q")
                 {
-                    name = GetMemberName();
-                    if(name != "q")
+                    Initialization.screen.PrintGetName();
+                    name = Get(Initialization.exception.HandleGetName);
+
+                    if (name != "q")
                     {
-                        phoneNumber = GetMemberPhoneNumber();
-                        if(phoneNumber != "q")
+                        Initialization.screen.PrintGetPhoneNumber();
+                        phoneNumber = GetWithMemberData(Initialization.exception.HandleGetPhoneNumber);
+
+                        if (phoneNumber != "q")
                         {
-                            address = GetMemberAddress();
-                            if(address != "q")
+                            Initialization.screen.PrintGetAddress();
+                            address = Get(Initialization.exception.HandleGetAddress);
+
+                            if (address != "q")
                             {
-                                age = GetMemberAge();
-                                if(age != "q")
+                                Initialization.screen.PrintGetAge();
+                                age = Get(Initialization.exception.HandleGetAge);
+
+                                if (age != "q")
                                 {
                                     memberData.InsertMemberData(id, password, name, phoneNumber, address, age);
                                     borrowingData.InsertBorrowingData(id, name, phoneNumber, null, null, null, null, null, null, null, null, null);
@@ -59,72 +71,34 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintNextProccess();
         }
 
-        public string GetMemberid()
-        {
-            string idCheck;
-            string id;
-            Initialization.screen.PrintGetId();
-            idCheck = Console.ReadLine();
-            id = Initialization.exception.HandleGetId(idCheck,memberData);
 
-            return id;
+        public string Get(Func<string,string> MethodName)
+        {
+            string str;
+            str = Console.ReadLine();
+            str = MethodName(str);
+
+            return str;
         }
 
-        public string GetMemberPassword()
+        public string GetWithMemberData(Func<string, MemberData, string> MethodName)
         {
-            int positionX = Console.GetCursorPosition().Left;
-            int positionY = Console.GetCursorPosition().Top;
-            string passwordCheck;
-            string password;
-            Initialization.screen.PrintGetPassword();
-            passwordCheck = Console.ReadLine();
-            password = Initialization.exception.HandleGetPassword(passwordCheck);
+            string str;
+            MemberData member = new MemberData();
+            str = Console.ReadLine();
+            str = MethodName(str, member);
 
-            return password;
+            return str;
         }
 
-        public string GetMemberName()
+        public string GetWithBookData(Func<string, BookData, string> MethodName)
         {
-            string nameCheck;
-            string name;
-            Initialization.screen.PrintGetName();
-            nameCheck = Console.ReadLine();
-            name = Initialization.exception.HandleGetName(nameCheck);
+            string str;
+            BookData book = new BookData();
+            str = Console.ReadLine();
+            str = MethodName(str, book);
 
-            return name;
-        }
-
-        public string GetMemberPhoneNumber()
-        {
-            string phoneNumberCheck;
-            string phoneNumber;
-            Initialization.screen.PrintGetPhoneNumber();
-            phoneNumberCheck = Console.ReadLine();
-            phoneNumber = Initialization.exception.HandleGetPhoneNumber(phoneNumberCheck,memberData);
-
-            return phoneNumber;
-        }
-
-        public string GetMemberAddress()
-        {
-            string addressCheck;
-            string address;
-            Initialization.screen.PrintGetAddress();
-            addressCheck = Console.ReadLine();
-            address = Initialization.exception.HandleGetAddress(addressCheck);
-
-            return address;
-        }
-
-        public string GetMemberAge()
-        {
-            string ageCheck;
-            string age;
-            Initialization.screen.PrintGetAge();
-            ageCheck = Console.ReadLine();
-            age = Initialization.exception.HandleGetAge(ageCheck);
-
-            return ageCheck;
+            return str;
         }
 
         /// <summary>
@@ -140,8 +114,13 @@ namespace Library_MySql.Controll
 
             Console.Clear();
             Initialization.screen.PrintExit();
-            title = GetTitleForShow(); ;
-            count = Convert.ToInt32(GetCountForShow());
+
+            Initialization.screen.PrintGetTitleForShow();
+            title = Get(Initialization.exception.HandleGetTitleForShow); 
+           
+            Initialization.screen.PrintGetCountForShow();
+            count = Convert.ToInt32(Get(Initialization.exception.HandleGetCountForShow));
+
             information = api.GetBookInformation(title);
             api.PrintBookInformation(information, count);
             isbe = GetIsbn();
@@ -158,12 +137,23 @@ namespace Library_MySql.Controll
             string bookCount;
 
             Console.Clear();
-            bookid =  GetBookId();
-            bookTitle =  GetBookTitle();
-            bookPublisher = GetBookPublisher();
-            bookAuthor = GetBookAuthor();
-            bookPrice = GetBookPrice();
-            bookCount = GetBookCount();
+            Initialization.screen.PrintGetBookId();
+            bookid = GetWithBookData(Initialization.exception.HandleGetBookUd);
+
+            Initialization.screen.PrintGetBookTitle();
+            bookTitle = GetWithBookData(Initialization.exception.HandleGetBookTitle);
+
+            Initialization.screen.PrintGetBookPublisher();
+            bookPublisher = Get(Initialization.exception.HandleGetPublisher);
+
+            Initialization.screen.PrintGetBookAuthor();
+            bookAuthor = Get(Initialization.exception.HandleGetBookAuthor);
+            
+            Initialization.screen.PrintGetBookPrice();
+            bookPrice = Get(Initialization.exception.HandleGetBookPrice);
+            
+            Initialization.screen.PrintGetBookCount();
+            bookCount = Get(Initialization.exception.HandleGetBookCount);
 
             Initialization.log.RecordWithBook("관리자", bookTitle, "등록");
 
@@ -171,101 +161,6 @@ namespace Library_MySql.Controll
 
             Initialization.screen.PrintSuccessRegisterBook();
             Console.ReadKey();
-        }
-
-        public string GetBookId()
-        {
-            string bookIdCheck;
-            string bookId;
-
-            Initialization.screen.PrintGetBookId();
-            bookIdCheck = Console.ReadLine();
-            bookId = Initialization.exception.HandleGetBookUd(bookIdCheck, bookData);
-            return bookId; 
-        }
-
-        public string GetBookTitle()
-        {
-            string bookTitleCheck;
-            string bookTitle;
-
-            Initialization.screen.PrintGetBookTitle();
-            bookTitleCheck = Console.ReadLine();
-            bookTitle = Initialization.exception.HandleGetBookTitle(bookTitleCheck, bookData);
-
-            return bookTitle;
-        }
-
-        public string GetBookPublisher()
-        {
-            string bookPublisherCheck;
-            string bookPublisher;
-
-            Initialization.screen.PrintGetBookPublisher();
-            bookPublisherCheck = Console.ReadLine();
-            bookPublisher = Initialization.exception.HandleGetPublisher(bookPublisherCheck);
-
-            return bookPublisher;
-        }
-
-        public string GetBookAuthor()
-        {
-            string bookAuthorCheck;
-            string bookAuthor;
-
-            Initialization.screen.PrintGetBookAuthor();
-            bookAuthorCheck = Console.ReadLine();
-            bookAuthor = Initialization.exception.HandleGetBookAuthor(bookAuthorCheck);
-
-            return bookAuthor;
-        }
-
-        public string GetBookPrice()
-        {
-            string bookPriceCheck;
-            string bookPrice;
-
-            Initialization.screen.PrintGetBookPrice();
-            bookPriceCheck = Console.ReadLine();
-            bookPrice = Initialization.exception.HandleGetBookPrice(bookPriceCheck);
-
-            return bookPrice;
-        }
-
-        public string GetBookCount()
-        {
-            string bookCountCheck;
-            string bookCount;
-
-            Initialization.screen.PrintGetBookCount();
-            bookCountCheck = Console.ReadLine();
-            bookCount = Initialization.exception.HandleGetBookCount(bookCountCheck);
-
-            return bookCount;
-        }
-
-        public string GetTitleForShow()
-        {
-            string titleCheck;
-            string title;
-
-            Initialization.screen.PrintGetTitleForShow();
-            titleCheck = Console.ReadLine();
-            title = Initialization.exception.HandleGetTitleForShow(titleCheck);
-
-            return title;
-        }
-
-        public string GetCountForShow()
-        {
-            string countCheck;
-            string count;
-
-            Initialization.screen.PrintGetCountForShow();
-            countCheck = Console.ReadLine();
-            count = Initialization.exception.HandleGetCountForShow(countCheck);
-
-            return count;
         }
 
         public string GetIsbn()
@@ -277,12 +172,5 @@ namespace Library_MySql.Controll
             return isbn;
         }
 
-        public void BackToFirstMenu(string check)
-        {
-            if(check == "q")
-            {
-
-            }
-        }
     }
 }
