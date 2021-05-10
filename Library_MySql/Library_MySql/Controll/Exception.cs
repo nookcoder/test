@@ -29,6 +29,7 @@ namespace Library_MySql
         /// </summary>
 
         // 아이디 예외처리 
+
         public string HandleGetId(string check, MemberData memberData)
         {
             Regex regex = new Regex(@"^[0-9a-zA-Z]");
@@ -581,12 +582,12 @@ namespace Library_MySql
             {
                 Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, positionY - 1);
+                Console.SetCursorPosition(0, positionY - 3);
                 Initialization.screen.PrintGetBorrowBookNumber();
                 Console.SetCursorPosition(0, positionY);
                 Initialization.screen.PrintInputError();
 
-                Console.SetCursorPosition(35, positionY - 1);
+                Console.SetCursorPosition(36, positionY - 1);
                 check = Console.ReadLine();
             }
             Console.SetCursorPosition(0, positionY);
@@ -838,7 +839,7 @@ namespace Library_MySql
                     Initialization.screen.PrintBookCountError();
                 }
 
-                Console.SetCursorPosition(13, positionY - 1);
+                Console.SetCursorPosition(21, positionY - 1);
                 check = Console.ReadLine();
             }
 
@@ -871,7 +872,7 @@ namespace Library_MySql
                     Initialization.screen.PrintBookCountError();
                 }
 
-                Console.SetCursorPosition(41, positionY - 1);
+                Console.SetCursorPosition(34, positionY - 1);
                 check = Console.ReadLine();
             }
 
@@ -906,7 +907,7 @@ namespace Library_MySql
                     Initialization.screen.PrintBookCountError();
                 }
 
-                Console.SetCursorPosition(13, 6);
+                Console.SetCursorPosition(21, 6);
                 check = Console.ReadLine();
             }
 
