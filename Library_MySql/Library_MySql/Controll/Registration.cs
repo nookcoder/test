@@ -114,7 +114,7 @@ namespace Library_MySql.Controll
         /// 도서 등록 관련 함수 
         /// </summar>
         
-        public void SearchForRegistration(Api api,BookData bookData)
+        public void RunRegisterFromSearch(Api api,BookData bookData)
         {
             string title;
             string information;
@@ -129,15 +129,6 @@ namespace Library_MySql.Controll
             api.PrintBookInformation(information, count);
             isbe = GetIsbn();
             api.InsertBookFromNaver(information,isbe,bookData);
-        }
-
-        public void RunRegisterBookFromSearch(Api api)
-        {
-            SearchForRegistration(api,bookData);
-            Initialization.screen.PrintNoticeRegister();
-            
-            
-
         }
 
         public void RunRegisterBook()

@@ -84,7 +84,7 @@ namespace Library_MySql.Controll
 
             if (Id != "q")
             {
-                if (memberData.IsMemberIdDuplication(Id))
+                if (memberData.IsCheckMemberId(Id))
                 {
                     decision = GetDecision();
                     if (decision == "1")
@@ -117,7 +117,7 @@ namespace Library_MySql.Controll
             password = GetPassword();
             if (password != "q")
             {
-                if (memberData.IsMemberPasswordDuplication(id, password))
+                if (memberData.IsCheckMemberPassword(id, password))
                 {
                     decision = GetDecision();
                     if (decision == "1")

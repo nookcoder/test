@@ -209,7 +209,7 @@ namespace Library_MySql.Controll
             if (memberId != "q")
             {
                 // 해당 되는 회원 아이디가 있을 때
-                if (memberData.IsMemberIdDuplication(memberId))
+                if (memberData.IsCheckMemberId(memberId))
                 {
                     memeberAddress = GetMemberAddress();
 
@@ -246,7 +246,7 @@ namespace Library_MySql.Controll
             if (memberId != "q")
             {
                 // 해당 되는 회원 아이디가 있을 때
-                if (memberData.IsMemberIdDuplication(memberId))
+                if (memberData.IsCheckMemberId(memberId))
                 {
                     memeberPhoneNumber = GetMemberAddress();
 

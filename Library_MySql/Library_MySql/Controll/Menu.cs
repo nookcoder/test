@@ -326,7 +326,7 @@ namespace Library_MySql.Controll
                     RunGetMethodOfRegister(registration);
                     break;
                 case (int)Initialization.RegisterBook.SEARCH:
-                    registration.RunRegisterBookFromSearch(api);
+                    registration.RunRegisterFromSearch(api,bookdata);
                     RunGetMethodOfRegister(registration);
                     break;
                 case (int)Initialization.RegisterBook.BACK:

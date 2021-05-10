@@ -66,9 +66,9 @@ namespace Library_MySql.Controll
                 password = GetPassword();
                 if (password != "q")
                 {
-                    if (memberData.IsMemberIdDuplication(id))
+                    if (memberData.IsCheckMemberId(id))
                     {
-                        if (memberData.IsMemberPasswordDuplication(id, password))
+                        if (memberData.IsCheckMemberPassword(id, password))
                         {
                             Initialization.screen.PrintLoginSuccess();
                             Initialization.log.RecordWithNoBook(id, "로그인");

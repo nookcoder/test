@@ -71,7 +71,6 @@ namespace Library_MySql.Model
             connection.Close();
         }
 
-        // 책 데이터 삭제
         public void DeletMemberData(string id)
         {
             string deleteQuery = "DELETE FROM member WHERE Id=@id;";
@@ -113,7 +112,7 @@ namespace Library_MySql.Model
             return isFind;
         }
 
-        public bool IsMemberIdDuplication(string id)
+        public bool IsCheckMemberId(string id)
         {
             DataSet dataset = new DataSet();
             bool isFind = Initialization.NOFIND;
@@ -159,7 +158,7 @@ namespace Library_MySql.Model
             return isFind;
         }
 
-        public bool IsMemberPhoneNumberDuplication(string id)
+        public bool IsCheckMemberPhoneNumber(string id)
         {
             DataSet dataset = new DataSet();
             bool isFind = Initialization.NOFIND;
@@ -184,7 +183,7 @@ namespace Library_MySql.Model
             return isFind;
         }
 
-        public bool IsMemberPasswordDuplication(string id, string password)
+        public bool IsCheckMemberPassword(string id, string password)
         {
             DataSet dataset = new DataSet();
             bool isFind = Initialization.NOFIND;

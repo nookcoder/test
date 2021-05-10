@@ -35,7 +35,7 @@ namespace Library_MySql
             Regex regex = new Regex(@"^[0-9a-zA-Z]");
 
             // 숫자 영어 로만 이루어진 아이디인지, 중복되는 아이디가 없는 지 확인
-            while (!regex.IsMatch(check) || check?.Length == 0 || memberData.IsMemberIdDuplication(check))
+            while (!regex.IsMatch(check) || check?.Length == 0 || memberData.IsCheckMemberId(check))
             {
                 Console.SetCursorPosition(0, 3);
                 Console.Write(new String(' ', 1000));
@@ -48,7 +48,7 @@ namespace Library_MySql
                     Initialization.screen.PrintInputError();
                 }
 
-                else if (memberData.IsMemberIdDuplication(check))
+                else if (memberData.IsCheckMemberId(check))
                 {
                     Initialization.screen.PrintIdDuplicationError();
                 }
@@ -302,7 +302,7 @@ namespace Library_MySql
             int positionY = Console.GetCursorPosition().Top;
             Regex regex = new Regex(@"^(010)(\d{4})(\d{4})$");
             Regex regex1 = new Regex(@"^(011)(\d{4})(\d{4})$");
-            while ((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check))
+            while ((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsCheckMemberPhoneNumber(check))
             {
                 Console.SetCursorPosition(0, positionY-1);
                 Console.Write(new String(' ', 1000));
@@ -315,7 +315,7 @@ namespace Library_MySql
                     Initialization.screen.PrintInputError();
                 }
 
-                else if (memberData.IsMemberPhoneNumberDuplication(check))
+                else if (memberData.IsCheckMemberPhoneNumber(check))
                 {
                     Initialization.screen.PrintPhoneNumberDuplicationError();
                 }
@@ -335,7 +335,7 @@ namespace Library_MySql
         {
             Regex regex = new Regex(@"^(010)(\d{4})(\d{4})$");
             Regex regex1 = new Regex(@"^(011)(\d{4})(\d{4})$");
-            while (((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check)) && check != "q")
+            while (((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsCheckMemberPhoneNumber(check)) && check != "q")
             {
                 Console.SetCursorPosition(0, 4);
                 Console.Write(new String(' ', 1000));
@@ -343,7 +343,7 @@ namespace Library_MySql
                 Initialization.screen.PrintGetPhoneNumber();
                 Console.SetCursorPosition(0, 7);
 
-                if (memberData.IsMemberPhoneNumberDuplication(check))
+                if (memberData.IsCheckMemberPhoneNumber(check))
                 {
                     Initialization.screen.PrintPhoneNumberDuplicationError();
                 }
@@ -367,7 +367,7 @@ namespace Library_MySql
             int positionY = Console.GetCursorPosition().Top;
             Regex regex = new Regex(@"^(010)(\d{4})(\d{4})$");
             Regex regex1 = new Regex(@"^(011)(\d{4})(\d{4})$");
-            while (((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsMemberPhoneNumberDuplication(check)) && check != "q")
+            while (((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsCheckMemberPhoneNumber(check)) && check != "q")
             {
                 Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
@@ -375,7 +375,7 @@ namespace Library_MySql
                 Initialization.screen.PrintGetPhoneNumber();
                 Console.SetCursorPosition(0, positionY);
 
-                if (memberData.IsMemberPhoneNumberDuplication(check))
+                if (memberData.IsCheckMemberPhoneNumber(check))
                 {
                     Initialization.screen.PrintPhoneNumberDuplicationError();
                 }
@@ -696,7 +696,7 @@ namespace Library_MySql
         // 도서 출판사 예외처리 
         public string HandleGetPublisher(string check)
         {
-            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]{1,15}");
             int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null)
             {
@@ -720,7 +720,7 @@ namespace Library_MySql
         // 도서 출판사 조회 예외처리
         public string HandleGetPublisherInInquiry(string check)
         {
-            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]{1,15}");
 
             while (!regex.IsMatch(check) || check == null)
             {
@@ -740,7 +740,7 @@ namespace Library_MySql
         // 도서 저자 예외처리 
         public string HandleGetBookAuthor(string check)
         {
-            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]{1,15}");
             int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null)
             {
@@ -764,7 +764,7 @@ namespace Library_MySql
         // 도서 저자 조회 예외처리 
         public string HandleGetAuthorInInquiry(string check)
         {
-            Regex regex = new Regex(@"^[가-힣a-zA-Z]");
+            Regex regex = new Regex(@"^[가-힣a-zA-Z]{1,15}");
             int positionY = Console.GetCursorPosition().Top;
             while (!regex.IsMatch(check) || check == null)
             {
