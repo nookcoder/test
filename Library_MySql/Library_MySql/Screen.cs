@@ -136,7 +136,7 @@ namespace Library_MySql
         {
             Console.WriteLine("\n");
             Console.WriteLine("\n");
-            Console.Write("  나이 : ");
+            Console.Write("  나이(숫자만) : ");
         }
 
         public void PrintIdDuplicationError()
@@ -222,7 +222,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine("  검색할 회원 나이를 입력해주세요");
             Console.WriteLine("\n");
-            Console.Write("  나이 : ");
+            Console.Write("  나이(숫자만) : ");
         }
 
         public void PrintGetInquiringAddress()
@@ -240,7 +240,7 @@ namespace Library_MySql
         {
             Console.WriteLine("\n");
             Console.WriteLine("\n");
-            Console.Write("  도서 번호 : ");
+            Console.Write("  도서 번호(숫자만) : ");
         }
 
         public void PrintBookIdDuplicationError()
@@ -282,7 +282,7 @@ namespace Library_MySql
         {
             Console.WriteLine("\n");
             Console.WriteLine("\n");
-            Console.Write("  도서 가격 : ");
+            Console.Write("  도서 가격(숫자만) : ");
         }
 
         public void PrintBookPriceError()
@@ -296,7 +296,7 @@ namespace Library_MySql
         {
             Console.WriteLine("\n");
             Console.WriteLine("\n");
-            Console.Write("  등록 권수 : ");
+            Console.Write("  등록 권수(숫자만) : ");
         }
 
         public void PrintBookCountError()
@@ -460,7 +460,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine("  수정하려는 도서번호를 입력해주세요");
             Console.WriteLine("\n");
-            Console.Write("  도서 번호 : ");
+            Console.Write("  도서 번호(숫자만) : ");
         }
 
         public void PrintGetModifingBookPrice()
@@ -468,7 +468,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine("  수정하려는 도서 가격 입력해주세요");
             Console.WriteLine("\n");
-            Console.Write("  도서 가격 : ");
+            Console.Write("  도서 가격(숫자만) : ");
         }
 
         public void PrintGetModifingBookCount()
@@ -476,7 +476,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine("  수정하려는 도서 권수 입력해주세요");
             Console.WriteLine("\n");
-            Console.Write("  도서 권수 : ");
+            Console.Write("  도서 권수(숫자만) : ");
         }
 
         // 도서 삭제 관련
@@ -485,7 +485,7 @@ namespace Library_MySql
             Console.WriteLine("\n");
             Console.WriteLine("  삭제하려는 도서번호를 입력해주세요");
             Console.WriteLine("\n");
-            Console.Write("  도서 번호 : ");
+            Console.Write("  도서 번호(숫자만) : ");
         }
 
         public void PrintGetDeleteId()
@@ -521,43 +521,11 @@ namespace Library_MySql
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        public void PrintBar()
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.WriteLine(new string('=', 150));
-            Console.ForegroundColor = ConsoleColor.White;
-        }
-
         public void PrintMiniBar()
         {
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine(new string('=', 60));
             Console.ForegroundColor = ConsoleColor.White;
-        }
-
-        public void PrintBookLabel()
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write(" NO");
-            Console.Write(new String(' ', 7) + "도서 제목");
-            Console.Write(new String(' ', 46) + "출판사");
-            Console.Write(new String(' ', 19) + "도서 저자");
-            Console.Write(new String(' ', 31) + "도서 가격");
-            Console.Write(new String(' ', 3) + "권수");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\n");
-        }
-
-        public void PrintMemberLabel()
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta;
-            Console.Write(" ID");
-            Console.Write(new String(' ', 16) + "이름");
-            Console.Write(new String(' ', 22) + "전화 번호");
-            Console.Write(new String(' ', 17) + "주소");
-            Console.Write(new String(' ', 22) + "나이");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("\n");
         }
 
 
@@ -731,6 +699,22 @@ namespace Library_MySql
         {
             Console.WriteLine("  정말로 삭제하시겠습니까?([1] 확인 / [q] 취소)");
             Console.Write("  입력 : ");
+        }
+
+        public void PrintSaveNotice()
+        {
+            Console.WriteLine(new String(' ', 20) + "저장이 완료되었습니다.");
+        }
+
+        public void PrintAskInfo()
+        {
+            Console.WriteLine("  세부 정보를 입력해주세요");
+        }
+
+        public void PrintIsbn()
+        {
+            Console.WriteLine("  등록하려는 책의 ISBN 을 입력해주세요");
+            Console.Write("  ISBN : ");
         }
 
     }
