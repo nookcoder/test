@@ -16,31 +16,22 @@ namespace Library_MySql.Controll
             this.bookData = new BookData();
         }
 
-        public string GetBookId()
-        {
-            string bookIdCheck;
-            string bookId;
-
-            Console.Clear();
-            Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetDeleteBookId();
-            bookIdCheck = Console.ReadLine();
-            bookId = Initialization.exception.HandleGetBookIdInModification(bookIdCheck);
-
-            return bookId;
-        }
-
         public void RunDeletBook(BookData bookData)
         {
             string bookId;
             string decision;
-            bookId = GetBookId();
+
+            Console.Clear();
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintGetDeleteBookId();
+            bookId = Get(Initialization.exception.HandleGetBookIdInModification);
 
             if (bookId != "q")
             {
                 if (bookData.IsBookIdDuplication(bookId))
                 {
-                    decision = GetDecision();
+                    Initialization.screen.PrintGetDecision();
+                    decision = Get(Initialization.exception.HandleGetDecision);
                     if (decision == "1")
                     {
                         bookData.DeletBookdata(bookId);
@@ -62,31 +53,22 @@ namespace Library_MySql.Controll
             else { }
         }
 
-        public string GetMemberId()
-        {
-            string IdCheck;
-            string Id;
-
-            Console.Clear();
-            Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetDeleteId();
-            IdCheck = Console.ReadLine();
-            Id = Initialization.exception.HandleGetIdInDelete(IdCheck);
-
-            return Id;
-        }
-
         public void RunDeleteMember(MemberData memberData)
         {
             string Id;
             string decision;
-            Id = GetMemberId();
+
+            Console.Clear();
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintGetDeleteId();
+            Id = Get(Initialization.exception.HandleGetIdInDelete);
 
             if (Id != "q")
             {
                 if (memberData.IsCheckMemberId(Id))
                 {
-                    decision = GetDecision();
+                    Initialization.screen.PrintGetDecision();
+                    decision = Get(Initialization.exception.HandleGetDecision);
                     if (decision == "1")
                     {
                         memberData.DeletMemberData(Id);
@@ -114,12 +96,14 @@ namespace Library_MySql.Controll
 
             Console.Clear();
             Initialization.screen.PrintExit();
-            password = GetPassword();
+            Initialization.screen.PrintGetPassword();
+            password = Get(Initialization.exception.HandleGetPassword);
             if (password != "q")
             {
                 if (memberData.IsCheckMemberPassword(id, password))
                 {
-                    decision = GetDecision();
+                    Initialization.screen.PrintGetDecision();
+                    decision = Get(Initialization.exception.HandleGetDecision);
                     if (decision == "1")
                     {
                         memberData.DeletMemberData(id);
@@ -142,28 +126,14 @@ namespace Library_MySql.Controll
             return isDone;
         }
 
-        public string GetDecision()
+        public string Get(Func<string, string> methodName)
         {
-            string decisionCheck;
-            string decision;
+            string str;
+            str = Console.ReadLine();
+            str = methodName(str);
 
-            Initialization.screen.PrintGetDecision();
-            decisionCheck = Console.ReadLine();
-            decision = Initialization.exception.HandleGetDecision(decisionCheck);
-
-            return decision;
+            return str;
         }
 
-        public string GetPassword()
-        {
-            string passwordCheck;
-            string password;
-
-            Initialization.screen.PrintGetPassword();
-            passwordCheck = Console.ReadLine();
-            password = Initialization.exception.HandleGetPassword(passwordCheck);
-
-            return password;
-        }
     }
 }
