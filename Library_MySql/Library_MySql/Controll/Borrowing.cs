@@ -153,12 +153,13 @@ namespace Library_MySql.Controll
         }
 
         // 도서 대출 메뉴 실행 시 실행되는 함수 
-        public void RunBorrowing(string id, BorrowingData borrowingData, BookData bookData)
+        public void RunBorrowing(string id, BorrowingData borrowingData, BookData bookData,Search search)
         {
             string bookIdCheck;
             string bookId;
 
             Console.Clear();
+            search.ShowAllBook(id);
             Initialization.screen.PrintExit();
             Initialization.screen.PrintMaxinumBook();
             Initialization.screen.PrintGetBorrowBookNumber();
@@ -349,28 +350,6 @@ namespace Library_MySql.Controll
             bookTItle = Initialization.exception.HandleGetTitle(bookTitleCheck);
 
             return bookTItle;
-        }
-
-        public string GetBorrowBookNumber()
-        {
-            string bookNumberCheck;
-            string bookNumber;
-            Initialization.screen.PrintGetBorrowBookNumber();
-            bookNumberCheck = Console.ReadLine();
-            bookNumber = Initialization.exception.HandleGetBookUdInBorrowing(bookNumberCheck);
-
-            return bookNumber;
-        }
-
-        public string GetReturnBookNumber()
-        {
-            string bookNumberCheck;
-            string bookNumber;
-            Initialization.screen.PrintReturn();
-            bookNumberCheck = Console.ReadLine();
-            bookNumber = Initialization.exception.HandleGetBookUdInBorrowing(bookNumberCheck);
-
-            return bookNumber;
         }
 
         public void ShowBorrowing(MySqlDataReader reader, int number)
