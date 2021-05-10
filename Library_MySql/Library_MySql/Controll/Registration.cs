@@ -25,21 +25,38 @@ namespace Library_MySql.Controll
         /// </summary>
         public void RunRegisterMember()
         {
-            string id, password, name, phoneNumber, address,age;
+            string id, password, name, phoneNumber, address, age;
 
             Console.Clear();
             id = GetMemberid();
-            password = GetMemberPassword();
-            name = GetMemberName();
-            phoneNumber = GetMemberPhoneNumber();
-            address = GetMemberAddress();
-            age = GetMemberAge();
-
-            memberData.InsertMemberData(id, password, name, phoneNumber, address, age);
-            borrowingData.InsertBorrowingData(id, name, phoneNumber, null, null, null, null, null, null, null, null, null);
-            Initialization.log.RecordWithNoBook(name, "회원가입");
-            Initialization.screen.PrintJoinSuccess();
-            Console.ReadKey();
+            if (id != "q")
+            { 
+                password = GetMemberPassword();
+                if (password != "q")
+                {
+                    name = GetMemberName();
+                    if(name != "q")
+                    {
+                        phoneNumber = GetMemberPhoneNumber();
+                        if(phoneNumber != "q")
+                        {
+                            address = GetMemberAddress();
+                            if(address != "q")
+                            {
+                                age = GetMemberAge();
+                                if(age != "q")
+                                {
+                                    memberData.InsertMemberData(id, password, name, phoneNumber, address, age);
+                                    borrowingData.InsertBorrowingData(id, name, phoneNumber, null, null, null, null, null, null, null, null, null);
+                                    Initialization.log.RecordWithNoBook(name, "회원가입");
+                                    Initialization.screen.PrintJoinSuccess();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            Initialization.screen.PrintNextProccess();
         }
 
         public string GetMemberid()
@@ -258,6 +275,14 @@ namespace Library_MySql.Controll
             isbn = Console.ReadLine();
 
             return isbn;
+        }
+
+        public void BackToFirstMenu(string check)
+        {
+            if(check == "q")
+            {
+
+            }
         }
     }
 }
