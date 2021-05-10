@@ -52,7 +52,7 @@ namespace Library_MySql
                     Initialization.screen.PrintIdDuplicationError();
                 }
 
-                Console.SetCursorPosition(24, 3);
+                Console.SetCursorPosition(32, 3);
                 check = Console.ReadLine();
             }
 
@@ -174,7 +174,7 @@ namespace Library_MySql
                 Initialization.screen.PrintGetPassword();
                 Console.SetCursorPosition(0, positionY);
                 Initialization.screen.PrintInputError();
-                Console.SetCursorPosition(27, positionY-1);
+                Console.SetCursorPosition(35, positionY-1);
                 check = Console.ReadLine();
             }
             Console.SetCursorPosition(0, positionY);
@@ -395,23 +395,24 @@ namespace Library_MySql
         // 주소 예외처리 
         public string HandleGetAddress(string check)
         {
+            int positionY = Console.GetCursorPosition().Top;
             Regex regex = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)대로");
             Regex regex1 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)로");
             Regex regex2 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)길");
             while (!regex.IsMatch(check) && !regex1.IsMatch(check) && !regex2.IsMatch(check))
             {
-                Console.SetCursorPosition(0, 19);
+                Console.SetCursorPosition(0, positionY-1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 16);
+                Console.SetCursorPosition(0, positionY - 5);
                 Initialization.screen.PrintGetAddress();
-                Console.SetCursorPosition(0, 21);
+                Console.SetCursorPosition(0, positionY);
                 Initialization.screen.PrintInputError();
-                Console.SetCursorPosition(28, 20);
+                Console.SetCursorPosition(28, positionY-1);
                 check = Console.ReadLine();
             }
-            Console.SetCursorPosition(0, 21);
+            Console.SetCursorPosition(0, positionY + 1);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 20);
+            Console.SetCursorPosition(0, positionY);
 
             return check;
         }
@@ -460,14 +461,15 @@ namespace Library_MySql
         // 회원 나이 예외처리 
         public string HandleGetAge(string check)
         {
+            int positionY = Console.GetCursorPosition().Top;
             Regex regex = new Regex(@"^[0-9]{1,3}$");
             while (!regex.IsMatch(check) || check == "0" || Convert.ToInt32(check) >= 150)
             {
-                Console.SetCursorPosition(0, 23);
+                Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
-                Console.SetCursorPosition(0, 20);
+                Console.SetCursorPosition(0, positionY  - 5);
                 Initialization.screen.PrintGetAge();
-                Console.SetCursorPosition(0, 25);
+                Console.SetCursorPosition(0, positionY);
 
                 if (!regex.IsMatch(check))
                 {
@@ -479,12 +481,12 @@ namespace Library_MySql
                     Initialization.screen.PrintAgeError();
                 }
 
-                Console.SetCursorPosition(9, 24);
+                Console.SetCursorPosition(17, positionY - 1);
                 check = Console.ReadLine();
             }
-            Console.SetCursorPosition(0, 26);
+            Console.SetCursorPosition(0, positionY);
             Console.Write(new String(' ', 1000));
-            Console.SetCursorPosition(0, 25);
+            Console.SetCursorPosition(0, positionY);
 
             return check;
         }
@@ -517,7 +519,7 @@ namespace Library_MySql
                     Initialization.screen.PrintBookIdDuplicationError();
                 }
 
-                Console.SetCursorPosition(14, positionY - 1);
+                Console.SetCursorPosition(22, positionY - 1);
                 check = Console.ReadLine();
             }
             Console.SetCursorPosition(0, positionY + 1);
@@ -561,7 +563,7 @@ namespace Library_MySql
                 Console.SetCursorPosition(0, positionY + 1);
                 Initialization.screen.PrintInputError();
 
-                Console.SetCursorPosition(14, positionY - 1);
+                Console.SetCursorPosition(22, positionY - 1);
                 check = Console.ReadLine();
             }
             Console.SetCursorPosition(0, positionY);
@@ -598,7 +600,7 @@ namespace Library_MySql
         // 도서 가격 수정 예외처리 
         public string HandleGetBookPriceInModification(string check)
         {
-            Regex regex = new Regex(@"^(0-9{1,})(00)$");
+            Regex regex = new Regex(@"^(\d{1,})(0)$");
             int positionY = Console.GetCursorPosition().Top;
             while ((!regex.IsMatch(check) || check == null || check.Length > 6) && check != "q")
             {
@@ -619,7 +621,7 @@ namespace Library_MySql
                     Initialization.screen.PrintGetModifingBookPrice();
                 }
 
-                Console.SetCursorPosition(14, positionY - 1);
+                Console.SetCursorPosition(22, positionY - 1);
                 check = Console.ReadLine();
             }
 
@@ -802,7 +804,7 @@ namespace Library_MySql
                     Initialization.screen.PrintBookPriceError();
                 }
 
-                Console.SetCursorPosition(14, positionY - 1);
+                Console.SetCursorPosition(22, positionY - 1);
                 check = Console.ReadLine();
             }
 
@@ -869,7 +871,7 @@ namespace Library_MySql
                     Initialization.screen.PrintBookCountError();
                 }
 
-                Console.SetCursorPosition(33, positionY - 1);
+                Console.SetCursorPosition(41, positionY - 1);
                 check = Console.ReadLine();
             }
 
