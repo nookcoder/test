@@ -169,7 +169,8 @@ namespace Library_MySql.Controll
         {
             string phoneNumber;
 
-            phoneNumber = GetMemberPhoneNumber();
+            Initialization.screen.PrintGetModifingPhoneNumber();
+            phoneNumber = GetWithMemberData(Initialization.exception.HandleGetPhoneNumberInModificationBySelf);
             if(phoneNumber != "q")
             {
                 Modify(id, phoneNumber, "phoneNumber");
@@ -181,7 +182,8 @@ namespace Library_MySql.Controll
         {
             string address;
 
-            address = GetMemberAddressBySelf();
+            Initialization.screen.PrintGetModifingAddress();
+            address = Get(Initialization.exception.HandleGetAddressInModificationBySelf);
             if(address != "q")
             {
                 Modify(id, address, "address");
@@ -203,7 +205,10 @@ namespace Library_MySql.Controll
             string memberId;
             string memeberAddress;
 
-            memberId = GetMemberId();
+            Console.Clear();
+            Initialization.screen.PrintExit();
+            Initialization.screen.PrintGetModifingMemberId();
+            memberId = Get(Initialization.exception.HandleGetIdInModifing);
 
             // 종류 아닐 때 
             if (memberId != "q")
@@ -211,7 +216,10 @@ namespace Library_MySql.Controll
                 // 해당 되는 회원 아이디가 있을 때
                 if (memberData.IsCheckMemberId(memberId))
                 {
-                    memeberAddress = GetMemberAddress();
+                    Console.Clear();
+                    Initialization.screen.PrintExit();
+                    Initialization.screen.PrintGetModifingAddress();
+                    memeberAddress = Get(Initialization.exception.HandleGetAddressInModification);
 
                     // 종료 아닐 때 
                     if (memeberAddress != "q")
@@ -240,7 +248,7 @@ namespace Library_MySql.Controll
             string memberId;
             string memeberPhoneNumber;
 
-            memberId = GetMemberId();
+            memberId = Get(Initialization.exception.HandleGetIdInModifing);
 
             // 종류 아닐 때 
             if (memberId != "q")
@@ -248,12 +256,15 @@ namespace Library_MySql.Controll
                 // 해당 되는 회원 아이디가 있을 때
                 if (memberData.IsCheckMemberId(memberId))
                 {
-                    memeberPhoneNumber = GetMemberAddress();
+                    Console.Clear();
+                    Initialization.screen.PrintExit();
+                    Initialization.screen.PrintGetModifingAddress();
+                    memeberPhoneNumber = Get(Initialization.exception.HandleGetAddressInModification);
 
                     // 종료 아닐 때 
                     if (memeberPhoneNumber != "q")
                     {
-                        memberData.UpdateMember(memberId,"phoneNumber" , memeberPhoneNumber);
+                        memberData.UpdateMember(memberId, "phoneNumber", memeberPhoneNumber);
                         Initialization.log.RecordWithBook("관리자", memberId, "수정");
                         Initialization.screen.PrintModifingNotice();
                         Initialization.screen.PrintNext();
@@ -272,71 +283,28 @@ namespace Library_MySql.Controll
             else { }
         }
 
-        public string GetMemberId()
+        /// <summary>
+        /// 무언가를 얻어올 때 쓰는 함수들 
+        /// </summary>
+        /// <param name="MethodName"></param>
+        /// <returns></returns>
+        public string Get(Func<string, string>MethodName)
         {
-            string memberIdCheck;
-            string memberId;
+            string str;
+            str = Console.ReadLine();
+            str = MethodName(str);
 
-            Console.Clear();
-            Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetModifingMemberId();
-            memberIdCheck = Console.ReadLine();
-            memberId = Initialization.exception.HandleGetIdInModifing(memberIdCheck);
-
-            return memberId;
+            return str;
         }
 
-        public string GetMemberPhoneNumber()
+        public string GetWithMemberData(Func<string, MemberData,string>MethodName)
         {
-            string phoneNumberCheck;
-            string phoneNumber;
+            string str;
+            MemberData memberData = new MemberData();
+            str = Console.ReadLine();
+            str = MethodName(str, memberData);
 
-            Initialization.screen.PrintGetModifingPhoneNumber();
-            phoneNumberCheck = Console.ReadLine();
-            phoneNumber = Initialization.exception.HandleGetPhoneNumberInModificationBySelf(phoneNumberCheck,memberData);
-
-            return phoneNumber;
-        }
-
-        // 관리자 
-        public string GetMemberPhoneNumberM()
-        {
-            string phoneNumberCheck;
-            string phoneNumber;
-
-            Console.Clear();
-            Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetModifingPhoneNumber();
-            phoneNumberCheck = Console.ReadLine();
-            phoneNumber = Initialization.exception.HandleGetPhoneNumberInModification(phoneNumberCheck, memberData);
-
-            return phoneNumber;
-        }
-
-        public string GetMemberAddress()
-        {
-            string addressCheck;
-            string address;
-
-            Console.Clear();
-            Initialization.screen.PrintExit();
-            Initialization.screen.PrintGetModifingAddress();
-            addressCheck = Console.ReadLine();
-            address = Initialization.exception.HandleGetAddressInModification(addressCheck);
-
-            return address;
-        }
-
-        public string GetMemberAddressBySelf()
-        {
-            string addressCheck;
-            string address;
-
-            Initialization.screen.PrintGetModifingAddress();
-            addressCheck = Console.ReadLine();
-            address = Initialization.exception.HandleGetAddressInModificationBySelf(addressCheck);
-
-            return address;
+            return str;
         }
 
         public string GetTwoMenu()
