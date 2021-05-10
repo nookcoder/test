@@ -105,8 +105,9 @@ namespace Library_MySql
             {
                 if (isbn == items["isbn"].ToString())
                 {
-                    bookId = Console.ReadLine();
-                    bookCount = Console.ReadLine();
+                    Initialization.screen.PrintAskInfo();
+                    bookId = GetBookId(bookData);
+                    bookCount = GetBookCount();
                     bookData.InsertBookData(bookId, items["title"].ToString(), items["publisher"].ToString(), items["author"].ToString(), items["price"].ToString(), bookCount);
                     Initialization.log.RecordWithBook("관리자", items["title"].ToString(), "등록");
                     isFind = true;
@@ -119,6 +120,26 @@ namespace Library_MySql
                 Initialization.screen.PrintNextProccess();
             }
 
+        }
+
+        public string GetBookId(BookData bookData)
+        {
+            string bookId;
+            Initialization.screen.PrintGetBookId();
+            bookId = Console.ReadLine();
+            bookId = Initialization.exception.HandleGetBookUd(bookId, bookData);
+
+            return bookId;
+        }
+
+        public string GetBookCount()
+        {
+            string bookCount;
+            Initialization.screen.PrintGetBookCount();
+            bookCount = Console.ReadLine();
+            bookCount = Initialization.exception.HandleGetBookCount(bookCount);
+
+            return bookCount;
         }
     }
 }
