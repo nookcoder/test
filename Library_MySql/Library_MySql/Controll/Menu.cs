@@ -54,7 +54,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintInitalMenu();
             Initialization.screen.PrintInput();
-            menu = GetFourMenu();
+            menu = GetMenu(Initialization.exception.HandleGetFourMenu);
 
             switch (menu)
             {
@@ -116,7 +116,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintMemberMenu();
             Initialization.screen.PrintInput();
 
-            menu = GetSixMenu();
+            menu = GetMenu(Initialization.exception.HandleGetSixMenu);
 
             switch(menu)
             {
@@ -194,7 +194,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintManagerMenu();
             Initialization.screen.PrintInput();
-            menu = GetManagerMenu();
+            menu = GetMenu(Initialization.exception.HandleManagerMenuInput);
 
             switch (menu)
             {
@@ -248,7 +248,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintInquiryMemberMenu();
             Initialization.screen.PrintInput();
-            menu = GetFiveMenu();
+            menu = GetMenu(Initialization.exception.HandleGetFiveMenu);
 
             switch (menu)
             {
@@ -283,7 +283,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintModifyMemberMenu();
             Initialization.screen.PrintInput();
-            menu = GetThreeMenu();
+            menu = GetMenu(Initialization.exception.HandleGetThreeMenu);
 
             switch (menu)
             {
@@ -318,7 +318,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintMethodRegister();
             Initialization.screen.PrintInput();
-            menu = GetThreeMenu();
+            menu = GetMenu(Initialization.exception.HandleGetThreeMenu);
             switch (menu)
             {
                 case (int)Initialization.RegisterBook.DIRECTION:
@@ -346,7 +346,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintSearchBookMenu();
             Initialization.screen.PrintInput();
-            menu = GetSixMenu();
+            menu = GetMenu(Initialization.exception.HandleGetSixMenu);
 
             switch (menu)
             {
@@ -391,7 +391,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintRecordMenu();
             Initialization.screen.PrintInput();
-            menu = GetFourMenu();
+            menu = GetMenu(Initialization.exception.HandleGetFourMenu);
 
             switch(menu)
             {
@@ -425,7 +425,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintSearchBookByMember();
             Initialization.screen.PrintInput();
-            menu = GetFiveMenu();
+            menu = GetMenu(Initialization.exception.HandleGetFiveMenu);
 
             switch (menu)
             {
@@ -464,7 +464,7 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintLabel();
             Initialization.screen.PrintModifyBookMenu();
             Initialization.screen.PrintInput();
-            menu = GetThreeMenu();
+            menu = GetMenu(Initialization.exception.HandleGetThreeMenu);
 
             switch (menu)
             {
@@ -491,62 +491,15 @@ namespace Library_MySql.Controll
             RunManagerMenu();
         }
 
-        public int GetThreeMenu()
+        public int GetMenu(Func<string,string> MethodName)
         {
             string menuCheck;
-            int menu = 1;
+            int menu;
 
             menuCheck = Console.ReadLine();
-            menu = Convert.ToInt32(Initialization.exception.HandleGetThreeMenu(menuCheck));
+            menu = Convert.ToInt32(MethodName(menuCheck));
 
             return menu;
         }
-
-        public int GetFourMenu()
-        {
-            string menucheck;
-            int menu;
-
-            menucheck = Console.ReadLine();
-            menu = Convert.ToInt32(Initialization.exception.HandleGetFourMenu(menucheck));
-
-            return menu;
-        }
-
-        public int GetFiveMenu()
-        {
-
-            string menucheck;
-            int menu;
-
-            menucheck = Console.ReadLine();
-            menu = Convert.ToInt32(Initialization.exception.HandleGetFiveMenu(menucheck));
-
-            return menu;
-        }
-
-        public int GetSixMenu()
-        {
-
-            string menucheck;
-            int menu;
-
-            menucheck = Console.ReadLine();
-            menu = Convert.ToInt32(Initialization.exception.HandleGetSixMenu(menucheck));
-
-            return menu;
-        }
-
-        public int GetManagerMenu()
-        {
-            string menucheck;
-            int menu;
-
-            menucheck = Console.ReadLine();
-            menu = Convert.ToInt32(Initialization.exception.HandleManagerMenuInput(menucheck));
-
-            return menu;
-        }
-
     }
 }
