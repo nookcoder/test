@@ -65,13 +65,16 @@ namespace Library_MySql
                 if (bookCount != count)
                 {
                     title = items["title"].ToString();
+                    title = RemoveTag(title);
                     author = items["author"].ToString();
+                    author = RemoveTag(author);
                     price = items["price"].ToString();
                     publisher = items["publisher"].ToString();
+                    publisher = RemoveTag(publisher);
                     publishDate = items["pubdate"].ToString();
                     isbn = items["isbn"].ToString();
                     description = items["description"].ToString();
-
+                    description = RemoveTag(description);
                     Initialization.screen.PrintMiniBar();
                     Console.WriteLine($"제목      : {title}");
                     Console.WriteLine($"저자      : {author}");
@@ -140,6 +143,14 @@ namespace Library_MySql
             bookCount = Initialization.exception.HandleGetBookCount(bookCount);
 
             return bookCount;
+        }
+
+        public string RemoveTag(string str)
+        {
+            str = str.Replace("<b>", "");
+            str = str.Replace("</b>", "");
+
+            return str;
         }
     }
 }
