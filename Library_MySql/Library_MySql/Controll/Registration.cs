@@ -114,10 +114,11 @@ namespace Library_MySql.Controll
         /// 도서 등록 관련 함수 
         /// </summar>
         
-        public void SearchForRegistration(Api api)
+        public void SearchForRegistration(Api api,BookData bookData)
         {
             string title;
             string information;
+            string isbe; 
             int count;
 
             Console.Clear();
@@ -126,38 +127,16 @@ namespace Library_MySql.Controll
             count = Convert.ToInt32(GetCountForShow());
             information = api.GetBookInformation(title);
             api.PrintBookInformation(information, count);
-            Initialization.log.RecordWithNoBook("관리자", "네이버 검색");
+            isbe = GetIsbn();
+            api.InsertBookFromNaver(information,isbe,bookData);
         }
 
         public void RunRegisterBookFromSearch(Api api)
         {
-            string bookId;
-            string bookTitle;
-            string bookPublisher;
-            string bookAuthor;
-            string bookPrice;
-            string bookCount;
-
-            SearchForRegistration(api);
+            SearchForRegistration(api,bookData);
             Initialization.screen.PrintNoticeRegister();
             
-            bookId = GetBookId();
-            if(bookId != "q")
-            {
-                bookTitle = GetBookTitle();
-                bookPublisher = GetBookPublisher();
-                bookAuthor = GetBookAuthor();
-                bookPrice = GetBookPrice();
-                bookCount = GetBookCount();
-                Initialization.log.RecordWithBook("관리자", bookTitle, "등록");
-                bookData.InsertBookData(bookId, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
-                Initialization.screen.PrintSuccessRegisterBook();
-                Console.ReadKey();
-            }
-            else
-            {
-                Initialization.screen.PrintNextProccess();
-            }
+            
 
         }
 
@@ -279,6 +258,15 @@ namespace Library_MySql.Controll
             count = Initialization.exception.HandleGetCountForShow(countCheck);
 
             return count;
+        }
+
+        public string GetIsbn()
+        {
+            string isbn;
+            Initialization.screen.PrintIsbn();
+            isbn = Console.ReadLine();
+
+            return isbn;
         }
     }
 }
