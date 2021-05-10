@@ -23,6 +23,7 @@ namespace Library_MySql.Controll
         /// <summary>
         /// 회원 가입 관련 함수 
         /// </summary>
+        // 으아ㅏ... 인터페이스? 그거 써보려 했는데 어떻게 적용시키는 건지 이해가 잘 안가요..ㅠ
         public void RunRegisterMember()
         {
             string id, password, name, phoneNumber, address, age;
@@ -71,36 +72,6 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintNextProccess();
         }
 
-
-        public string Get(Func<string,string> MethodName)
-        {
-            string str;
-            str = Console.ReadLine();
-            str = MethodName(str);
-
-            return str;
-        }
-
-        public string GetWithMemberData(Func<string, MemberData, string> MethodName)
-        {
-            string str;
-            MemberData member = new MemberData();
-            str = Console.ReadLine();
-            str = MethodName(str, member);
-
-            return str;
-        }
-
-        public string GetWithBookData(Func<string, BookData, string> MethodName)
-        {
-            string str;
-            BookData book = new BookData();
-            str = Console.ReadLine();
-            str = MethodName(str, book);
-
-            return str;
-        }
-
         /// <summary>
         /// 도서 등록 관련 함수 
         /// </summar>
@@ -127,6 +98,7 @@ namespace Library_MySql.Controll
             api.InsertBookFromNaver(information,isbe,bookData);
         }
 
+        // 도서 직접 등록 
         public void RunRegisterBook()
         {
             string bookid;
@@ -140,27 +112,73 @@ namespace Library_MySql.Controll
             Initialization.screen.PrintGetBookId();
             bookid = GetWithBookData(Initialization.exception.HandleGetBookUd);
 
-            Initialization.screen.PrintGetBookTitle();
-            bookTitle = GetWithBookData(Initialization.exception.HandleGetBookTitle);
+            if (bookid != "q")
+            {
+                Initialization.screen.PrintGetBookTitle();
+                bookTitle = GetWithBookData(Initialization.exception.HandleGetBookTitle);
+                    
+                if(bookTitle != "q")
+                {
+                    Initialization.screen.PrintGetBookPublisher();
+                    bookPublisher = Get(Initialization.exception.HandleGetPublisher);
 
-            Initialization.screen.PrintGetBookPublisher();
-            bookPublisher = Get(Initialization.exception.HandleGetPublisher);
+                    if(bookPublisher != "q")
+                    {
+                        Initialization.screen.PrintGetBookAuthor();
+                        bookAuthor = Get(Initialization.exception.HandleGetBookAuthor);
+                        
+                        if(bookAuthor != "q")
+                        {
+                            Initialization.screen.PrintGetBookPrice();
+                            bookPrice = Get(Initialization.exception.HandleGetBookPrice);
 
-            Initialization.screen.PrintGetBookAuthor();
-            bookAuthor = Get(Initialization.exception.HandleGetBookAuthor);
-            
-            Initialization.screen.PrintGetBookPrice();
-            bookPrice = Get(Initialization.exception.HandleGetBookPrice);
-            
-            Initialization.screen.PrintGetBookCount();
-            bookCount = Get(Initialization.exception.HandleGetBookCount);
+                            if(bookPrice != "q")
+                            {
+                                Initialization.screen.PrintGetBookCount();
+                                bookCount = Get(Initialization.exception.HandleGetBookCount);
+                                Initialization.log.RecordWithBook("관리자", bookTitle, "등록");
 
-            Initialization.log.RecordWithBook("관리자", bookTitle, "등록");
+                                bookData.InsertBookData(bookid, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
 
-            bookData.InsertBookData(bookid, bookTitle, bookPublisher, bookAuthor, bookPrice, bookCount);
+                                Initialization.screen.PrintSuccessRegisterBook();
+                            }
+                        }
+                    }
+                }
+            }
 
-            Initialization.screen.PrintSuccessRegisterBook();
+            Initialization.screen.PrintNextProccess();
             Console.ReadKey();
+        }
+
+        // 무언가를 얻어올 때 쓰는 함수들
+        public string Get(Func<string, string> MethodName)
+        {
+            string str;
+            str = Console.ReadLine();
+            str = MethodName(str);
+
+            return str;
+        }
+
+        public string GetWithMemberData(Func<string, MemberData, string> MethodName)
+        {
+            string str;
+            MemberData member = new MemberData();
+            str = Console.ReadLine();
+            str = MethodName(str, member);
+
+            return str;
+        }
+
+        public string GetWithBookData(Func<string, BookData, string> MethodName)
+        {
+            string str;
+            BookData book = new BookData();
+            str = Console.ReadLine();
+            str = MethodName(str, book);
+
+            return str;
         }
 
         public string GetIsbn()
