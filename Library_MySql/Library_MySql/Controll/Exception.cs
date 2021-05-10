@@ -35,7 +35,7 @@ namespace Library_MySql
             Regex regex = new Regex(@"^[0-9a-zA-Z]");
 
             // 숫자 영어 로만 이루어진 아이디인지, 중복되는 아이디가 없는 지 확인
-            while (!regex.IsMatch(check) || check?.Length == 0 || memberData.IsCheckMemberId(check))
+            while (!regex.IsMatch(check) || check?.Length == 0 || memberData.IsCheckMemberId(check) &&check!="q")
             {
                 Console.SetCursorPosition(0, 3);
                 Console.Write(new String(' ', 1000));
@@ -53,7 +53,7 @@ namespace Library_MySql
                     Initialization.screen.PrintIdDuplicationError();
                 }
 
-                Console.SetCursorPosition(32, 3);
+                Console.SetCursorPosition(24, 3);
                 check = Console.ReadLine();
             }
 
@@ -210,7 +210,7 @@ namespace Library_MySql
         {
             Regex regex = new Regex(@"^[가-힣a-zA-Z]{2,}$");
             int positionY = Console.GetCursorPosition().Top;
-            while (!regex.IsMatch(check) || check == null)
+            while (!regex.IsMatch(check) || check == null && check !="q")
             {
                 Console.SetCursorPosition(0, positionY -1);
                 Console.Write(new String(' ', 1000));
@@ -302,7 +302,7 @@ namespace Library_MySql
             int positionY = Console.GetCursorPosition().Top;
             Regex regex = new Regex(@"^(010)(\d{4})(\d{4})$");
             Regex regex1 = new Regex(@"^(011)(\d{4})(\d{4})$");
-            while ((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsCheckMemberPhoneNumber(check))
+            while ((!regex.IsMatch(check) && !regex1.IsMatch(check)) || memberData.IsCheckMemberPhoneNumber(check) && check != "q")
             {
                 Console.SetCursorPosition(0, positionY-1);
                 Console.Write(new String(' ', 1000));
@@ -400,7 +400,7 @@ namespace Library_MySql
             Regex regex = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)대로");
             Regex regex1 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)로");
             Regex regex2 = new Regex(@"([가-힣]+)시 ([가-힣0-9]+)길");
-            while (!regex.IsMatch(check) && !regex1.IsMatch(check) && !regex2.IsMatch(check))
+            while (!regex.IsMatch(check) && !regex1.IsMatch(check) && !regex2.IsMatch(check) && check !="q")
             {
                 Console.SetCursorPosition(0, positionY-1);
                 Console.Write(new String(' ', 1000));
@@ -464,7 +464,7 @@ namespace Library_MySql
         {
             int positionY = Console.GetCursorPosition().Top;
             Regex regex = new Regex(@"^[0-9]{1,3}$");
-            while (!regex.IsMatch(check) || check == "0" || Convert.ToInt32(check) >= 150)
+            while (!regex.IsMatch(check) || check == "0" || Convert.ToInt32(check) >= 150 && check !="q")
             {
                 Console.SetCursorPosition(0, positionY - 1);
                 Console.Write(new String(' ', 1000));
