@@ -13,36 +13,53 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
 public class Frame extends JFrame{
-	Container c; 
-	URL url;
-	JLabel label;
+	private Container c;
+	private KakaoCrawler kakao;
+	
 	public Frame() throws ParseException, IOException 
 	{
-		setTitle("이미지 검색");
-		setSize(600,400);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTextField();
+		this.kakao = new KakaoCrawler();
+		InitializeFram();
 		setVisible(true);
 	}
 	
-	public void setTextField() throws ParseException, IOException
+	public void InitializeFram()
 	{
-		KakaoCrawler api = new KakaoCrawler();
-		JSONArray imgUrlArray = api.ImageParse();
+		setTitle("이미지 검색");
+		setLayout(null);
+		setSize(800,600);
+		SetComponents();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+	
+	public void SetComponents()
+	{
+		JButton btn = new JButton("Click");
+		JTextField textfield = new JTextField("");
+		
+		btn.setBounds(100, 150, 100, 30);
+		textfield.setBounds(250, 150, 150, 30);
+		
+		btn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				textfield.setText("Button Clicked");
+			}
+		});
+		
+		add(btn); add(textfield);
+	}
+	
+	public void setTextField()
+	{
 		c = getContentPane(); 
-		for(int i =0;i<imgUrlArray.size() ;i++)
-		{
-			JSONObject jsonobj = (JSONObject)imgUrlArray.get(i);
-			String imgUrl = (String)jsonobj.get("image_url");
-			url = new URL(imgUrl);
-			BufferedImage image = ImageIO.read(url);
-			label = new JLabel(new ImageIcon(image));
-			c.add(label);
-		}
 
 		c.setLayout(new FlowLayout());
 		c.add(new JLabel("검색 "));
 		c.add(new JTextField(20));
 		c.add(new JButton("Test"));
+		
 	}
 }
