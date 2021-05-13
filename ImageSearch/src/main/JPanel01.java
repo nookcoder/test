@@ -1,25 +1,27 @@
 package main;
 
+import java.awt.Graphics;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class JPanel01 extends JPanel{ // 1번째 패널 
+public class JPanel01 extends JPanel{ // 시작 패널 
 
-	private JButton jButton1;
-	private JScrollPane jscrolPane1;
-	private JTextField jTextField;
+	private JButton runningSearch;
+	private JButton lookingRecord;
 	private ChangingJPanel change;
+	private JPanel02 jpanel02;
+	private JPanel03 jpanel03;
 	
 	public JPanel01(ChangingJPanel change) {
 		this.change = change;
 		setLayout(null);
 	
-		jButton1 = new JButton("검색");
-		jButton1.setSize(100,60);
-		jButton1.setLocation(600,250);
+		runningSearch = new JButton("검색");
+		runningSearch.setSize(100,60);
+		runningSearch.setLocation(100,250);
 		
-		jButton1.addActionListener(new ActionListener() {
+		runningSearch.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
@@ -27,28 +29,19 @@ public class JPanel01 extends JPanel{ // 1번째 패널
 			}
 		});
 		
-		add(jButton1);
+		lookingRecord = new JButton("활동내역");
+		lookingRecord.setSize(100,60);
+		lookingRecord.setLocation(500,100);
 		
-		jTextField = new JTextField("") {
-			@Override
-			public void setBorder(Border border)
-			{
-				
-			}
-		};
-		
-		jTextField.setSize(500,60);
-		jTextField.setLocation(100,250);
-		
-		add(jTextField); 
-		
-		jTextField.addActionListener(new ActionListener() {
+		lookingRecord.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				jTextField.setText("");
+				change.ChangePanel("panel03");
 			}
 		});
+		
+		add(runningSearch); add(lookingRecord);
 		
 		
 	}
