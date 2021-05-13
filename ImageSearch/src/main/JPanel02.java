@@ -1,22 +1,39 @@
 package main;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import org.json.simple.parser.ParseException;
 
 public class JPanel02 extends JPanel{
 
+	private ArrayList<String> urlList;
 	private JButton searchButton;
 	private JButton backButton;
 	private JScrollPane jscrolPane;
-	private JTextArea jTextArea2; 
+	public JTextPane jTextPane; 
 	private JTextField jTextField2;
 	private ChangingJPanel change;
+	private KakaoCrawler kakao;
+	private Image img;
 	
-	public JPanel02(ChangingJPanel change) {
+	public JPanel02(ChangingJPanel change) { // 이미지 검색 패널 
 		this.change = change;
+		this.kakao = new KakaoCrawler();
+		this.urlList = new ArrayList<String>();
+		
 		setLayout(null);
 		
-		searchButton = new JButton("두번째");
+		searchButton = new JButton("검색");
 		searchButton.setSize(100,60);
 		searchButton.setLocation(600,90);
 		
@@ -29,17 +46,43 @@ public class JPanel02 extends JPanel{
 			public void actionPerformed(ActionEvent e)
 			{
 				change.ChangePanel("panel01");;
-			}
+			} 
 		});
-		
-		jTextArea2 = new JTextArea();
-		jscrolPane = new JScrollPane(jTextArea2);
+
+		jTextPane = new JTextPane();
+		jscrolPane = new JScrollPane(jTextPane);
 		jscrolPane.setBounds(100,150,600,300);
 		
 		jTextField2 = new JTextField("");
 		jTextField2.setSize(500,60);
 		jTextField2.setLocation(100,90);
+
+		jTextField2.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				PushImage(); 
+			}
+		
+		});
+		
 		
 		add(searchButton);add(jscrolPane);add(jTextField2);add(backButton);
 	}
+	
+	public void PushImage() {
+		try {
+			urlList = kakao.AddImage(jTextField2.getText());
+			for(int index = 0; index < urlList.size(); index++)
+			{
+				URL url = new URL(urlList.get(index).toString());
+				jTextPane.insertIcon(new ImageIcon(url));
+			}
+					
+		} catch (ParseException e1){
+		e1.printStackTrace();
+		} catch (IOException e1) {
+		e1.printStackTrace();}
+	}
+	
 }
