@@ -1,4 +1,4 @@
-package main;
+package panel;
 
 import java.awt.Graphics;
 import java.awt.event.*;

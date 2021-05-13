@@ -1,19 +1,14 @@
-package main;
+package panel;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import org.json.simple.parser.ParseException;
-
+import main.KakaoCrawler;
 public class JPanel02 extends JPanel{
 
 	private ArrayList<String> urlList;
@@ -22,12 +17,9 @@ public class JPanel02 extends JPanel{
 	private JScrollPane jscrolPane;
 	public JTextPane jTextPane; 
 	private JTextField jTextField2;
-	private ChangingJPanel change;
 	private KakaoCrawler kakao;
-	private Image img;
 	
 	public JPanel02(ChangingJPanel change) { // 이미지 검색 패널 
-		this.change = change;
 		this.kakao = new KakaoCrawler();
 		this.urlList = new ArrayList<String>();
 		

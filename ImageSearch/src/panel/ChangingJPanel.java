@@ -1,4 +1,4 @@
-package main;
+package panel;
 
 import java.awt.event.*;
 import javax.swing.*;
@@ -33,12 +33,5 @@ public class ChangingJPanel extends JFrame{
 			repaint();
 		}
 	}
-	
-//	public RunChange(class panel) {
-//		getContentPane().removeAll();
-//		getContentPane().add(panel);
-//		revalidate();
-//		repaint();
-//	}
-//	
+
 }
