@@ -64,7 +64,7 @@ public class JPanel02 extends JPanel{
 	
 	public void PushImage() {
 		try {
-			urlList = kakao.AddImage(jTextField2.getText());
+			urlList = kakao.GetImageUrlArray(jTextField2.getText());
 			for(int index = 0; index < urlList.size(); index++)
 			{
 				URL url = new URL(urlList.get(index).toString());

@@ -68,7 +68,7 @@ public class KakaoCrawler {
 	 }
 	
 	 // 한줄 정보(?) 에서 JSONpaerse 하기 
-	 public JSONArray GetImageUrlArray(String searchText) throws ParseException, IOException{
+	 public JSONArray GetDocumentlArray(String searchText) throws ParseException, IOException{
 		 JSONParser jsonParser = new JSONParser();
 		 JSONObject jsonObject = (JSONObject)jsonParser.parse(GetJsonFromKakao(searchText));
 		 JSONArray jsonArray = (JSONArray)jsonObject.get("documents");
@@ -77,9 +77,9 @@ public class KakaoCrawler {
 	 }
 	
 	 // 이미지 Url 로 이미지 넣기 
-	 public ArrayList<String> AddImage(String SearchText) throws ParseException, IOException
+	 public ArrayList<String> GetImageUrlArray(String SearchText) throws ParseException, IOException
 	 {
-		 JSONArray imgUrlArray = GetImageUrlArray(SearchText);
+		 JSONArray imgUrlArray = GetDocumentlArray(SearchText);
 
 		 for(int i =0;i<imgUrlArray.size() ;i++)
 		 {
