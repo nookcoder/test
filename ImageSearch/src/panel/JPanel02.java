@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import org.json.simple.parser.ParseException;
 import main.KakaoCrawler;
@@ -28,6 +30,9 @@ public class JPanel02 extends JPanel{
 	private GridLayout grid;
 	private JLabel jLabel;
 	private JPanel imgPanel;
+	private JComboBox<String> comboBox;
+	private String count[] = {"10","20","30"};
+	private int imageCount = 10; 
 	
 	public JPanel02(ChangingJPanel change) { // 이미지 검색 패널 
 		this.kakao = new KakaoCrawler();
@@ -41,9 +46,32 @@ public class JPanel02 extends JPanel{
 		
 		MakeSearchButton(change);
 		MakeBackButton(change);
+
+		comboBox = new JComboBox(count);
+		
+		comboBox.setBounds(10, 10, 70, 25);
+		comboBox.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				int index = comboBox.getSelectedIndex();
+				switch(index) {
+					case 0:
+						grid = new GridLayout(5,2);
+						imageCount = 10;
+						break;
+					case 1 : 
+						grid = new GridLayout(10,2);
+						imageCount = 20;
+						break;
+					case 2 : 
+						grid = new GridLayout(15,2);
+						imageCount = 30;
+						break;	
+				}
+			}
+		});
 		
 		jTextPane = new JTextPane();
-		jTextPane.setEditable(false);
+		//jTextPane.setEditable(false);
 		
 		jTextField2 = new JTextField("");
 		jTextField2.setSize(400,40);
@@ -54,7 +82,12 @@ public class JPanel02 extends JPanel{
 			public void actionPerformed(ActionEvent e)
 			{
 				// 이미지 넣기 
-				PushImage(); 
+				try {
+					PushImage(imageCount);
+				} catch (BadLocationException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} 
 				
 				// 활동 내역 기록하기
 				try {
@@ -71,7 +104,7 @@ public class JPanel02 extends JPanel{
 		jscrolPane = new JScrollPane(jTextPane);
 		jscrolPane.setBounds(50,70,500,250);
 		
-		add(jscrolPane);add(jTextField2); 
+		add(jscrolPane);add(jTextField2); add(comboBox);
 	}
 	
 	public void MakeSearchButton(ChangingJPanel change) {
@@ -82,9 +115,14 @@ public class JPanel02 extends JPanel{
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
-			{
+			{	
 				// 이미지 넣기 
-				PushImage(); 
+				try {
+					PushImage(imageCount);
+				} catch (BadLocationException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} 
 				
 				// 활동 내역 기록하기
 				try {
@@ -116,10 +154,12 @@ public class JPanel02 extends JPanel{
 		add(backButton);
 	}
 	
-	public void PushImage() {
+	public void PushImage(int imageCount) throws BadLocationException {
 	
 		try {
-			urlList = kakao.GetImageUrlArray(jTextField2.getText(), 10);
+			urlList = kakao.GetImageUrlArray(jTextField2.getText(), imageCount);
+			jTextPane.selectAll();
+			jTextPane.replaceSelection("");
 			for(int index = 0; index < urlList.size(); index++)
 			{
 				URL url = new URL(urlList.get(index).toString());
@@ -136,7 +176,7 @@ public class JPanel02 extends JPanel{
 		e1.printStackTrace();
 		} catch (IOException e1) {
 		e1.printStackTrace();}
-		
 	}
+	
 	
 }
