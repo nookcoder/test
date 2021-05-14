@@ -1,65 +1,59 @@
 package main;
 
-import javax.imageio.ImageIO;
+
 import javax.swing.*;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
+
+import panel.ChangingJPanel;
+import panel.JPanel01;
+import panel.JPanel02;
+import panel.JPanel03;
+
 import java.awt.*;
 import java.io.IOException;
-import java.net.URL;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
 
 public class Frame extends JFrame{
 	private Container c;
+	private ImageIcon icon;
 	private KakaoCrawler kakao;
 	
 	public Frame() throws ParseException, IOException 
 	{
-		this.kakao = new KakaoCrawler();
-		InitializeFram();
-		setVisible(true);
-	}
-	
-	public void InitializeFram()
-	{
-		setTitle("이미지 검색");
-		setLayout(null);
-		setSize(800,600);
-		SetComponents();
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	}
-	
-	public void SetComponents()
-	{
-		JButton btn = new JButton("Click");
-		JTextField textfield = new JTextField("");
+		ChangingJPanel win = new ChangingJPanel();
 		
-		btn.setBounds(100, 150, 100, 30);
-		textfield.setBounds(250, 150, 150, 30);
+		win.setTitle("이미지 검색");
 		
-		btn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				textfield.setText("Button Clicked");
+		win.jpanel01 = new JPanel01(win) {
+			public void paintComponent(Graphics g) {
+				ImageIcon image = new ImageIcon("images/KakaoTalk_20190518_190420225.jpg");
+				g.drawImage(image.getImage(), 0, 0, 800, 600, null);
+				setOpaque(false);
+				super.paintComponent(g);
 			}
-		});
+		};
+		win.jpanel02 = new JPanel02(win) {
+			public void paintComponent(Graphics g) {
+				ImageIcon image = new ImageIcon("images/KakaoTalk_20190518_190420225.jpg");
+				g.drawImage(image.getImage(), 0, 0, 800, 600, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
+		win.jpanel03 = new JPanel03(win) {
+			public void paintComponent(Graphics g) {
+				ImageIcon image = new ImageIcon("images/KakaoTalk_20190518_190420225.jpg");
+				g.drawImage(image.getImage(), 0, 0, 800, 600, null);
+				setOpaque(false);
+				super.paintComponent(g);
+			}
+		};
 		
-		add(btn); add(textfield);
+		win.add(win.jpanel01);
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		win.setSize(600,400);
+		win.setVisible(true);
 	}
 	
-	public void setTextField()
-	{
-		c = getContentPane(); 
 
-		c.setLayout(new FlowLayout());
-		c.add(new JLabel("검색 "));
-		c.add(new JTextField(20));
-		c.add(new JButton("Test"));
-		
-	}
 }
