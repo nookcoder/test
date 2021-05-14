@@ -9,5 +9,5 @@ public class Constants {
 	public String PASSWORD = "0000";
 	public String INSERTQUERY = "insert into searchrecord(text,date) values(?,?)";
 	public String DELETEQUERY = "delete from searchrecord";
-	public String SELECTQUERY = "select * from searchredcord";
+	public String SELECTQUERY = "select * from searchrecord";
 }
