@@ -24,10 +24,23 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 		this.log = new SearchLog();
 		
 		setLayout(null);
+		MakeBackButton();
+		MakeDeleteButton();
+		MakeShowLogButton();
 		
+		logArea= new JTextArea("");
+		logArea.setEditable(false);
+		
+		jscroll = new JScrollPane(logArea);
+		jscroll.setBounds(50,100,500,250);
+		
+		add(backButton); add(deletButton); add(showLogButton); add(jscroll);
+	}
+	
+	public void MakeBackButton() {
 		backButton = new JButton("홈으로");
 		backButton.setSize(100,60);
-		backButton.setLocation(600,90);
+		backButton.setLocation(250,30);
 	
 		backButton.addActionListener(new ActionListener() {
 			@Override
@@ -37,9 +50,14 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 			}
 		});
 		
-		deletButton = new JButton("활동내역 삭제");
+		add(backButton);
+		
+	}
+	
+	public void MakeDeleteButton() {
+		deletButton = new JButton("삭제");
 		deletButton.setSize(100,60);
-		deletButton.setLocation(400,90);
+		deletButton.setLocation(450,30);
 		
 		deletButton.addActionListener(new ActionListener() {
 			@Override
@@ -54,13 +72,14 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 			}
 		});
 		
-		logArea= new JTextArea("");
-		logArea.setEditable(false);
-
-
-		showLogButton = new JButton("활동내역 조회");
+		add(deletButton);
+	}
+	
+	public void MakeShowLogButton()
+	{
+		showLogButton = new JButton("조회");
 		showLogButton.setSize(100,60);
-		showLogButton.setLocation(200,90);
+		showLogButton.setLocation(50,30);
 		
 		showLogButton.addActionListener(new ActionListener() {
 			@Override
@@ -80,9 +99,6 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 			}
 		});
 		
-		jscroll = new JScrollPane(logArea);
-		jscroll.setBounds(100,150,600,300);
-		
-		add(backButton); add(deletButton); add(showLogButton); add(jscroll);
+		 add(showLogButton);
 	}
 }
