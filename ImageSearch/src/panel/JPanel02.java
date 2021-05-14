@@ -49,7 +49,7 @@ public class JPanel02 extends JPanel{
 
 		comboBox = new JComboBox(count);
 		
-		comboBox.setBounds(10, 10, 70, 25);
+		comboBox.setBounds(320, 40, 50, 30);
 		comboBox.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int index = comboBox.getSelectedIndex();
@@ -71,11 +71,11 @@ public class JPanel02 extends JPanel{
 		});
 		
 		jTextPane = new JTextPane();
-		//jTextPane.setEditable(false);
+		jTextPane.setEditable(false);
 		
 		jTextField2 = new JTextField("");
-		jTextField2.setSize(400,40);
-		jTextField2.setLocation(50,30);
+		jTextField2.setSize(300,30);
+		jTextField2.setLocation(20,10);
 
 		jTextField2.addActionListener(new ActionListener() {
 			@Override
@@ -102,15 +102,15 @@ public class JPanel02 extends JPanel{
 		
 
 		jscrolPane = new JScrollPane(jTextPane);
-		jscrolPane.setBounds(50,70,500,250);
+		jscrolPane.setBounds(17,90,350,430);
 		
 		add(jscrolPane);add(jTextField2); add(comboBox);
 	}
 	
 	public void MakeSearchButton(ChangingJPanel change) {
-		searchButton = new JButton("검색");
-		searchButton.setSize(100,40);
-		searchButton.setLocation(450,30);
+		searchButton = new JButton("악");
+		searchButton.setSize(50,30);
+		searchButton.setLocation(320,10);
 		
 		searchButton.addActionListener(new ActionListener() {
 			@Override
@@ -140,8 +140,8 @@ public class JPanel02 extends JPanel{
 	public void MakeBackButton(ChangingJPanel change) {
 		
 		backButton = new JButton("홈으로");
-		backButton.setSize(100,40);
-		backButton.setLocation(450,320);
+		backButton.setSize(100,20);
+		backButton.setLocation(265,520);
 		
 		backButton.addActionListener(new ActionListener() {
 			@Override
@@ -158,8 +158,7 @@ public class JPanel02 extends JPanel{
 	
 		try {
 			urlList = kakao.GetImageUrlArray(jTextField2.getText(), imageCount);
-			jTextPane.selectAll();
-			jTextPane.replaceSelection("");
+
 			for(int index = 0; index < urlList.size(); index++)
 			{
 				URL url = new URL(urlList.get(index).toString());

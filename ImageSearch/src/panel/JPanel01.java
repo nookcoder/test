@@ -17,13 +17,12 @@ public class JPanel01 extends JPanel{ // 시작 패널
 		
 		MakeRuningSearchButton(change);
 		MakeLookingRecord(change);
-		
 	}
 	
 	public void MakeRuningSearchButton(ChangingJPanel change) {
 		runningSearch = new JButton("검색");
-		runningSearch.setSize(100,60);
-		runningSearch.setLocation(100,250);
+		runningSearch.setSize(300,60);
+		runningSearch.setLocation(50,270);
 		
 		runningSearch.addActionListener(new ActionListener() {
 			@Override
@@ -38,8 +37,8 @@ public class JPanel01 extends JPanel{ // 시작 패널
 	
 	public void MakeLookingRecord(ChangingJPanel change) {
 		lookingRecord = new JButton(new ImageIcon("ImageSearch/src/images/KakaoTalk_20190518_190420225.jpg"));
-		lookingRecord.setSize(100,60);
-		lookingRecord.setLocation(380,250);
+		lookingRecord.setSize(300,60);
+		lookingRecord.setLocation(50,350);
 		
 		lookingRecord.addActionListener(new ActionListener() {
 			@Override
