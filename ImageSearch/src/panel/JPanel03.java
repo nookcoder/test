@@ -2,17 +2,26 @@ package panel;
 
 import java.awt.Graphics;
 import java.awt.event.*;
+import java.sql.SQLException;
+
 import javax.swing.*;
+
+import main.SearchLog;
 
 public class JPanel03 extends JPanel { // 활동내역조회 패널
 	
-	private JButton runningSearch;
-	private JButton lookingRecord;
+	private SearchLog log;
 	private ChangingJPanel change;
+
+	private JButton deletButton;
 	private JButton backButton;
+	private JButton showLogButton;
+	private JTextArea logArea; 
 	
 	public JPanel03(ChangingJPanel change) {
 		this.change = change;
+		this.log = new SearchLog();
+		
 		setLayout(null);
 		
 		backButton = new JButton("홈으로");
@@ -23,10 +32,48 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				change.ChangePanel("panel01");;
+				change.ChangePanel("panel01");
 			}
 		});
 		
-		add(backButton);
+		deletButton = new JButton("활동내역 삭제");
+		deletButton.setSize(100,60);
+		deletButton.setLocation(400,90);
+		
+		deletButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				try {
+					log.DeleteAll();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		showLogButton = new JButton("활동내역 조회");
+		showLogButton.setSize(100,60);
+		showLogButton.setLocation(200,90);
+		
+		showLogButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				try {
+					log.DeleteAll();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		logArea= new JTextArea();
+		logArea.setEditable(false);
+		logArea.setBounds(100,150,600,300);
+		
+		add(backButton); add(deletButton); add(showLogButton); add(logArea);
 	}
 }
