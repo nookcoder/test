@@ -77,11 +77,11 @@ public class KakaoCrawler {
 	 }
 	
 	 // 이미지 Url 로 이미지 넣기 
-	 public ArrayList<String> GetImageUrlArray(String SearchText) throws ParseException, IOException
+	 public ArrayList<String> GetImageUrlArray(String SearchText,int imageCount) throws ParseException, IOException
 	 {
 		 JSONArray imgUrlArray = GetDocumentlArray(SearchText);
 
-		 for(int i =0;i<imgUrlArray.size() ;i++)
+		 for(int i =0;i<imageCount;i++)
 		 {
 			 JSONObject jsonobj = (JSONObject)imgUrlArray.get(i);
 			 urlList.add((String)jsonobj.get("image_url"));
