@@ -15,10 +15,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
 import org.json.simple.parser.ParseException;
+
+import main.Constants;
 import main.KakaoCrawler;
 import main.SearchLog;
 public class JPanel02 extends JPanel{
 
+	private Constants constant = new Constants();
 	private ArrayList<String> urlList;
 	private JButton searchButton;
 	private JButton backButton;
@@ -108,9 +111,10 @@ public class JPanel02 extends JPanel{
 	}
 	
 	public void MakeSearchButton(ChangingJPanel change) {
-		searchButton = new JButton("악");
+		searchButton = new JButton("검색");
 		searchButton.setSize(50,30);
 		searchButton.setLocation(320,10);
+		constant.DecorateButtonJpanel02(searchButton);
 		
 		searchButton.addActionListener(new ActionListener() {
 			@Override
@@ -142,6 +146,7 @@ public class JPanel02 extends JPanel{
 		backButton = new JButton("홈으로");
 		backButton.setSize(100,20);
 		backButton.setLocation(265,520);
+		constant.DecorateButtonJpanel02(backButton);
 		
 		backButton.addActionListener(new ActionListener() {
 			@Override

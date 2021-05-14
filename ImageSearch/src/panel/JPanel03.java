@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
+import main.Constants;
 import main.SearchLog;
 
 public class JPanel03 extends JPanel { // 활동내역조회 패널
@@ -18,6 +19,7 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 	private JButton showLogButton;
 	private JTextArea logArea; 
 	private JScrollPane jscroll;
+	private Constants constant = new Constants();
 	
 	public JPanel03(ChangingJPanel change) {
 		this.change = change;
@@ -32,16 +34,17 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 		logArea.setEditable(false);
 		
 		jscroll = new JScrollPane(logArea);
-		jscroll.setBounds(50,100,500,250);
+		jscroll.setBounds(0,30,400,400);
 		
 		add(backButton); add(deletButton); add(showLogButton); add(jscroll);
 	}
 	
 	public void MakeBackButton() {
 		backButton = new JButton("홈으로");
-		backButton.setSize(100,60);
-		backButton.setLocation(250,30);
-	
+		backButton.setSize(60,60);
+		backButton.setLocation(160,450);
+		constant.DecorateButtonJpanel02(backButton);
+		
 		backButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -56,8 +59,9 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 	
 	public void MakeDeleteButton() {
 		deletButton = new JButton("삭제");
-		deletButton.setSize(100,60);
-		deletButton.setLocation(450,30);
+		deletButton.setSize(60,60);
+		deletButton.setLocation(300,450);
+		constant.DecorateButtonJpanel02(deletButton);
 		
 		deletButton.addActionListener(new ActionListener() {
 			@Override
@@ -78,8 +82,9 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 	public void MakeShowLogButton()
 	{
 		showLogButton = new JButton("조회");
-		showLogButton.setSize(100,60);
-		showLogButton.setLocation(50,30);
+		showLogButton.setSize(60,60);
+		showLogButton.setLocation(20,450);
+		constant.DecorateButtonJpanel02(showLogButton);
 		
 		showLogButton.addActionListener(new ActionListener() {
 			@Override
