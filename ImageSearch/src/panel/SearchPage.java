@@ -32,6 +32,7 @@ public class SearchPage extends JPanel{
 	private SearchLogWithMySql searchLog;
 	private GridLayout grid;
 	private JLabel jLabel;
+	private JButton imgButton;
 	private JPanel imgPanel;
 	private JComboBox<String> comboBox;
 	private String count[] = {"10","20","30"};
@@ -170,8 +171,8 @@ public class SearchPage extends JPanel{
 				ImageIcon img = new ImageIcon(url);
 				Image changedImg= img.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH );
 				ImageIcon Icon = new ImageIcon(changedImg);
-				jLabel = new JLabel(Icon);
-				imgPanel.add(jLabel);
+				imgButton = new JButton(Icon);
+				imgPanel.add(imgButton);
 			}
 			imgPanel.setLayout(grid);
 			jTextPane.insertComponent(imgPanel);
