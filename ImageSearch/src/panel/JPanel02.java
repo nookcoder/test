@@ -3,25 +3,29 @@ package panel;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
 
 import org.json.simple.parser.ParseException;
 import main.KakaoCrawler;
+import main.SearchLog;
 public class JPanel02 extends JPanel{
 
 	private ArrayList<String> urlList;
 	private JButton searchButton;
 	private JButton backButton;
 	private JScrollPane jscrolPane;
-	public JTextPane jTextPane; 
+	private JTextPane jTextPane; 
 	private JTextField jTextField2;
 	private KakaoCrawler kakao;
+	private SearchLog searchLog;
 	
 	public JPanel02(ChangingJPanel change) { // 이미지 검색 패널 
 		this.kakao = new KakaoCrawler();
 		this.urlList = new ArrayList<String>();
+		this.searchLog = new SearchLog();
 		
 		setLayout(null);
 		
@@ -42,6 +46,7 @@ public class JPanel02 extends JPanel{
 		});
 
 		jTextPane = new JTextPane();
+		jTextPane.setEditable(false);
 		jscrolPane = new JScrollPane(jTextPane);
 		jscrolPane.setBounds(100,150,600,300);
 		
@@ -54,6 +59,12 @@ public class JPanel02 extends JPanel{
 			public void actionPerformed(ActionEvent e)
 			{
 				PushImage(); 
+				try {
+					searchLog.InsertSearchLog(jTextField2.getText());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		
 		});
