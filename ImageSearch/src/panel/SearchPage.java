@@ -16,10 +16,10 @@ import javax.swing.text.PlainDocument;
 
 import org.json.simple.parser.ParseException;
 
-import main.Constants;
-import main.KakaoCrawler;
-import main.SearchLog;
-public class JPanel02 extends JPanel{
+import data.Constants;
+import data.KakaoCrawler;
+import data.SearchLogWithMySql;
+public class SearchPage extends JPanel{
 
 	private Constants constant = new Constants();
 	private ArrayList<String> urlList;
@@ -29,7 +29,7 @@ public class JPanel02 extends JPanel{
 	private JTextPane jTextPane; 
 	private JTextField jTextField2;
 	private KakaoCrawler kakao;
-	private SearchLog searchLog;
+	private SearchLogWithMySql searchLog;
 	private GridLayout grid;
 	private JLabel jLabel;
 	private JPanel imgPanel;
@@ -37,10 +37,10 @@ public class JPanel02 extends JPanel{
 	private String count[] = {"10","20","30"};
 	private int imageCount = 10; 
 	
-	public JPanel02(ChangingJPanel change) { // 이미지 검색 패널 
+	public SearchPage(ChangingJPanel change) { // 이미지 검색 패널 
 		this.kakao = new KakaoCrawler();
 		this.urlList = new ArrayList<String>();
-		this.searchLog = new SearchLog();
+		this.searchLog = new SearchLogWithMySql();
 		this.grid = new GridLayout(5,2);
 		this.jLabel = new JLabel();
 		this.imgPanel = new JPanel();

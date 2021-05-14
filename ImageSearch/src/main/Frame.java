@@ -5,18 +5,18 @@ import javax.swing.*;
 
 import org.json.simple.parser.ParseException;
 
+import data.Constants;
 import panel.ChangingJPanel;
-import panel.JPanel01;
-import panel.JPanel02;
-import panel.JPanel03;
+import panel.FirstPage;
+import panel.SearchPage;
+import panel.LogPage;
 
 import java.awt.*;
 import java.io.IOException;
 
 public class Frame extends JFrame{
-	private Container c;
-	private ImageIcon icon;
-	private KakaoCrawler kakao;
+	
+	private Constants constant = new Constants();
 	
 	public Frame() throws ParseException, IOException 
 	{
@@ -24,34 +24,20 @@ public class Frame extends JFrame{
 		
 		win.setTitle("이미지 검색");
 		
-		win.jpanel01 = new JPanel01(win) {
-			public void paintComponent(Graphics g) {
-				ImageIcon image = new ImageIcon("images/KakaoTalk_20190518_190420225.jpg");
-				g.drawImage(image.getImage(), 0, 0, 800, 600, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		win.jpanel02 = new JPanel02(win) {
-			public void paintComponent(Graphics g) {
-				ImageIcon image = new ImageIcon("images/KakaoTalk_20190518_190420225.jpg");
-				g.drawImage(image.getImage(), 0, 0, 800, 600, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
-		win.jpanel03 = new JPanel03(win) {
-			public void paintComponent(Graphics g) {
-				ImageIcon image = new ImageIcon("images/KakaoTalk_20190518_190420225.jpg");
-				g.drawImage(image.getImage(), 0, 0, 800, 600, null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
+		win.firstPage= new FirstPage(win);
+		win.firstPage.setBackground(constant.yellowColor);
+			
 		
-		win.add(win.jpanel01);
+		win.searchPage = new SearchPage(win);
+		win.searchPage.setBackground(constant.yellowColor);
+		
+		win.logPage = new LogPage(win);
+		win.logPage.setBackground(constant.yellowColor); 
+		
+		win.add(win.firstPage);
+		
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		win.setSize(600,400);
+		win.setSize(400,600);
 		win.setVisible(true);
 	}
 	

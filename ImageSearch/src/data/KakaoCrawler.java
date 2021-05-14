@@ -1,4 +1,4 @@
-package main;
+package data;
 
 import java.awt.Container;
 import java.awt.Graphics;

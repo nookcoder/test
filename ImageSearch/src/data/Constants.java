@@ -1,4 +1,4 @@
-package main;
+package data;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,6 +15,8 @@ public class Constants {
 	public String INSERTQUERY = "insert into searchrecord(text,date) values(?,?)";
 	public String DELETEQUERY = "delete from searchrecord";
 	public String SELECTQUERY = "select * from searchrecord";
+	
+	public Color yellowColor = new Color(244,219,54);
 	
 	public void DecorateButton(JButton button) {
 		Font font = new Font("SansSerif",Font.BOLD,30);

@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 import javax.swing.*;
 
-import main.Constants;
-import main.SearchLog;
+import data.Constants;
+import data.SearchLogWithMySql;
 
-public class JPanel03 extends JPanel { // 활동내역조회 패널
+public class LogPage extends JPanel { // 활동내역조회 패널
 	
-	private SearchLog log;
+	private SearchLogWithMySql log;
 	private ChangingJPanel change;
 
 	private JButton deletButton;
@@ -21,9 +21,9 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 	private JScrollPane jscroll;
 	private Constants constant = new Constants();
 	
-	public JPanel03(ChangingJPanel change) {
+	public LogPage(ChangingJPanel change) {
 		this.change = change;
-		this.log = new SearchLog();
+		this.log = new SearchLogWithMySql();
 		
 		setLayout(null);
 		MakeBackButton();

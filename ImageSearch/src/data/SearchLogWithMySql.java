@@ -1,18 +1,18 @@
-package main;
+package data;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
-public class SearchLog { // mysql 에서 활동내역을 관리할 클래스 
+public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스 
 	
 	private Constants constant;
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
 	
-	public SearchLog() {
+	public SearchLogWithMySql() {
 		
 		this.constant = new Constants();
 		
@@ -45,15 +45,18 @@ public class SearchLog { // mysql 에서 활동내역을 관리할 클래스
 	}
 	
 	// 활동 내역 출력하기 
-	public void ShowSearchLog() throws SQLException {
+	public String GetSearchLogString() throws SQLException {
 		String selectQuery = constant.SELECTQUERY;
 		String searchLogStr ="";
 		pstmt = conn.prepareStatement(selectQuery);
 		ResultSet rs = pstmt.executeQuery(selectQuery);
 		
+		int count = 0;
+		
 		while(rs.next()) {
-			searchLogStr += "검색 시간 : "+rs.getString("date") + "\t검색어 : "+rs.getString("text") +"\n";
+			searchLogStr += "검색 시간 : "+rs.getString("date") + "   검색어 : "+rs.getString("text") +"\n";
 		}
 		
+		return searchLogStr;
 	}
 }

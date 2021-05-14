@@ -7,16 +7,17 @@ import java.awt.event.*;
 import java.io.IOException;
 import javax.swing.border.Border;
 
-import main.Constants;
+import data.Constants;
+
 import javax.swing.*;
 
-public class JPanel01 extends JPanel{ // 시작 패널 
+public class FirstPage extends JPanel{ // 시작 패널 
 
 	private JButton runningSearch;
 	private JButton lookingRecord;
 	private Constants constant = new Constants();
 	
-	public JPanel01(ChangingJPanel change) throws IOException {
+	public FirstPage(ChangingJPanel change) throws IOException {
 		
 		setLayout(null);
 		
