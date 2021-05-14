@@ -54,11 +54,9 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 			}
 		});
 		
-		logArea= new JTextArea();
+		logArea= new JTextArea("");
 		logArea.setEditable(false);
 
-		jscroll = new JScrollPane(logArea);
-		jscroll.setBounds(100,150,600,300);
 
 		showLogButton = new JButton("활동내역 조회");
 		showLogButton.setSize(100,60);
@@ -70,6 +68,9 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 			{
 				try {
 					String str;
+					logArea.selectAll();
+					logArea.replaceSelection("");
+					
 					str = log.GetSearchLogString();
 					logArea.append(str);
 				} catch (SQLException e1) {
@@ -79,6 +80,8 @@ public class JPanel03 extends JPanel { // 활동내역조회 패널
 			}
 		});
 		
+		jscroll = new JScrollPane(logArea);
+		jscroll.setBounds(100,150,600,300);
 		
 		add(backButton); add(deletButton); add(showLogButton); add(jscroll);
 	}
