@@ -4,6 +4,8 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 
 public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스 
 	
@@ -35,6 +37,26 @@ public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스
 		pstmt.setString(1,text);
 		pstmt.setString(2,dateFormat.format(System.currentTimeMillis()).toString());
 		pstmt.executeUpdate();
+	}
+	
+	public boolean IsRecorded(String text) throws SQLException {
+		String selectQuery = constant.SELECTQUERY; 
+		boolean isFound = false; 
+		
+		pstmt = conn.prepareStatement(selectQuery); 
+		ResultSet rs = pstmt.executeQuery(selectQuery);
+		
+		
+		while(rs.next())
+		{
+			if(rs.getString("text") == text)
+			{
+				isFound = true;
+			}
+			
+		}
+		
+		return isFound;
 	}
 	
 	// 활동 내역 초기화 
