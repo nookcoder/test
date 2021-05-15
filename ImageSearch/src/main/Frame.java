@@ -13,12 +13,13 @@ import panel.LogPage;
 
 import java.awt.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class Frame extends JFrame{
 	
 	private Constants constant = new Constants();
 	
-	public Frame() throws ParseException, IOException 
+	public Frame() throws ParseException, IOException, SQLException 
 	{
 		ChangingJPanel win = new ChangingJPanel();
 		

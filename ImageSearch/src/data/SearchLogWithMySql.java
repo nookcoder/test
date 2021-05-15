@@ -4,8 +4,6 @@ import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 
 public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스 
 	
@@ -13,8 +11,9 @@ public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private SimpleDateFormat dateFormat = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+	private Statement st;
 	
-	public SearchLogWithMySql() {
+	public SearchLogWithMySql() throws SQLException {
 		
 		this.constant = new Constants();
 		
@@ -22,7 +21,7 @@ public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스
 		try {
 			Class.forName(constant.JDBC_DRIVER);
 			conn = DriverManager.getConnection(constant.DB_URL,constant.USERNAME,constant.PASSWORD);
-			
+			this.st = conn.createStatement();
 		} catch (ClassNotFoundException e) { 
 			e.printStackTrace(); 
 		} catch (SQLException e) { 
@@ -38,14 +37,13 @@ public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스
 		pstmt.setString(2,dateFormat.format(System.currentTimeMillis()).toString());
 		pstmt.executeUpdate();
 	}
-	
+
+	// DB 에 기록되어있는 단어 인지 확인하기 
 	public boolean IsRecorded(String text) throws SQLException {
 		String selectQuery = constant.SELECTQUERY; 
-		boolean isFound = false; 
+		boolean isFound = false;
 		
-		pstmt = conn.prepareStatement(selectQuery); 
-		ResultSet rs = pstmt.executeQuery(selectQuery);
-		
+		ResultSet rs = st.executeQuery(selectQuery);
 		
 		while(rs.next())
 		{
@@ -57,6 +55,17 @@ public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스
 		}
 		
 		return isFound;
+	}
+	
+	// DB에 검색되어있는 단어 갱신해주기 
+	public void UpdateRecordedText(String text) throws SQLException {
+		String deleteQuery = constant.DELETEQUERY + " where text = ?";
+		
+		pstmt = conn.prepareStatement(deleteQuery);
+		pstmt.setString(1, text);
+		pstmt.executeUpdate();
+	
+		InsertSearchLog(text);
 	}
 	
 	// 활동 내역 초기화 
@@ -72,8 +81,6 @@ public class SearchLogWithMySql { // mysql 에서 활동내역을 관리할 클래스
 		String searchLogStr ="";
 		pstmt = conn.prepareStatement(selectQuery);
 		ResultSet rs = pstmt.executeQuery(selectQuery);
-		
-		int count = 0;
 		
 		while(rs.next()) {
 			searchLogStr += "검색 시간 : "+rs.getString("date") + "   검색어 : "+rs.getString("text") +"\n";

@@ -38,7 +38,7 @@ public class SearchPage extends JPanel{
 	private String count[] = {"10","20","30"};
 	private int imageCount = 10; 
 	
-	public SearchPage(ChangingJPanel change) { // 이미지 검색 패널 
+	public SearchPage(ChangingJPanel change) throws SQLException { // 이미지 검색 패널 
 		this.kakao = new KakaoCrawler();
 		this.urlList = new ArrayList<String>();
 		this.searchLog = new SearchLogWithMySql();
@@ -54,6 +54,7 @@ public class SearchPage extends JPanel{
 		comboBox = new JComboBox(count);
 		
 		comboBox.setBounds(320, 40, 50, 30);
+		
 		comboBox.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int index = comboBox.getSelectedIndex();
@@ -95,7 +96,15 @@ public class SearchPage extends JPanel{
 				
 				// 활동 내역 기록하기
 				try {
-					searchLog.InsertSearchLog(jTextField2.getText());
+					String text = jTextField2.getText();
+					
+					// 중복된 단어면 갱신해주고, 처음 입력한 단어면 기록하기
+					if(!searchLog.IsRecorded(text))
+					{
+						searchLog.UpdateRecordedText(text);
+					}
+					else { searchLog.InsertSearchLog(text); }
+					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

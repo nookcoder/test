@@ -21,7 +21,7 @@ public class LogPage extends JPanel { // 활동내역조회 패널
 	private JScrollPane jscroll;
 	private Constants constant = new Constants();
 	
-	public LogPage(ChangingJPanel change) {
+	public LogPage(ChangingJPanel change) throws SQLException {
 		this.change = change;
 		this.log = new SearchLogWithMySql();
 		
