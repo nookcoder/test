@@ -181,6 +181,17 @@ public class SearchPage extends JPanel{
 				Image changedImg= img.getImage().getScaledInstance(200, 150, Image.SCALE_SMOOTH );
 				ImageIcon Icon = new ImageIcon(changedImg);
 				imgButton = new JButton(Icon);
+				SetButtonOpaque(imgButton);
+				imgButton.addMouseListener(new MouseAdapter(){
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						if(e.getClickCount() == 2)
+						{
+							CreateNewPage(img);
+						}
+					}
+				});
+				
 				imgPanel.add(imgButton);
 			}
 			imgPanel.setLayout(grid);
@@ -192,5 +203,23 @@ public class SearchPage extends JPanel{
 		e1.printStackTrace();}
 	}
 	
+	public void CreateNewPage(ImageIcon img) {
+		JFrame newJrame = new JFrame();
+		JPanel newPageContainer = new JPanel();
+		JLabel newLabel = new JLabel(img);
+		
+		newJrame.setContentPane(newPageContainer);
+		
+		newPageContainer.add(newLabel);
+		
+		newJrame.setSize(img.getImage().getWidth(null),img.getImage().getHeight(null));
+		newJrame.setVisible(true);
+	}
 	
+	public void SetButtonOpaque(JButton btn) {
+		btn.setBorderPainted(false);
+		btn.setContentAreaFilled(false);
+		btn.setFocusPainted(false);
+		btn.setOpaque(false);
+	}
 }
