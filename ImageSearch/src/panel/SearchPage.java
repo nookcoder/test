@@ -120,12 +120,14 @@ public class SearchPage extends JPanel{
 		add(jscrolPane);add(jTextField2); add(comboBox);
 	}
 	
+	// 검색 버튼 만들기 
 	public void MakeSearchButton(ChangingJPanel change) {
 		searchButton = new JButton("검색");
 		searchButton.setSize(50,30);
 		searchButton.setLocation(320,10);
 		constant.DecorateButtonJpanel02(searchButton);
 		
+		// 검색 버튼 클릭 시 이벤트 추가 
 		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e)
@@ -140,7 +142,13 @@ public class SearchPage extends JPanel{
 				
 				// 활동 내역 기록하기
 				try {
-					searchLog.InsertSearchLog(jTextField2.getText());
+					String text = jTextField2.getText();
+					
+					if(!searchLog.IsRecorded(text))
+					{
+						searchLog.UpdateRecordedText(text);
+					}
+					else { searchLog.InsertSearchLog(text); }
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -151,6 +159,7 @@ public class SearchPage extends JPanel{
 		add(searchButton);
 	}
 	
+	// 뒤로가기 버튼 만들기 
 	public void MakeBackButton(ChangingJPanel change) {
 		
 		backButton = new JButton("홈으로");
@@ -169,6 +178,7 @@ public class SearchPage extends JPanel{
 		add(backButton);
 	}
 	
+	// 이미지 뿌리기 
 	public void PushImage(int imageCount) throws BadLocationException {
 	
 		try {
@@ -182,6 +192,8 @@ public class SearchPage extends JPanel{
 				ImageIcon Icon = new ImageIcon(changedImg);
 				imgButton = new JButton(Icon);
 				SetButtonOpaque(imgButton);
+				
+				// 더블 클릭 시 새 창에 띄우기 
 				imgButton.addMouseListener(new MouseAdapter(){
 					@Override
 					public void mouseClicked(MouseEvent e) {
@@ -203,6 +215,7 @@ public class SearchPage extends JPanel{
 		e1.printStackTrace();}
 	}
 	
+	// 새창 띄우는 함수 
 	public void CreateNewPage(ImageIcon img) {
 		JFrame newJrame = new JFrame();
 		JPanel newPageContainer = new JPanel();
@@ -216,6 +229,7 @@ public class SearchPage extends JPanel{
 		newJrame.setVisible(true);
 	}
 	
+	// 버튼 배경 없애기 
 	public void SetButtonOpaque(JButton btn) {
 		btn.setBorderPainted(false);
 		btn.setContentAreaFilled(false);
