@@ -69,6 +69,7 @@ public class LogPage extends JPanel { // 활동내역조회 패널
 			{
 				try {
 					log.DeleteAll();
+					CreateNewPage();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -106,4 +107,18 @@ public class LogPage extends JPanel { // 활동내역조회 패널
 		
 		 add(showLogButton);
 	}
+	
+	// 새창 띄우는 함수 
+		public void CreateNewPage() {
+			JFrame newJrame = new JFrame();
+			JPanel newPageContainer = new JPanel();
+			JLabel newLabel = new JLabel("삭제가 완료되었습니다!!");
+			
+			newJrame.setContentPane(newPageContainer);
+			
+			newPageContainer.add(newLabel);
+			
+			newJrame.setSize(300,200);
+			newJrame.setVisible(true);
+		}
 }
