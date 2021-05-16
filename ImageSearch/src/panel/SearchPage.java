@@ -86,6 +86,8 @@ public class SearchPage extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
+				String text = jTextField2.getText();
+				
 				// 이미지 넣기 
 				try {
 					PushImage(imageCount);
@@ -93,18 +95,18 @@ public class SearchPage extends JPanel{
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				} 
-				
+					
 				// 활동 내역 기록하기
 				try {
-					String text = jTextField2.getText();
-					
+						
 					// 중복된 단어면 갱신해주고, 처음 입력한 단어면 기록하기
 					if(!searchLog.IsRecorded(text))
 					{
 						searchLog.UpdateRecordedText(text);
 					}
 					else { searchLog.InsertSearchLog(text); }
-					
+						
+						
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -183,7 +185,7 @@ public class SearchPage extends JPanel{
 	
 		try {
 			urlList = kakao.GetImageUrlArray(jTextField2.getText(), imageCount);
-
+			imgPanel.removeAll();
 			for(int index = 0; index < urlList.size(); index++)
 			{
 				URL url = new URL(urlList.get(index).toString());
@@ -208,6 +210,8 @@ public class SearchPage extends JPanel{
 			}
 			imgPanel.setLayout(grid);
 			jTextPane.insertComponent(imgPanel);
+			imgPanel.revalidate();
+			imgPanel.repaint();
 					
 		} catch (ParseException e1){
 		e1.printStackTrace();
