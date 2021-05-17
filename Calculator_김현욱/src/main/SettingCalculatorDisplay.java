@@ -16,7 +16,7 @@ public class SettingCalculatorDisplay extends JPanel
 	private JPanel displayPanel;
 	private JPanel keyPadPanel;
 	
-	private JTextField textArea; 
+	static JTextField textArea; 
 	
 	private JButton[] numberButton;
 	private JButton ce; 
@@ -32,20 +32,17 @@ public class SettingCalculatorDisplay extends JPanel
 	
 	private Constants constant;
 	
-	private EventListener eventListener;
-	
 	public String lastedOperator;
-	private int num1, num2;
+	private int num;
 	private int sum;
-	public boolean isStart = true; 
-	public boolean isContinue = false;
-	public boolean isEqualNext = false;
+	static boolean isNewNumberStart  = true; 
+	static boolean isContinue = false;
+	static boolean isEqualNext = false;
+	static boolean isFirstNumber = true;
 	
 	public SettingCalculatorDisplay() {
 		this.constant = new Constants();
-		this.eventListener = new EventListener();
-		this.num1 = 0; 
-		this.num2 = 0; 
+		this.num = 0; 
 		this.sum = 0;
 		
 		this.displayPanel = new JPanel(); 
@@ -69,60 +66,10 @@ public class SettingCalculatorDisplay extends JPanel
 			numberButton[number] = new JButton(Integer.toString(number));
 			setButtonFont(numberButton[number]);
 			
-			numberButton[number].addActionListener(new ActionListener() {
-			
-				// 계산기 버튼 클릭 시 입력되게 하는 함수 
-				public void actionPerformed(ActionEvent e) {
-					JButton numberButton = (JButton)e.getSource();
-					String number = numberButton.getText();
-					String result = textArea.getText(); 
-					if(isStart||result.equals("0"))
-					{
-						textArea.setText("");
-						textArea.setText(number);
-					}			
-					
-					else if(isContinue)
-					{
-						textArea.setText("");
-					}
-					
-					else {textArea.setText(result + number);}
-					
-					isStart = false;
-				}
-			});
+			numberButton[number].addActionListener(new NumberButtonListener());
 		}
 		
 		this.plus = new JButton("+");
-		plus.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e ) {
-				
-				JButton operatorButton = (JButton)e.getSource();
-				String operator = operatorButton.getText();
-				if(operator == "+")
-				{
-					if(isEqualNext)
-					{
-						textArea.setText("");
-					}
-					
-					else
-					{
-						num1 = Integer.parseInt(textArea.getText());
-						num2 = Integer.parseInt(textArea.getText());
-						sum += num1;
-						num1 = 0;
-						lastedOperator = "+";
-						isStart = true;
-					}
-					
-				}
-						
-			}
-			
-		});
 		this.minus = new JButton("ㅡ");
 		this.multiply = new JButton("X");
 		this.divide = new JButton("%");
@@ -131,34 +78,9 @@ public class SettingCalculatorDisplay extends JPanel
 		this.dot = new JButton(".");
 		this.changingSign = new JButton("+/-");
 		this.equal = new JButton("=");
-		equal.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				JButton operatorButton = (JButton)e.getSource();
-				String operator = operatorButton.getText();
-				if(operator == "=") {
-					if(lastedOperator == "+")
-					{
-						if(isEqualNext)
-						{
-							num2 = Integer.parseInt(textArea.getText());
-							sum += num2;
-							isEqualNext = true;
-						}
-						
-						else 
-						{
-							sum += num2;
-							isEqualNext = true;
-						}
-					}
-					textArea.setText(Integer.toString(sum));
-				}
-			}
-		});
-		
 		this.backSpace = new JButton("BACK");
 		
+		// 연산기호 버튼 커스텀
 		setSignButtonFont(plus);
 		setSignButtonFont(minus);
 		setSignButtonFont(multiply);
@@ -169,14 +91,16 @@ public class SettingCalculatorDisplay extends JPanel
 		setSignButtonFont(equal);
 		setSignButtonFont(backSpace);
 
-		minus.addActionListener(null);
-		multiply.addActionListener(null);
-		divide.addActionListener(null);
+		// 연산 기호 이벤트 처리 
+		plus.addActionListener(new OperatorListener());
+		minus.addActionListener(new OperatorListener());
+		multiply.addActionListener(new OperatorListener());
+		divide.addActionListener(new OperatorListener());
+		equal.addActionListener(new EqualListener());
 		c.addActionListener(null);
 		ce.addActionListener(null);
 		dot.addActionListener(null);
 		changingSign.addActionListener(null);
-		equal.addActionListener(null);
 		backSpace.addActionListener(null);
 
 		keyPadPanel.add(ce);
@@ -207,8 +131,8 @@ public class SettingCalculatorDisplay extends JPanel
 		keyPadPanel.setLayout(new GridLayout(5,4));
 		
 		add(keyPadPanel,BorderLayout.CENTER);
-		
-	}
+		}		
+	
 	
 	public void setButtonFont(JButton btn) {
 		btn.setFont(constant.font);
@@ -217,4 +141,78 @@ public class SettingCalculatorDisplay extends JPanel
 	public void setSignButtonFont(JButton btn) {
 		btn.setFont(constant.signFont);
 	}
+
+	private class NumberButtonListener implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e){
+			JButton numberButton = (JButton)e.getSource();
+			String number = numberButton.getText();
+			String result = textArea.getText(); 
+			if(isNewNumberStart ||result.equals("0")||isEqualNext)
+			{
+				textArea.setText("");
+				textArea.setText(number);
+			}			
+			
+			
+			else {textArea.setText(result + number);}
+			
+			num = Integer.parseInt(textArea.getText());
+			
+			isNewNumberStart = false;
+			isEqualNext = false;
+		}
+	}
+	
+	private class OperatorListener implements ActionListener{
+		public void actionPerformed(ActionEvent e ) {
+			
+			JButton operatorButton = (JButton)e.getSource();
+			String operator = operatorButton.getText();
+
+			RunOperator(operator);
+		}
+		
+		public void RunOperator(String operator) 
+		{
+				if(isFirstNumber)
+				{
+					sum = num;
+					isFirstNumber = false;
+				}
+				
+				else 
+				{
+					if(operator == "+") {sum += num;}
+					else if(operator == "ㅡ") {sum -= num;}
+					else if(operator == "X") {sum *= num;}
+					else if(operator == "%") {sum /= num;}
+				}
+				
+				lastedOperator = operator;
+				isNewNumberStart  = true;
+		}
+		
+	}
+	
+	private class EqualListener implements ActionListener{
+		public void actionPerformed(ActionEvent e)
+		{
+			RunOperation(lastedOperator);
+			textArea.setText(Integer.toString(sum));
+		}
+		
+		public void RunOperation(String operator)
+		{
+			if(operator == "+") {sum += num;}
+			else if(operator == "ㅡ") {sum -= num;}
+			else if(operator == "X") {sum *= num;}
+			else if(operator == "%") {sum /= num;}
+			isEqualNext = true;
+		}
+		
+	}
 }
+
+
+
