@@ -6,6 +6,8 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -30,8 +32,11 @@ public class SettingCalculatorDisplay extends JPanel
 	
 	private Constants constant;
 	
+	private EventListener eventListener;
+	
 	public SettingCalculatorDisplay() {
 		this.constant = new Constants();
+		this.eventListener = new EventListener();
 		
 		this.displayPanel = new JPanel(); 
 		this.keyPadPanel = new JPanel();
@@ -53,8 +58,21 @@ public class SettingCalculatorDisplay extends JPanel
 		{
 			numberButton[number] = new JButton(Integer.toString(number));
 			setButtonFont(numberButton[number]);
-		
-			//numberButton[number].addActionListener(null);
+			
+			numberButton[number].addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					JButton numberButton = (JButton)e.getSource();
+					String number = numberButton.getText();
+					String result = textArea.getText(); 
+					String text = "";
+					if(result.equals("0"))
+					{
+						textArea.setText("");
+						textArea.setText(number);
+					}					
+					else {textArea.setText(result + number);}
+				}
+			});
 		}
 		
 		this.plus = new JButton("+");
