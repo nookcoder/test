@@ -108,7 +108,7 @@ public class SettingCalculatorDisplay extends JPanel
 		equal.addActionListener(new EqualListener());
 		c.addActionListener(new ResetListener());
 		ce.addActionListener(new ResetListener()); 
-		dot.addActionListener(null);
+		dot.addActionListener(new DotListener());
 		changingSign.addActionListener(new ChangingSignListener());
 		backSpace.addActionListener(null);
 
@@ -263,6 +263,7 @@ public class SettingCalculatorDisplay extends JPanel
 		}
 	}
 
+	// +/- 입력 이벤트 처리 
 	private class ChangingSignListener implements ActionListener{
 		
 		public void actionPerformed(ActionEvent e)
@@ -303,6 +304,17 @@ public class SettingCalculatorDisplay extends JPanel
 				textArea.setText(Integer.toString(number));
 			}
 		}
+	}
+	
+	private class DotListener implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			String oldString = textArea.getText();
+			String newString = oldString + ".";
+			
+			if(!textArea.getText().contains(".")) {textArea.setText(newString);}
+		}
+		
 	}
 }
 
