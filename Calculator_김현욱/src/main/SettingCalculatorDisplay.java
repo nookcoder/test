@@ -191,9 +191,7 @@ public class SettingCalculatorDisplay extends JPanel
 			{
 				textArea.setText("");
 				textArea.setText(number);
-			}			
-			
-			
+			}					
 			// 연속으로 숫자 입력 시 
 			else {textArea.setText(result + number);}
 			
@@ -272,7 +270,6 @@ public class SettingCalculatorDisplay extends JPanel
 			else if (resetButton.getText() == "CE")
 			{
 				textArea.setText("0");
-				ReverseCalculator();
 				if(isEqualNext) {
 					reset();
 				}
