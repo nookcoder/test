@@ -159,30 +159,11 @@ public class SettingCalculatorDisplay extends JPanel
 	
 	public void runOperation(String operator)
 	{
-		if(haveDot)
-		{
 			if(operator == "+") {doubleSum += doubleNum;}
 			else if(operator == "ㅡ") {doubleSum -= doubleNum;}
 			else if(operator == "X") {doubleSum *= doubleNum;}
 			else if(operator == "/") {doubleSum /= doubleNum;}
-			
-			return;
-		}
-		
-		if(operator == "+") {sum += num;}
-		else if(operator == "ㅡ") {sum -= num;}
-		else if(operator == "X") {sum *= num;}
-		else if(operator == "/") {
-			if(sum % num == 0) {sum /= num;}
-			else
-			{
-				haveDot = true;
-				doubleSum = Double.valueOf(sum);
-				doubleNum = Double.valueOf(num);
-				doubleSum /= doubleNum;
-			}
-		}
-}
+	}
 
 	public void reset() {
 		isNewNumberStart  = true; 
@@ -192,8 +173,8 @@ public class SettingCalculatorDisplay extends JPanel
 		lastedOperator = null;
 		haveDot = false;
 		
-		num = 0; 
-		sum = 0;
+		doubleNum = 0.0;
+		doubleSum = 0.0;
 	}
 	
 	// 숫자 키 입력 시 이벤트 처리 
@@ -229,14 +210,8 @@ public class SettingCalculatorDisplay extends JPanel
 		
 		public void getNumber() {
 			// 입력한 숫자 저장 
-				if(isFirstNumber) {doubleSum = Double.valueOf(textArea.getText());}
-				else{ doubleNum = Double.valueOf(textArea.getText());}
-						
-			else 
-			{
-				if(isFirstNumber) {sum = Integer.parseInt(textArea.getText());}
-				else{ num = Integer.parseInt(textArea.getText());}
-			}
+			if(isFirstNumber) {doubleSum = Double.valueOf(textArea.getText());}
+			else{ doubleNum = Double.valueOf(textArea.getText());}
 		}
 	}
 	
@@ -266,15 +241,7 @@ public class SettingCalculatorDisplay extends JPanel
 			{
 				isEqualNext = true;
 				runOperation(lastedOperator);
-				if(haveDot)
-				{
-					textArea.setText(doubleSum.toString());
-				}
-				
-				else 
-				{
-					textArea.setText(Integer.toString(sum));
-				}
+				textArea.setText(doubleSum.toString());
 			}
 		}
 	}
@@ -315,57 +282,19 @@ public class SettingCalculatorDisplay extends JPanel
 				textArea.setText("");
 				textArea.setText("-");
 				isNewNumberStart = false;
-				if(haveDot)
-				{ 
-					if(!textArea.getText().equals("-")) { doubleSum = Double.valueOf(textArea.getText());}
-					return;
-				}
-				
-				if(!textArea.getText().equals("-")) {sum = Integer.parseInt(textArea.getText());}
-				
-				return;
-			}
-			if(haveDot)
-			{
-				if(isFirstNumber) 
-				{
-					showChangeOperatorWithDouble(doubleSum);
-					doubleSum = Double.valueOf(textArea.getText());
-				}
-				else
-				{
-					showChangeOperatorWithDouble(doubleNum);
-					doubleNum = Double.valueOf(textArea.getText());
-				}
-				
+				if(!textArea.getText().equals("-")) { doubleSum = Double.valueOf(textArea.getText());}
 				return;
 			}
 			
 			if(isFirstNumber) 
 			{
-				showChangeOperatorWithInt(sum);
-				sum = Integer.parseInt(textArea.getText());
+				showChangeOperatorWithDouble(doubleSum);
+				doubleSum = Double.valueOf(textArea.getText());
 			}
 			else
 			{
-				showChangeOperatorWithInt(num);
-				num = Integer.parseInt(textArea.getText());
-			}
-		}
-		
-		// 부호 바뀌는 거 사용자에게 보여주는 함수 (정수)
-		public void showChangeOperatorWithInt(int number) {
-			
-			if(number > 0)
-			{
-				textArea.setText("");
-				textArea.setText("-" + Integer.toString(number));
-			}
-			
-			else if(number < 0)
-			{
-				textArea.setText("");
-				textArea.setText(Integer.toString(number));
+				showChangeOperatorWithDouble(doubleNum);
+				doubleNum = Double.valueOf(textArea.getText());
 			}
 		}
 		
