@@ -41,7 +41,7 @@ public class SettingCalculatorDisplay extends JPanel
 	private boolean isEqualNext; // = 를 누른 후 다음 이벤트인지 판단
 	private boolean isFirstNumber; // 계산 과정에서 첫번째 입력 숫자인지 확인 
 	private boolean isOperatorNext; // 가장 최근에 입력된 게 연산 기호인지 확인 
-	private boolean haveDot;
+	private String check;
 	
 	public SettingCalculatorDisplay() {
 		this.constant = new Constants();
@@ -56,7 +56,6 @@ public class SettingCalculatorDisplay extends JPanel
 		this.isFirstNumber = true;
 		this.isEqualNext = false;
 		this.isOperatorNext = false; 
-		this.haveDot = false;
 		
 		this.displayPanel = new JPanel(); // 숫자표시칸 관련 패널 
 		this.keyPadPanel = new JPanel(); // 숫자패드 관련 패널 
@@ -164,17 +163,34 @@ public class SettingCalculatorDisplay extends JPanel
 			else if(operator == "X") {doubleSum *= doubleNum;}
 			else if(operator == "/") {doubleSum /= doubleNum;}
 	}
-
+	
+	public void setPrintingNumberToInt(Double number)
+	{
+		String[] numberString = number.toString().split(".");
+		if(numberString[1].equals("0")) {
+			textArea.setText(numberString[0]);
+		}
+		else {
+			textArea.setText(number.toString());
+		}
+		
+	}
+	
 	public void reset() {
 		isNewNumberStart  = true; 
 		isFirstNumber = true;
 		isEqualNext = false;
 		isOperatorNext = false;
 		lastedOperator = null;
-		haveDot = false;
 		
 		doubleNum = 0.0;
 		doubleSum = 0.0;
+	}
+	
+	public void cut(Double sum)
+	{
+		String sumString = sum.toString();
+		
 	}
 	
 	// 숫자 키 입력 시 이벤트 처리 
@@ -241,7 +257,16 @@ public class SettingCalculatorDisplay extends JPanel
 			{
 				isEqualNext = true;
 				runOperation(lastedOperator);
-				textArea.setText(doubleSum.toString());
+				String doubleSumString = Double.toString(doubleSum);
+				String doubleSumCheck = doubleSumString.substring(doubleSumString.length() - 1);
+				if(doubleSumCheck == "0")
+				{
+					textArea.setText(doubleSum.toString().substring(0, doubleSumString.length()-2));
+				}
+				else
+				{
+					textArea.setText(doubleSum.toString());
+				}
 			}
 		}
 	}
@@ -322,8 +347,6 @@ public class SettingCalculatorDisplay extends JPanel
 			String newString = oldString + ".";
 			
 			if(!textArea.getText().contains(".")) {textArea.setText(newString);}
-			
-			haveDot = true;
 		}
 		
 	}
