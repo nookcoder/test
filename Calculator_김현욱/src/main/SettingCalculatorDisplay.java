@@ -229,11 +229,8 @@ public class SettingCalculatorDisplay extends JPanel
 		
 		public void getNumber() {
 			// 입력한 숫자 저장 
-			if(haveDot)
-			{
 				if(isFirstNumber) {doubleSum = Double.valueOf(textArea.getText());}
 				else{ doubleNum = Double.valueOf(textArea.getText());}
-			}
 						
 			else 
 			{
