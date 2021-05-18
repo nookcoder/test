@@ -32,12 +32,14 @@ public class SettingCalculatorDisplay extends JPanel
 	
 	private Constants constant;
 	
-	public String lastedOperator; // 가장 최근에 입력된 사칙연산 기호 
+	private String lastedOperator; // 가장 최근에 입력된 사칙연산 기호 
 	private int num; // 입력된 숫자 
 	private int sum; // 출력될 계산 결과 값
 	private boolean isNewNumberStart  = true; // 새로운 숫자가 입력되는 지 판단
 	private boolean isEqualNext = false; // = 를 누른 후 다음 이벤트인지 판단
 	private boolean isFirstNumber = true; // 계산 과정에서 첫번째 입력 숫자인지 확인 
+	private boolean isOperatorNext = false; // 가장 최근에 입력된 게 연산 기호인지 확인 
+	private boolean isChanging = false; 
 	
 	public SettingCalculatorDisplay() {
 		this.constant = new Constants();
@@ -49,6 +51,7 @@ public class SettingCalculatorDisplay extends JPanel
 		this.isNewNumberStart = true;
 		this.isFirstNumber = true;
 		this.isEqualNext = false;
+		this.isOperatorNext = false; 
 		
 		this.displayPanel = new JPanel(); // 숫자표시칸 관련 패널 
 		this.keyPadPanel = new JPanel(); // 숫자패드 관련 패널 
@@ -107,7 +110,7 @@ public class SettingCalculatorDisplay extends JPanel
 		c.addActionListener(new ResetListener());
 		ce.addActionListener(new ResetListener()); 
 		dot.addActionListener(null);
-		changingSign.addActionListener(null);
+		changingSign.addActionListener(new ChangingSignListener());
 		backSpace.addActionListener(null);
 
 		keyPadPanel.add(ce);
@@ -148,7 +151,27 @@ public class SettingCalculatorDisplay extends JPanel
 	public void setSignButtonFont(JButton btn) {
 		btn.setFont(constant.signFont);
 	}
+	
+	public void runOperation(String operator)
+	{
+		if(operator == "+") {sum += num;}
+		else if(operator == "ㅡ") {sum -= num;}
+		else if(operator == "X") {sum *= num;}
+		else if(operator == "/") {sum /= num;}
+	}
 
+	public void reset() {
+		isNewNumberStart  = true; 
+		isFirstNumber = true;
+		isEqualNext = false;
+		isOperatorNext = false;
+		lastedOperator = null;
+		isChanging = false;
+		
+		num = 0; 
+		sum = 0;
+	}
+	
 	// 숫자 키 입력 시 이벤트 처리 
 	private class NumberButtonListener implements ActionListener{
 		
@@ -156,6 +179,12 @@ public class SettingCalculatorDisplay extends JPanel
 			JButton numberButton = (JButton)e.getSource();
 			String number = numberButton.getText();
 			String result = textArea.getText(); 
+			
+			if(isEqualNext)
+			{
+				reset();
+				textArea.setText(number);
+			}
 			
 			// 새로운 숫자 입력시 기존 쓰여져있던 숫자 지우기 
 			if(isNewNumberStart ||result.equals("0")||isEqualNext)
@@ -169,25 +198,14 @@ public class SettingCalculatorDisplay extends JPanel
 			else {textArea.setText(result + number);}
 			
 			// 입력한 숫자 저장 
-			num = Integer.parseInt(textArea.getText());
-			
+			if(isFirstNumber) {sum = Integer.parseInt(textArea.getText());}
+			else{ num = Integer.parseInt(textArea.getText());}
+
 			// 연산 기호 다음 숫자일 떄 처리(계산해주는 과정) 
-			if(lastedOperator != null)
-			{
-				RunOperator(lastedOperator);
-			}
 			
 			isNewNumberStart = false;
 			isEqualNext = false;
-		}
-		
-		// 계산하는 함수 
-		public void RunOperator(String lastedOperator)
-		{
-			if(lastedOperator == "+") {sum += num;}
-			else if(lastedOperator == "ㅡ") {sum -= num;}
-			else if(lastedOperator == "X") {sum *= num;}
-			else if(lastedOperator == "/") {sum /= num;}
+			isOperatorNext = false;
 		}
 	}
 	
@@ -198,45 +216,40 @@ public class SettingCalculatorDisplay extends JPanel
 			JButton operatorButton = (JButton)e.getSource();
 			String operator = operatorButton.getText();
 
-			RunOperator(operator);
-		}
-		
-		public void RunOperator(String operator) 
-		{
+			if(lastedOperator  != null){runOperation(lastedOperator);}
+
+			lastedOperator = operator;	
 			
-				if(isFirstNumber)
-				{
-					sum = num;
-					isFirstNumber = false;
-				}
-				
-				lastedOperator = operator;
-				isNewNumberStart  = true;
-		}
-		
+			isOperatorNext = true;
+			isChanging = false;
+			isNewNumberStart  = true;
+			isFirstNumber = false;
+		}		
 	}
 	
 	// 등호(=) 이벤트 처리 
 	private class EqualListener implements ActionListener{
 		public void actionPerformed(ActionEvent e)
 		{
-			// 등호를 연속으로 입력했을 떄 
-			if(isEqualNext)
+			if(!isOperatorNext)
 			{
-				RunOperation(lastedOperator);
+	
+				if(isChanging)
+				{
+					sum *= -1;
+					isEqualNext = true;
+					textArea.setText(Integer.toString(sum));
+				}
+				
+				else if(!isChanging)
+				{
+					isEqualNext = true;
+					runOperation(lastedOperator);
+					textArea.setText(Integer.toString(sum));
+				}
 			}
-			
-			isEqualNext = true;
-			textArea.setText(Integer.toString(sum));
 		}
 		
-		public void RunOperation(String operator)
-		{
-			if(operator == "+") {sum += num;}
-			else if(operator == "ㅡ") {sum -= num;}
-			else if(operator == "X") {sum *= num;}
-			else if(operator == "/") {sum /= num;}
-		}
 		
 	}
 	
@@ -250,29 +263,60 @@ public class SettingCalculatorDisplay extends JPanel
 			// 완전 초기화 
 			if(resetButton.getText() == "C")
 			{
-				num = 0; 
-				isNewNumberStart  = true; 
-				isEqualNext = false;
-				isFirstNumber = true;
-				sum = 0;
 				textArea.setText("0");
+
+				reset();
 			}
 			
 			// 등호 다음 ce 입력 시 초기화, 계산과정중 ce입력시 숫자만 초기화 
 			else if (resetButton.getText() == "CE")
 			{
 				textArea.setText("0");
+				ReverseCalculator();
 				if(isEqualNext) {
-					isNewNumberStart  = true; 
-					isEqualNext = false;
-					isFirstNumber = true;
-					lastedOperator = null;
-					num = 0; 
-					sum = 0;
+					reset();
 				}
 			}
 		}
+		
+		public void ReverseCalculator() {
+			if(lastedOperator == "+") {sum -= num;}
+			else if(lastedOperator == "+") {sum += num;}
+			else if(lastedOperator == "X") {sum /= num;}
+			else if(lastedOperator == "/") {sum *= num;}
+			isChanging = false;
+		}
 	}
+
+	private class ChangingSignListener implements ActionListener{
+		public void actionPerformed(ActionEvent e)
+		{ 
+			if(isNewNumberStart)
+			{
+				textArea.setText("");
+				textArea.setText("-");
+				isNewNumberStart = false;
+			}
+			
+			else
+			{
+				if(num > 0)
+				{
+					textArea.setText("");
+					textArea.setText("-" + Integer.toString(num));
+				}
+				
+				else if(num < 0)
+				{
+					textArea.setText("");
+					textArea.setText(Integer.toString(num));
+				}
+			}
+
+			isChanging = true;
+		}
+	}
+	
 }
 
 
