@@ -213,8 +213,8 @@ public class SettingCalculatorDisplay extends JPanel
 			
 			JButton operatorButton = (JButton)e.getSource();
 			String operator = operatorButton.getText();
-
-			if(lastedOperator  != null){runOperation(lastedOperator);}
+			
+			if(lastedOperator  != null) {runOperation(lastedOperator);}
 
 			lastedOperator = operator;	
 			
@@ -236,6 +236,7 @@ public class SettingCalculatorDisplay extends JPanel
 				{
 					sum *= -1;
 					isEqualNext = true;
+					runOperation(lastedOperator);
 					textArea.setText(Integer.toString(sum));
 				}
 				
@@ -247,8 +248,6 @@ public class SettingCalculatorDisplay extends JPanel
 				}
 			}
 		}
-		
-		
 	}
 	
 	// c ce 입력시 이벤트 처리 
@@ -275,42 +274,45 @@ public class SettingCalculatorDisplay extends JPanel
 				}
 			}
 		}
-		
-		public void ReverseCalculator() {
-			if(lastedOperator == "+") {sum -= num;}
-			else if(lastedOperator == "+") {sum += num;}
-			else if(lastedOperator == "X") {sum /= num;}
-			else if(lastedOperator == "/") {sum *= num;}
-			isChanging = false;
-		}
 	}
 
 	private class ChangingSignListener implements ActionListener{
+		
 		public void actionPerformed(ActionEvent e)
 		{ 
+			// 계산기에서 맨처음으로 입력할 떄 
 			if(isNewNumberStart)
 			{
 				textArea.setText("");
 				textArea.setText("-");
 				isNewNumberStart = false;
+				setChangingSign();
+				return;
 			}
-			
-			else
-			{
-				if(num > 0)
-				{
-					textArea.setText("");
-					textArea.setText("-" + Integer.toString(num));
-				}
-				
-				else if(num < 0)
-				{
-					textArea.setText("");
-					textArea.setText(Integer.toString(num));
-				}
-			}
-
+	
+			ShowChangeOperator(sum);
+			setChangingSign();
+		}
+		
+		public void setChangingSign() {
+			if(!textArea.getText().equals("-")) {sum = Integer.parseInt(textArea.getText());}
 			isChanging = true;
+		}
+	}
+	
+	// 부호 바뀌는 거 사용자에게 보여주는 함수 
+	public void ShowChangeOperator(int number) {
+		
+		if(number > 0)
+		{
+			textArea.setText("");
+			textArea.setText("-" + Integer.toString(number));
+		}
+		
+		else if(number < 0)
+		{
+			textArea.setText("");
+			textArea.setText(Integer.toString(number));
 		}
 	}
 	
