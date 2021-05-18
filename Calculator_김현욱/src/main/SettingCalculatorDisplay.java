@@ -35,10 +35,13 @@ public class SettingCalculatorDisplay extends JPanel
 	private String lastedOperator; // 가장 최근에 입력된 사칙연산 기호 
 	private int num; // 입력된 숫자 
 	private int sum; // 출력될 계산 결과 값
+	private Double doubleNum;
+	private Double doubleSum;
 	private boolean isNewNumberStart; // 새로운 숫자가 입력되는 지 판단
 	private boolean isEqualNext; // = 를 누른 후 다음 이벤트인지 판단
 	private boolean isFirstNumber; // 계산 과정에서 첫번째 입력 숫자인지 확인 
 	private boolean isOperatorNext; // 가장 최근에 입력된 게 연산 기호인지 확인 
+	private boolean haveDot;
 	
 	public SettingCalculatorDisplay() {
 		this.constant = new Constants();
@@ -46,11 +49,14 @@ public class SettingCalculatorDisplay extends JPanel
 		// 계산과정에서 쓰일 변수들 초기화 
 		this.num = 0; 
 		this.sum = 0;
+		this.doubleNum = 0.0;
+		this.doubleSum = 0.0; 
 		this.lastedOperator = null;
 		this.isNewNumberStart = true;
 		this.isFirstNumber = true;
 		this.isEqualNext = false;
 		this.isOperatorNext = false; 
+		this.haveDot = false;
 		
 		this.displayPanel = new JPanel(); // 숫자표시칸 관련 패널 
 		this.keyPadPanel = new JPanel(); // 숫자패드 관련 패널 
@@ -153,11 +159,30 @@ public class SettingCalculatorDisplay extends JPanel
 	
 	public void runOperation(String operator)
 	{
+		if(haveDot)
+		{
+			if(operator == "+") {doubleSum += doubleNum;}
+			else if(operator == "ㅡ") {doubleSum -= doubleNum;}
+			else if(operator == "X") {doubleSum *= doubleNum;}
+			else if(operator == "/") {doubleSum /= doubleNum;}
+			
+			return;
+		}
+		
 		if(operator == "+") {sum += num;}
 		else if(operator == "ㅡ") {sum -= num;}
 		else if(operator == "X") {sum *= num;}
-		else if(operator == "/") {sum /= num;}
-	}
+		else if(operator == "/") {
+			if(sum % num == 0) {sum /= num;}
+			else
+			{
+				haveDot = true;
+				doubleSum = Double.valueOf(sum);
+				doubleNum = Double.valueOf(num);
+				doubleSum /= doubleNum;
+			}
+		}
+}
 
 	public void reset() {
 		isNewNumberStart  = true; 
@@ -165,6 +190,7 @@ public class SettingCalculatorDisplay extends JPanel
 		isEqualNext = false;
 		isOperatorNext = false;
 		lastedOperator = null;
+		haveDot = false;
 		
 		num = 0; 
 		sum = 0;
@@ -193,15 +219,27 @@ public class SettingCalculatorDisplay extends JPanel
 			// 연속으로 숫자 입력 시 
 			else {textArea.setText(result + number);}
 			
-			// 입력한 숫자 저장 
-			if(isFirstNumber) {sum = Integer.parseInt(textArea.getText());}
-			else{ num = Integer.parseInt(textArea.getText());}
-
-			// 연산 기호 다음 숫자일 떄 처리(계산해주는 과정) 
+			getNumber();
 			
+			// 연산 기호 다음 숫자일 떄 처리(계산해주는 과정) 
+			isOperatorNext = false;
 			isNewNumberStart = false;
 			isEqualNext = false;
-			isOperatorNext = false;
+		}
+		
+		public void getNumber() {
+			// 입력한 숫자 저장 
+			if(haveDot)
+			{
+				if(isFirstNumber) {doubleSum = Double.valueOf(textArea.getText());}
+				else{ doubleNum = Double.valueOf(textArea.getText());}
+			}
+						
+			else 
+			{
+				if(isFirstNumber) {sum = Integer.parseInt(textArea.getText());}
+				else{ num = Integer.parseInt(textArea.getText());}
+			}
 		}
 	}
 	
@@ -218,8 +256,8 @@ public class SettingCalculatorDisplay extends JPanel
 			
 			isOperatorNext = true;
 			isNewNumberStart  = true;
-			isFirstNumber = false;
 			isEqualNext = false;
+			isFirstNumber = false;
 		}		
 	}
 	
@@ -231,8 +269,15 @@ public class SettingCalculatorDisplay extends JPanel
 			{
 				isEqualNext = true;
 				runOperation(lastedOperator);
-				textArea.setText(Integer.toString(sum));
-				//lastedOperator = null;
+				if(haveDot)
+				{
+					textArea.setText(doubleSum.toString());
+				}
+				
+				else 
+				{
+					textArea.setText(Integer.toString(sum));
+				}
 			}
 		}
 	}
@@ -248,7 +293,6 @@ public class SettingCalculatorDisplay extends JPanel
 			if(resetButton.getText() == "C")
 			{
 				textArea.setText("0");
-
 				reset();
 			}
 			
@@ -274,23 +318,46 @@ public class SettingCalculatorDisplay extends JPanel
 				textArea.setText("");
 				textArea.setText("-");
 				isNewNumberStart = false;
+				if(haveDot)
+				{ 
+					if(!textArea.getText().equals("-")) { doubleSum = Double.valueOf(textArea.getText());}
+					return;
+				}
+				
 				if(!textArea.getText().equals("-")) {sum = Integer.parseInt(textArea.getText());}
+				
 				return;
 			}
+			if(haveDot)
+			{
+				if(isFirstNumber) 
+				{
+					showChangeOperatorWithDouble(doubleSum);
+					doubleSum = Double.valueOf(textArea.getText());
+				}
+				else
+				{
+					showChangeOperatorWithDouble(doubleNum);
+					doubleNum = Double.valueOf(textArea.getText());
+				}
+				
+				return;
+			}
+			
 			if(isFirstNumber) 
 			{
-				ShowChangeOperator(sum);
+				showChangeOperatorWithInt(sum);
 				sum = Integer.parseInt(textArea.getText());
 			}
 			else
 			{
-				ShowChangeOperator(num);
+				showChangeOperatorWithInt(num);
 				num = Integer.parseInt(textArea.getText());
 			}
 		}
 		
-		// 부호 바뀌는 거 사용자에게 보여주는 함수 
-		public void ShowChangeOperator(int number) {
+		// 부호 바뀌는 거 사용자에게 보여주는 함수 (정수)
+		public void showChangeOperatorWithInt(int number) {
 			
 			if(number > 0)
 			{
@@ -304,6 +371,22 @@ public class SettingCalculatorDisplay extends JPanel
 				textArea.setText(Integer.toString(number));
 			}
 		}
+		
+		// 부호 바뀌는 거 사용자에게 보여주는 함수 (실수)
+		public void showChangeOperatorWithDouble(Double number) {
+			
+			if(number > 0)
+			{
+				textArea.setText("");
+				textArea.setText("-" + number.toString());
+			}
+			
+			else if(number < 0)
+			{
+				textArea.setText("");
+				textArea.setText(number.toString());
+			}
+		}
 	}
 	
 	private class DotListener implements ActionListener{
@@ -313,6 +396,8 @@ public class SettingCalculatorDisplay extends JPanel
 			String newString = oldString + ".";
 			
 			if(!textArea.getText().contains(".")) {textArea.setText(newString);}
+			
+			haveDot = true;
 		}
 		
 	}
