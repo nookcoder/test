@@ -19,9 +19,7 @@ public class SettingCalculatorDisplay extends JPanel
 {
 	private JPanel displayPanel;
 	private JPanel keyPadPanel;
-	
-	private JTextField textArea; 
-	
+	private JLabel textArea; 
 	private JButton[] numberButton;
 	private JButton ce; 
 	private JButton c; 
@@ -47,6 +45,7 @@ public class SettingCalculatorDisplay extends JPanel
 	private boolean isOperatorNext; // 가장 최근에 입력된 게 연산 기호인지 확인 
 	
 	GridBagLayout grid;
+	private Box verticalBox;
 	
 	public SettingCalculatorDisplay() {
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
@@ -67,11 +66,6 @@ public class SettingCalculatorDisplay extends JPanel
 		
 		this.displayPanel = new JPanel(); // 숫자표시칸 관련 패널 
 		this.keyPadPanel = new JPanel(); // 숫자패드 관련 패널 
-		
-		this.textArea = new JTextField(11);
-		textArea.setText("0"); 
-		textArea.setHorizontalAlignment(JTextField.RIGHT);
-		textArea.setFont(constant.font);
 		
 		this.keyPadPanel = new JPanel(); 
 		this.numberButton = new JButton[10];
@@ -148,8 +142,19 @@ public class SettingCalculatorDisplay extends JPanel
 		
 		keyPadPanel.setLayout(new GridLayout(5,4,2,2));
 		
-		add(textArea);
-		add(keyPadPanel);
+		verticalBox = Box.createVerticalBox();
+		add(verticalBox);
+		
+		this.textArea = new JLabel("0",JLabel.RIGHT);
+		textArea.setText("0"); 
+		textArea.setHorizontalAlignment(JTextField.RIGHT);
+		textArea.setFont(constant.font);
+		
+		displayPanel.add(textArea);
+		gridInsert(displayPanel,0,0,1,1);
+		gridInsert(keyPadPanel,0,1,1,3);
+		//add(displayPanel);
+		//add(keyPadPanel);
 		}		
 	
 	public void gridInsert(Component c, int girdx , int gridy,int weightx,int weighty)
