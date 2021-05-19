@@ -1,13 +1,6 @@
 package main;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -19,7 +12,10 @@ public class SettingCalculatorDisplay extends JPanel
 {
 	private JPanel displayPanel;
 	private JPanel keyPadPanel;
-	private JLabel textArea; 
+	private JTextField textArea; 
+	private JPanel noticePanel;
+	private JLabel label;
+	private JLabel textNotice;
 	private JButton[] numberButton;
 	private JButton ce; 
 	private JButton c; 
@@ -35,8 +31,6 @@ public class SettingCalculatorDisplay extends JPanel
 	private Constants constant;
 	
 	private String lastedOperator; // 가장 최근에 입력된 사칙연산 기호 
-	private int num; // 입력된 숫자 
-	private int sum; // 출력될 계산 결과 값
 	private Double doubleNum;
 	private Double doubleSum;
 	private boolean isNewNumberStart; // 새로운 숫자가 입력되는 지 판단
@@ -44,18 +38,12 @@ public class SettingCalculatorDisplay extends JPanel
 	private boolean isFirstNumber; // 계산 과정에서 첫번째 입력 숫자인지 확인 
 	private boolean isOperatorNext; // 가장 최근에 입력된 게 연산 기호인지 확인 
 	
-	GridBagLayout grid;
-	private Box verticalBox;
-	
 	public SettingCalculatorDisplay() {
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-			
-		this.grid = new GridBagLayout();
+		
 		this.constant = new Constants();
 		
 		// 계산과정에서 쓰일 변수들 초기화 
-		this.num = 0; 
-		this.sum = 0;
 		this.doubleNum = 0.0;
 		this.doubleSum = 0.0; 
 		this.lastedOperator = null;
@@ -66,6 +54,8 @@ public class SettingCalculatorDisplay extends JPanel
 		
 		this.displayPanel = new JPanel(); // 숫자표시칸 관련 패널 
 		this.keyPadPanel = new JPanel(); // 숫자패드 관련 패널 
+		this.noticePanel = new JPanel();
+		noticePanel.setLayout(new GridLayout(0,1));
 		
 		this.keyPadPanel = new JPanel(); 
 		this.numberButton = new JButton[10];
@@ -115,6 +105,7 @@ public class SettingCalculatorDisplay extends JPanel
 		changingSign.addActionListener(new ChangingSignListener());
 		backSpace.addActionListener(null);
 
+		// 숫자패드 만들기
 		keyPadPanel.add(ce);
 		keyPadPanel.add(c);
 		keyPadPanel.add(backSpace);
@@ -142,32 +133,24 @@ public class SettingCalculatorDisplay extends JPanel
 		
 		keyPadPanel.setLayout(new GridLayout(5,4,2,2));
 		
-		verticalBox = Box.createVerticalBox();
-		add(verticalBox);
+		this.textArea = new JTextField("0");
+		this.textNotice = new JLabel("1");
+		this.label = new JLabel();
+		label.add(new JButton());
+		//label.setHorizontalAlignment(JLabel.RIGHT);
+		noticePanel.add(label);
+		noticePanel.add(textNotice);
+		noticePanel.setLayout(new GridLayout(0,1));
 		
-		this.textArea = new JLabel("0",JLabel.RIGHT);
 		textArea.setText("0"); 
 		textArea.setHorizontalAlignment(JTextField.RIGHT);
 		textArea.setFont(constant.font);
-		
+		displayPanel.setLayout(new GridLayout(0,1));
+		displayPanel.add(noticePanel);
 		displayPanel.add(textArea);
-		gridInsert(displayPanel,0,0,1,1);
-		gridInsert(keyPadPanel,0,1,1,3);
-		//add(displayPanel);
-		//add(keyPadPanel);
+		add(displayPanel);
+		add(keyPadPanel);
 		}		
-	
-	public void gridInsert(Component c, int girdx , int gridy,int weightx,int weighty)
-	{
-		 GridBagConstraints gridBack = new GridBagConstraints();
-		 gridBack.fill= GridBagConstraints.BOTH;
-		 gridBack.gridx = girdx; 
-		 gridBack.gridy = gridy;
-		 gridBack.weightx = weightx;
-		 gridBack.weighty = weighty;
-		 grid.setConstraints(c, gridBack);
-		 add(c);
-	}
 	
 	public void setButtonFont(JButton btn) {
 		btn.setFont(constant.font);
