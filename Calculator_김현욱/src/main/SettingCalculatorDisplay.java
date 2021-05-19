@@ -1,10 +1,14 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -41,9 +45,13 @@ public class SettingCalculatorDisplay extends JPanel
 	private boolean isEqualNext; // = 를 누른 후 다음 이벤트인지 판단
 	private boolean isFirstNumber; // 계산 과정에서 첫번째 입력 숫자인지 확인 
 	private boolean isOperatorNext; // 가장 최근에 입력된 게 연산 기호인지 확인 
-	private String check;
+	
+	GridBagLayout grid;
 	
 	public SettingCalculatorDisplay() {
+		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+			
+		this.grid = new GridBagLayout();
 		this.constant = new Constants();
 		
 		// 계산과정에서 쓰일 변수들 초기화 
@@ -60,15 +68,10 @@ public class SettingCalculatorDisplay extends JPanel
 		this.displayPanel = new JPanel(); // 숫자표시칸 관련 패널 
 		this.keyPadPanel = new JPanel(); // 숫자패드 관련 패널 
 		
-		displayPanel.setLayout(new FlowLayout());
-		keyPadPanel.setLayout(new GridLayout(0,4,5,5));
-		
 		this.textArea = new JTextField(11);
 		textArea.setText("0"); 
 		textArea.setHorizontalAlignment(JTextField.RIGHT);
 		textArea.setFont(constant.font);
-		
-		add(textArea,BorderLayout.NORTH);
 		
 		this.keyPadPanel = new JPanel(); 
 		this.numberButton = new JButton[10];
@@ -93,18 +96,19 @@ public class SettingCalculatorDisplay extends JPanel
 		this.changingSign = new JButton("+/-");
 		this.equal = new JButton("=");
 		this.backSpace = new JButton("BACK");
-		
+	
 		// 연산기호 버튼 커스텀
 		setSignButtonFont(plus);
 		setSignButtonFont(minus);
 		setSignButtonFont(multiply);
 		setSignButtonFont(c);
 		setSignButtonFont(ce);
-		setSignButtonFont(dot);
-		setSignButtonFont(changingSign);
+		setButtonFont(dot);
+		setButtonFont(changingSign);
 		setSignButtonFont(equal);
 		setSignButtonFont(backSpace);
-
+		setSignButtonFont(divide);
+		
 		// 연산 기호 이벤트 처리 
 		plus.addActionListener(new OperatorListener());
 		minus.addActionListener(new OperatorListener());
@@ -142,18 +146,34 @@ public class SettingCalculatorDisplay extends JPanel
 		keyPadPanel.add(dot);
 		keyPadPanel.add(equal);
 		
-		keyPadPanel.setLayout(new GridLayout(5,4));
+		keyPadPanel.setLayout(new GridLayout(5,4,2,2));
 		
-		add(keyPadPanel,BorderLayout.CENTER);
+		add(textArea);
+		add(keyPadPanel);
 		}		
 	
+	public void gridInsert(Component c, int girdx , int gridy,int weightx,int weighty)
+	{
+		 GridBagConstraints gridBack = new GridBagConstraints();
+		 gridBack.fill= GridBagConstraints.BOTH;
+		 gridBack.gridx = girdx; 
+		 gridBack.gridy = gridy;
+		 gridBack.weightx = weightx;
+		 gridBack.weighty = weighty;
+		 grid.setConstraints(c, gridBack);
+		 add(c);
+	}
 	
 	public void setButtonFont(JButton btn) {
 		btn.setFont(constant.font);
+		btn.setBorderPainted(false);
+		btn.setBackground(Color.WHITE);
 	}
 	
 	public void setSignButtonFont(JButton btn) {
 		btn.setFont(constant.signFont);
+		btn.setBorderPainted(false);
+		btn.setBackground(Color.LIGHT_GRAY);
 	}
 	
 	public void runOperation(String operator)
@@ -185,12 +205,6 @@ public class SettingCalculatorDisplay extends JPanel
 		
 		doubleNum = 0.0;
 		doubleSum = 0.0;
-	}
-	
-	public void cut(Double sum)
-	{
-		String sumString = sum.toString();
-		
 	}
 	
 	// 숫자 키 입력 시 이벤트 처리 
@@ -259,10 +273,12 @@ public class SettingCalculatorDisplay extends JPanel
 				runOperation(lastedOperator);
 				String doubleSumString = Double.toString(doubleSum);
 				String doubleSumCheck = doubleSumString.substring(doubleSumString.length() - 1);
-				if(doubleSumCheck == "0")
+				
+				if(doubleSumCheck.equals("0"))
 				{
 					textArea.setText(doubleSum.toString().substring(0, doubleSumString.length()-2));
 				}
+				
 				else
 				{
 					textArea.setText(doubleSum.toString());
