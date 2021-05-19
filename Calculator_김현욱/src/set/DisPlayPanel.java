@@ -1,5 +1,6 @@
-package main;
+package set;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -8,7 +9,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class SettingCalculatorDisplay extends JPanel
+public class DisPlayPanel extends JPanel
 {
 	private JPanel displayPanel;
 	private JPanel keyPadPanel;
@@ -38,8 +39,8 @@ public class SettingCalculatorDisplay extends JPanel
 	private boolean isFirstNumber; // 계산 과정에서 첫번째 입력 숫자인지 확인 
 	private boolean isOperatorNext; // 가장 최근에 입력된 게 연산 기호인지 확인 
 	
-	public SettingCalculatorDisplay() {
-		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+	public DisPlayPanel() {
+		setLayout(new BorderLayout());
 		
 		this.constant = new Constants();
 		
@@ -57,9 +58,14 @@ public class SettingCalculatorDisplay extends JPanel
 		this.noticePanel = new JPanel();
 		noticePanel.setLayout(new GridLayout(0,1));
 		this.textArea = new JTextField("0");
+		textArea.setBackground(constant.calcGray);
+		textArea.setBorder(BorderFactory.createEmptyBorder());
+		textArea.setFont(constant.displayFont);
+		textArea.setEditable(false);
 		this.textNotice = new JLabel();
 		this.label = new JLabel();
 		label.add(new JButton());
+		label.setBackground(constant.calcGray);
 		noticePanel.add(label);
 		noticePanel.add(textNotice);
 		noticePanel.setLayout(new GridLayout(0,1));
@@ -70,8 +76,9 @@ public class SettingCalculatorDisplay extends JPanel
 		displayPanel.setLayout(new GridLayout(0,1));
 		displayPanel.add(noticePanel);
 		displayPanel.add(textArea);
-		add(displayPanel);
-		add(new KeyPad(textArea));
+		
+		add(displayPanel,BorderLayout.NORTH);
+		add(new KeyPad(textArea,label));
 	}
 }
 

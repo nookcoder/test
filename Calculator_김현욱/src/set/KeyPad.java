@@ -1,10 +1,7 @@
-package main;
+package set;
 
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -34,12 +31,15 @@ public class KeyPad extends JPanel {
 	private Constants constant;
 	
 	private JTextField textArea;
+	private JLabel label;
 	
-	public KeyPad(JTextField textArea)
+	public KeyPad(JTextField textArea,JLabel label)
 	{
+		setLayout(new BorderLayout());
 		this.keyPadPanel = new JPanel(); 
 		this.numberButton = new JButton[10];
 		this.textArea = textArea;
+		this.label = label;
 		
 		// 계산과정에서 쓰일 변수들 초기화 
 		this.doubleNum = 0.0;
@@ -123,7 +123,7 @@ public class KeyPad extends JPanel {
 		keyPadPanel.add(dot);
 		keyPadPanel.add(equal);
 		
-		add(keyPadPanel);
+		add(keyPadPanel,BorderLayout.CENTER);
 	}
 	
 	public void setButtonFont(JButton btn){
@@ -205,15 +205,18 @@ public class KeyPad extends JPanel {
 		}
 		
 		// 연산 기호 이벤트 처리 
-		private class OperatorListener implements ActionListener{
+	private class OperatorListener implements ActionListener{
 			public void actionPerformed(ActionEvent e ) {
 				
 				JButton operatorButton = (JButton)e.getSource();
 				String operator = operatorButton.getText();
 				
 				if(lastedOperator  != null && !isEqualNext) {runOperation(lastedOperator);}
-
+				
 				lastedOperator = operator;	
+				
+				label.setText(doubleSum.toString());
+				label.setText(operator);
 				
 				isOperatorNext = true;
 				isNewNumberStart  = true;
@@ -223,7 +226,7 @@ public class KeyPad extends JPanel {
 		}
 		
 		// 등호(=) 이벤트 처리 
-		private class EqualListener implements ActionListener{
+	private class EqualListener implements ActionListener{
 			public void actionPerformed(ActionEvent e)
 			{
 				if(!isOperatorNext)
@@ -316,34 +319,99 @@ public class KeyPad extends JPanel {
 		}
 		
 		// . 입력 이벤트 처리 
-		private class DotListener implements ActionListener{
+	private class DotListener implements ActionListener{
+		
+		public void actionPerformed(ActionEvent e) {
+			String oldString = textArea.getText();
+			String newString = oldString + ".";
 			
-			public void actionPerformed(ActionEvent e) {
-				String oldString = textArea.getText();
-				String newString = oldString + ".";
+			if(!textArea.getText().contains(".")) {textArea.setText(newString);}
+		}
+
+	}
+
+	// 백스페이스 이벤트 처리 
+	private class BackSpaceListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			String originalText = textArea.getText();
+			
+			if(originalText.length() != 0) {
+				String backText = originalText.substring(0,originalText.length()-1);
+				textArea.setText(backText);
 				
-				if(!textArea.getText().contains(".")) {textArea.setText(newString);}
+				if(isFirstNumber) {doubleSum = Double.valueOf(textArea.getText());}
+				else{ doubleNum = Double.valueOf(textArea.getText());}
 			}
+				
+			else { 
+				textArea.setText("0");
+			}
+	}	
+			
+	public class NumberButtonMouseListener implements MouseListener{
+			
+		public void mouseEntered(MouseEvent e) {
+			JButton btn = (JButton)e.getSource();
+			btn.setBackground(Color.LIGHT_GRAY);
+		}
+			
+		public void mouseExited(MouseEvent e) {
+			JButton btn = (JButton)e.getSource();
+			btn.setBackground(Color.white);
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
 			
 		}
 
-		// 백스페이스 이벤트 처리 
-		private class BackSpaceListener implements ActionListener{
-			public void actionPerformed(ActionEvent e) {
-				String originalText = textArea.getText();
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
 				
-				if(originalText.length() != 0) {
-					String backText = originalText.substring(0,originalText.length()-1);
-					textArea.setText(backText);
-					
-					if(isFirstNumber) {doubleSum = Double.valueOf(textArea.getText());}
-					else{ doubleNum = Double.valueOf(textArea.getText());}
-				}
+			}
+		}
+		
+		private class OperatorButtonMouseListener implements MouseListener{
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
 				
-				else { 
-					textArea.setText("0");
-				}
-						
-			}	
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				JButton btn = (JButton)e.getSource();
+				btn.setBackground(Color.WHITE);
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				JButton btn = (JButton)e.getSource();
+				btn.setBackground(Color.LIGHT_GRAY);
+				
+			}
+		}	
 	}
 }
