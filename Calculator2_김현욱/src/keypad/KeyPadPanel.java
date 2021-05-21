@@ -30,6 +30,7 @@ public class KeyPadPanel extends JPanel {
 	private String operator;
 	private boolean isDone;
 	private boolean isFirst;
+	private boolean isFirstNumberButton;
 	
 	private JTextField calculatorDisplay;
 	private JLabel showingProcess;
@@ -50,6 +51,7 @@ public class KeyPadPanel extends JPanel {
 		this.temp = 0.0; 
 		this.isDone = true;
 		this.isFirst = true;
+		this.isFirstNumberButton = true;
 		
 		this.constant = new Constants();
 		
@@ -59,7 +61,7 @@ public class KeyPadPanel extends JPanel {
 		{
 			numberButton[number] = new JButton(Integer.toString(number));
 			constant.setButtonFont(numberButton[number]);
-		//	numberButton[number].addActionListener(new NumberButtonListener());
+			numberButton [number].addActionListener(new NumberButtonListene());
 		}
 		this.plus = new JButton("＋");
 		this.minus = new JButton("－");
@@ -137,11 +139,50 @@ public class KeyPadPanel extends JPanel {
 	// 숫자버튼 이벤트리스너
 	private class NumberButtonListene implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			
+			JButton btn = (JButton)e.getSource();
+			String number = btn.getText();
+			
+			// 앞선 연산자 적용 
 			if(!isDone)
 			{
 				calculateWithNum(operator);
 				isDone = true;
 			}
+			
+			// 처음 입력하는 숫자인지 확인 
+			if(isFirstNumberButton)
+			{
+				calculatorDisplay.setText("");
+				isFirstNumberButton = false;
+			}
+			
+			// 숫자 입력 
+			calculatorDisplay.setText(calculatorDisplay.getText()+ number);
+			
+			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장 
+			if(isFirst)
+			{
+				sum = Double.valueOf(calculatorDisplay.getText());
+			}
+			else {
+				num = Double.valueOf(calculatorDisplay.getText());
+			}
+		}
+	}
+	
+	private class OperatorButton implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+			JButton btn = (JButton)e.getSource();
+			String operator = btn.getText();
+			
+			if(operator == "＋") {}
+			else if (operator == "－") {}
+			else if (operator == "×") {}
+			else if(operator == "÷") {}
+			else if(operator == "＝") {}
+			
 		}
 	}
 }

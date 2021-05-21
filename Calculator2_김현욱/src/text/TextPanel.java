@@ -9,14 +9,14 @@ import set.Constants;
 public class TextPanel extends JPanel{
 	
 	// 가장 위에 있는 구성요소(기록버튼, 계산과정) 
-	private JButton calculateRecordButton; 
-	private JLabel showingProcess;
-	private JPanel upperPanel; 
-	private JPanel textPanel;
+	public JButton calculateRecordButton; 
+	public JLabel showingProcess;
+	public JPanel upperPanel; 
+	public JPanel textPanel;
 	
 	// 입력창 
-	private JTextField calculatorDisplay;
-	private JPanel calculatorDisplayPanel; 
+	public JTextField calculatorDisplay;
+	public JPanel calculatorDisplayPanel; 
 	
 	private Constants constants;
 	
