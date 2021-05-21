@@ -177,6 +177,13 @@ public class KeyPadPanel extends JPanel {
 		showingProcess.setText("");
 		calculatorDisplay.setText("0");
 	}
+	
+	public void saveCalculatorRecord(String oldSum,Double number) {
+		if(operator != null)
+		{
+			calculatorRecord.append(oldSum + " "+operator+" "+number.toString()+" = "+sum.toString() + "\n");
+		}
+	}
 
 	// 숫자버튼 이벤트리스너
 	private class NumberButtonListene implements ActionListener {
@@ -253,9 +260,9 @@ public class KeyPadPanel extends JPanel {
 					temp = sum;
 					isFirstEqual = false;
 				}
-				//calculatorRecord.append(oldSum + " "+operator+" "+temp.toString()+" = "+sum.toString());
+				saveCalculatorRecord(oldSum,temp);
 				calculateWithNoNum(operator);
-				showResult(oldSum);
+				showResult(oldSum,temp);
 			} 
 			
 			// 숫자 다음의 등호일때 
@@ -265,8 +272,8 @@ public class KeyPadPanel extends JPanel {
 				if (operator != null) 
 				{
 					calculateWithNum(operator);
-					showResult(oldSum);
-					calculatorRecord.append(oldSum + " "+operator+" "+num.toString()+" = "+sum.toString());
+					showResult(oldSum,num);
+					saveCalculatorRecord(oldSum,num);
 				}
 				
 				// 연산자가 없을 떄 
@@ -279,7 +286,7 @@ public class KeyPadPanel extends JPanel {
 		}
 		
 		// 게산기 로그 화면에 표시되게하는 함수 
-		public void showResult(String oldSum) {
+		public void showResult(String oldSum,Double number) {
 			if(sum.toString() == "Infinity") 
 			{
 				showingProcess.setText("");
@@ -287,7 +294,7 @@ public class KeyPadPanel extends JPanel {
 				isInfinity = true;
 				return;
 			}
-			showingProcess.setText(oldSum + " " + operator + num.toString() + " =");
+			showingProcess.setText(oldSum + " " + operator + number.toString() + " =");
 			calculatorDisplay.setText(sum.toString());
 		}
 
@@ -298,10 +305,7 @@ public class KeyPadPanel extends JPanel {
 			// 앞선 연산자 적용
 			if (!isDone && !isEqualNext) {
 				calculateWithNum(operator);
-				if(operator != null)
-				{
-					calculatorRecord.append(oldSum + " "+operator+" "+num.toString()+" = "+sum.toString());
-				}
+				saveCalculatorRecord(oldSum,num);
 				isDone = true;
 			}
 			
