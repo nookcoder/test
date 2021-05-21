@@ -34,19 +34,19 @@ public class KeyPadPanel extends JPanel {
 	private boolean isFirstEqual;
 	private boolean isEqualNext;
 	private boolean isInfinity;
-	
+
 	private JTextField calculatorDisplay;
 	private JLabel showingProcess;
 	private JTextArea calculatorRecord;
 	private Constants constant;
 
-	public KeyPadPanel(JLabel showingProcess, JTextField calculatorDisplay,JTextArea calculatorRecord) {
+	public KeyPadPanel(JLabel showingProcess, JTextField calculatorDisplay, JTextArea calculatorRecord) {
 
 		// 계산과정 화면 초기화
 		this.calculatorDisplay = calculatorDisplay;
 		this.showingProcess = showingProcess;
 		this.calculatorRecord = calculatorRecord;
-		
+
 		// 숫자 패널 초기화
 		this.keyPadPanel = new JPanel();
 
@@ -60,7 +60,7 @@ public class KeyPadPanel extends JPanel {
 		this.isFirstEqual = true;
 		this.isEqualNext = false;
 		this.isInfinity = false;
-		
+
 		this.constant = new Constants();
 
 		// 버튼 초기화
@@ -132,13 +132,13 @@ public class KeyPadPanel extends JPanel {
 		keyPadPanel.add(numberButton[0]);
 		keyPadPanel.add(dot);
 		keyPadPanel.add(equal);
-
+		calculatorDisplay.addKeyListener(new CalcKetListener());
 		add(keyPadPanel);
 		setLayout(new GridLayout());
 	}
 
 	// 두번째 숫자가 입력됐을 때 연산
-	public void calculate(String operator,Double number) {
+	public void calculate(String operator, Double number) {
 		if (operator == "＋") {
 			sum += number;
 		} else if (operator == "－") {
@@ -164,12 +164,83 @@ public class KeyPadPanel extends JPanel {
 		showingProcess.setText("");
 		calculatorDisplay.setText("0");
 	}
-	
-	public void saveCalculatorRecord(String oldSum,Double number) {
-		if(operator != null)
-		{
-			calculatorRecord.append(oldSum + " "+operator+" "+number.toString()+" = "+sum.toString() + "\n");
+
+	public void saveCalculatorRecord(String oldSum, Double number) {
+		if (operator != null) {
+			calculatorRecord.append(oldSum + " " + operator + " " + number.toString() + " = " + sum.toString() + "\n");
 		}
+	}
+
+	public void actEqual() {
+		String oldSum = sum.toString();
+
+		// 0으로 나눴을 때
+		if (isInfinity) {
+			reset();
+			isDone = false;
+			isInfinity = false;
+			return;
+		}
+
+		// 연산자 다음의 등호일때
+		if (isDone) {
+			// 등호가 처음 입력됐을 때
+			if (isFirstEqual) {
+				temp = sum;
+				isFirstEqual = false;
+			}
+			saveCalculatorRecord(oldSum, temp);
+			calculate(operator, temp);
+			showResult(oldSum, temp);
+		}
+
+		// 숫자 다음의 등호일때
+		else {
+			// 연산자가 입력 됐을 때
+			if (operator != null) {
+				calculate(operator, num);
+				showResult(oldSum, num);
+				saveCalculatorRecord(oldSum, num);
+			}
+
+			// 연산자가 없을 떄
+			else {
+				showingProcess.setText(oldSum + " =");
+			}
+		}
+		isEqualNext = true;
+	}
+
+	// 게산기 로그 화면에 표시되게하는 함수
+	public void showResult(String oldSum, Double number) {
+		if (sum.toString() == "Infinity") {
+			showingProcess.setText("");
+			calculatorDisplay.setText("0으로 나눌 수 없습니다");
+			isInfinity = true;
+			return;
+		}
+		showingProcess.setText(oldSum + " " + operator + number.toString() + " =");
+		calculatorDisplay.setText(sum.toString());
+	}
+
+	// 연산 기호 입력시 처리 함수
+	public void actOperator(String op) {
+		String oldSum = sum.toString();
+
+		// 앞선 연산자 적용
+		if (!isDone && !isEqualNext) {
+			calculate(operator, num);
+			saveCalculatorRecord(oldSum, num);
+			isDone = true;
+		}
+
+		operator = op;
+		showingProcess.setText(sum.toString() + " " + operator);
+		calculatorDisplay.setText(sum.toString());
+		isFirst = false;
+		isFirstNumberButton = true;
+		isFirstEqual = true;
+		isEqualNext = false;
 	}
 
 	// 숫자버튼 이벤트리스너
@@ -186,7 +257,7 @@ public class KeyPadPanel extends JPanel {
 			}
 
 			// 처음 입력하는 숫자인지 확인
-			if (isFirstNumberButton || calculatorDisplay.getText() =="0") {
+			if (isFirstNumberButton || calculatorDisplay.getText() == "0") {
 				calculatorDisplay.setText("");
 				isFirstNumberButton = false;
 			}
@@ -194,7 +265,7 @@ public class KeyPadPanel extends JPanel {
 			// 숫자 입력
 			calculatorDisplay.setText(calculatorDisplay.getText() + number);
 			isDone = false;
-			
+
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
 			if (isFirst) {
 				sum = Double.valueOf(calculatorDisplay.getText());
@@ -204,7 +275,7 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 
-	// 연산버튼 이벤트 리스너 
+	// 연산버튼 이벤트 리스너
 	private class OperatorButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
@@ -224,109 +295,98 @@ public class KeyPadPanel extends JPanel {
 			}
 
 		}
-		
-		// 등호 입력 시 실행 함수 
-		public void actEqual() {
-			String oldSum = sum.toString();
-			
-			// 0으로 나눴을 때 
-			if(isInfinity)
-			{
-				reset();
-				isDone=false;
-				isInfinity = false;
-				return;
-			}
-			
-			// 연산자 다음의 등호일때 
-			if (isDone) 
-			{
-				// 등호가 처음 입력됐을 때 
-				if (isFirstEqual) 
-				{
-					temp = sum;
-					isFirstEqual = false;
-				}
-				saveCalculatorRecord(oldSum,temp);
-				calculate(operator,temp);
-				showResult(oldSum,temp);
-			} 
-			
-			// 숫자 다음의 등호일때 
-			else
-			{
-				// 연산자가 입력 됐을 때 
-				if (operator != null) 
-				{
-					calculate(operator,num);
-					showResult(oldSum,num);
-					saveCalculatorRecord(oldSum,num);
-				}
-				
-				// 연산자가 없을 떄 
-				else
-				{
-					showingProcess.setText(oldSum + " =");
-				}
-			}
-			isEqualNext = true;
-		}
-		
-		// 게산기 로그 화면에 표시되게하는 함수 
-		public void showResult(String oldSum,Double number) {
-			if(sum.toString() == "Infinity") 
-			{
-				showingProcess.setText("");
-				calculatorDisplay.setText("0으로 나눌 수 없습니다");
-				isInfinity = true;
-				return;
-			}
-			showingProcess.setText(oldSum + " " + operator + number.toString() + " =");
-			calculatorDisplay.setText(sum.toString());
-		}
-
-		// 연산 기호 입력시 처리 함수 
-		public void actOperator(String op) {
-			String oldSum = sum.toString();
-			
-			// 앞선 연산자 적용
-			if (!isDone && !isEqualNext) {
-				calculate(operator,num);
-				saveCalculatorRecord(oldSum,num);
-				isDone = true;
-			}
-			
-			operator = op;
-			showingProcess.setText(sum.toString() + " " + operator);
-			calculatorDisplay.setText(sum.toString());
-			isFirst = false;
-			isFirstNumberButton = true;
-			isFirstEqual = true;
-			isEqualNext = false;
-		}
 	}
 
-	// 초기화 버튼 이벤트 리스너( c, ce) 
-	private class ResetButton implements ActionListener{
+	// 초기화 버튼 이벤트 리스너( c, ce)
+	private class ResetButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
 			String ResetBtn = btn.getText();
-			
-			if(ResetBtn == "C")
-			{
+
+			if (ResetBtn == "C") {
 				reset();
 			}
-			
-			else if(ResetBtn == "CE")
-			{
+
+			else if (ResetBtn == "CE") {
 				calculatorDisplay.setText("0");
-				if(isFirst) {sum = 0.0;}
-				else {num = 0.0;}
-				if(isEqualNext)
-				{
+				if (isFirst) {
+					sum = 0.0;
+				} else {
+					num = 0.0;
+				}
+				if (isEqualNext) {
 					reset();
 				}
 			}
+		}
+	}
+
+	private class CalcKetListener implements KeyListener {
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			int operatorKeyCode = e.getKeyCode();
+			switch (operatorKeyCode) {
+			case KeyEvent.VK_ADD:
+				actOperator("＋");
+				break;
+			case KeyEvent.VK_MINUS:
+				actOperator("－");
+				break;
+			case KeyEvent.VK_MULTIPLY:
+				actOperator("×");
+				break;
+			case KeyEvent.VK_DIVIDE:
+				actOperator("÷");
+				break;
+			case KeyEvent.VK_ENTER:
+				actEqual();
+				break;
+			case KeyEvent.VK_EQUALS:
+				actEqual();
+				break;
+				
+			case KeyEvent.VK_ESCAPE:
+				reset();
+				break;
+			}
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			char number = e.getKeyChar();
+			if (number >= '0' && number <= '9') {// 등호 다음 숫자 입력 시 계산기 초기화
+				if (isEqualNext) {
+					reset();
+					isEqualNext = false;
+				}
+
+				// 처음 입력하는 숫자인지 확인
+				if (isFirstNumberButton || calculatorDisplay.getText() == "0") {
+					calculatorDisplay.setText("");
+					isFirstNumberButton = false;
+				}
+
+				// 숫자 입력
+				calculatorDisplay.setText(calculatorDisplay.getText() + number);
+				isDone = false;
+
+				// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
+				if (isFirst) {
+					sum = Double.valueOf(calculatorDisplay.getText());
+				} else {
+					num = Double.valueOf(calculatorDisplay.getText());
+				}
+			}
+			else {
+				keyTyped(e);
+			}
+		}
+		
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+
 		}
 	}
 }
