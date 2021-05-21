@@ -85,8 +85,8 @@ public class KeyPadPanel extends JPanel {
 		multiply.addActionListener(new OperatorButton());
 		divide.addActionListener(new OperatorButton());
 		equal.addActionListener(new OperatorButton());
-		c = new JButton("C");
-		ce = new JButton("CE");
+		c.addActionListener(new ResetButton());
+		ce.addActionListener(new ResetButton());
 		dot = new JButton(".");
 		changingSign = new JButton("±");
 		backSpace = new JButton("BACK");
@@ -183,13 +183,14 @@ public class KeyPadPanel extends JPanel {
 			JButton btn = (JButton) e.getSource();
 			String number = btn.getText();
 
+			// 등호 다음 숫자 입력 시 계산기 초기화
 			if (isEqualNext) {
 				reset();
 				isEqualNext = false;
 			}
 
 			// 처음 입력하는 숫자인지 확인
-			if (isFirstNumberButton) {
+			if (isFirstNumberButton || calculatorDisplay.getText() =="0") {
 				calculatorDisplay.setText("");
 				isFirstNumberButton = false;
 			}
@@ -197,6 +198,7 @@ public class KeyPadPanel extends JPanel {
 			// 숫자 입력
 			calculatorDisplay.setText(calculatorDisplay.getText() + number);
 			isDone = false;
+			
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
 			if (isFirst) {
 				sum = Double.valueOf(calculatorDisplay.getText());
@@ -227,10 +229,11 @@ public class KeyPadPanel extends JPanel {
 
 		}
 		
-		
+		// 등호 입력 시 실행 함수 
 		public void actEqual() {
 			String oldSum = sum.toString();
 			
+			// 0으로 나눴을 때 
 			if(isInfinity)
 			{
 				reset();
@@ -273,6 +276,7 @@ public class KeyPadPanel extends JPanel {
 			isEqualNext = true;
 		}
 		
+		// 게산기 로그 화면에 표시되게하는 함수 
 		public void showResult(String oldSum) {
 			if(sum.toString() == "Infinity") 
 			{
@@ -285,18 +289,41 @@ public class KeyPadPanel extends JPanel {
 			calculatorDisplay.setText(sum.toString());
 		}
 
+		// 연산 기호 입력시 처리 함수 
 		public void actOperator(String op) {
+			
+			// 앞선 연산자 적용
 			if (!isDone && !isEqualNext) {
 				calculateWithNum(operator);
 				isDone = true;
 			}
+			
 			operator = op;
 			showingProcess.setText(sum.toString() + " " + operator);
 			isFirst = false;
 			isFirstNumberButton = true;
 			isFirstEqual = true;
 			isEqualNext = false;
-			// 앞선 연산자 적용
+		}
+	}
+
+	// 초기화 버튼 이벤트 리스너( c, ce) 
+	private class ResetButton implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			JButton btn = (JButton) e.getSource();
+			String ResetBtn = btn.getText();
+			
+			if(ResetBtn == "C")
+			{
+				reset();
+			}
+			
+			else if(ResetBtn == "CE")
+			{
+				calculatorDisplay.setText("0");
+				if(isFirst) {sum = 0.0;}
+				else {num = 0.0;}
+			}
 		}
 	}
 }
