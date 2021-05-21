@@ -165,12 +165,14 @@ public class KeyPadPanel extends JPanel {
 		calculatorDisplay.setText("0");
 	}
 
+	// 계산기록 저장하기 
 	public void saveCalculatorRecord(String oldSum, Double number) {
 		if (operator != null) {
 			calculatorRecord.append(oldSum + " " + operator + " " + number.toString() + " = " + sum.toString() + "\n");
 		}
 	}
 
+	// 등호(=) 작동 함수 
 	public void actEqual() {
 		String oldSum = sum.toString();
 
@@ -236,7 +238,7 @@ public class KeyPadPanel extends JPanel {
 
 		operator = op;
 		showingProcess.setText(sum.toString() + " " + operator);
-		calculatorDisplay.setText(sum.toString());
+		calculatorDisplay.setText(addCommaToresult(sum.toString()));
 		isFirst = false;
 		isFirstNumberButton = true;
 		isFirstEqual = true;
@@ -263,14 +265,42 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 	
+	// 입력된 숫자 저장하기 
 	public void getNumber() {
 		if (isFirst) {
-			sum = Double.valueOf(calculatorDisplay.getText());
+			sum = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
 		} else {
-			num = Double.valueOf(calculatorDisplay.getText());
+			num = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
 		}
 	}
 
+	public String printingNumber(String number) {
+		StringBuffer addComma = new StringBuffer();
+		String oldText = calculatorDisplay.getText() + number;
+		String oldTextCheck = oldText.replaceAll("[,]", "");
+		addComma.append(oldText);
+		if(oldTextCheck .length() != 1 && oldTextCheck.length() % 3 == 1)
+		{
+			addComma.insert(oldText.length()-3, ",");
+		}
+		String newText = addComma.toString();
+		return newText;
+	}
+	
+	public String addCommaToresult(String number) {
+		StringBuffer addComma = new StringBuffer();
+		String oldText = number;
+		String oldTextCheck = oldText.replaceAll("[,]", "");
+		addComma.append(oldText);
+		if(oldTextCheck .length() != 1 && oldTextCheck.length() % 3 == 1)
+		{
+			addComma.insert(oldText.length()-3, ",");
+		}
+		String newText = addComma.toString();
+		
+		return newText;
+	}
+	
 	// 숫자버튼 이벤트리스너
 	private class NumberButtonListene implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -291,7 +321,7 @@ public class KeyPadPanel extends JPanel {
 			}
 
 			// 숫자 입력
-			calculatorDisplay.setText(calculatorDisplay.getText() + number);
+			calculatorDisplay.setText(printingNumber(number));
 			isDone = false;
 
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
@@ -345,7 +375,6 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 
-	
 	// 백스페이스 이벤트 
 	private class BackSpaceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
