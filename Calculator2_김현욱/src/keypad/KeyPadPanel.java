@@ -138,28 +138,15 @@ public class KeyPadPanel extends JPanel {
 	}
 
 	// 두번째 숫자가 입력됐을 때 연산
-	public void calculateWithNum(String operator) {
+	public void calculate(String operator,Double number) {
 		if (operator == "＋") {
-			sum += num;
+			sum += number;
 		} else if (operator == "－") {
-			sum -= num;
+			sum -= number;
 		} else if (operator == "×") {
-			sum *= num;
+			sum *= number;
 		} else if (operator == "÷") {
-			sum /= num;
-		}
-	}
-
-	// 숫자하나만 입력됐을 때 연산
-	public void calculateWithNoNum(String operator) {
-		if (operator == "＋") {
-			sum += temp;
-		} else if (operator == "－") {
-			sum -= temp;
-		} else if (operator == "×") {
-			sum *= temp;
-		} else if (operator == "÷") {
-			sum /= temp;
+			sum /= number;
 		}
 	}
 
@@ -261,7 +248,7 @@ public class KeyPadPanel extends JPanel {
 					isFirstEqual = false;
 				}
 				saveCalculatorRecord(oldSum,temp);
-				calculateWithNoNum(operator);
+				calculate(operator,temp);
 				showResult(oldSum,temp);
 			} 
 			
@@ -271,7 +258,7 @@ public class KeyPadPanel extends JPanel {
 				// 연산자가 입력 됐을 때 
 				if (operator != null) 
 				{
-					calculateWithNum(operator);
+					calculate(operator,num);
 					showResult(oldSum,num);
 					saveCalculatorRecord(oldSum,num);
 				}
@@ -304,7 +291,7 @@ public class KeyPadPanel extends JPanel {
 			
 			// 앞선 연산자 적용
 			if (!isDone && !isEqualNext) {
-				calculateWithNum(operator);
+				calculate(operator,num);
 				saveCalculatorRecord(oldSum,num);
 				isDone = true;
 			}
