@@ -31,6 +31,8 @@ public class KeyPadPanel extends JPanel {
 	private boolean isDone;
 	private boolean isFirst;
 	private boolean isFirstNumberButton;
+	private boolean isFirstEqual;
+	private boolean isEqualNext;
 
 	private JTextField calculatorDisplay;
 	private JLabel showingProcess;
@@ -52,7 +54,9 @@ public class KeyPadPanel extends JPanel {
 		this.isDone = true;
 		this.isFirst = true;
 		this.isFirstNumberButton = true;
-
+		this.isFirstEqual = true;
+		this.isEqualNext = false;
+		
 		this.constant = new Constants();
 
 		// 버튼 초기화
@@ -134,7 +138,7 @@ public class KeyPadPanel extends JPanel {
 		if (operator == "＋") {
 			sum += num;
 		} else if (operator == "－") {
-			sum += num;
+			sum -= num;
 		} else if (operator == "×") {
 			sum *= num;
 		} else if (operator == "÷") {
@@ -145,14 +149,26 @@ public class KeyPadPanel extends JPanel {
 	// 숫자하나만 입력됐을 때 연산
 	public void calculateWithNoNum(String operator) {
 		if (operator == "＋") {
-			sum += sum;
+			sum += temp;
 		} else if (operator == "－") {
-			sum -= sum;
+			sum -= temp;
 		} else if (operator == "×") {
-			sum *= sum;
+			sum *= temp;
 		} else if (operator == "÷") {
-			sum /= sum;
+			sum /= temp;
 		}
+	}
+	
+	public void reset() {
+		sum = 0.0;
+		num = 0.0;
+		temp = 0.0;
+		isDone = true;
+		isFirst = true;
+		isFirstNumberButton = true;
+		isFirstEqual = true;
+		isEqualNext = false;
+		showingProcess.setText("");
 	}
 
 	// 숫자버튼 이벤트리스너
@@ -162,6 +178,11 @@ public class KeyPadPanel extends JPanel {
 			JButton btn = (JButton) e.getSource();
 			String number = btn.getText();
 
+			if(isEqualNext)
+			{
+				reset();
+			}
+			
 			// 처음 입력하는 숫자인지 확인
 			if (isFirstNumberButton) {
 				calculatorDisplay.setText("");
@@ -195,12 +216,28 @@ public class KeyPadPanel extends JPanel {
 			} else if (operatorBtn == "÷") {
 				actOperator("÷");
 			} else if (operatorBtn == "＝") {
+				if(isDone)
+				{
+					if(isFirstEqual)
+					{
+						temp = sum;
+						isFirstEqual = false;
+					}
+					calculateWithNoNum(operator);
+					showingProcess.setText(sum.toString() + " " + operator);
+				}
+				else {
+					temp = sum;
+					calculateWithNum(operator);
+					showingProcess.setText(temp.toString() + " "+operator+ num.toString()+" = "+ sum.toString());
+				}
+				isEqualNext = true;
 			}
 
 		}
 
 		public void actOperator(String op) {
-			if (!isDone) {
+			if (!isDone && !isEqualNext) {
 				calculateWithNum(operator);
 				isDone = true;
 			}
@@ -208,6 +245,7 @@ public class KeyPadPanel extends JPanel {
 			showingProcess.setText(sum.toString() + " " + operator);
 			isFirst = false;
 			isFirstNumberButton = true;
+			isFirstEqual = true;
 			// 앞선 연산자 적용
 		}
 	}
