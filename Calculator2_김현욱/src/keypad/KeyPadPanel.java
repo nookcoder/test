@@ -37,14 +37,16 @@ public class KeyPadPanel extends JPanel {
 	
 	private JTextField calculatorDisplay;
 	private JLabel showingProcess;
+	private JTextArea calculatorRecord;
 	private Constants constant;
 
-	public KeyPadPanel(JLabel showingProcess, JTextField calculatorDisplay) {
+	public KeyPadPanel(JLabel showingProcess, JTextField calculatorDisplay,JTextArea calculatorRecord) {
 
 		// 계산과정 화면 초기화
 		this.calculatorDisplay = calculatorDisplay;
 		this.showingProcess = showingProcess;
-
+		this.calculatorRecord = calculatorRecord;
+		
 		// 숫자 패널 초기화
 		this.keyPadPanel = new JPanel();
 
@@ -251,7 +253,7 @@ public class KeyPadPanel extends JPanel {
 					temp = sum;
 					isFirstEqual = false;
 				}
-				
+				//calculatorRecord.append(oldSum + " "+operator+" "+temp.toString()+" = "+sum.toString());
 				calculateWithNoNum(operator);
 				showResult(oldSum);
 			} 
@@ -264,6 +266,7 @@ public class KeyPadPanel extends JPanel {
 				{
 					calculateWithNum(operator);
 					showResult(oldSum);
+					calculatorRecord.append(oldSum + " "+operator+" "+num.toString()+" = "+sum.toString());
 				}
 				
 				// 연산자가 없을 떄 
@@ -272,7 +275,6 @@ public class KeyPadPanel extends JPanel {
 					showingProcess.setText(oldSum + " =");
 				}
 			}
-			
 			isEqualNext = true;
 		}
 		
@@ -291,15 +293,21 @@ public class KeyPadPanel extends JPanel {
 
 		// 연산 기호 입력시 처리 함수 
 		public void actOperator(String op) {
+			String oldSum = sum.toString();
 			
 			// 앞선 연산자 적용
 			if (!isDone && !isEqualNext) {
 				calculateWithNum(operator);
+				if(operator != null)
+				{
+					calculatorRecord.append(oldSum + " "+operator+" "+num.toString()+" = "+sum.toString());
+				}
 				isDone = true;
 			}
 			
 			operator = op;
 			showingProcess.setText(sum.toString() + " " + operator);
+			calculatorDisplay.setText(sum.toString());
 			isFirst = false;
 			isFirstNumberButton = true;
 			isFirstEqual = true;
@@ -323,6 +331,10 @@ public class KeyPadPanel extends JPanel {
 				calculatorDisplay.setText("0");
 				if(isFirst) {sum = 0.0;}
 				else {num = 0.0;}
+				if(isEqualNext)
+				{
+					reset();
+				}
 			}
 		}
 	}
