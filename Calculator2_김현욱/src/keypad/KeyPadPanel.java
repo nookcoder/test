@@ -91,7 +91,7 @@ public class KeyPadPanel extends JPanel {
 		ce.addActionListener(new ResetButton());
 		dot = new JButton(".");
 		changingSign = new JButton("±");
-		backSpace = new JButton("BACK");
+		backSpace.addActionListener(new BackSpaceListener());
 
 		// 버튼 꾸미기
 		constant.setButtonFont(plus);
@@ -243,6 +243,34 @@ public class KeyPadPanel extends JPanel {
 		isEqualNext = false;
 	}
 
+	// 백스페이스 로직 
+	public void actBackSpace() {
+		if (!isEqualNext) {
+			String oldText = calculatorDisplay.getText();
+			if (oldText.length() > 1) {
+				String newText = oldText.substring(0, oldText.length() - 1);
+				calculatorDisplay.setText(newText);
+				getNumber();
+			}
+
+			else {
+				calculatorDisplay.setText("0");
+				getNumber();
+			}
+		}
+		else {
+			showingProcess.setText("");
+		}
+	}
+	
+	public void getNumber() {
+		if (isFirst) {
+			sum = Double.valueOf(calculatorDisplay.getText());
+		} else {
+			num = Double.valueOf(calculatorDisplay.getText());
+		}
+	}
+
 	// 숫자버튼 이벤트리스너
 	private class NumberButtonListene implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -267,11 +295,7 @@ public class KeyPadPanel extends JPanel {
 			isDone = false;
 
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
-			if (isFirst) {
-				sum = Double.valueOf(calculatorDisplay.getText());
-			} else {
-				num = Double.valueOf(calculatorDisplay.getText());
-			}
+			getNumber();
 		}
 	}
 
@@ -321,6 +345,15 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 
+	
+	// 백스페이스 이벤트 
+	private class BackSpaceListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			actBackSpace();
+		}
+	}
+
+	// 키보드 입력 이벤트
 	private class CalcKetListener implements KeyListener {
 
 		@Override
@@ -330,24 +363,33 @@ public class KeyPadPanel extends JPanel {
 			case KeyEvent.VK_ADD:
 				actOperator("＋");
 				break;
+			
 			case KeyEvent.VK_MINUS:
 				actOperator("－");
 				break;
+			
 			case KeyEvent.VK_MULTIPLY:
 				actOperator("×");
 				break;
+			
 			case KeyEvent.VK_DIVIDE:
 				actOperator("÷");
 				break;
+			
 			case KeyEvent.VK_ENTER:
 				actEqual();
 				break;
+
 			case KeyEvent.VK_EQUALS:
 				actEqual();
 				break;
-				
+
 			case KeyEvent.VK_ESCAPE:
 				reset();
+				break;
+			
+			case KeyEvent.VK_BACK_SPACE:
+				actBackSpace();
 				break;
 			}
 		}
@@ -377,12 +419,11 @@ public class KeyPadPanel extends JPanel {
 				} else {
 					num = Double.valueOf(calculatorDisplay.getText());
 				}
-			}
-			else {
+			} else {
 				keyTyped(e);
 			}
 		}
-		
+
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
