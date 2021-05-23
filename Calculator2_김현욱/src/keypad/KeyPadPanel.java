@@ -283,7 +283,10 @@ public class KeyPadPanel extends JPanel {
 		if (!isEqualNext) {
 			String oldText = calculatorDisplay.getText();
 			String oldTextCheck = oldText.replaceAll("[,]", "");
-
+			if(isFirstNumberButton)
+			{
+				return;
+			}
 			if(oldText.length() == 1) {
 				calculatorDisplay.setText("0");
 				getNumber();
