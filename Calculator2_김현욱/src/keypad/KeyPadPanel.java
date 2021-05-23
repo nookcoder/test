@@ -262,11 +262,10 @@ public class KeyPadPanel extends JPanel {
 	public void actOperator(String op) {
 		String oldSum = sum.toString();
 		String newSum = makeIntPrinting(oldSum);
-		String newNum = makeIntPrinting(num.toString());
 		// 앞선 연산자 적용
 		if (!isDone && !isEqualNext) {
 			calculate(operator, num);
-			saveCalculatorRecord(makeIntPrinting(newSum), makeIntPrinting(num.toString()));
+			saveCalculatorRecord(newSum, makeIntPrinting(num.toString()));
 			isDone = true;
 		}
 
