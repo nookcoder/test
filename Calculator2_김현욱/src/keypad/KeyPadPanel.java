@@ -166,9 +166,9 @@ public class KeyPadPanel extends JPanel {
 	}
 
 	// 계산기록 저장하기
-	public void saveCalculatorRecord(String oldSum, Double number) {
+	public void saveCalculatorRecord(String oldSum, String number) {
 		if (operator != null) {
-			calculatorRecord.append(oldSum + " " + operator + " " + number.toString() + " = " + sum.toString() + "\n");
+			calculatorRecord.append(oldSum + " " + operator + " " + number+ " = " + sum.toString() + "\n");
 		}
 	}
 
@@ -191,7 +191,7 @@ public class KeyPadPanel extends JPanel {
 				temp = sum;
 				isFirstEqual = false;
 			}
-			saveCalculatorRecord(oldSum, temp);
+			saveCalculatorRecord(makeIntPrinting(oldSum), makeIntPrinting(temp.toString()));
 			calculate(operator, temp);
 			showResult(oldSum, temp);
 		}
@@ -202,7 +202,7 @@ public class KeyPadPanel extends JPanel {
 			if (operator != null) {
 				calculate(operator, num);
 				showResult(oldSum, num);
-				saveCalculatorRecord(oldSum, num);
+				saveCalculatorRecord(makeIntPrinting(oldSum), makeIntPrinting(num.toString()));
 			}
 
 			// 연산자가 없을 떄
@@ -266,7 +266,7 @@ public class KeyPadPanel extends JPanel {
 		// 앞선 연산자 적용
 		if (!isDone && !isEqualNext) {
 			calculate(operator, num);
-			saveCalculatorRecord(newSum, num);
+			saveCalculatorRecord(makeIntPrinting(newSum), makeIntPrinting(num.toString()));
 			isDone = true;
 		}
 
