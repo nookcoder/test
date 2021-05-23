@@ -15,4 +15,6 @@ public class Constants {
 		btn.setBorderPainted(false);
 		btn.setBackground(Color.WHITE);
 	}
+	
+	public Dimension dimension = new Dimension(450,550);
 }
