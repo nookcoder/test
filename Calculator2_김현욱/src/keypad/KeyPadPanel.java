@@ -46,7 +46,6 @@ public class KeyPadPanel extends JPanel {
 		this.calculatorDisplay = calculatorDisplay;
 		this.showingProcess = showingProcess;
 		this.calculatorRecord = calculatorRecord;
-
 		// 숫자 패널 초기화
 		this.keyPadPanel = new JPanel();
 
@@ -89,7 +88,7 @@ public class KeyPadPanel extends JPanel {
 		equal.addActionListener(new OperatorButton());
 		c.addActionListener(new ResetButton());
 		ce.addActionListener(new ResetButton());
-		dot = new JButton(".");
+		dot.addActionListener(new DotListener());
 		changingSign = new JButton("±");
 		backSpace.addActionListener(new BackSpaceListener());
 
@@ -161,18 +160,19 @@ public class KeyPadPanel extends JPanel {
 		isFirstEqual = true;
 		isEqualNext = false;
 		operator = null;
+		isInfinity = false;
 		showingProcess.setText("");
 		calculatorDisplay.setText("0");
 	}
 
-	// 계산기록 저장하기 
+	// 계산기록 저장하기
 	public void saveCalculatorRecord(String oldSum, Double number) {
 		if (operator != null) {
 			calculatorRecord.append(oldSum + " " + operator + " " + number.toString() + " = " + sum.toString() + "\n");
 		}
 	}
 
-	// 등호(=) 작동 함수 
+	// 등호(=) 작동 함수
 	public void actEqual() {
 		String oldSum = sum.toString();
 
@@ -220,52 +220,92 @@ public class KeyPadPanel extends JPanel {
 			calculatorDisplay.setText("0으로 나눌 수 없습니다");
 			isInfinity = true;
 			return;
+		} else if (sum.toString() == "NaN") {
+			showingProcess.setText("");
+			calculatorDisplay.setText("정의되지않은 결과입니다");
+			isInfinity = true;
+			return;
 		}
-		showingProcess.setText(oldSum + " " + operator + number.toString() + " =");
-		calculatorDisplay.setText(sum.toString());
+		String newSum = makeIntPrinting(oldSum);
+		String newNumber = makeIntPrinting(number.toString());
+		String newResult = makeIntPrinting(sum.toString());
+		showingProcess.setText(newSum + " " + operator + " " + newNumber + " =");
+		calculatorDisplay.setText(newResult);
+	}
+	
+	public String makeIntPrinting(String check) {
+		String[] zeroCheck = check.split("\\.");
+		String newString="0"; 
+		int zeroCount = 0;
+		
+		for(int i =0; i<zeroCheck[1].length();i++)
+		{
+			if(zeroCheck[1].charAt(i) == '0')
+			{
+				zeroCount++; 
+			}
+		}
+		
+		if(zeroCheck[1].length() == zeroCount)
+		{
+			newString = zeroCheck[0];
+		}
+		else
+		{
+			newString = check;
+		}
+		
+		return newString;
 	}
 
 	// 연산 기호 입력시 처리 함수
 	public void actOperator(String op) {
 		String oldSum = sum.toString();
-
+		String newSum = makeIntPrinting(oldSum);
+		String newNum = makeIntPrinting(num.toString());
 		// 앞선 연산자 적용
 		if (!isDone && !isEqualNext) {
 			calculate(operator, num);
-			saveCalculatorRecord(oldSum, num);
+			saveCalculatorRecord(newSum, num);
 			isDone = true;
 		}
 
 		operator = op;
-		showingProcess.setText(sum.toString() + " " + operator);
-		calculatorDisplay.setText(addCommaToresult(sum.toString()));
+		showingProcess.setText(makeIntPrinting(sum.toString()) + " " + operator);
+		calculatorDisplay.setText(makeIntPrinting(sum.toString()));
 		isFirst = false;
 		isFirstNumberButton = true;
 		isFirstEqual = true;
 		isEqualNext = false;
 	}
 
-	// 백스페이스 로직 
+	// 백스페이스 로직
 	public void actBackSpace() {
 		if (!isEqualNext) {
 			String oldText = calculatorDisplay.getText();
-			if (oldText.length() > 1) {
-				String newText = oldText.substring(0, oldText.length() - 1);
-				calculatorDisplay.setText(newText);
-				getNumber();
-			}
+			String oldTextCheck = oldText.replaceAll("[,]", "");
 
-			else {
+			if(oldText.length() == 1) {
 				calculatorDisplay.setText("0");
 				getNumber();
+				return;
 			}
-		}
+			String newText = oldText.substring(0, oldText.length() - 1);
+			String newTextCheck = newText.replaceAll("[,]", "");
+			if(newTextCheck.length() == 4 && newText.contains(","))
+			{
+				calculatorDisplay.setText(newTextCheck);
+			}
+			calculatorDisplay.setText(newText);
+			getNumber();
+		} 
+		
 		else {
 			showingProcess.setText("");
 		}
 	}
-	
-	// 입력된 숫자 저장하기 
+
+	// 입력된 숫자 저장하기
 	public void getNumber() {
 		if (isFirst) {
 			sum = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
@@ -274,33 +314,42 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 
+	// 점 추가
+	public void addDot() {
+		String oldText = calculatorDisplay.getText();
+		String newText = oldText + ".";
+		if (!oldText.contains(".")) {
+			if(isFirstNumberButton)
+			{
+				calculatorDisplay.setText("0.");
+				return;
+			}
+			calculatorDisplay.setText(newText);
+			isFirstNumberButton = false;
+		}
+	}
+
+	// 숫자 길어지면 콤마 추가
 	public String printingNumber(String number) {
 		StringBuffer addComma = new StringBuffer();
-		String oldText = calculatorDisplay.getText() + number;
-		String oldTextCheck = oldText.replaceAll("[,]", "");
-		addComma.append(oldText);
-		if(oldTextCheck .length() != 1 && oldTextCheck.length() % 3 == 1)
-		{
-			addComma.insert(oldText.length()-3, ",");
+		String newText;
+		String oldText;
+		String oldTextCheck;
+
+		oldText = calculatorDisplay.getText() + number;
+		oldTextCheck = oldText.replaceAll("[,]", "");
+		if (oldTextCheck.length() <= 16) {
+			addComma.append(oldText);
+			if (oldTextCheck.length() != 1 && oldTextCheck.length() % 3 == 1 && !oldText.contains(".")) {
+				addComma.insert(oldText.length() - 3, ",");
+			}
+			newText = addComma.toString();
+		} else {
+			newText = calculatorDisplay.getText();
 		}
-		String newText = addComma.toString();
 		return newText;
 	}
-	
-	public String addCommaToresult(String number) {
-		StringBuffer addComma = new StringBuffer();
-		String oldText = number;
-		String oldTextCheck = oldText.replaceAll("[,]", "");
-		addComma.append(oldText);
-		if(oldTextCheck .length() != 1 && oldTextCheck.length() % 3 == 1)
-		{
-			addComma.insert(oldText.length()-3, ",");
-		}
-		String newText = addComma.toString();
-		
-		return newText;
-	}
-	
+
 	// 숫자버튼 이벤트리스너
 	private class NumberButtonListene implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -375,36 +424,45 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 
-	// 백스페이스 이벤트 
+	// 백스페이스 이벤트
 	private class BackSpaceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			actBackSpace();
 		}
 	}
 
+	private class DotListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			addDot();
+		}
+	}
+
 	// 키보드 입력 이벤트
 	private class CalcKetListener implements KeyListener {
 
+		
 		@Override
 		public void keyTyped(KeyEvent e) {
 			int operatorKeyCode = e.getKeyCode();
+			calculatorDisplay.requestFocus();
+			
 			switch (operatorKeyCode) {
 			case KeyEvent.VK_ADD:
 				actOperator("＋");
 				break;
-			
+
 			case KeyEvent.VK_MINUS:
 				actOperator("－");
 				break;
-			
+
 			case KeyEvent.VK_MULTIPLY:
 				actOperator("×");
 				break;
-			
+
 			case KeyEvent.VK_DIVIDE:
 				actOperator("÷");
 				break;
-			
+
 			case KeyEvent.VK_ENTER:
 				actEqual();
 				break;
@@ -416,15 +474,21 @@ public class KeyPadPanel extends JPanel {
 			case KeyEvent.VK_ESCAPE:
 				reset();
 				break;
-			
+
 			case KeyEvent.VK_BACK_SPACE:
 				actBackSpace();
+				break;
+
+			case KeyEvent.VK_PERIOD:
+				addDot();
 				break;
 			}
 		}
 
 		@Override
 		public void keyPressed(KeyEvent e) {
+			calculatorDisplay.requestFocus();
+		
 			char number = e.getKeyChar();
 			if (number >= '0' && number <= '9') {// 등호 다음 숫자 입력 시 계산기 초기화
 				if (isEqualNext) {
@@ -438,15 +502,35 @@ public class KeyPadPanel extends JPanel {
 					isFirstNumberButton = false;
 				}
 
+				
+				String oldText = calculatorDisplay.getText() + number;
 				// 숫자 입력
-				calculatorDisplay.setText(calculatorDisplay.getText() + number);
+				if (calculatorDisplay.getText().length() <= 16) {
+					StringBuffer addCommaString = new StringBuffer();
+
+					String oldTextCheck = oldText.replaceAll("[,]", "");
+					if (oldTextCheck.length() != 1 && oldTextCheck.length() % 3 == 1 && !oldText.contains(".")) {
+						addCommaString.append(oldText);
+						addCommaString.insert(oldText.length() - 3, ",");
+						calculatorDisplay.setText(addCommaString.toString());
+					}
+
+					else {
+						calculatorDisplay.setText(calculatorDisplay.getText() + number);
+					}
+				}
+
+				else {
+					calculatorDisplay.setText(calculatorDisplay.getText());
+				}
+
 				isDone = false;
 
 				// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
 				if (isFirst) {
-					sum = Double.valueOf(calculatorDisplay.getText());
+					sum = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
 				} else {
-					num = Double.valueOf(calculatorDisplay.getText());
+					num = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
 				}
 			} else {
 				keyTyped(e);
