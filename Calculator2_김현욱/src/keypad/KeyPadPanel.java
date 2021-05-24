@@ -401,12 +401,18 @@ public class KeyPadPanel extends JPanel {
 				isEqualNext = false;
 			}
 
+			if(number.equals("0") && calculatorDisplay.getText().equals("0"))
+			{
+				isDone = false;
+				getNumber();
+				return;
+			}
+			
 			// 처음 입력하는 숫자인지 확인
-			if (isFirstNumberButton) {
+			if (isFirstNumberButton || calculatorDisplay.getText().equals("0")) {
 				calculatorDisplay.setText("");
 				isFirstNumberButton = false;
 			}
-			
 			
 			// 숫자 입력
 			calculatorDisplay.setText(printingNumber(number));
@@ -530,13 +536,28 @@ public class KeyPadPanel extends JPanel {
 		
 			char number = e.getKeyChar();
 			if (number >= '0' && number <= '9') {// 등호 다음 숫자 입력 시 계산기 초기화
+				
+				if (isInfinity) {
+					reset();
+					isDone = false;
+					isInfinity = false;
+					return;
+				}
+				
 				if (isEqualNext) {
 					reset();
 					isEqualNext = false;
 				}
 
+				if(number == '0' && calculatorDisplay.getText().equals("0"))
+				{
+					isDone = false;
+					getNumber();
+					return;
+				}
+				
 				// 처음 입력하는 숫자인지 확인
-				if (isFirstNumberButton || calculatorDisplay.getText() == "0") {
+				if (isFirstNumberButton || calculatorDisplay.getText().equals("0")) {
 					calculatorDisplay.setText("");
 					isFirstNumberButton = false;
 				}
