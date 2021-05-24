@@ -216,7 +216,6 @@ public class KeyPadPanel extends JPanel {
 	// 게산기 로그 화면에 표시되게하는 함수
 	public void showResult(String oldSum, Double number) {
 		if (sum.toString() == "Infinity") {
-			showingProcess.setText("");
 			calculatorDisplay.setText("0으로 나눌 수 없습니다");
 			isInfinity = true;
 			return;
@@ -324,6 +323,8 @@ public class KeyPadPanel extends JPanel {
 			if(isFirstNumberButton)
 			{
 				calculatorDisplay.setText("0.");
+				num = 0.0;
+				isDone = false;
 				return;
 			}
 			calculatorDisplay.setText(newText);
@@ -366,11 +367,12 @@ public class KeyPadPanel extends JPanel {
 			}
 
 			// 처음 입력하는 숫자인지 확인
-			if (isFirstNumberButton || calculatorDisplay.getText() == "0") {
+			if (isFirstNumberButton) {
 				calculatorDisplay.setText("");
 				isFirstNumberButton = false;
 			}
-
+			
+			
 			// 숫자 입력
 			calculatorDisplay.setText(printingNumber(number));
 			isDone = false;
