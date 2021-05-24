@@ -256,12 +256,41 @@ public class KeyPadPanel extends JPanel {
 		
 		return newString;
 	}
-
+	
+	public void printingInCalculatorWithNoEqual(String check,String temp1) {
+		if(check.toString() == "Infinity")
+		{
+			isFirst = true;
+			isFirstNumberButton = true;
+			isFirstEqual = true;
+			isDone = false;
+			isEqualNext = false;
+			showingProcess.setText(temp1 + " ÷ 0 " + operator);
+			calculatorDisplay.setText("0으로 나눌 수 없습니다");
+			sum = 0.0;
+			num = 0.0;
+			temp = 0.0;
+			isInfinity = true;
+			return;
+		}
+		
+		showingProcess.setText(makeIntPrinting(check.toString()) + " " + operator);
+		calculatorDisplay.setText(makeIntPrinting(check.toString()));
+	}
+	
 	// 연산 기호 입력시 처리 함수
 	public void actOperator(String op) {
 		String oldSum = sum.toString();
 		String newSum = makeIntPrinting(oldSum);
 		// 앞선 연산자 적용
+		// 0으로 나눴을 때
+		if (isInfinity) {
+			reset();
+			isDone = false;
+			isInfinity = false;
+			return;
+		}
+		
 		if (!isDone && !isEqualNext) {
 			calculate(operator, num);
 			saveCalculatorRecord(newSum, makeIntPrinting(num.toString()));
@@ -269,8 +298,7 @@ public class KeyPadPanel extends JPanel {
 		}
 
 		operator = op;
-		showingProcess.setText(makeIntPrinting(sum.toString()) + " " + operator);
-		calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+		printingInCalculatorWithNoEqual(sum.toString(),oldSum);
 		isFirst = false;
 		isFirstNumberButton = true;
 		isFirstEqual = true;
@@ -360,6 +388,13 @@ public class KeyPadPanel extends JPanel {
 			JButton btn = (JButton) e.getSource();
 			String number = btn.getText();
 
+			if (isInfinity) {
+				reset();
+				isDone = false;
+				isInfinity = false;
+				return;
+			}
+			
 			// 등호 다음 숫자 입력 시 계산기 초기화
 			if (isEqualNext) {
 				reset();
