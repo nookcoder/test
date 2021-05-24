@@ -182,6 +182,22 @@ public class KeyPadPanel extends JPanel {
 		calculatorDisplay.setText("0");
 	}
 
+	// 계산기 ce 버튼
+	public void actCE()
+	{
+		calculatorDisplay.setText("0");
+		if (isFirst) {
+			sum = 0.0; 
+			getNumber();
+		} else {
+			num = 0.0;
+			getNumber();
+		}
+		if (isEqualNext) {
+			reset();
+		}
+	}
+	
 	// 계산기록 저장하기
 	public void saveCalculatorRecord(String oldSum, String number) {
 		if (operator != null) {
@@ -449,7 +465,7 @@ public class KeyPadPanel extends JPanel {
 			}
 			
 			// 등호 다음 숫자 입력 시 계산기 초기화
-			if (isEqualNext) {
+			if (isEqualNext || (isEqualNext && isHaveNegate)) {
 				reset();
 				isEqualNext = false;
 			}
@@ -509,17 +525,7 @@ public class KeyPadPanel extends JPanel {
 			}
 
 			else if (ResetBtn == "CE") {
-				calculatorDisplay.setText("0");
-				if (isFirst) {
-					sum = 0.0; 
-					getNumber();
-				} else {
-					num = 0.0;
-					getNumber();
-				}
-				if (isEqualNext) {
-					reset();
-				}
+				actCE();
 			}
 		}
 	}
@@ -580,13 +586,21 @@ public class KeyPadPanel extends JPanel {
 			case KeyEvent.VK_ESCAPE:
 				reset();
 				break;
-
+				
+			case KeyEvent.VK_DELETE:
+				actCE();
+				break;
+				
 			case KeyEvent.VK_BACK_SPACE:
 				actBackSpace();
 				break;
 
 			case KeyEvent.VK_PERIOD:
 				addDot();
+				break;
+				
+			case KeyEvent.VK_F9:
+				actNegate();
 				break;
 			}
 		}
