@@ -144,6 +144,34 @@ public class KeyPadPanel extends JPanel {
 		setLayout(new GridLayout());
 	}
 	
+	public void resizeNumber() {
+		switch(calculatorDisplay.getText().replaceAll("[,]","").length())
+		{
+			case 10:
+				calculatorDisplay.setFont(constant.calculatorDisplayFont);
+				break;
+			case 11:
+				calculatorDisplay.setFont(constant.calculatorDisplayFont2);
+				break;
+			case 12:
+				calculatorDisplay.setFont(constant.calculatorDisplayFont3);
+				break;
+			case 13:
+				calculatorDisplay.setFont(constant.calculatorDisplayFont4);
+				break;
+			case 14:
+				calculatorDisplay.setFont(constant.calculatorDisplayFont5);
+				break;
+			case 15:
+				calculatorDisplay.setFont(constant.calculatorDisplayFont6);
+				break;
+			case 16:
+				calculatorDisplay.setFont(constant.calculatorDisplayFont7);
+				break;
+				
+		}
+	}
+	
 	// 입력된 숫자 저장하기
 	public void getNumber() {
 		if (isFirst) {
@@ -348,6 +376,7 @@ public class KeyPadPanel extends JPanel {
 
 	// 백스페이스 로직
 	public void actBackSpace() {
+		resizeNumber();
 		if (!isEqualNext) {
 			String oldText = calculatorDisplay.getText();
 			String oldTextCheck = oldText.replaceAll("[,]", "");
@@ -510,6 +539,7 @@ public class KeyPadPanel extends JPanel {
 			isDone = false;
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
 			getNumber();
+			resizeNumber();
 		}
 	}
 
@@ -661,7 +691,7 @@ public class KeyPadPanel extends JPanel {
 				
 				String oldText = calculatorDisplay.getText() + number;
 				// 숫자 입력
-				if (calculatorDisplay.getText().length() <= 16) {
+				if (calculatorDisplay.getText().replaceAll("[,]","").length() <= 16) {
 					StringBuffer addCommaString = new StringBuffer();
 
 					String oldTextCheck = oldText.replaceAll("[,]", "");
@@ -681,7 +711,7 @@ public class KeyPadPanel extends JPanel {
 				}
 
 				isDone = false;
-
+				resizeNumber();
 				// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
 				if (isFirst) {
 					sum = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));

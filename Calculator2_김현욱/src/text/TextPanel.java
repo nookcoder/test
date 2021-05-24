@@ -1,6 +1,7 @@
 package text;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
@@ -41,9 +42,12 @@ public class TextPanel extends JPanel{
 		this.calculatorDisplay = new JTextField("0");
 		calculatorDisplay.setHorizontalAlignment(JTextField.RIGHT);
 		calculatorDisplay.setEditable(false);
+		calculatorDisplay.setBorder(null);
+		calculatorDisplay.setFont(constants.calculatorDisplayFont);
+		
 		this.calculatorDisplayPanel = new JPanel();
 		this.textPanel = new JPanel();
-		
+	
 		this.calculatorRecord = new JTextArea(50,20);
 		calculatorRecord.setEditable(false);
 		this.deleteButton = new JButton("ªË¡¶");
@@ -75,7 +79,7 @@ public class TextPanel extends JPanel{
 			{
 				JFrame f = new JFrame();
 				f.add(calculatorRecordPanel);
-				f.setSize(300,100);
+				f.setSize(500,500);
 				f.setVisible(true);
 			}
 		}); 
@@ -85,6 +89,8 @@ public class TextPanel extends JPanel{
 		add(textPanel);
 		add(keyPadPanel);
 		
-		setLayout(constants.textGridLayout);
+		setLayout(constants.textGridLayout);	
+		
+		
 	}
 }
