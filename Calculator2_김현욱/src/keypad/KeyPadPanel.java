@@ -440,8 +440,8 @@ public class KeyPadPanel extends JPanel {
 			if(isFirstNumberButton)
 			{
 				calculatorDisplay.setText("0.");
-				num = 0.0;
 				isDone = false;
+				isFirstNumberButton = false;
 				return;
 			}
 			calculatorDisplay.setText(newText);
@@ -499,7 +499,8 @@ public class KeyPadPanel extends JPanel {
 			}
 			
 			// 처음 입력하는 숫자인지 확인
-			if (isFirstNumberButton || calculatorDisplay.getText().equals("0")) {
+			if (isFirstNumberButton || calculatorDisplay.getText().equals("0") )
+			{
 				calculatorDisplay.setText("");
 				isFirstNumberButton = false;
 			}
@@ -507,7 +508,6 @@ public class KeyPadPanel extends JPanel {
 			// 숫자 입력
 			calculatorDisplay.setText(printingNumber(number));
 			isDone = false;
-
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
 			getNumber();
 		}
