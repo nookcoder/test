@@ -36,7 +36,7 @@ public class KeyPadPanel extends JPanel {
 	private boolean isEqualNext;
 	private boolean isInfinity;
 	private boolean isHaveNegate;
-	
+	private boolean isCENext;
 	
 	private JLabel negateLabel; 
 	private JTextField calculatorDisplay;
@@ -66,6 +66,7 @@ public class KeyPadPanel extends JPanel {
 		this.isEqualNext = false;
 		this.isInfinity = false;
 		this.isHaveNegate = false;
+		this.isCENext = false;
 		
 		this.constant = new Constants();
 
@@ -178,6 +179,7 @@ public class KeyPadPanel extends JPanel {
 		operator = null;
 		isInfinity = false;
 		isHaveNegate = false;
+		isCENext = false;
 		showingProcess.setText("");
 		calculatorDisplay.setText("0");
 	}
@@ -186,6 +188,7 @@ public class KeyPadPanel extends JPanel {
 	public void actCE()
 	{
 		calculatorDisplay.setText("0");
+		isCENext = true;
 		if (isFirst) {
 			sum = 0.0; 
 			getNumber();
@@ -285,7 +288,13 @@ public class KeyPadPanel extends JPanel {
 		// 연산자 다음의 등호일때
 		if (isDone) {
 			// 등호가 처음 입력됐을 때
-			if (isFirstEqual) {
+			if(isCENext)
+			{
+				isCENext = false;
+				temp = 0.0;
+				isFirstEqual = false;
+			}
+			else if (isFirstEqual) {
 				temp = sum;
 				isFirstEqual = false;
 			}
@@ -438,6 +447,7 @@ public class KeyPadPanel extends JPanel {
 			calculatorDisplay.setText(newText);
 			isFirstNumberButton = false;
 		}
+		
 	}
 
 	// 숫자 길어지면 콤마 추가
