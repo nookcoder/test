@@ -149,30 +149,34 @@ public class KeyPadPanel extends JPanel {
 		String noCommaNumber = number.replaceAll("[,]", "");
 		numberBuffer.append(noCommaNumber);
 		switch(noCommaNumber.length()) {
-			case 4:
-				numberBuffer.insert(1, ",");
+			case 1 : case 2: case 3:
+				noCommaNumber.replaceAll("[,]", "");
 				break;
-			case 7:
-				numberBuffer.insert(1,",");
-				numberBuffer.insert(5,",");
+				
+			case 4: case 5: case 6:
+				numberBuffer.insert(noCommaNumber.length() - 3, ",");
 				break;
-			case 10:
-				numberBuffer.insert(1,",");
-				numberBuffer.insert(5,",");
-				numberBuffer.insert(9, ",");
+			case 7: case 8: case 9:
+				numberBuffer.insert(noCommaNumber.length() - 3,",");
+				numberBuffer.insert(noCommaNumber.length() - 6,",");
 				break;
-			case 13:	
-				numberBuffer.insert(1,",");
-				numberBuffer.insert(5,",");
-				numberBuffer.insert(9, ",");
-				numberBuffer.insert(13, ",");
+			case 10: case 11: case 12:
+				numberBuffer.insert(noCommaNumber.length() - 3,",");
+				numberBuffer.insert(noCommaNumber.length() - 6,",");
+				numberBuffer.insert(noCommaNumber.length() - 9, ",");
 				break;
-			case 16:
-				numberBuffer.insert(1,",");
-				numberBuffer.insert(5,",");
-				numberBuffer.insert(9, ",");
-				numberBuffer.insert(13, ",");
-				numberBuffer.insert(17, ",");
+			case 13: case 14: case 15:	
+				numberBuffer.insert(noCommaNumber.length() - 3,",");
+				numberBuffer.insert(noCommaNumber.length() - 6,",");
+				numberBuffer.insert(noCommaNumber.length() - 9, ",");
+				numberBuffer.insert(noCommaNumber.length() -12, ",");
+				break;
+			case 16: 
+				numberBuffer.insert(noCommaNumber.length() -3,",");
+				numberBuffer.insert(noCommaNumber.length() -6,",");
+				numberBuffer.insert(noCommaNumber.length() -9, ",");
+				numberBuffer.insert(noCommaNumber.length() -12, ",");
+				numberBuffer.insert(noCommaNumber.length() -15, ",");
 				break;
 		}
 		return numberBuffer.toString();
@@ -180,7 +184,6 @@ public class KeyPadPanel extends JPanel {
 	
 	// 숫자 길어지면 콤마 추가
 	public String printingNumber(String number) {
-		StringBuffer addComma = new StringBuffer();
 		String newText;
 		String oldText;
 		String oldTextCheck;
@@ -188,11 +191,7 @@ public class KeyPadPanel extends JPanel {
 		oldText = calculatorDisplay.getText() + number;
 		oldTextCheck = oldText.replaceAll("[,]", "");
 		if (oldTextCheck.length() <= 16) {
-			addComma.append(oldText);
-			if (oldTextCheck.length() != 1 && oldTextCheck.length() % 3 == 1 && !oldText.contains(".")) {
-				addComma.insert(oldText.length() - 3, ",");
-			}
-			newText = addComma.toString();
+			newText = setComma(oldText);
 		} else {
 			newText = calculatorDisplay.getText();
 		}
@@ -202,7 +201,7 @@ public class KeyPadPanel extends JPanel {
 	public void resizeNumber() {
 		switch(calculatorDisplay.getText().replaceAll("[,]","").length())
 		{
-			case 10:
+		case 1: case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
 				calculatorDisplay.setFont(constant.calculatorDisplayFont);
 				break;
 			case 11:
@@ -265,6 +264,7 @@ public class KeyPadPanel extends JPanel {
 		isCENext = false;
 		showingProcess.setText("");
 		calculatorDisplay.setText("0");
+		calculatorDisplay.setFont(constant.calculatorDisplayFont);
 	}
 
 	// 계산기 ce 버튼
@@ -434,7 +434,6 @@ public class KeyPadPanel extends JPanel {
 		resizeNumber();
 		if (!isEqualNext) {
 			String oldText = calculatorDisplay.getText();
-			String oldTextCheck = oldText.replaceAll("[,]", "");
 			if(isFirstNumberButton)
 			{
 				return;
@@ -444,12 +443,7 @@ public class KeyPadPanel extends JPanel {
 				getNumber();
 				return;
 			}
-			String newText = oldText.substring(0, oldText.length() - 1);
-			String newTextCheck = newText.replaceAll("[,]", "");
-			if(newTextCheck.length() == 4 && newText.contains(","))
-			{
-				calculatorDisplay.setText(newTextCheck);
-			}
+			String newText = setComma(oldText);
 			calculatorDisplay.setText(newText);
 			getNumber();
 		} 
@@ -565,10 +559,10 @@ public class KeyPadPanel extends JPanel {
 			if (isFirstNumberButton || calculatorDisplay.getText().equals("0") )
 			{
 				calculatorDisplay.setText("");
-				isFirstNumberButton = false;
 			}
 			
 			// 숫자 입력
+			isFirstNumberButton = false;
 			calculatorDisplay.setText(printingNumber(number));
 			isDone = false;
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
@@ -725,7 +719,7 @@ public class KeyPadPanel extends JPanel {
 				
 				String oldText = calculatorDisplay.getText() + number;
 				// 숫자 입력
-				if (calculatorDisplay.getText().replaceAll("[,]","").length() <= 16) {
+				if (calculatorDisplay.getText().replaceAll("[,]","").length() < 16) {
 					StringBuffer addCommaString = new StringBuffer();
 
 					String oldTextCheck = oldText.replaceAll("[,]", "");
