@@ -354,6 +354,24 @@ public class KeyPadPanel extends JPanel {
 		String oldSum = sum.toString();
 		String newSum = makeIntPrinting(oldSum);
 
+		if(isEqualNext)
+		{
+			if(showingProcess.getText().contains("negate"))
+			{
+				showingProcess.setText("negate("+oldNegateString +")" );
+				oldNegateString = "negate("+oldNegateString +")";
+				sum *= -1;
+				calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+				return;	
+			}
+			isHaveNegate = true;
+			sum = sum * -1; 
+			calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+			showingProcess.setText("negate("+newSum+")" );
+			oldNegateString = "negate("+newSum+")";
+			return;
+		}
+
 		if(isDone)
 		{
 			isDone = false; 
@@ -365,13 +383,17 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 
+		
 		if(showingProcess.getText().contains("negate"))
 		{
 			showingProcess.setText(newSum +" "+ operator + " "+ "negate("+oldNegateString +")" );
 			oldNegateString = "negate("+oldNegateString +")";
 			num *= -1;
 			calculatorDisplay.setText(makeIntPrinting(num.toString()));
+			return;
 		}
+		
+		
 	}
 	
 	// Á¡ Ãß°¡
