@@ -308,6 +308,7 @@ public class KeyPadPanel extends JPanel {
 		String newResult = makeIntPrinting(sum.toString());
 		showingProcess.setText(newSum + " " + operator + " " + newNumber + " =");
 		calculatorDisplay.setText(newResult);
+		resizeNumber();
 	}
 	
 	public String makeIntPrinting(String check) {
@@ -359,7 +360,6 @@ public class KeyPadPanel extends JPanel {
 	// 등호(=) 작동 함수
 	public void actEqual() {
 		String oldSum = sum.toString();
-
 		// 0으로 나눴을 때
 		if (isInfinity) {
 			reset();
@@ -401,6 +401,7 @@ public class KeyPadPanel extends JPanel {
 			}
 		}
 		isEqualNext = true;
+		resizeNumber();
 	}
 	
 	// 연산 기호 입력시 처리 함수
@@ -509,6 +510,7 @@ public class KeyPadPanel extends JPanel {
 			num *= -1;
 			calculatorDisplay.setText(makeIntPrinting(num.toString()));
 		}
+		resizeNumber();
 	}
 	
 	// 점 추가
@@ -526,7 +528,7 @@ public class KeyPadPanel extends JPanel {
 			calculatorDisplay.setText(newText);
 			isFirstNumberButton = false;
 		}
-		
+		resizeNumber();
 	}
 	
 	// 숫자버튼 이벤트리스너
