@@ -28,14 +28,15 @@ public class KeyPadPanel extends JPanel {
 	private Double num;
 	private Double temp;
 	private String operator;
+	private String oldNegateString;
 	private boolean isDone;
 	private boolean isFirst;
 	private boolean isFirstNumberButton;
 	private boolean isFirstEqual;
 	private boolean isEqualNext;
 	private boolean isInfinity;
-	private boolean isFirstNegate; 
-	private boolean isHaveNeagate;
+	private boolean isHaveNegate;
+	
 	
 	private JLabel negateLabel; 
 	private JTextField calculatorDisplay;
@@ -64,8 +65,7 @@ public class KeyPadPanel extends JPanel {
 		this.isFirstEqual = true;
 		this.isEqualNext = false;
 		this.isInfinity = false;
-		this.isFirstNegate = true;
-		this.isHaveNeagate = false;
+		this.isHaveNegate = false;
 		
 		this.constant = new Constants();
 
@@ -177,8 +177,7 @@ public class KeyPadPanel extends JPanel {
 		isEqualNext = false;
 		operator = null;
 		isInfinity = false;
-		isFirstNegate = true;
-		isHaveNeagate = false;
+		isHaveNegate = false;
 		showingProcess.setText("");
 		calculatorDisplay.setText("0");
 	}
@@ -354,18 +353,27 @@ public class KeyPadPanel extends JPanel {
 	public void actNegate() {
 		String oldSum = sum.toString();
 		String newSum = makeIntPrinting(oldSum);
+
 		if(isDone)
 		{
 			isDone = false; 
+			isHaveNegate = true;
 			num = sum * -1; 
 			calculatorDisplay.setText(makeIntPrinting(num.toString()));
-			if(isFirstNegate)
-			{
-				showingProcess.setText(newSum +" "+ operator + " "+ "negate("+newSum+")" );
-			}
+			showingProcess.setText(newSum +" "+ operator + " "+ "negate("+newSum+")" );
+			oldNegateString = "negate("+newSum+")";
+			return;
+		}
+
+		if(showingProcess.getText().contains("negate"))
+		{
+			showingProcess.setText(newSum +" "+ operator + " "+ "negate("+oldNegateString +")" );
+			oldNegateString = "negate("+oldNegateString +")";
+			num *= -1;
+			calculatorDisplay.setText(makeIntPrinting(num.toString()));
 		}
 	}
-
+	
 	// Á¡ Ãß°¡
 	public void addDot() {
 		String oldText = calculatorDisplay.getText();
