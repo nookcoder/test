@@ -388,7 +388,7 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 
-		if(isDone)
+		if(isDone && !calculatorDisplay.getText().equals("0"))
 		{
 			isDone = false; 
 			isHaveNegate = true;
@@ -409,12 +409,18 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 		
-		if(isFirst)
+		if(isFirst && !calculatorDisplay.getText().equals("0"))
 		{
 			sum *= -1 ;
 			calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+			return; 
 		}
 		
+		if(!calculatorDisplay.getText().equals("0"))
+		{
+			num *= -1;
+			calculatorDisplay.setText(makeIntPrinting(num.toString()));
+		}
 	}
 	
 	// Á¡ Ãß°¡
