@@ -431,9 +431,9 @@ public class KeyPadPanel extends JPanel {
 
 	// 백스페이스 로직
 	public void actBackSpace() {
-		resizeNumber();
 		if (!isEqualNext) {
-			String oldText = calculatorDisplay.getText();
+			String oldText = calculatorDisplay.getText().replaceAll("[,]", "");
+			String removeOldText = oldText.substring(0, oldText.length()-1);
 			if(isFirstNumberButton)
 			{
 				return;
@@ -443,7 +443,7 @@ public class KeyPadPanel extends JPanel {
 				getNumber();
 				return;
 			}
-			String newText = setComma(oldText);
+			String newText = setComma(removeOldText);
 			calculatorDisplay.setText(newText);
 			getNumber();
 		} 
@@ -451,6 +451,7 @@ public class KeyPadPanel extends JPanel {
 		else {
 			showingProcess.setText("");
 		}
+		resizeNumber();
 	}
 	
 	public void actNegate() {
@@ -720,18 +721,8 @@ public class KeyPadPanel extends JPanel {
 				String oldText = calculatorDisplay.getText() + number;
 				// 숫자 입력
 				if (calculatorDisplay.getText().replaceAll("[,]","").length() < 16) {
-					StringBuffer addCommaString = new StringBuffer();
-
 					String oldTextCheck = oldText.replaceAll("[,]", "");
-					if (oldTextCheck.length() != 1 && oldTextCheck.length() % 3 == 1 && !oldText.contains(".")) {
-						addCommaString.append(oldText);
-						addCommaString.insert(oldText.length() - 3, ",");
-						calculatorDisplay.setText(addCommaString.toString());
-					}
-
-					else {
-						calculatorDisplay.setText(calculatorDisplay.getText() + number);
-					}
+						calculatorDisplay.setText(setComma(oldTextCheck));
 				}
 
 				else {
