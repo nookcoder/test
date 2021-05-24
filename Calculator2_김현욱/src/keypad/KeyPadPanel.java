@@ -346,7 +346,7 @@ public class KeyPadPanel extends JPanel {
 			{
 				return;
 			}
-			if(oldText.length() == 1) {
+			if(oldText.length() == 1 || (oldText.length() == 2 && oldText.contains("-"))) {
 				calculatorDisplay.setText("0");
 				getNumber();
 				return;
@@ -409,6 +409,11 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 		
+		if(isFirst)
+		{
+			sum *= -1 ;
+			calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+		}
 		
 	}
 	
