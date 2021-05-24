@@ -144,6 +144,61 @@ public class KeyPadPanel extends JPanel {
 		setLayout(new GridLayout());
 	}
 	
+	public String setComma(String number) {
+		StringBuffer numberBuffer = new StringBuffer();
+		String noCommaNumber = number.replaceAll("[,]", "");
+		numberBuffer.append(noCommaNumber);
+		switch(noCommaNumber.length()) {
+			case 4:
+				numberBuffer.insert(1, ",");
+				break;
+			case 7:
+				numberBuffer.insert(1,",");
+				numberBuffer.insert(5,",");
+				break;
+			case 10:
+				numberBuffer.insert(1,",");
+				numberBuffer.insert(5,",");
+				numberBuffer.insert(9, ",");
+				break;
+			case 13:	
+				numberBuffer.insert(1,",");
+				numberBuffer.insert(5,",");
+				numberBuffer.insert(9, ",");
+				numberBuffer.insert(13, ",");
+				break;
+			case 16:
+				numberBuffer.insert(1,",");
+				numberBuffer.insert(5,",");
+				numberBuffer.insert(9, ",");
+				numberBuffer.insert(13, ",");
+				numberBuffer.insert(17, ",");
+				break;
+		}
+		return numberBuffer.toString();
+	}
+	
+	// 숫자 길어지면 콤마 추가
+	public String printingNumber(String number) {
+		StringBuffer addComma = new StringBuffer();
+		String newText;
+		String oldText;
+		String oldTextCheck;
+
+		oldText = calculatorDisplay.getText() + number;
+		oldTextCheck = oldText.replaceAll("[,]", "");
+		if (oldTextCheck.length() <= 16) {
+			addComma.append(oldText);
+			if (oldTextCheck.length() != 1 && oldTextCheck.length() % 3 == 1 && !oldText.contains(".")) {
+				addComma.insert(oldText.length() - 3, ",");
+			}
+			newText = addComma.toString();
+		} else {
+			newText = calculatorDisplay.getText();
+		}
+		return newText;
+	}
+	
 	public void resizeNumber() {
 		switch(calculatorDisplay.getText().replaceAll("[,]","").length())
 		{
@@ -477,27 +532,6 @@ public class KeyPadPanel extends JPanel {
 			isFirstNumberButton = false;
 		}
 		
-	}
-
-	// 숫자 길어지면 콤마 추가
-	public String printingNumber(String number) {
-		StringBuffer addComma = new StringBuffer();
-		String newText;
-		String oldText;
-		String oldTextCheck;
-
-		oldText = calculatorDisplay.getText() + number;
-		oldTextCheck = oldText.replaceAll("[,]", "");
-		if (oldTextCheck.length() <= 16) {
-			addComma.append(oldText);
-			if (oldTextCheck.length() != 1 && oldTextCheck.length() % 3 == 1 && !oldText.contains(".")) {
-				addComma.insert(oldText.length() - 3, ",");
-			}
-			newText = addComma.toString();
-		} else {
-			newText = calculatorDisplay.getText();
-		}
-		return newText;
 	}
 	
 	// 숫자버튼 이벤트리스너
