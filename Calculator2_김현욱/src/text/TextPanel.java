@@ -29,6 +29,7 @@ public class TextPanel extends JPanel{
 	public JTextArea calculatorRecord;
 	public JButton deleteButton;
 	public JPanel calculatorRecordPanel; 
+	public JScrollPane calculatorRecordScroll;
 	
 	private Constants constants;
 	
@@ -38,7 +39,9 @@ public class TextPanel extends JPanel{
 
 		this.showingProcess = new JLabel();
 		showingProcess.setHorizontalAlignment(JLabel.RIGHT);
-		this.calculateRecordButton = new JButton("기록");
+		this.calculateRecordButton = new JButton(new ImageIcon("src/images/record.png"));
+		calculateRecordButton.setBorderPainted(false);
+		calculateRecordButton.setContentAreaFilled(false);
 		this.kindLabel = new JLabel("표준");
 		kindLabel.setFont(constants.ButtonFont);
 		this.upperPanel = new JPanel();
@@ -53,7 +56,8 @@ public class TextPanel extends JPanel{
 		this.calculatorDisplayPanel = new JPanel();
 		this.textPanel = new JPanel();
 	
-		this.calculatorRecord = new JTextArea(50,20);
+		this.calculatorRecord = new JTextArea("아직 기록이 없음");
+		this.calculatorRecordScroll = new JScrollPane(calculatorRecord);
 		calculatorRecord.setEditable(false);
 		this.deleteButton = new JButton("삭제");
 		deleteButton.addActionListener(new ActionListener() {
@@ -77,8 +81,9 @@ public class TextPanel extends JPanel{
 		textPanel.add(calculatorDisplayPanel);
 		textPanel.setLayout(constants.textGridLayout);
 		
-		calculatorRecordPanel.add(calculatorRecord);
-		calculatorRecordPanel.add(deleteButton);
+		calculatorRecordPanel.setLayout(new BorderLayout());
+		calculatorRecordPanel.add(calculatorRecordScroll,BorderLayout.CENTER);
+		calculatorRecordPanel.add(deleteButton,BorderLayout.SOUTH);
 		
 		calculatorDisplayPanel.setLayout(new GridLayout());
 		calculateRecordButton.addActionListener(new ActionListener() {

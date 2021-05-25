@@ -23,5 +23,18 @@ public class Constants {
 		btn.setBackground(Color.WHITE);
 	}
 	
+	public void setOperatorButton(JButton btn) {
+		btn.setFont(ButtonFont);
+		btn.setBorderPainted(false);
+		btn.setBackground(new Color(220,220,220));
+	}
+	
+	public void setEqualButton(JButton btn)
+	{
+		btn.setFont(ButtonFont);
+		btn.setBorderPainted(false);
+		btn.setBackground(new Color(120,120,255));
+
+	}
 	public Dimension dimension = new Dimension(450,550);
 }

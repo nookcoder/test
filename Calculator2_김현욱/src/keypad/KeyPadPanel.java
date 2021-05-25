@@ -101,16 +101,16 @@ public class KeyPadPanel extends JPanel {
 		backSpace.addActionListener(new BackSpaceListener());
 
 		// 버튼 꾸미기
-		constant.setButtonFont(plus);
-		constant.setButtonFont(minus);
-		constant.setButtonFont(multiply);
-		constant.setButtonFont(c);
-		constant.setButtonFont(ce);
+		constant.setOperatorButton(plus);
+		constant.setOperatorButton(minus);
+		constant.setOperatorButton(multiply);
+		constant.setOperatorButton(c);
+		constant.setOperatorButton(ce);
 		constant.setButtonFont(dot);
 		constant.setButtonFont(changingSign);
-		constant.setButtonFont(equal);
-		constant.setButtonFont(backSpace);
-		constant.setButtonFont(divide);
+		constant.setEqualButton(equal);
+		constant.setOperatorButton(backSpace);
+		constant.setOperatorButton(divide);
 
 		// 숫자 패널에 버튼 추가
 		keyPadPanel.setLayout(new GridLayout(5, 4, 2, 2));
