@@ -150,7 +150,8 @@ public class KeyPadPanel extends JPanel {
 		{
 			return setComma("9999999999999999");
 		}
-		if(check.contains("E"))
+		
+		else if(check.contains("E"))
 		{
 			String[] overflowCheck = check.split("E");
 			String overflowResultString;
@@ -163,6 +164,10 @@ public class KeyPadPanel extends JPanel {
 			else
 			{
 				overflowResultString = overflowCheck[0].substring(0, overflowCheck[0].length())+"e+"+overflowCheck[1];
+				if(overflowResultString.equals("1.0e+16"))
+				{
+					overflowResultString = setComma("9999999999999999");
+				}
 			}
 			return overflowResultString;
 		}
@@ -318,7 +323,7 @@ public class KeyPadPanel extends JPanel {
 	// 계산기록 저장하기
 	public void saveCalculatorRecord(String oldSum, String number) {
 		if (operator != null) {
-			calculatorRecord.append(oldSum + " " + operator + " " + number+ " = " + sum.toString() + "\n");
+			calculatorRecord.append(setOverflow(oldSum) + " " + operator + " " + setOverflow(number)+ " = " + setOverflow(sum.toString()) + "\n");
 		}
 	}
 
