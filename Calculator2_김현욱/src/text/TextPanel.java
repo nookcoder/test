@@ -2,6 +2,7 @@ package text;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
@@ -15,8 +16,10 @@ public class TextPanel extends JPanel{
 	// 가장 위에 있는 구성요소(기록버튼, 계산과정) 
 	public JButton calculateRecordButton; 
 	public JLabel showingProcess;
-	public JPanel upperPanel; 
+	public JPanel upperPanel;
+	public JPanel buttonPanel;
 	public JPanel textPanel;
+	public JLabel kindLabel;
 	
 	// 입력창 
 	public JTextField calculatorDisplay;
@@ -36,8 +39,10 @@ public class TextPanel extends JPanel{
 		this.showingProcess = new JLabel();
 		showingProcess.setHorizontalAlignment(JLabel.RIGHT);
 		this.calculateRecordButton = new JButton("기록");
-		
+		this.kindLabel = new JLabel("표준");
+		kindLabel.setFont(constants.ButtonFont);
 		this.upperPanel = new JPanel();
+		this.buttonPanel = new JPanel();
 		
 		this.calculatorDisplay = new JTextField("0");
 		calculatorDisplay.setHorizontalAlignment(JTextField.RIGHT);
@@ -58,8 +63,10 @@ public class TextPanel extends JPanel{
 		});
 		this.calculatorRecordPanel = new JPanel(); 
 		
-		
-		upperPanel.add(calculateRecordButton);
+		buttonPanel.setLayout(new BorderLayout());
+		buttonPanel.add(calculateRecordButton,BorderLayout.EAST);
+		buttonPanel.add(kindLabel, BorderLayout.WEST);
+		upperPanel.add(buttonPanel);
 		upperPanel.add(showingProcess);
 		upperPanel.setLayout(constants.textGridLayout);
 		
