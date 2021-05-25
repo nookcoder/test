@@ -255,7 +255,7 @@ public class KeyPadPanel extends JPanel {
 			case 15:
 				calculatorDisplay.setFont(constant.calculatorDisplayFont6);
 				break;
-			case 16:
+			case 16: case 17: case 18: case 19: case 20:
 				calculatorDisplay.setFont(constant.calculatorDisplayFont7);
 				break;
 				
@@ -393,6 +393,7 @@ public class KeyPadPanel extends JPanel {
 		
 		showingProcess.setText(setOverflow(newCheckString) + " " + operator);
 		calculatorDisplay.setText(setOverflow(newCheckString));
+		resizeNumber();
 	}
 	
 	// 등호(=) 작동 함수
