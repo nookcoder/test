@@ -86,7 +86,7 @@ public class KeyPadPanel extends JPanel {
 		this.dot = new JButton(".");
 		this.changingSign = new JButton("±");
 		this.equal = new JButton("＝");
-		this.backSpace = new JButton("BACK");
+		this.backSpace = new JButton("◀");
 
 		// 연산자 이벤트 추가
 		plus.addActionListener(new OperatorButton());
@@ -158,6 +158,7 @@ public class KeyPadPanel extends JPanel {
 			if(Integer.parseInt(overflowCheck[1]) >= 7 && Integer.parseInt(overflowCheck[1]) <= 15)
 			{
 				overflowResultString = overflowCheck[0].replaceAll("[.]", "");
+				overflowResultString = overflowResultString.substring(0,overflowResultString.length()-1);
 				overflowResultString = setComma(overflowResultString);
 			}
 			
