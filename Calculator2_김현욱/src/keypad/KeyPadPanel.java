@@ -146,6 +146,10 @@ public class KeyPadPanel extends JPanel {
 	
 	public String setOverflow(String check)
 	{
+		if(check.replaceAll("[,]", "")=="9999999999999999")
+		{
+			return setComma("9999999999999999");
+		}
 		if(check.contains("E"))
 		{
 			String[] overflowCheck = check.split("E");
@@ -153,6 +157,7 @@ public class KeyPadPanel extends JPanel {
 			if(Integer.parseInt(overflowCheck[1]) >= 7 && Integer.parseInt(overflowCheck[1]) <= 15)
 			{
 				overflowResultString = overflowCheck[0].replaceAll("[.]", "");
+				overflowResultString = setComma(overflowResultString);
 			}
 			
 			else
@@ -167,41 +172,45 @@ public class KeyPadPanel extends JPanel {
 	}
 	
 	public String setComma(String number) {
-		StringBuffer numberBuffer = new StringBuffer();
-		String noCommaNumber = number.replaceAll("[,]", "");
-		numberBuffer.append(noCommaNumber);
-		switch(noCommaNumber.length()) {
-			case 1 : case 2: case 3:
-				noCommaNumber.replaceAll("[,]", "");
-				break;
-				
-			case 4: case 5: case 6:
-				numberBuffer.insert(noCommaNumber.length() - 3, ",");
-				break;
-			case 7: case 8: case 9:
-				numberBuffer.insert(noCommaNumber.length() - 3,",");
-				numberBuffer.insert(noCommaNumber.length() - 6,",");
-				break;
-			case 10: case 11: case 12:
-				numberBuffer.insert(noCommaNumber.length() - 3,",");
-				numberBuffer.insert(noCommaNumber.length() - 6,",");
-				numberBuffer.insert(noCommaNumber.length() - 9, ",");
-				break;
-			case 13: case 14: case 15:	
-				numberBuffer.insert(noCommaNumber.length() - 3,",");
-				numberBuffer.insert(noCommaNumber.length() - 6,",");
-				numberBuffer.insert(noCommaNumber.length() - 9, ",");
-				numberBuffer.insert(noCommaNumber.length() -12, ",");
-				break;
-			case 16: 
-				numberBuffer.insert(noCommaNumber.length() -3,",");
-				numberBuffer.insert(noCommaNumber.length() -6,",");
-				numberBuffer.insert(noCommaNumber.length() -9, ",");
-				numberBuffer.insert(noCommaNumber.length() -12, ",");
-				numberBuffer.insert(noCommaNumber.length() -15, ",");
-				break;
+		if(!number.contains("."))
+		{
+			StringBuffer numberBuffer = new StringBuffer();
+			String noCommaNumber = number.replaceAll("[,]", "");
+			numberBuffer.append(noCommaNumber);
+			switch(noCommaNumber.length()) {
+				case 1 : case 2: case 3:
+					noCommaNumber.replaceAll("[,]", "");
+					break;
+					
+				case 4: case 5: case 6:
+					numberBuffer.insert(noCommaNumber.length() - 3, ",");
+					break;
+				case 7: case 8: case 9:
+					numberBuffer.insert(noCommaNumber.length() - 3,",");
+					numberBuffer.insert(noCommaNumber.length() - 6,",");
+					break;
+				case 10: case 11: case 12:
+					numberBuffer.insert(noCommaNumber.length() - 3,",");
+					numberBuffer.insert(noCommaNumber.length() - 6,",");
+					numberBuffer.insert(noCommaNumber.length() - 9, ",");
+					break;
+				case 13: case 14: case 15:	
+					numberBuffer.insert(noCommaNumber.length() - 3,",");
+					numberBuffer.insert(noCommaNumber.length() - 6,",");
+					numberBuffer.insert(noCommaNumber.length() - 9, ",");
+					numberBuffer.insert(noCommaNumber.length() -12, ",");
+					break;
+				case 16: 
+					numberBuffer.insert(noCommaNumber.length() -3,",");
+					numberBuffer.insert(noCommaNumber.length() -6,",");
+					numberBuffer.insert(noCommaNumber.length() -9, ",");
+					numberBuffer.insert(noCommaNumber.length() -12, ",");
+					numberBuffer.insert(noCommaNumber.length() -15, ",");
+					break;
+			}
+			return numberBuffer.toString();
 		}
-		return numberBuffer.toString();
+		return number;
 	}
 	
 	// 숫자 길어지면 콤마 추가
@@ -375,8 +384,10 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 		
-		showingProcess.setText(setOverflow(makeIntPrinting(check.toString())) + " " + operator);
-		calculatorDisplay.setText(setOverflow(makeIntPrinting(check.toString())));
+		String newCheckString = makeIntPrinting(check.toString());
+		
+		showingProcess.setText(setOverflow(newCheckString) + " " + operator);
+		calculatorDisplay.setText(setOverflow(newCheckString));
 	}
 	
 	// 등호(=) 작동 함수
@@ -419,7 +430,7 @@ public class KeyPadPanel extends JPanel {
 
 			// 연산자가 없을 떄
 			else {
-				showingProcess.setText(setOverflow(oldSum) + " =");
+				showingProcess.setText(setOverflow(makeIntPrinting(oldSum)) + " =");
 			}
 		}
 		isEqualNext = true;
