@@ -144,6 +144,28 @@ public class KeyPadPanel extends JPanel {
 		setLayout(new GridLayout());
 	}
 	
+	public String setOverflow(String check)
+	{
+		String[] overflowCheck = check.split("E");
+		String overflowResultString;
+		if(check.contains("E"))
+		{
+			if(Integer.parseInt(overflowCheck[1]) >= 7 && Integer.parseInt(overflowCheck[1]) <= 15)
+			{
+				overflowResultString = overflowCheck[0].replaceAll(".", "");
+			}
+			
+			else
+			{
+				overflowResultString = overflowCheck[0].substring(0, overflowCheck[0].length()-1)+"e+"+overflowCheck[1];
+			}
+			return overflowResultString;
+		}
+		
+		
+		return check;
+	}
+	
 	public String setComma(String number) {
 		StringBuffer numberBuffer = new StringBuffer();
 		String noCommaNumber = number.replaceAll("[,]", "");
@@ -353,8 +375,13 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 		
-		showingProcess.setText(makeIntPrinting(check.toString()) + " " + operator);
-		calculatorDisplay.setText(makeIntPrinting(check.toString()));
+		String result;
+		
+		result = makeIntPrinting(check.toString());
+		result = setOverflow(result);
+		
+		showingProcess.setText(result+ " " + operator);
+		calculatorDisplay.setText(result);
 	}
 	
 	// 등호(=) 작동 함수
