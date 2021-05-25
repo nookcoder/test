@@ -146,18 +146,18 @@ public class KeyPadPanel extends JPanel {
 	
 	public String setOverflow(String check)
 	{
-		String[] overflowCheck = check.split("E");
-		String overflowResultString;
 		if(check.contains("E"))
 		{
+			String[] overflowCheck = check.split("E");
+			String overflowResultString;
 			if(Integer.parseInt(overflowCheck[1]) >= 7 && Integer.parseInt(overflowCheck[1]) <= 15)
 			{
-				overflowResultString = overflowCheck[0].replaceAll(".", "");
+				overflowResultString = overflowCheck[0].replaceAll("[.]", "");
 			}
 			
 			else
 			{
-				overflowResultString = overflowCheck[0].substring(0, overflowCheck[0].length()-1)+"e+"+overflowCheck[1];
+				overflowResultString = overflowCheck[0].substring(0, overflowCheck[0].length())+"e+"+overflowCheck[1];
 			}
 			return overflowResultString;
 		}
@@ -314,7 +314,7 @@ public class KeyPadPanel extends JPanel {
 	}
 
 	// 게산기 로그 화면에 표시되게하는 함수
-	public void showResult(String oldSum, Double number) {
+	public void showResult(String oldSum, String number) {
 		if (sum.toString() == "Infinity") {
 			calculatorDisplay.setText("0으로 나눌 수 없습니다");
 			isInfinity = true;
@@ -326,10 +326,10 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 		String newSum = makeIntPrinting(oldSum);
-		String newNumber = makeIntPrinting(number.toString());
+		String newNumber = makeIntPrinting(number);
 		String newResult = makeIntPrinting(sum.toString());
-		showingProcess.setText(newSum + " " + operator + " " + newNumber + " =");
-		calculatorDisplay.setText(newResult);
+		showingProcess.setText(setOverflow(newSum) + " " + operator + " " + setOverflow(newNumber) + " =");
+		calculatorDisplay.setText(setOverflow(newResult));
 		resizeNumber();
 	}
 	
@@ -375,13 +375,8 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 		
-		String result;
-		
-		result = makeIntPrinting(check.toString());
-		result = setOverflow(result);
-		
-		showingProcess.setText(result+ " " + operator);
-		calculatorDisplay.setText(result);
+		showingProcess.setText(setOverflow(makeIntPrinting(check.toString())) + " " + operator);
+		calculatorDisplay.setText(setOverflow(makeIntPrinting(check.toString())));
 	}
 	
 	// 등호(=) 작동 함수
@@ -408,9 +403,9 @@ public class KeyPadPanel extends JPanel {
 				temp = sum;
 				isFirstEqual = false;
 			}
-			saveCalculatorRecord(makeIntPrinting(oldSum), makeIntPrinting(temp.toString()));
+			saveCalculatorRecord(setOverflow(makeIntPrinting(oldSum)), setOverflow(makeIntPrinting(temp.toString())));
 			calculate(operator, temp);
-			showResult(oldSum, temp);
+			showResult(oldSum, temp.toString());
 		}
 
 		// 숫자 다음의 등호일때
@@ -418,13 +413,13 @@ public class KeyPadPanel extends JPanel {
 			// 연산자가 입력 됐을 때
 			if (operator != null) {
 				calculate(operator, num);
-				showResult(oldSum, num);
+				showResult(oldSum, num.toString());
 				saveCalculatorRecord(makeIntPrinting(oldSum), makeIntPrinting(num.toString()));
 			}
 
 			// 연산자가 없을 떄
 			else {
-				showingProcess.setText(oldSum + " =");
+				showingProcess.setText(setOverflow(oldSum) + " =");
 			}
 		}
 		isEqualNext = true;
