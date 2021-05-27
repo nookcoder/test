@@ -122,16 +122,7 @@ public class TextPanel extends JPanel{
 		miniPanel.add(bottomPanel);
 		miniPanel.setLayout(constants.textGridLayout);
 		add(miniPanel);
-		setLayout(constants.textGridLayout);	
-		if(getWidth() >= 400)
-		{
-			this.removeAll();
-			add(miniPanel);
-			add(calculatorRecordPanel);
-			setLayout(new GridLayout(1,0));
-			this.updateUI();
-			this.repaint();
-		}
+		setLayout(constants.textGridLayout);		
 	}
 	
 	private class ChangingPad implements ActionListener{
