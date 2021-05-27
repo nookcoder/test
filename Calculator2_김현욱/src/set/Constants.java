@@ -8,6 +8,9 @@ public class Constants {
 	public GridLayout textGridLayout = new GridLayout(0,1); 
 	public GridLayout panelGridLayout = new GridLayout(0,2); 
 	public BorderLayout KeyPadBorderLayout = new BorderLayout();
+
+	public Color RECORD_BACKGROUND = new Color(247,247,247);
+	
 	public Font ButtonFont = new Font("µ¸À½", Font.BOLD, 20);
 	public Font calculatorDisplayFont = new Font("µ¸À½",Font.BOLD,50);
 	public Font calculatorDisplayFont2 = new Font("µ¸À½",Font.BOLD,45);

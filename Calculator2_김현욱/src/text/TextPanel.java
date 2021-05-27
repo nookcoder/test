@@ -17,7 +17,8 @@ public class TextPanel extends JPanel{
 	public JButton calculateRecordButton; 
 	public JLabel showingProcess;
 	public JPanel upperPanel;
-	public JPanel buttonPanel;
+	public JPanel recordButtonPanel;
+	public JPanel deleteButtonPanel;
 	public JPanel textPanel;
 	public JLabel kindLabel;
 	
@@ -39,7 +40,7 @@ public class TextPanel extends JPanel{
 	public TextPanel()
 	{
 		this.constants = new Constants();
-
+		
 		this.showingProcess = new JLabel();
 		showingProcess.setHorizontalAlignment(JLabel.RIGHT);
 		this.calculateRecordButton = new JButton(new ImageIcon("src/images/record.png"));
@@ -48,7 +49,7 @@ public class TextPanel extends JPanel{
 		this.kindLabel = new JLabel("표준");
 		kindLabel.setFont(constants.ButtonFont);
 		this.upperPanel = new JPanel();
-		this.buttonPanel = new JPanel();
+		this.recordButtonPanel = new JPanel();
 		
 		this.calculatorDisplay = new JTextField("0");
 		calculatorDisplay.setHorizontalAlignment(JTextField.RIGHT);
@@ -60,25 +61,31 @@ public class TextPanel extends JPanel{
 		this.textPanel = new JPanel();
 	
 		this.calculatorRecord = new JTextArea("아직 기록이 없음");
-		this.calculatorRecordScroll = new JScrollPane(calculatorRecord);
 		calculatorRecord.setEditable(false);
+		calculatorRecord.setBackground(constants.RECORD_BACKGROUND);
+		this.calculatorRecordScroll = new JScrollPane(calculatorRecord);
+		calculatorRecordScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED );
+		calculatorRecordScroll.setBorder(null);
 		calculateRecordButton.addActionListener(new ChangingPad());
 		
-		
+		this.deleteButtonPanel = new JPanel();
 		this.deleteButton = new JButton("삭제");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculatorRecord .setText("");
 			}
 		});
+		deleteButtonPanel.setLayout(new BorderLayout());
+		deleteButtonPanel.setBackground(constants.RECORD_BACKGROUND);
+		deleteButtonPanel.add(deleteButton,BorderLayout.EAST);
 		
 		this.calculatorRecordPanel = new JPanel(); 
 		this.bottomPanel = new JPanel();
 		
-		buttonPanel.setLayout(new BorderLayout());
-		buttonPanel.add(calculateRecordButton,BorderLayout.EAST);
-		buttonPanel.add(kindLabel, BorderLayout.WEST);
-		upperPanel.add(buttonPanel);
+		recordButtonPanel.setLayout(new BorderLayout());
+		recordButtonPanel.add(calculateRecordButton,BorderLayout.EAST);
+		recordButtonPanel.add(kindLabel, BorderLayout.WEST);
+		upperPanel.add(recordButtonPanel);
 		upperPanel.add(showingProcess);
 		upperPanel.setLayout(constants.textGridLayout);
 		
@@ -91,7 +98,7 @@ public class TextPanel extends JPanel{
 		
 		calculatorRecordPanel.setLayout(new BorderLayout());
 		calculatorRecordPanel.add(calculatorRecordScroll,BorderLayout.CENTER);
-		calculatorRecordPanel.add(deleteButton,BorderLayout.SOUTH);
+		calculatorRecordPanel.add(deleteButtonPanel,BorderLayout.SOUTH);
 		
 		calculatorDisplayPanel.setLayout(new GridLayout());
 	
