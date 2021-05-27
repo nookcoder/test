@@ -11,6 +11,7 @@ public class Constants {
 	public BorderLayout KeyPadBorderLayout = new BorderLayout();
 
 	public Color RECORD_BACKGROUND = new Color(247,247,247);
+	public Font RECORD_FONT = new Font("¸¼Àº°íµñ",Font.BOLD,30);
 	
 	public Font ButtonFont = new Font("µ¸À½", Font.BOLD, 20);
 	public Font calculatorDisplayFont = new Font("µ¸À½",Font.BOLD,50);

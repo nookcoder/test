@@ -24,6 +24,10 @@ public class BigTextPanel extends JPanel{
 		public JPanel textPanel;
 		public JLabel kindLabel;
 		public JPanel miniPanel = new JPanel();
+		
+		private JPanel labelPanel = new JPanel(); 
+		private JLabel label = new JLabel("기록"); 
+		
 		// 입력창 
 		public JTextField calculatorDisplay;
 		public JPanel calculatorDisplayPanel; 
@@ -90,6 +94,11 @@ public class BigTextPanel extends JPanel{
 			deleteButtonPanel.setBackground(constants.RECORD_BACKGROUND);
 			deleteButtonPanel.add(deleteButton,BorderLayout.EAST);
 			
+			label.setFont(constants.RECORD_FONT);
+			labelPanel.setLayout(new BorderLayout());
+			labelPanel.add(label,BorderLayout.WEST);
+			labelPanel.setBackground(constants.RECORD_BACKGROUND);
+			
 			this.calculatorRecordPanel = new JPanel(); 
 			this.bottomPanel = new JPanel();
 			
@@ -110,6 +119,7 @@ public class BigTextPanel extends JPanel{
 			calculatorRecordPanel.setLayout(new BorderLayout());
 			calculatorRecordPanel.add(calculatorRecordScroll,BorderLayout.CENTER);
 			calculatorRecordPanel.add(deleteButtonPanel,BorderLayout.SOUTH);
+			calculatorRecordPanel.add(labelPanel,BorderLayout.NORTH);
 			
 			calculatorDisplayPanel.setLayout(new GridLayout());
 		

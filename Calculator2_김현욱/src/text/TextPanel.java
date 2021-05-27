@@ -50,7 +50,7 @@ public class TextPanel extends JPanel{
 		calculateRecordButton.setBorderPainted(false);
 		calculateRecordButton.setContentAreaFilled(false);
 		this.kindLabel = new JLabel("วฅมุ");
-		kindLabel.setFont(constants.ButtonFont);
+		kindLabel.setFont(constants.RECORD_FONT);
 		this.upperPanel = new JPanel();
 		this.recordButtonPanel = new JPanel();
 		
