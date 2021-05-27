@@ -55,6 +55,7 @@ public class TextPanel extends JPanel{
 		this.recordButtonPanel = new JPanel();
 		
 		this.calculatorDisplay = new JTextField("0");
+		calculatorDisplay.requestFocusInWindow();
 		calculatorDisplay.setHorizontalAlignment(JTextField.RIGHT);
 		calculatorDisplay.setEditable(false);
 		calculatorDisplay.setBorder(null);

@@ -40,6 +40,7 @@ public class SettingCalculator extends JFrame{
 		add(contentPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		textPanel.calculatorDisplay.requestFocusInWindow();
 	}
 	
 	private class SizeListener implements ComponentListener{

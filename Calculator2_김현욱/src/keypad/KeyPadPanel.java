@@ -617,6 +617,7 @@ public class KeyPadPanel extends JPanel {
 			// 계산과정의 처음 숫자면 sum, 처음이아니면 num 에 저장
 			getNumber();
 			resizeNumber();
+			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 
@@ -638,7 +639,7 @@ public class KeyPadPanel extends JPanel {
 			} else if (operatorBtn == "＝") {
 				actEqual();
 			}
-
+			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 
@@ -655,6 +656,7 @@ public class KeyPadPanel extends JPanel {
 			else if (ResetBtn == "CE") {
 				actCE();
 			}
+			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 
@@ -662,18 +664,21 @@ public class KeyPadPanel extends JPanel {
 	private class BackSpaceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			actBackSpace();
+			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 
 	private class DotListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			addDot();
+			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 
 	private class NegateListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			actNegate();
+			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 	
