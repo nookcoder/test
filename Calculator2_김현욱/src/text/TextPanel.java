@@ -37,6 +37,8 @@ public class TextPanel extends JPanel{
 	
 	public JPanel bottomPanel;
 	public KeyPadPanel keyPadPanel;
+	public JLabel label = new JLabel("±â·Ï"); 
+	private JPanel labelPanel = new JPanel(); 
 	
 	private Constants constants;
 	
@@ -117,6 +119,11 @@ public class TextPanel extends JPanel{
 	
 		keyPadPanel = new KeyPadPanel(showingProcess,calculatorDisplay,calculatorRecord);
 		
+		label.setFont(constants.RECORD_FONT);
+		labelPanel.setLayout(new BorderLayout());
+		labelPanel.add(label,BorderLayout.NORTH);
+		labelPanel.setBackground(constants.RECORD_BACKGROUND);
+		
 		miniPanel.add(textPanel);
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(keyPadPanel,BorderLayout.CENTER);
@@ -124,6 +131,7 @@ public class TextPanel extends JPanel{
 		miniPanel.setLayout(constants.textGridLayout);
 		add(miniPanel);
 		setLayout(constants.textGridLayout);		
+		addComponentListener(new SizeListener());
 	}
 	
 	private class ChangingPad implements ActionListener{
@@ -149,6 +157,49 @@ public class TextPanel extends JPanel{
 				bottomPanel.repaint();
 				state = "keyPad";
 			}
+		}
+	}
+	
+	private class SizeListener implements ComponentListener{
+		@Override
+		public void componentResized(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().getWidth() > 900)
+			{
+				removeAll();
+				add(miniPanel);
+				calculatorRecordPanel.add(labelPanel);
+				calculateRecordButton.setVisible(false);
+				add(calculatorRecordPanel);
+				setLayout(new GridLayout(1,0));
+				updateUI();
+				repaint();
+			}
+			else if(e.getComponent().getWidth() <= 900) {
+				removeAll();
+				add(miniPanel);
+				calculateRecordButton.setVisible(true);
+				labelPanel.remove(label);
+				updateUI();
+				repaint();}
+		}
+
+		@Override
+		public void componentMoved(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void componentShown(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void componentHidden(ComponentEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

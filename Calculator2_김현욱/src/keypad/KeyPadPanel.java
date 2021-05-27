@@ -182,6 +182,7 @@ public class KeyPadPanel extends JPanel {
 		{
 			StringBuffer numberBuffer = new StringBuffer();
 			String noCommaNumber = number.replaceAll("[,]", "");
+			noCommaNumber.replaceAll("-", "");
 			numberBuffer.append(noCommaNumber);
 			switch(noCommaNumber.length()) {
 				case 1 : case 2: case 3:

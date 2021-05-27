@@ -35,7 +35,6 @@ public class SettingCalculator extends JFrame{
 		
 		contentPanel.setLayout(new BorderLayout());
 		contentPanel.add(textPanel,BorderLayout.CENTER);
-		contentPanel.addComponentListener(new SizeListener());
 		//add(bigTextPanel);
 		add(contentPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
