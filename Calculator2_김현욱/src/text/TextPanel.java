@@ -2,11 +2,13 @@ package text;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import keypad.KeyPadPanel;
 import set.Constants;
@@ -60,12 +62,22 @@ public class TextPanel extends JPanel{
 		this.calculatorDisplayPanel = new JPanel();
 		this.textPanel = new JPanel();
 	
-		this.calculatorRecord = new JTextArea("아직 기록이 없음");
+		this.calculatorRecord = new JTextArea();
 		calculatorRecord.setEditable(false);
 		calculatorRecord.setBackground(constants.RECORD_BACKGROUND);
 		this.calculatorRecordScroll = new JScrollPane(calculatorRecord);
 		calculatorRecordScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED );
 		calculatorRecordScroll.setBorder(null);
+		calculatorRecordScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+			@Override
+			protected void configureScrollBarColors() {
+				this.removeLayoutComponent(decrButton);
+				this.trackColor = constants.RECORD_BACKGROUND;
+				this.decrButton = null;
+				this.thumbColor = Color.GRAY;
+		
+			}
+		});
 		calculateRecordButton.addActionListener(new ChangingPad());
 		
 		this.deleteButtonPanel = new JPanel();
@@ -102,9 +114,6 @@ public class TextPanel extends JPanel{
 		
 		calculatorDisplayPanel.setLayout(new GridLayout());
 	
-	
-	
-		
 		keyPadPanel = new KeyPadPanel(showingProcess,calculatorDisplay,calculatorRecord);
 		
 		add(textPanel);
