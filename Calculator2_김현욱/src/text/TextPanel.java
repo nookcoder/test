@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class TextPanel extends JPanel{
 	public JPanel deleteButtonPanel;
 	public JPanel textPanel;
 	public JLabel kindLabel;
-	
+	public JPanel miniPanel = new JPanel();
 	// 입력창 
 	public JTextField calculatorDisplay;
 	public JPanel calculatorDisplayPanel; 
@@ -71,17 +72,16 @@ public class TextPanel extends JPanel{
 		calculatorRecordScroll.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
 			@Override
 			protected void configureScrollBarColors() {
-				this.removeLayoutComponent(decrButton);
 				this.trackColor = constants.RECORD_BACKGROUND;
-				this.decrButton = null;
 				this.thumbColor = Color.GRAY;
-		
 			}
 		});
 		calculateRecordButton.addActionListener(new ChangingPad());
 		
 		this.deleteButtonPanel = new JPanel();
-		this.deleteButton = new JButton("삭제");
+		this.deleteButton = new JButton(constants.DELETE_IMAGE);
+		deleteButton.setBorderPainted(false);
+		deleteButton.setContentAreaFilled(false);
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculatorRecord .setText("");
@@ -116,12 +116,22 @@ public class TextPanel extends JPanel{
 	
 		keyPadPanel = new KeyPadPanel(showingProcess,calculatorDisplay,calculatorRecord);
 		
-		add(textPanel);
+		miniPanel.add(textPanel);
 		bottomPanel.setLayout(new BorderLayout());
 		bottomPanel.add(keyPadPanel,BorderLayout.CENTER);
-		add(bottomPanel);
+		miniPanel.add(bottomPanel);
+		miniPanel.setLayout(constants.textGridLayout);
+		add(miniPanel);
 		setLayout(constants.textGridLayout);	
-		
+		if(getWidth() >= 400)
+		{
+			this.removeAll();
+			add(miniPanel);
+			add(calculatorRecordPanel);
+			setLayout(new GridLayout(1,0));
+			this.updateUI();
+			this.repaint();
+		}
 	}
 	
 	private class ChangingPad implements ActionListener{
@@ -148,8 +158,6 @@ public class TextPanel extends JPanel{
 				state = "keyPad";
 			}
 		}
-		
-		
 	}
 }
 

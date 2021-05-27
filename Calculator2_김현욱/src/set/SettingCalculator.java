@@ -7,9 +7,6 @@ import text.TextPanel;
 
 public class SettingCalculator extends JFrame{
 	
-	private JTextField calculatorDisplay = new JTextField("0");
-	private JTextArea recordArea; 
-	private JLabel showingProcess = new JLabel("À¸¾Ó"); 
 	private Constants constats = new Constants(); 
 	
 	public SettingCalculator() {

@@ -1,6 +1,7 @@
 package set;
 import java.awt.*;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class Constants {
@@ -40,4 +41,8 @@ public class Constants {
 
 	}
 	public Dimension dimension = new Dimension(450,550);
+	
+	ImageIcon deleteBynImage = new ImageIcon("src/images/deleteButon.png");
+	Image changSize = deleteBynImage.getImage().getScaledInstance(40,40, Image.SCALE_SMOOTH);
+	public ImageIcon DELETE_IMAGE = new ImageIcon(changSize);
 }
