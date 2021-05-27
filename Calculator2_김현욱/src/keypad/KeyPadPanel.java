@@ -2,6 +2,7 @@ package keypad;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 import set.Constants;
@@ -158,14 +159,18 @@ public class KeyPadPanel extends JPanel {
 			if(Integer.parseInt(overflowCheck[1]) >= 7 && Integer.parseInt(overflowCheck[1]) <= 15)
 			{
 				overflowResultString = overflowCheck[0].replaceAll("[.]", "");
-				overflowResultString = overflowResultString.substring(0,overflowResultString.length()-1);
+				overflowResultString = overflowResultString.substring(0,overflowResultString.length());
 				overflowResultString = setComma(overflowResultString);
 			}
 			
 			else
 			{
 				overflowResultString = overflowCheck[0].substring(0, overflowCheck[0].length())+"e+"+overflowCheck[1];
-				if(overflowResultString.equals("1.0e+16"))
+				if(Integer.parseInt(overflowCheck[1]) < 0)
+				{
+					overflowResultString =  overflowCheck[0].substring(0, overflowCheck[0].length())+"e"+overflowCheck[1];
+				}
+				if(overflowResultString.equals("1.0e16"))
 				{
 					overflowResultString = setComma("9999999999999999");
 				}
@@ -256,7 +261,7 @@ public class KeyPadPanel extends JPanel {
 			case 15:
 				calculatorDisplay.setFont(constant.calculatorDisplayFont6);
 				break;
-			case 16: case 17: case 18: case 19: case 20:
+			case 16: case 17: case 18: case 19: case 20: case 21: case 22: case 23:
 				calculatorDisplay.setFont(constant.calculatorDisplayFont7);
 				break;
 				
@@ -304,22 +309,6 @@ public class KeyPadPanel extends JPanel {
 		calculatorDisplay.setFont(constant.calculatorDisplayFont);
 	}
 
-	// 계산기 ce 버튼
-	public void actCE()
-	{
-		calculatorDisplay.setText("0");
-		isCENext = true;
-		if (isFirst) {
-			sum = 0.0; 
-			getNumber();
-		} else {
-			num = 0.0;
-			getNumber();
-		}
-		if (isEqualNext) {
-			reset();
-		}
-	}
 	
 	// 계산기록 저장하기
 	public void saveCalculatorRecord(String oldSum, String number) {
@@ -393,8 +382,25 @@ public class KeyPadPanel extends JPanel {
 		String newCheckString = makeIntPrinting(check.toString());
 		
 		showingProcess.setText(setOverflow(newCheckString) + " " + operator);
-		calculatorDisplay.setText(setOverflow(newCheckString));
+		calculatorDisplay.setText(setOverflow(setComma(newCheckString)));
 		resizeNumber();
+	}
+	
+	// 계산기 ce 버튼
+	public void actCE()
+	{
+		calculatorDisplay.setText("0");
+		isCENext = true;
+		if (isFirst) {
+			sum = 0.0; 
+			getNumber();
+		} else {
+			num = 0.0;
+			getNumber();
+		}
+		if (isEqualNext) {
+			reset();
+		}
 	}
 	
 	// 등호(=) 작동 함수
@@ -423,7 +429,7 @@ public class KeyPadPanel extends JPanel {
 			}
 			saveCalculatorRecord(setOverflow(makeIntPrinting(oldSum)), setOverflow(makeIntPrinting(temp.toString())));
 			calculate(operator, temp);
-			showResult(oldSum, temp.toString());
+			showResult(setComma(oldSum), setComma(temp.toString()));
 		}
 
 		// 숫자 다음의 등호일때
@@ -463,7 +469,7 @@ public class KeyPadPanel extends JPanel {
 			saveCalculatorRecord(newSum, makeIntPrinting(num.toString()));
 		}
 		operator = op;
-		printingInCalculatorWithNoEqual(sum.toString(),oldSum);
+		printingInCalculatorWithNoEqual(setComma(sum.toString()),setComma(oldSum));
 		isFirst = false;
 		isFirstNumberButton = true;
 		isFirstEqual = true;
@@ -506,12 +512,12 @@ public class KeyPadPanel extends JPanel {
 				showingProcess.setText("negate("+oldNegateString +")" );
 				oldNegateString = "negate("+oldNegateString +")";
 				sum *= -1;
-				calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+				calculatorDisplay.setText(setOverflow(makeIntPrinting(sum.toString())));
 				return;	
 			}
 			isHaveNegate = true;
 			sum = sum * -1; 
-			calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+			calculatorDisplay.setText(setOverflow(makeIntPrinting(sum.toString())));
 			showingProcess.setText("negate("+newSum+")" );
 			oldNegateString = "negate("+newSum+")";
 			return;
@@ -522,7 +528,7 @@ public class KeyPadPanel extends JPanel {
 			isDone = false; 
 			isHaveNegate = true;
 			num = sum * -1; 
-			calculatorDisplay.setText(makeIntPrinting(num.toString()));
+			calculatorDisplay.setText(setOverflow(makeIntPrinting(num.toString())));
 			showingProcess.setText(newSum +" "+ operator + " "+ "negate("+newSum+")" );
 			oldNegateString = "negate("+newSum+")";
 			return;
@@ -534,21 +540,21 @@ public class KeyPadPanel extends JPanel {
 			showingProcess.setText(newSum +" "+ operator + " "+ "negate("+oldNegateString +")" );
 			oldNegateString = "negate("+oldNegateString +")";
 			num *= -1;
-			calculatorDisplay.setText(makeIntPrinting(num.toString()));
+			calculatorDisplay.setText(setOverflow(makeIntPrinting(num.toString())));
 			return;
 		}
 		
 		if(isFirst && !calculatorDisplay.getText().equals("0"))
 		{
 			sum *= -1 ;
-			calculatorDisplay.setText(makeIntPrinting(sum.toString()));
+			calculatorDisplay.setText(setOverflow(makeIntPrinting(sum.toString())));
 			return; 
 		}
 		
 		if(!calculatorDisplay.getText().equals("0"))
 		{
 			num *= -1;
-			calculatorDisplay.setText(makeIntPrinting(num.toString()));
+			calculatorDisplay.setText(setOverflow(makeIntPrinting(num.toString())));
 		}
 		resizeNumber();
 	}

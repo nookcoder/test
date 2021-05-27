@@ -31,6 +31,9 @@ public class TextPanel extends JPanel{
 	public JPanel calculatorRecordPanel; 
 	public JScrollPane calculatorRecordScroll;
 	
+	public JPanel bottomPanel;
+	public KeyPadPanel keyPadPanel;
+	
 	private Constants constants;
 	
 	public TextPanel()
@@ -59,13 +62,18 @@ public class TextPanel extends JPanel{
 		this.calculatorRecord = new JTextArea("아직 기록이 없음");
 		this.calculatorRecordScroll = new JScrollPane(calculatorRecord);
 		calculatorRecord.setEditable(false);
+		calculateRecordButton.addActionListener(new ChangingPad());
+		
+		
 		this.deleteButton = new JButton("삭제");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				calculatorRecord .setText("");
 			}
 		});
+		
 		this.calculatorRecordPanel = new JPanel(); 
+		this.bottomPanel = new JPanel();
 		
 		buttonPanel.setLayout(new BorderLayout());
 		buttonPanel.add(calculateRecordButton,BorderLayout.EAST);
@@ -86,23 +94,47 @@ public class TextPanel extends JPanel{
 		calculatorRecordPanel.add(deleteButton,BorderLayout.SOUTH);
 		
 		calculatorDisplayPanel.setLayout(new GridLayout());
-		calculateRecordButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
-				JFrame f = new JFrame();
-				f.add(calculatorRecordPanel);
-				f.setSize(500,500);
-				f.setVisible(true);
-			}
-		}); 
+	
+	
+	
 		
-		KeyPadPanel keyPadPanel = new KeyPadPanel(showingProcess,calculatorDisplay,calculatorRecord);
+		keyPadPanel = new KeyPadPanel(showingProcess,calculatorDisplay,calculatorRecord);
 		
 		add(textPanel);
-		add(keyPadPanel);
-		
+		bottomPanel.setLayout(new BorderLayout());
+		bottomPanel.add(keyPadPanel,BorderLayout.CENTER);
+		add(bottomPanel);
 		setLayout(constants.textGridLayout);	
+		
+	}
+	
+	private class ChangingPad implements ActionListener{
+
+		private String state = "keyPad"; 
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			if(state.equals("keyPad"))
+			{
+				bottomPanel.removeAll();
+				bottomPanel.add(calculatorRecordPanel,BorderLayout.CENTER);
+				bottomPanel.updateUI();
+				bottomPanel.repaint();
+				state = "recordPad";
+			}
+			else if(state.equals("recordPad")) {
+
+				bottomPanel.removeAll();
+				bottomPanel.add(keyPadPanel,BorderLayout.CENTER);
+				bottomPanel.updateUI();
+				bottomPanel.repaint();
+				state = "keyPad";
+			}
+		}
 		
 		
 	}
 }
+
+
