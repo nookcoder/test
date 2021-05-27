@@ -121,7 +121,7 @@ public class TextPanel extends JPanel{
 		
 		label.setFont(constants.RECORD_FONT);
 		labelPanel.setLayout(new BorderLayout());
-		labelPanel.add(label,BorderLayout.NORTH);
+		labelPanel.add(label,BorderLayout.WEST);
 		labelPanel.setBackground(constants.RECORD_BACKGROUND);
 		
 		miniPanel.add(textPanel);
@@ -168,7 +168,12 @@ public class TextPanel extends JPanel{
 			{
 				removeAll();
 				add(miniPanel);
-				calculatorRecordPanel.add(labelPanel);
+				calculatorRecordPanel.removeAll();
+				calculatorRecordPanel.add(calculatorRecordScroll,BorderLayout.CENTER);
+				calculatorRecordPanel.add(deleteButtonPanel,BorderLayout.SOUTH);
+				calculatorRecordPanel.add(labelPanel,BorderLayout.NORTH);
+				calculatorRecordPanel.updateUI();
+				calculatorRecordPanel.repaint();
 				calculateRecordButton.setVisible(false);
 				add(calculatorRecordPanel);
 				setLayout(new GridLayout(1,0));
@@ -179,7 +184,11 @@ public class TextPanel extends JPanel{
 				removeAll();
 				add(miniPanel);
 				calculateRecordButton.setVisible(true);
-				labelPanel.remove(label);
+				calculatorRecordPanel.removeAll();
+				calculatorRecordPanel.add(calculatorRecordScroll,BorderLayout.CENTER);
+				calculatorRecordPanel.add(deleteButtonPanel,BorderLayout.SOUTH);
+				calculatorRecordPanel.updateUI();
+				calculatorRecordPanel.repaint();
 				updateUI();
 				repaint();}
 		}
