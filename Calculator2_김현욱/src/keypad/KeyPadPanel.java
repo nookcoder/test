@@ -507,12 +507,12 @@ public class KeyPadPanel extends JPanel {
 				showingProcess.setText("negate("+oldNegateString +")" );
 				oldNegateString = "negate("+oldNegateString +")";
 				sum *= -1;
-				calculatorDisplay.setText(setOverflow(makeIntPrinting(sum.toString())));
+				calculatorDisplay.setText(setOverflow(setComma(makeIntPrinting(sum.toString()))));
 				return;	
 			}
 			isHaveNegate = true;
 			sum = sum * -1; 
-			calculatorDisplay.setText(setOverflow(makeIntPrinting(sum.toString())));
+			calculatorDisplay.setText(setOverflow(setComma(makeIntPrinting(sum.toString()))));
 			showingProcess.setText("negate("+newSum+")" );
 			oldNegateString = "negate("+newSum+")";
 			return;
@@ -523,7 +523,7 @@ public class KeyPadPanel extends JPanel {
 			isDone = false; 
 			isHaveNegate = true;
 			num = sum * -1; 
-			calculatorDisplay.setText(setOverflow(makeIntPrinting(num.toString())));
+			calculatorDisplay.setText(setOverflow(setComma(makeIntPrinting(num.toString()))));
 			showingProcess.setText(newSum +" "+ operator + " "+ "negate("+newSum+")" );
 			oldNegateString = "negate("+newSum+")";
 			return;
@@ -535,21 +535,21 @@ public class KeyPadPanel extends JPanel {
 			showingProcess.setText(newSum +" "+ operator + " "+ "negate("+oldNegateString +")" );
 			oldNegateString = "negate("+oldNegateString +")";
 			num *= -1;
-			calculatorDisplay.setText(setOverflow(makeIntPrinting(num.toString())));
+			calculatorDisplay.setText(setOverflow(setComma(makeIntPrinting(num.toString()))));
 			return;
 		}
 		
 		if(isFirst && !calculatorDisplay.getText().equals("0"))
 		{
 			sum *= -1 ;
-			calculatorDisplay.setText(setOverflow(makeIntPrinting(sum.toString())));
+			calculatorDisplay.setText(setOverflow(setComma(makeIntPrinting(sum.toString()))));
 			return; 
 		}
 		
 		if(!calculatorDisplay.getText().equals("0"))
 		{
 			num *= -1;
-			calculatorDisplay.setText(setOverflow(makeIntPrinting(num.toString())));
+			calculatorDisplay.setText(setOverflow(setComma(makeIntPrinting(num.toString()))));
 		}
 		resizeNumber();
 	}
