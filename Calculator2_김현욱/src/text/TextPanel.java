@@ -2,6 +2,7 @@ package text;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -166,8 +167,7 @@ public class TextPanel extends JPanel{
 			// TODO Auto-generated method stub
 			if(e.getComponent().getWidth() > 900)
 			{
-				removeAll();
-				add(miniPanel);
+				resetMiniPanel();
 				calculatorRecordPanel.removeAll();
 				calculatorRecordPanel.add(calculatorRecordScroll,BorderLayout.CENTER);
 				calculatorRecordPanel.add(deleteButtonPanel,BorderLayout.SOUTH);
@@ -181,8 +181,7 @@ public class TextPanel extends JPanel{
 				repaint();
 			}
 			else if(e.getComponent().getWidth() <= 900) {
-				removeAll();
-				add(miniPanel);
+				resetMiniPanel();
 				calculateRecordButton.setVisible(true);
 				calculatorRecordPanel.removeAll();
 				calculatorRecordPanel.add(calculatorRecordScroll,BorderLayout.CENTER);
@@ -209,6 +208,21 @@ public class TextPanel extends JPanel{
 		public void componentHidden(ComponentEvent e) {
 			// TODO Auto-generated method stub
 			
+		}
+		
+		public void resetMiniPanel() {
+			removeAll();
+			miniPanel.removeAll();
+			bottomPanel.removeAll();
+			bottomPanel.add(keyPadPanel,BorderLayout.CENTER);
+			bottomPanel.updateUI();
+			bottomPanel.repaint();
+			miniPanel.add(textPanel);
+			miniPanel.add(bottomPanel);
+			miniPanel.setLayout(constants.textGridLayout);
+			miniPanel.updateUI();
+			miniPanel.repaint();
+			add(miniPanel);
 		}
 	}
 }
