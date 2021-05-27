@@ -147,12 +147,7 @@ public class KeyPadPanel extends JPanel {
 	
 	public String setOverflow(String check)
 	{
-		if(check.replaceAll("[,]", "")=="9999999999999999")
-		{
-			return setComma("9999999999999999");
-		}
-		
-		else if(check.contains("E"))
+		if(check.contains("E"))
 		{
 			String[] overflowCheck = check.split("E");
 			String overflowResultString;
@@ -170,7 +165,7 @@ public class KeyPadPanel extends JPanel {
 				{
 					overflowResultString =  overflowCheck[0].substring(0, overflowCheck[0].length())+"e"+overflowCheck[1];
 				}
-				if(overflowResultString.equals("1.0e16"))
+				if(overflowResultString.equals("1.0e+16"))
 				{
 					overflowResultString = setComma("9999999999999999");
 				}
@@ -333,7 +328,7 @@ public class KeyPadPanel extends JPanel {
 		String newNumber = makeIntPrinting(number);
 		String newResult = makeIntPrinting(sum.toString());
 		showingProcess.setText(setOverflow(newSum) + " " + operator + " " + setOverflow(newNumber) + " =");
-		calculatorDisplay.setText(setOverflow(newResult));
+		calculatorDisplay.setText(setOverflow(setComma(newResult)));
 		resizeNumber();
 	}
 	
@@ -429,7 +424,7 @@ public class KeyPadPanel extends JPanel {
 			}
 			saveCalculatorRecord(setOverflow(makeIntPrinting(oldSum)), setOverflow(makeIntPrinting(temp.toString())));
 			calculate(operator, temp);
-			showResult(setComma(oldSum), setComma(temp.toString()));
+			showResult(oldSum, temp.toString());
 		}
 
 		// 숫자 다음의 등호일때
@@ -685,11 +680,24 @@ public class KeyPadPanel extends JPanel {
 	// 키보드 입력 이벤트
 	private class CalcKetListener implements KeyListener {
 
-		
 		@Override
 		public void keyTyped(KeyEvent e) {
 			int operatorKeyCode = e.getKeyCode();
 			calculatorDisplay.requestFocus();
+
+			if(e.isShiftDown())
+			{
+				switch(operatorKeyCode)
+				{
+					case KeyEvent.VK_EQUALS:
+						actOperator("＋");
+						break;
+					case KeyEvent.VK_8:
+						actOperator("×");
+						break;
+				}
+				return;
+			}
 			
 			switch (operatorKeyCode) {
 			case KeyEvent.VK_ADD:
@@ -704,7 +712,7 @@ public class KeyPadPanel extends JPanel {
 				actOperator("×");
 				break;
 
-			case KeyEvent.VK_DIVIDE:
+			case KeyEvent.VK_DIVIDE: case KeyEvent.VK_SLASH:
 				actOperator("÷");
 				break;
 
@@ -741,7 +749,7 @@ public class KeyPadPanel extends JPanel {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			calculatorDisplay.requestFocus();
-		
+			
 			char number = e.getKeyChar();
 			if (number >= '0' && number <= '9') {// 등호 다음 숫자 입력 시 계산기 초기화
 				
@@ -790,15 +798,18 @@ public class KeyPadPanel extends JPanel {
 				} else {
 					num = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
 				}
-			} else {
+			}
+			
+			else {
 				keyTyped(e);
 			}
+			
+			
 		}
 
 		@Override
 		public void keyReleased(KeyEvent e) {
 			// TODO Auto-generated method stub
-
 		}
 	}
 }
