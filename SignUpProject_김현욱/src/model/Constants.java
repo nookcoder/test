@@ -1,8 +1,12 @@
 package model;
 
+import java.awt.*;
+
+import javax.swing.ImageIcon;
+
 public class Constants {
 	
-	// µ¥ÀÌÅÍ º£ÀÌ½º °ü·Ã Constants
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½ Constants
 	public String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
 	public String DB_URL = "jdbc:mysql://localhost:3306/search_log?serverTimezone=Asia/Seoul&useSSL=false";
 	public String USERNAME = "root";
@@ -10,5 +14,9 @@ public class Constants {
 	public String INSERTQUERY = "insert into searchrecord(text,date) values(?,?)";
 	public String DELETEQUERY = "delete from searchrecord";
 	public String SELECTQUERY = "select * from searchrecord";
-
+	
+	public Color YELLOW = new Color(255,185,0);
+	public Color LIGHE_BLUE = new Color(8,190,255);
+	
+	public ImageIcon SIGNUP_BACKGROUND = new ImageIcon("src/images/signupBackground.jpg");
 }
