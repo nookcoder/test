@@ -69,56 +69,56 @@ public class SignUp extends JFrame {
 		
 		JLabel idLabel = new JLabel("아이디 :  ");
 		idLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		idLabel.setFont(new Font("휴먼매직체", Font.BOLD, 14));
+		idLabel.setFont(constants.SIGNUP_FONT);
 		idLabel.setBounds(31, 10, 71, 51);
 		idLabel.setForeground(constants.YELLOW);
 		contentPane.add(idLabel);
 		
 		JLabel passwordLabel = new JLabel("비밀번호 : ");
 		passwordLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		passwordLabel.setFont(new Font("휴먼매직체", Font.BOLD, 15));
+		passwordLabel.setFont(constants.SIGNUP_FONT);
 		passwordLabel.setBounds(31, 71, 71, 51);
 		passwordLabel.setForeground(constants.YELLOW);
 		contentPane.add(passwordLabel);
 		
 		JLabel passwordCheckLabel = new JLabel("비밀번호 확인 : ");
 		passwordCheckLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		passwordCheckLabel.setFont(new Font("휴먼매직체", Font.BOLD, 15));
+		passwordCheckLabel.setFont(constants.SIGNUP_FONT);
 		passwordCheckLabel.setBounds(-1, 124, 103, 51);
-		passwordCheckLabel.setForeground(constants.YELLOW);
+		passwordCheckLabel.setForeground(Color.RED);
 		contentPane.add(passwordCheckLabel);
 		
 		JLabel nameLabel = new JLabel("이름 : ");
 		nameLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		nameLabel.setFont(new Font("휴먼매직체", Font.BOLD, 15));
+		nameLabel.setFont(constants.SIGNUP_FONT);
 		nameLabel.setBounds(31, 185, 71, 51);
 		nameLabel.setForeground(constants.YELLOW);
 		contentPane.add(nameLabel);
 		
 		JLabel birthLabel = new JLabel("생년월일 : ");
 		birthLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		birthLabel.setFont(new Font("휴먼매직체", Font.BOLD, 15));
+		birthLabel.setFont(constants.SIGNUP_FONT);
 		birthLabel.setBounds(31, 245, 71, 51);
 		birthLabel.setForeground(constants.YELLOW);
 		contentPane.add(birthLabel);
 		
 		JLabel phoneNumberLabel = new JLabel("전화번호 : ");
 		phoneNumberLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		phoneNumberLabel.setFont(new Font("휴먼매직체", Font.BOLD, 15));
+		phoneNumberLabel.setFont(constants.SIGNUP_FONT);
 		phoneNumberLabel.setBounds(31, 312, 71, 51);
 		phoneNumberLabel.setForeground(constants.YELLOW);
 		contentPane.add(phoneNumberLabel);
 		 
 		JLabel emailLabel = new JLabel("이메일 : ");
 		emailLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		emailLabel.setFont(new Font("휴먼매직체", Font.BOLD, 15));
+		emailLabel.setFont(constants.SIGNUP_FONT);
 		emailLabel.setForeground(constants.YELLOW);
 		emailLabel.setBounds(43, 373, 59, 51);
 		contentPane.add(emailLabel);
 		
 		JLabel addressLabel = new JLabel("주소 : ");
 		addressLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		addressLabel.setFont(new Font("휴먼매직체", Font.BOLD, 15));
+		addressLabel.setFont(constants.SIGNUP_FONT);
 		addressLabel.setBounds(43, 434, 59, 53);
 		addressLabel.setForeground(constants.YELLOW);
 		contentPane.add(addressLabel);
@@ -142,12 +142,14 @@ public class SignUp extends JFrame {
 				setBorder(new RoundedCornerBorder());
 			}
 		};
-		idField .setBounds(114, 18, 225, 36);
+		idField.setBounds(114, 18, 225, 36);
 		idField.setColumns(10);
 		idField.setBackground(constants.LIGHE_BLUE);
+		idField.setForeground(Color.WHITE);
+		idField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(idField);
 		
-		passwordField = new JTextField() {
+		passwordField = new JPasswordField() {
 			@Override 
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
@@ -169,9 +171,10 @@ public class SignUp extends JFrame {
 		passwordField.setColumns(10);
 		passwordField.setBounds(114, 79, 225, 36);
 		passwordField.setBackground(constants.LIGHE_BLUE);
+		passwordField.setForeground(Color.WHITE);
 		contentPane.add(passwordField);
 		
-		passwordCheckField = new JTextField() {
+		passwordCheckField = new JPasswordField() {
 			@Override 
 			protected void paintComponent(Graphics g) {
 				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
@@ -193,6 +196,7 @@ public class SignUp extends JFrame {
 		passwordCheckField.setColumns(10);
 		passwordCheckField.setBounds(114, 132, 225, 36);
 		passwordCheckField.setBackground(constants.LIGHE_BLUE);
+		passwordCheckField.setForeground(Color.WHITE);
 		contentPane.add(passwordCheckField);
 		
 		nameField = new JTextField() {
@@ -217,6 +221,8 @@ public class SignUp extends JFrame {
 		nameField.setColumns(10);
 		nameField.setBounds(114, 193, 225, 36);
 		nameField.setBackground(constants.LIGHE_BLUE);
+		nameField.setForeground(Color.WHITE);
+		nameField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(nameField);
 		
 		birthField = new JTextField() {
@@ -241,6 +247,8 @@ public class SignUp extends JFrame {
 		birthField.setColumns(10);
 		birthField.setBounds(114, 253, 225, 36);
 		birthField.setBackground(constants.LIGHE_BLUE);
+		birthField.setForeground(Color.WHITE);
+		birthField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(birthField);
 		
 		phoneNumberField = new JTextField() {
@@ -265,6 +273,8 @@ public class SignUp extends JFrame {
 		phoneNumberField.setColumns(10);
 		phoneNumberField.setBounds(114, 320, 225, 36);
 		phoneNumberField.setBackground(constants.LIGHE_BLUE);
+		phoneNumberField.setForeground(Color.WHITE);
+		phoneNumberField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(phoneNumberField);
 		
 		emailField = new JTextField() {
@@ -289,6 +299,8 @@ public class SignUp extends JFrame {
 		emailField.setColumns(10);
 		emailField.setBounds(114, 381, 225, 36);
 		emailField.setBackground(constants.LIGHE_BLUE);
+		emailField.setForeground(Color.WHITE);
+		emailField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(emailField);
 		
 		addressField = new JTextField() {
@@ -313,9 +325,11 @@ public class SignUp extends JFrame {
 		addressField.setColumns(10);
 		addressField.setBounds(114, 443, 225, 36);
 		addressField.setBackground(constants.LIGHE_BLUE);
+		addressField.setForeground(Color.WHITE);
+		addressField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(addressField);
 	}
-	
+
 	public class RoundedCornerBorder extends AbstractBorder {
 		private Color ALPHA_ZERO = new Color(0x0, true);
 		@Override 

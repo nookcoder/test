@@ -18,5 +18,7 @@ public class Constants {
 	public Color YELLOW = new Color(255,185,0);
 	public Color LIGHE_BLUE = new Color(8,190,255);
 	
+	public Font SIGNUP_FONT = new Font("휴먼매직체", Font.BOLD, 15); 
+	
 	public ImageIcon SIGNUP_BACKGROUND = new ImageIcon("src/images/signupBackground.jpg");
 }
