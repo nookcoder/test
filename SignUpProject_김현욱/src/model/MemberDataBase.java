@@ -4,16 +4,15 @@ import java.sql.*;
 
 public class MemberDataBase {
 	private Constants constants;
-	private Connection connection; 
-	private Statement statement; 
-	private ResultSet resultset;
+	public Connection connection; 
+	public Statement statement; 
+	public ResultSet resultset;
 	
 	public MemberDataBase() {
 		this.constants = new Constants();
 		this.connection = null; 
 		this.statement = null; 
 		this.resultset = null;
-		
 		
 		try {
 			Class.forName(constants.JDBC_DRIVER);
