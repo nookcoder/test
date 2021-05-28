@@ -21,42 +21,31 @@ public class SignUpController {
 		this.constants = new Constants();
 		this.member = member;
 		this.signup = signup;
+		this.signup.setIdListener(new IdListener());
 	}
 	
-	// 데베에 정보 넣기 
-	public void insertData(String id,String password,String name,String birth,String email,String phoneNumber,String address) throws SQLException
-	{
-		String insertQuery = constants.INSERTQUERY;
-		PreparedStatement statement = (PreparedStatement) member.connection.prepareStatement(insertQuery);
-		statement.setString(1, id);
-		statement.setString(2, password);
-		statement.setString(3, name);
-		statement.setString(4, birth);
-		statement.setString(5, email);
-		statement.setString(6, phoneNumber);
-		statement.setString(7, address);
-		statement.executeUpdate();
-	}
-	
-	public boolean checkIsHaving(String data,String check) throws SQLException
-	{
-		boolean isHaving = false;
-		String selecQuery = constants.SELECTQUERY;
-		Statement statement = (Statement) member.connection.createStatement();
-		ResultSet resultset = statement.executeQuery(selecQuery);
-	
-		while(resultset.next())
+	private class IdListener implements ActionListener{
+		
+		String inputId = signup.getId();
+		
+		public void actionPerformed(ActionEvent e)
 		{
-			if(check == resultset.getString("\"" + data + "\""))
-			{
-				isHaving = true;
+			try {
+				if(member.checkIsHaving("id",inputId))
+				{
+					signup.idField.setText("");
+					// 안내문구 
+					signup.idField.requestFocus();
+					return;
+				}
+				signup.addressField.setText("되나?");
+				signup.passwordField.requestFocus();
+				
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
-		
-		return isHaving; 
 	}
 	
-//	private class InsertListener implements ActionListener{
-//		
-//	}
 }

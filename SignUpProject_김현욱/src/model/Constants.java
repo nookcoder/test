@@ -8,12 +8,12 @@ public class Constants {
 	
 	// ������ ���̽� ���� Constants
 	public String JDBC_DRIVER = "com.mysql.jdbc.Driver"; 
-	public String DB_URL = "jdbc:mysql://localhost:3306/search_log?serverTimezone=Asia/Seoul&useSSL=false";
+	public String DB_URL = "jdbc:mysql://localhost:3306/signup?serverTimezone=Asia/Seoul&useSSL=false";
 	public String USERNAME = "root";
 	public String PASSWORD = "0000";
-	public String INSERTQUERY = "insert into signup(id,password,name,birth,email,phoneNumber,address) values(?,?,?,?,?,?,?)";
-	public String DELETEQUERY = "delete from signup";
-	public String SELECTQUERY = "select * from signup";
+	public String INSERTQUERY = "insert into member_info(id,password,name,birth,email,phoneNumber,address) values(?,?,?,?,?,?,?)";
+	public String DELETEQUERY = "delete from member_info";
+	public String SELECTQUERY = "select * from member_info";
 	
 	public Color YELLOW = new Color(255,185,0);
 	public Color LIGHE_BLUE = new Color(8,190,255);
