@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -351,7 +352,70 @@ public class SignUp extends JFrame {
 		okayButton.setForeground(constants.YELLOW);
 		contentPane.add(okayButton);
 	}
+	
+	// 텍스트 필드 값 받아오기 
+	public String getId() {
+		return idField.getText();
+	}
+	public String getPassword() {
+		return passwordField.getText();
+	}
+	public String getPasswordCheck() {
+		return passwordCheckField.getText();
+	}
+	public String getName() {
+		return nameField.getText();
+	}
+	public String getBirth() {
+		return birthField.getText();
+	}
+	public String getPhoneNumber() {
+		return phoneNumberField.getText();
+	}
+	public String getEmail() {
+		return emailField.getText();
+	}
+	public String getAddress() {
+		return addressField.getText();
+	}
 
+	// 이벤트 등록 
+	public void setIdListener(ActionListener listener)
+	{
+		idField.addActionListener(listener);
+	}
+	public void setPasswordListener(ActionListener listener)
+	{
+		passwordField.addActionListener(listener);
+	}
+	public void setPasswordChekcListener(ActionListener listener)
+	{
+		passwordCheckField.addActionListener(listener);
+	}
+	public void setNameListener(ActionListener listener)
+	{
+		nameField.addActionListener(listener);
+	}
+	public void setBirthListener(ActionListener listener)
+	{
+		birthField.addActionListener(listener);
+	}
+	public void setPhoneNumberListener(ActionListener listener)
+	{
+		phoneNumberField.addActionListener(listener);
+	}
+	public void setEmailListener(ActionListener listener)
+	{
+		emailField.addActionListener(listener);
+	}
+	public void setAddressListener(ActionListener listener)
+	{
+		addressField.addActionListener(listener);
+	}
+	
+	
+	
+	
 	private class RoundedCornerBorder extends AbstractBorder {
 		private Color ALPHA_ZERO = new Color(0x0, true);
 		@Override 
