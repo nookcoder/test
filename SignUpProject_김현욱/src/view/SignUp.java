@@ -1,8 +1,6 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,8 +12,6 @@ import model.Constants;
 import javax.swing.JTextField;
 import java.awt.*;
 import javax.swing.JLabel;
-import javax.swing.SpringLayout;
-import java.awt.Font;
 import java.awt.geom.Area;
 import java.awt.geom.*;
 
@@ -26,32 +22,20 @@ public class SignUp extends JFrame {
 
 	private Constants constants = new Constants();
 	private JPanel contentPane;
-	private JTextField idField;
-	private JTextField passwordField;
-	private JTextField passwordCheckField;
-	private JTextField nameField;
-	private JTextField birthField;
-	private JTextField phoneNumberField;
-	private JTextField emailField;
-	private JTextField addressField;
-	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SignUp frame = new SignUp();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	public JTextField idField;
+	public JTextField passwordField;
+	public JTextField passwordCheckField;
+	public JTextField nameField;
+	public JTextField birthField;
+	public JTextField phoneNumberField;
+	public JTextField emailField;
+	public JTextField addressField;
 
 	public SignUp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400,600);
 		setResizable(false);
+		setLocationRelativeTo(null);
 		
 		contentPane = new JPanel() {
 			public void paintComponent(Graphics g)
@@ -70,42 +54,42 @@ public class SignUp extends JFrame {
 		JLabel idLabel = new JLabel("아이디 :  ");
 		idLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		idLabel.setFont(constants.SIGNUP_FONT);
-		idLabel.setBounds(31, 10, 71, 51);
+		idLabel.setBounds(31, 23, 71, 51);
 		idLabel.setForeground(constants.YELLOW);
 		contentPane.add(idLabel);
 		
 		JLabel passwordLabel = new JLabel("비밀번호 : ");
 		passwordLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		passwordLabel.setFont(constants.SIGNUP_FONT);
-		passwordLabel.setBounds(31, 71, 71, 51);
+		passwordLabel.setBounds(31, 84, 71, 51);
 		passwordLabel.setForeground(constants.YELLOW);
 		contentPane.add(passwordLabel);
 		
 		JLabel passwordCheckLabel = new JLabel("비밀번호 확인 : ");
 		passwordCheckLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		passwordCheckLabel.setFont(constants.SIGNUP_FONT);
-		passwordCheckLabel.setBounds(-1, 124, 103, 51);
+		passwordCheckLabel.setBounds(-1, 145, 103, 51);
 		passwordCheckLabel.setForeground(Color.RED);
 		contentPane.add(passwordCheckLabel);
 		
 		JLabel nameLabel = new JLabel("이름 : ");
 		nameLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		nameLabel.setFont(constants.SIGNUP_FONT);
-		nameLabel.setBounds(31, 185, 71, 51);
+		nameLabel.setBounds(31, 206, 71, 51);
 		nameLabel.setForeground(constants.YELLOW);
 		contentPane.add(nameLabel);
 		
 		JLabel birthLabel = new JLabel("생년월일 : ");
 		birthLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		birthLabel.setFont(constants.SIGNUP_FONT);
-		birthLabel.setBounds(31, 245, 71, 51);
+		birthLabel.setBounds(31, 267, 71, 51);
 		birthLabel.setForeground(constants.YELLOW);
 		contentPane.add(birthLabel);
 		
 		JLabel phoneNumberLabel = new JLabel("전화번호 : ");
 		phoneNumberLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		phoneNumberLabel.setFont(constants.SIGNUP_FONT);
-		phoneNumberLabel.setBounds(31, 312, 71, 51);
+		phoneNumberLabel.setBounds(31, 328, 71, 51);
 		phoneNumberLabel.setForeground(constants.YELLOW);
 		contentPane.add(phoneNumberLabel);
 		 
@@ -113,13 +97,13 @@ public class SignUp extends JFrame {
 		emailLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		emailLabel.setFont(constants.SIGNUP_FONT);
 		emailLabel.setForeground(constants.YELLOW);
-		emailLabel.setBounds(43, 373, 59, 51);
+		emailLabel.setBounds(43, 389, 59, 51);
 		contentPane.add(emailLabel);
 		
 		JLabel addressLabel = new JLabel("주소 : ");
 		addressLabel.setHorizontalAlignment(SwingConstants.TRAILING);
 		addressLabel.setFont(constants.SIGNUP_FONT);
-		addressLabel.setBounds(43, 434, 59, 53);
+		addressLabel.setBounds(43, 450, 59, 53);
 		addressLabel.setForeground(constants.YELLOW);
 		contentPane.add(addressLabel);
 		
@@ -142,7 +126,7 @@ public class SignUp extends JFrame {
 				setBorder(new RoundedCornerBorder());
 			}
 		};
-		idField.setBounds(114, 18, 225, 36);
+		idField.setBounds(114, 30, 225, 36);
 		idField.setColumns(10);
 		idField.setBackground(constants.LIGHE_BLUE);
 		idField.setForeground(Color.WHITE);
@@ -169,7 +153,7 @@ public class SignUp extends JFrame {
 			}
 		};
 		passwordField.setColumns(10);
-		passwordField.setBounds(114, 79, 225, 36);
+		passwordField.setBounds(114, 92, 225, 36);
 		passwordField.setBackground(constants.LIGHE_BLUE);
 		passwordField.setForeground(Color.WHITE);
 		contentPane.add(passwordField);
@@ -194,7 +178,7 @@ public class SignUp extends JFrame {
 			}
 		};
 		passwordCheckField.setColumns(10);
-		passwordCheckField.setBounds(114, 132, 225, 36);
+		passwordCheckField.setBounds(114, 153, 225, 36);
 		passwordCheckField.setBackground(constants.LIGHE_BLUE);
 		passwordCheckField.setForeground(Color.WHITE);
 		contentPane.add(passwordCheckField);
@@ -219,7 +203,7 @@ public class SignUp extends JFrame {
 			}
 		};
 		nameField.setColumns(10);
-		nameField.setBounds(114, 193, 225, 36);
+		nameField.setBounds(114, 221, 225, 36);
 		nameField.setBackground(constants.LIGHE_BLUE);
 		nameField.setForeground(Color.WHITE);
 		nameField.setFont(constants.SIGNUP_FONT);
@@ -245,7 +229,7 @@ public class SignUp extends JFrame {
 			}
 		};
 		birthField.setColumns(10);
-		birthField.setBounds(114, 253, 225, 36);
+		birthField.setBounds(114, 274, 225, 36);
 		birthField.setBackground(constants.LIGHE_BLUE);
 		birthField.setForeground(Color.WHITE);
 		birthField.setFont(constants.SIGNUP_FONT);
@@ -271,7 +255,7 @@ public class SignUp extends JFrame {
 			}
 		};
 		phoneNumberField.setColumns(10);
-		phoneNumberField.setBounds(114, 320, 225, 36);
+		phoneNumberField.setBounds(114, 335, 225, 36);
 		phoneNumberField.setBackground(constants.LIGHE_BLUE);
 		phoneNumberField.setForeground(Color.WHITE);
 		phoneNumberField.setFont(constants.SIGNUP_FONT);
@@ -297,7 +281,7 @@ public class SignUp extends JFrame {
 			}
 		};
 		emailField.setColumns(10);
-		emailField.setBounds(114, 381, 225, 36);
+		emailField.setBounds(114, 396, 225, 36);
 		emailField.setBackground(constants.LIGHE_BLUE);
 		emailField.setForeground(Color.WHITE);
 		emailField.setFont(constants.SIGNUP_FONT);
@@ -323,14 +307,52 @@ public class SignUp extends JFrame {
 			}
 		};
 		addressField.setColumns(10);
-		addressField.setBounds(114, 443, 225, 36);
+		addressField.setBounds(114, 458, 225, 36);
 		addressField.setBackground(constants.LIGHE_BLUE);
 		addressField.setForeground(Color.WHITE);
 		addressField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(addressField);
+		
+		JButton okayButton = new JButton("OK") {
+			@Override
+			protected void paintComponent(Graphics g) {
+				int width = getWidth();
+				int height = getHeight();
+				
+				Graphics2D graphics = (Graphics2D) g;
+				
+				graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				
+				if(getModel().isArmed()) {
+					graphics.setColor(getBackground().darker());
+				} else if (getModel().isRollover()) {
+					graphics.setColor(getBackground().brighter());
+				} else {
+					graphics.setColor(getBackground());
+				}
+				
+				graphics.fillRoundRect(0,0,width,height,15,15);
+				
+				FontMetrics fontMetrics = graphics.getFontMetrics(); 
+				Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds();
+				
+				int textX = (width - stringBounds.width) / 2;
+				int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent(); graphics.setColor(getForeground()); 
+				
+				graphics.setFont(getFont());
+				graphics.drawString(getText(), textX, textY);
+				graphics.dispose();
+
+				super.paintComponent(g);
+			}
+		};
+		okayButton.setBounds(161, 519, 91, 23);
+		okayButton.setBackground(constants.LIGHE_BLUE);
+		okayButton.setForeground(constants.YELLOW);
+		contentPane.add(okayButton);
 	}
 
-	public class RoundedCornerBorder extends AbstractBorder {
+	private class RoundedCornerBorder extends AbstractBorder {
 		private Color ALPHA_ZERO = new Color(0x0, true);
 		@Override 
 		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
@@ -357,4 +379,5 @@ public class SignUp extends JFrame {
 			return insets;
 		}
 	}
+	
 }
