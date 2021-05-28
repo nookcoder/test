@@ -1,15 +1,9 @@
 package set;
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 
-import keypad.KeyPadPanel;
 import text.TextPanel;
 
 public class SettingCalculator extends JFrame{
@@ -35,6 +29,7 @@ public class SettingCalculator extends JFrame{
 		add(contentPanel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+
 		textPanel.calculatorDisplay.requestFocusInWindow();
 	}
 
