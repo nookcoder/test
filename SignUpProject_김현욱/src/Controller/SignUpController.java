@@ -1,6 +1,7 @@
 package Controller;
 
 import java.awt.event.*;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.mysql.jdbc.*;
@@ -37,9 +38,22 @@ public class SignUpController {
 		statement.executeUpdate();
 	}
 	
-	public void checkIsHaving()
+	public boolean checkIsHaving(String data,String check) throws SQLException
 	{
+		boolean isHaving = false;
 		String selecQuery = constants.SELECTQUERY;
+		Statement statement = (Statement) member.connection.createStatement();
+		ResultSet resultset = statement.executeQuery(selecQuery);
+	
+		while(resultset.next())
+		{
+			if(check == resultset.getString("\"" + data + "\""))
+			{
+				isHaving = true;
+			}
+		}
+		
+		return isHaving; 
 	}
 	
 //	private class InsertListener implements ActionListener{
