@@ -20,5 +20,7 @@ public class Constants {
 	
 	public Font SIGNUP_FONT = new Font("휴먼매직체", Font.BOLD, 15); 
 	
+	public String REGEX_TEXT_NUMBER = "^[0-9a-z]$";
+	
 	public ImageIcon SIGNUP_BACKGROUND = new ImageIcon("src/images/signupBackground.jpg");
 }

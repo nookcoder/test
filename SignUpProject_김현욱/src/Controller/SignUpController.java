@@ -15,9 +15,11 @@ public class SignUpController {
 	private MemberDataBase member;
 	private SignUp signup;
 	private Constants constants;
+	private Exception exception;
 	
 	public SignUpController(MemberDataBase member, SignUp signup)
 	{
+		this.exception = new Exception();
 		this.constants = new Constants();
 		this.member = member;
 		this.signup = signup;
@@ -38,7 +40,8 @@ public class SignUpController {
 					signup.idField.requestFocus();
 					return;
 				}
-				signup.addressField.setText("되나?");
+				
+				if(exception.checkIdInput(inputId))
 				signup.passwordField.requestFocus();
 				
 			} catch (SQLException e1) {
