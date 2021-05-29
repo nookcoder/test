@@ -8,6 +8,7 @@ import com.mysql.jdbc.*;
 
 import model.Constants;
 import model.MemberDataBase;
+import model.Exception;
 import view.SignUp;
 
 public class SignUpController {
@@ -19,7 +20,7 @@ public class SignUpController {
 	
 	public SignUpController(MemberDataBase member, SignUp signup)
 	{
-		this.exception = new Exception();
+		this.exception= new Exception();
 		this.constants = new Constants();
 		this.member = member;
 		this.signup = signup;
@@ -36,18 +37,22 @@ public class SignUpController {
 				if(member.checkIsHaving("id",inputId))
 				{
 					signup.idField.setText("");
-					// 안내문구 
 					signup.idField.requestFocus();
 					return;
 				}
 				
-				if(exception.checkIdInput(inputId))
+				if(!exception.checkIdInput(inputId))
+				{
+					signup.idField.setText("");
+					return;
+				}
+				
 				signup.passwordField.requestFocus();
 				
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
 			}
+			
 		}
 	}
 	
