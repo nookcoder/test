@@ -30,6 +30,22 @@ public class LoginView extends JFrame{
 	private JButton okButton; 
 	private JButton exitButton; 
 	
+	// 로그인 패널 
+	private JPanel loginPanel; 
+	private JPanel checkboxPanel;
+	private JLabel serverLabel;
+	private JButton player1; 
+	private JButton player2; 
+	private Checkbox happyServer; 
+	private Checkbox dreamServer;
+	private JButton findButton;
+	private JPanel InputPanel;
+	private JLabel id; 
+	private JLabel password; 
+	private JTextField idField; 
+	private JPasswordField passwordField; 
+	private JTextField textField;
+	
 	
 	public LoginView(){
 		setUndecorated(true);
@@ -49,10 +65,72 @@ public class LoginView extends JFrame{
 				super.paintComponent(g);
 			}
 		};
-		contentPanel.setLayout(new BorderLayout());
 
+		// 로그인 영역 
+		loginPanel = new JPanel();
+		loginPanel.setBounds(274, 369, 252, 169);
+		loginPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		checkboxPanel = new JPanel();
+		checkboxPanel.setBounds(28, 35, 199, 32);
+		serverLabel = new JLabel("멀티서버 선택");
+		serverLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		serverLabel.setBounds(74, 0, 114, 29);
+		player1= new JButton(constants.PLAYER1);
+		player2 = new JButton(constants.PLATER2);
+		happyServer = new Checkbox(" HAPPY");
+		happyServer.setBounds(103, 5, 96, 22);
+		dreamServer = new Checkbox(" DREAM");
+		dreamServer.setBounds(10, 5, 96, 22);
+		InputPanel = new JPanel();
+		InputPanel.setBounds(12, 94, 228, 65);
+		findButton = new JButton("ID/PW 찾기");
+		findButton.setBounds(48, 71, 166, 23);
+		id = new JLabel("I             D");
+		id.setBounds(12, 8, 62, 15);
+		password = new JLabel("PASSWORD");
+		password.setBounds(12, 40, 68, 15);
+		idField = new JTextField();
+		idField.setBounds(86, 5, 130, 21);
+		passwordField = new JPasswordField();
+		passwordField.setBounds(0, 20, 52, -20);
+		contentPanel.setLayout(null);
+		checkboxPanel.setLayout(null);
+		
+		// 서버 component 추가
+		serverLabel.setForeground(Color.WHITE);
+		serverLabel.setFont(constants.LOGIN_FONT);
+		checkboxPanel.add(dreamServer);
+		checkboxPanel.add(happyServer);
+		checkboxPanel.setFont(constants.LOGIN_FONT);
+		InputPanel.setLayout(null);
+		
+		decorateButton(findButton);
+		findButton.setBackground(constants.YELLOW);
+		findButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 3, true));
+		
+		InputPanel.add(id);
+		InputPanel.add(idField);
+		InputPanel.add(password);
+		InputPanel.add(passwordField);
+		loginPanel.setLayout(null);
+		loginPanel.add(serverLabel);
+		loginPanel.add(checkboxPanel);
+		loginPanel.add(findButton);
+		loginPanel.add(InputPanel);
+		loginPanel.add(player1);
+		loginPanel.add(player2);
+		
+		textField = new JPasswordField();
+		textField.setBounds(86, 37, 130, 21);
+		InputPanel.add(textField);
+		textField.setColumns(10);
+		loginPanel.setBackground(constants.YELLOW);
+		
+		contentPanel.add(loginPanel);
+		
 		// 버튼 패널 
 		buttonPanel = new JPanel(); 
+		buttonPanel.setBounds(238, 548, 329, 39);
 		
 		// 버튼 생성 
 		newIdButton = new JButton("회원가입");
@@ -61,15 +139,17 @@ public class LoginView extends JFrame{
 		decorateButton(newIdButton);
 		decorateButton(okButton);
 		decorateButton(exitButton);
-//		newIdButton.addMouseListener(new ButtonDecorate()); 
+		newIdButton.addMouseListener(new ButtonDecorate()); 
+		okButton.addMouseListener(new ButtonDecorate());
+		exitButton.addMouseListener(new ButtonDecorate());
 		
 		buttonPanel.add(newIdButton);
 		buttonPanel.add(okButton);
 		buttonPanel.add(exitButton);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		
-		contentPanel.add(buttonPanel, BorderLayout.SOUTH);
-		add(contentPanel);
+		contentPanel.add(buttonPanel);
+		getContentPane().add(contentPanel);
 		setVisible(true);
 	}
 	
@@ -89,6 +169,11 @@ public class LoginView extends JFrame{
 		
 	}
 	
+	public void setEventListener(JButton btn,MouseListener listener)
+	{
+		btn.addMouseListener(listener);
+	}
+	
 	private class ButtonDecorate implements MouseListener{
 		
 		@Override
@@ -102,6 +187,7 @@ public class LoginView extends JFrame{
 			// TODO Auto-generated method stub
 
 		}
+		
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -118,9 +204,8 @@ public class LoginView extends JFrame{
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			e.getComponent().setBackground(getBackground());
+			e.getComponent().setBackground(e.getComponent().getBackground().brighter());
 		}
 	}
-	
 }
 
