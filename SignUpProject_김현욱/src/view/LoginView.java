@@ -19,6 +19,7 @@ import javax.swing.*;
 
 public class LoginView extends JFrame{
 
+	private setRoundBorder roundBorder = new setRoundBorder();
 	private Constants constants;
 	
 	// 가장 큰 패널 
@@ -67,63 +68,110 @@ public class LoginView extends JFrame{
 		};
 
 		// 로그인 영역 
-		loginPanel = new JPanel();
-		loginPanel.setBounds(274, 369, 252, 169);
-		loginPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		checkboxPanel = new JPanel();
-		checkboxPanel.setBounds(28, 35, 199, 32);
-		serverLabel = new JLabel("멀티서버 선택");
+		loginPanel = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				Graphics2D g2 = (Graphics2D)g.create();
+				RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+				g2.setRenderingHints(qualityHints);
+
+				g2.setPaint(new GradientPaint(new Point(0, 0), Color.orange, new Point(0, getHeight()),
+						constants.DARKER_YELLOW));
+				g2.fillRoundRect(0, 0, getWidth(), getHeight(), 40, 40);
+				g2.dispose();
+			}
+		};
+		loginPanel.setBounds(274, 390, 252, 148);
+		
+		// 서버 선택 관련 
+		checkboxPanel = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				Graphics2D g2 = (Graphics2D)g.create();
+				RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+				g2.setRenderingHints(qualityHints);
+
+				g2.setPaint(new GradientPaint(new Point(0, 0), Color.GRAY, new Point(0, getHeight()),
+						Color.GRAY));
+				g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+				g2.dispose();
+			}
+		};
+		checkboxPanel.setBounds(12, 10, 228, 32);
+		serverLabel = new JLabel("서버 선택");
+		serverLabel.setBounds(0, 5, 61, 22);
 		serverLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		serverLabel.setBounds(74, 0, 114, 29);
-		player1= new JButton(constants.PLAYER1);
-		player2 = new JButton(constants.PLATER2);
-		happyServer = new Checkbox(" HAPPY");
-		happyServer.setBounds(103, 5, 96, 22);
-		dreamServer = new Checkbox(" DREAM");
-		dreamServer.setBounds(10, 5, 96, 22);
-		InputPanel = new JPanel();
-		InputPanel.setBounds(12, 94, 228, 65);
+		happyServer = new Checkbox("HAPPY");
+		happyServer.setBounds(147, 5, 71, 22);
+		dreamServer = new Checkbox("DREAM");
+		dreamServer.setBounds(67, 5, 71, 22);
+		happyServer.setBackground(constants.BLUE);
+		dreamServer.setBackground(constants.BLUE);
+		
+		// 아이디 비밀번호 찾기 버튼 
 		findButton = new JButton("ID/PW 찾기");
-		findButton.setBounds(48, 71, 166, 23);
-		id = new JLabel("I             D");
-		id.setBounds(12, 8, 62, 15);
-		password = new JLabel("PASSWORD");
-		password.setBounds(12, 40, 68, 15);
+		findButton.addMouseListener(new ButtonDecorate());
+		findButton.setBounds(12, 51, 228, 23);
+
+		// 입력창 관련 
+		InputPanel = new JPanel() {
+			@Override
+			public void paintComponent(Graphics g) {
+				Graphics2D g2 = (Graphics2D)g.create();
+				RenderingHints qualityHints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+				qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+				g2.setRenderingHints(qualityHints);
+
+				g2.setPaint(new GradientPaint(new Point(0, 0), Color.GRAY, new Point(0, getHeight()),
+						Color.GRAY));
+				g2.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+				g2.dispose();
+			}
+		};
+		InputPanel.setBounds(12, 73, 228, 65);
+		InputPanel.setLayout(null);
+		InputPanel.setBackground(Color.GRAY);
+		id = new JLabel("아이디");
+		decorateFieldLabel(id);
+		id.setBounds(10, 5, 70, 24);
+		password = new JLabel("비밀번호");
+		password.setHorizontalAlignment(SwingConstants.CENTER);
+		decorateFieldLabel(password);
+		password.setBounds(10, 34, 70, 24);
 		idField = new JTextField();
-		idField.setBounds(86, 5, 130, 21);
-		passwordField = new JPasswordField();
-		passwordField.setBounds(0, 20, 52, -20);
+		idField.setBounds(86, 5, 130, 24);
+		idField.setBorder(null);
+		textField = new JPasswordField();
+		textField.setBounds(86, 34, 130, 24);
+		textField.setBorder(null);
+		InputPanel.add(textField);
+		textField.setColumns(10);
+		InputPanel.add(id);
+		InputPanel.add(idField);
+		InputPanel.add(password);
+		loginPanel.setLayout(null);
+		loginPanel.add(checkboxPanel);
+		loginPanel.add(findButton);
+		loginPanel.add(InputPanel);
+		
 		contentPanel.setLayout(null);
 		checkboxPanel.setLayout(null);
 		
 		// 서버 component 추가
 		serverLabel.setForeground(Color.WHITE);
-		serverLabel.setFont(constants.LOGIN_FONT);
+		checkboxPanel.add(serverLabel);
 		checkboxPanel.add(dreamServer);
 		checkboxPanel.add(happyServer);
-		checkboxPanel.setFont(constants.LOGIN_FONT);
-		InputPanel.setLayout(null);
+		checkboxPanel.setFont(constants.SERVER_FONT);
+		dreamServer.setFont(constants.LOGIN_FONT);
+		happyServer.setFont(constants.LOGIN_FONT);
 		
 		decorateButton(findButton);
 		findButton.setBackground(constants.YELLOW);
 		findButton.setBorder(BorderFactory.createLineBorder(Color.ORANGE, 3, true));
-		
-		InputPanel.add(id);
-		InputPanel.add(idField);
-		InputPanel.add(password);
-		InputPanel.add(passwordField);
-		loginPanel.setLayout(null);
-		loginPanel.add(serverLabel);
-		loginPanel.add(checkboxPanel);
-		loginPanel.add(findButton);
-		loginPanel.add(InputPanel);
-		loginPanel.add(player1);
-		loginPanel.add(player2);
-		
-		textField = new JPasswordField();
-		textField.setBounds(86, 37, 130, 21);
-		InputPanel.add(textField);
-		textField.setColumns(10);
+	
 		loginPanel.setBackground(constants.YELLOW);
 		
 		contentPanel.add(loginPanel);
@@ -150,7 +198,29 @@ public class LoginView extends JFrame{
 		
 		contentPanel.add(buttonPanel);
 		getContentPane().add(contentPanel);
+		player1 = new JButton();
+		player2 = new JButton();
+		player2.setSize(106, 129);
+		player2.setLocation(526, 400);
+		player1.setBounds(170, 400, 106, 129);
+		player1.setIcon(constants.PLAYER1); 
+		player2.setIcon(constants.PLATER2);
+		player1.setBorderPainted(false);
+		player2.setBorderPainted(false);
+
+		contentPanel.add(player1);
+		contentPanel.add(player2);
 		setVisible(true);
+	}
+	
+	public void decorateFieldLabel(JLabel label)
+	{
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setOpaque(true);
+		label.setBackground(constants.BLUE);
+		label.setForeground(Color.WHITE);
+		label.setFont(constants.FIELD_LABEL_FONT);
+		label.setBackground(constants.BLUE);
 	}
 	
 	public void decorateButton(JButton btn)
@@ -159,7 +229,6 @@ public class LoginView extends JFrame{
 		btn.setBackground(constants.LIGHE_BLUE);
 		btn.setForeground(Color.WHITE);
 		btn.setFont(constants.LOGIN_FONT);
-		//btn.setContentAreaFilled(false);
 		btn.setBorder(BorderFactory.createCompoundBorder(
 				BorderFactory.createLineBorder(constants.BLUE, 3, true),
 				BorderFactory.createEmptyBorder(2, 20, 2, 20)
@@ -172,6 +241,22 @@ public class LoginView extends JFrame{
 	public void setEventListener(JButton btn,MouseListener listener)
 	{
 		btn.addMouseListener(listener);
+	}
+	
+	private class setRoundBorder extends Component{ 
+
+		public void paintComponent(Graphics g) {
+		    Graphics2D g2 = (Graphics2D)g.create();
+		    RenderingHints qualityHints =
+		      new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		    qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+		    g2.setRenderingHints(qualityHints);
+
+		    g2.setPaint(new GradientPaint(new Point(0, 0), Color.orange, new Point(0, getHeight()),
+		    		constants.DARKER_YELLOW));
+		    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 40, 40);
+		    g2.dispose();
+		  }
 	}
 	
 	private class ButtonDecorate implements MouseListener{

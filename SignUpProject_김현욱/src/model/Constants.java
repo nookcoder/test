@@ -15,13 +15,15 @@ public class Constants {
 	public String DELETEQUERY = "delete from member_info";
 	public String SELECTQUERY = "select * from member_info";
 	
+	public Color DARKER_YELLOW = new Color(255,85,30);
 	public Color YELLOW = new Color(240,160,11);
 	public Color LIGHE_BLUE = new Color(60,212,254);
 	public Color BLUE = new Color(33,91,190);
 	
+	public Font SERVER_FONT = new Font("휴먼매직체", Font.BOLD, 10); 
 	public Font SIGNUP_FONT = new Font("휴먼매직체", Font.BOLD, 15); 
 	public Font LOGIN_FONT = new Font("한컴 고딕",Font.BOLD,14);
-	public Font SERVERCHECK_FONT = new Font("한컴 고딕",Font.BOLD,14);
+	public Font FIELD_LABEL_FONT = new Font("한컴 고딕",Font.BOLD,16);
 	
 	public String TEXT_NUMBER = "^[a-z0-9]{5,12}$";
 	
