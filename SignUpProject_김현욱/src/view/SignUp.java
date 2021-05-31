@@ -40,6 +40,7 @@ public class SignUp extends JFrame {
 	public JLabel passwordCheckExplanation;
 	public JLabel nameExplanation;
 	public JLabel birthExplanation;
+	public JLabel phoneNumberExplanation;
 	public JLabel emailExplanation;
 	public JLabel addressExplanation;
 	
@@ -152,7 +153,7 @@ public class SignUp extends JFrame {
 		userInfoPanel.setBackground(constants.MIDDLE_BLUE);
 		
 		JLabel nameLabel = new JLabel("이름");
-		JLabel nameExplanation = new JLabel("");
+		nameExplanation = new JLabel();
 		nameExplanation.setBounds(105, 33, 234, 23);
 		nameExplanation.setFont(constants.EXPLANINATION_FONT);
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -162,7 +163,7 @@ public class SignUp extends JFrame {
 		userInfoPanel.add(nameExplanation);
 		
 		JLabel birthLabel = new JLabel("생년월일");
-		JLabel birthExplanation = new JLabel("주민등록번호 앞 6자리를 입력해주세요");
+		birthExplanation = new JLabel("주민등록번호 앞 6자리를 입력해주세요");
 		birthExplanation.setLocation(105, 80);
 		birthExplanation.setSize(234, 30);
 		birthExplanation.setFont(constants.EXPLANINATION_FONT);
@@ -173,7 +174,7 @@ public class SignUp extends JFrame {
 		userInfoPanel.add(birthExplanation);
 		
 		JLabel phoneNumberLabel = new JLabel("전화번호");
-		JLabel phoneNumberExplanation = new JLabel("\'-\' 제외한 숫자만 입력해주세요");
+		phoneNumberExplanation = new JLabel("\'-\' 제외한 숫자만 입력해주세요");
 		phoneNumberExplanation.setLocation(105, 131);
 		phoneNumberExplanation.setFont(constants.EXPLANINATION_FONT);
 		phoneNumberExplanation.setSize(234, 30);
@@ -184,7 +185,7 @@ public class SignUp extends JFrame {
 		userInfoPanel.add(phoneNumberExplanation);
 		 
 		JLabel emailLabel = new JLabel("이메일");
-		JLabel emailExplanation= new JLabel();
+		emailExplanation= new JLabel();
 		emailExplanation.setLocation(105, 182);
 		emailExplanation.setSize(234, 30);
 		emailExplanation.setFont(constants.EXPLANINATION_FONT);
@@ -195,7 +196,7 @@ public class SignUp extends JFrame {
 		userInfoPanel.add(emailExplanation);
 		
 		JLabel addressLabel = new JLabel("주소");
-		JLabel addressExplanation= new JLabel("");
+		addressExplanation= new JLabel("");
 		addressExplanation.setLocation(105, 236);
 		addressExplanation.setSize(234, 30);
 		addressExplanation.setFont(constants.EXPLANINATION_FONT);
@@ -215,14 +216,14 @@ public class SignUp extends JFrame {
 		birthField = new JTextField();
 		birthField.setDocument(new JTextFieldLimit(6));
 		birthField.setColumns(10);
-		birthField.setBounds(105, 210, 234, 23);
+		birthField.setBounds(105, 60, 234, 23);
 		birthField.setFont(constants.SIGNUP_FONT);
 		userInfoPanel.add(birthField);
 		
 		phoneNumberField = new JTextField();
 		phoneNumberField.setColumns(10);
 		phoneNumberField.setDocument(new JTextFieldLimit(11));
-		phoneNumberField.setBounds(105, 60, 234, 23);
+		phoneNumberField.setBounds(105, 110, 234, 23);
 		phoneNumberField.setFont(constants.SIGNUP_FONT);
 		userInfoPanel.add(phoneNumberField);
 		
@@ -234,7 +235,7 @@ public class SignUp extends JFrame {
 		
 		addressField = new JTextField();
 		addressField.setColumns(10);
-		addressField.setBounds(105, 110, 234, 23);
+		addressField.setBounds(105, 210, 234, 23);
 		addressField.setFont(constants.SIGNUP_FONT);
 		userInfoPanel.add(addressField);
 		
@@ -303,40 +304,6 @@ public class SignUp extends JFrame {
 		return addressField.getText();
 	}
 
-	// 이벤트 등록 
-	public void setIdListener(ActionListener listener)
-	{
-		idField.addActionListener(listener);
-	}
-	public void setPasswordListener(ActionListener listener)
-	{
-		passwordField.addActionListener(listener);
-	}
-	public void setPasswordChekcListener(ActionListener listener)
-	{
-		passwordCheckField.addActionListener(listener);
-	}
-	public void setNameListener(ActionListener listener)
-	{
-		nameField.addActionListener(listener);
-	}
-	public void setBirthListener(ActionListener listener)
-	{
-		birthField.addActionListener(listener);
-	}
-	public void setPhoneNumberListener(ActionListener listener)
-	{
-		phoneNumberField.addActionListener(listener);
-	}
-	public void setEmailListener(ActionListener listener)
-	{
-		emailField.addActionListener(listener);
-	}
-	public void setAddressListener(ActionListener listener)
-	{
-		addressField.addActionListener(listener);
-	}
-	
 	public class JTextFieldLimit extends PlainDocument {
 		private int limit;
 

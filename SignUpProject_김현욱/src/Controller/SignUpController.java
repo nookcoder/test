@@ -22,6 +22,8 @@ public class SignUpController {
 	private Exception exception;
 	private boolean isIdCheck = false;
 	private boolean isPasswordCheck = false;
+	private boolean isNameCheck = false;
+	
 	
 	public SignUpController(MemberDataBase member, SignUp signup)
 	{
@@ -34,6 +36,7 @@ public class SignUpController {
 		signup.idField.addKeyListener(new IdFieldListener());
 		signup.passwordField.addKeyListener(new PasswordFieldListener());
 		signup.passwordCheckField.addActionListener(new PasswordCheckListener());
+		signup.nameField.addActionListener(new NameFieldListener());
 	}
 	
 	public void setError(String explanation) {
@@ -177,6 +180,30 @@ public class SignUpController {
 		}
 		
 
+		
+	}
+
+	private class NameFieldListener implements ActionListener{
+
+		String name; 
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			name = signup.getName();
+			if(exception.checkNameInput(name))
+			{
+				isNameCheck = true;
+				signup.nameExplanation.setText(name + "님 환영합니다");
+				signup.birthField.requestFocus();
+				
+			}
+			else {
+				isNameCheck = true;
+				signup.nameExplanation.setText("잘못된 형식입니다");
+				signup.nameField.setText("");
+			}	
+		}
 		
 	}
 }

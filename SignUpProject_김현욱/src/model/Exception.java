@@ -25,4 +25,12 @@ public class Exception {
 		}
 		return false;
 	}
+	
+	public boolean checkNameInput(String check) {
+		if(Pattern.matches(constants.NAME_REGEX, check)) 
+		{
+			return true;
+		}
+		return false;
+	}
 }
