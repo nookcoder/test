@@ -33,6 +33,15 @@ public class SignUp extends JFrame {
 	public JButton okayButton;
 	public JButton idCheckButton;
 	
+	public JLabel idExplanation;
+	public JLabel passwordExplanation;
+	public JLabel passwordCheckExplanation;
+	public JLabel nameExplanation;
+	public JLabel birthExplanation;
+	public JLabel emailExplanation;
+	public JLabel addressExplanation;
+	
+	
 	public SignUp() {
 		setUndecorated(true);
 		setSize(400,550);
@@ -58,7 +67,7 @@ public class SignUp extends JFrame {
 		idPanel.setBounds(10, 35, 364, 56);
 		
 		JLabel idLabel = new JLabel("게임아이디");
-		JLabel idExplanation = new JLabel("4~12자의 영어 소문자,숫자만 사용가능합니다");
+		idExplanation = new JLabel("4~12자의 영어 소문자,숫자만 사용가능합니다");
 		idCheckButton = new JButton("중복확인");
 		idCheckButton.setHorizontalAlignment(SwingConstants.LEFT);
 		idCheckButton.setLocation(257, 7);
@@ -91,7 +100,7 @@ public class SignUp extends JFrame {
 		passwordPanel.setBounds(12, 101, 362, 116);
 		
 		JLabel passwordLabel = new JLabel("비밀번호");
-		JLabel passwordExplanation = new JLabel("8~16자 영문 대 소문자, 숫자를 사용하세요");
+		passwordExplanation = new JLabel("8~16자 영문 대 소문자, 숫자를 사용하세요");
 		passwordExplanation.setLocation(105, 32);
 		passwordExplanation.setSize(234, 30);
 		passwordExplanation.setFont(constants.EXPLANINATION_FONT);
@@ -100,7 +109,7 @@ public class SignUp extends JFrame {
 		passwordLabel.setBounds(12, 12, 88, 23);
 		
 		JLabel passwordCheckLabel = new JLabel("비밀번호 확인");
-		JLabel passwordCheckExplanation = new JLabel("");
+		passwordCheckExplanation = new JLabel("");
 		passwordCheckExplanation.setLocation(105, 85);
 		passwordCheckExplanation.setSize(199, 23);
 		passwordCheckExplanation.setFont(constants.EXPLANINATION_FONT);
@@ -110,12 +119,14 @@ public class SignUp extends JFrame {
 		
 		passwordField = new JPasswordField();
 		passwordField.setColumns(10);
+		passwordField.setDocument(new JTextFieldLimit(16));
 		passwordField.setBounds(105, 12, 234, 23);
 		passwordField.setFont(constants.SIGNUP_FONT);
 		
 		passwordCheckField = new JPasswordField();
 		passwordCheckField.setColumns(10);
 		passwordCheckField.setBounds(105, 61, 234, 23);
+		passwordCheckField.setDocument(new JTextFieldLimit(16));
 		passwordCheckField.setFont(constants.SIGNUP_FONT);
 		passwordPanel.setLayout(null);
 		
@@ -326,20 +337,20 @@ public class SignUp extends JFrame {
 	}
 	
 	public class JTextFieldLimit extends PlainDocument {
-		  private int limit;
+		private int limit;
 
-		  JTextFieldLimit(int limit) {
-		   super();
-		   this.limit = limit;
-		   }
-
-		  public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
-		    if (str == null) return;
-
-		    if ((getLength() + str.length()) <= limit) {
-		      super.insertString(offset, str, attr);
-		    }
-		  }
+		JTextFieldLimit(int limit) {
+			super();
+			this.limit = limit;
 		}
+
+		public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
+			if (str == null) return;
+
+			if ((getLength() + str.length()) <= limit) {
+				super.insertString(offset, str, attr);
+			}
+		}
+	}
 	
 }

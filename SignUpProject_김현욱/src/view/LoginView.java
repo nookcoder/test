@@ -15,6 +15,9 @@ import java.awt.geom.*;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.*;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 import javax.swing.*;
 
 public class LoginView extends JFrame{
@@ -142,10 +145,12 @@ public class LoginView extends JFrame{
 		idField = new JTextField();
 		idField.setBounds(86, 5, 130, 24);
 		idField.setBorder(null);
+		idField.setDocument(new JTextFieldLimit(16));
 		idField.addKeyListener(new FieldKeyListener());
 	
 		textField = new JPasswordField();
 		textField.setBounds(86, 34, 130, 24);
+		textField.setDocument(new JTextFieldLimit(16));
 		textField.setBorder(null);
 		textField.addKeyListener(new FieldKeyListener());
 		
@@ -317,6 +322,23 @@ public class LoginView extends JFrame{
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
 			e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+		}
+	}
+	
+	public class JTextFieldLimit extends PlainDocument {
+		private int limit;
+
+		JTextFieldLimit(int limit) {
+			super();
+			this.limit = limit;
+		}
+
+		public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
+			if (str == null) return;
+
+			if ((getLength() + str.length()) <= limit) {
+				super.insertString(offset, str, attr);
+			}
 		}
 	}
 }

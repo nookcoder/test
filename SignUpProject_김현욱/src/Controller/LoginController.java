@@ -19,6 +19,7 @@ public class LoginController {
 		login.newIdButton.addActionListener(new ButtonListener());
 		login.okButton.addActionListener(new ButtonListener());
 		login.exitButton.addActionListener(new ButtonListener());
+		
 	}
 	
 	private class ButtonListener implements ActionListener{
@@ -30,6 +31,7 @@ public class LoginController {
 			if(btn.getText().equals("회원가입"))
 			{
 				SignUp signup = new SignUp();
+				SignUpController signUpController = new SignUpController(data,signup);
 				signup.setVisible(true);
 			}
 			

@@ -11,7 +11,7 @@ public class Exception {
 	
 	
 	public boolean checkIdInput(String check) {
-		String a = "^[a-z0-9]$"; 
+		String a = "^[a-z0-9]{4,12}"; 
 		if(Pattern.matches(a, check)) 
 		{
 			return true;
