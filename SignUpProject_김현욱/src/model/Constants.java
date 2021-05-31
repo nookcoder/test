@@ -27,7 +27,7 @@ public class Constants {
 	public Font SIGNUP_FONT = new Font("한컴 고딕", Font.BOLD, 15); 
 	public Font LOGIN_FONT = new Font("한컴 고딕",Font.BOLD,14);
 	public Font FIELD_LABEL_FONT = new Font("한컴 고딕",Font.BOLD,16);
-	public Font EXPLANINATION_FONT = new Font("한컴 고딕",Font.PLAIN,14);
+	public Font EXPLANINATION_FONT = new Font("한컴 고딕",Font.PLAIN,12);
 	
 	public String TEXT_NUMBER = "^[a-z0-9]{5,12}$";
 	

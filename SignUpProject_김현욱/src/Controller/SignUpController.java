@@ -24,36 +24,7 @@ public class SignUpController {
 		this.constants = new Constants();
 		this.member = member;
 		this.signup = signup;
-		this.signup.setIdListener(new IdListener());
 	}
 	
-	private class IdListener implements ActionListener{
-		
-		String inputId = signup.getId();
-		
-		public void actionPerformed(ActionEvent e)
-		{
-			try {
-				if(member.checkIsHaving("id",inputId))
-				{
-					signup.idField.setText("");
-					signup.idField.requestFocus();
-					return;
-				}
-				
-				if(!exception.checkIdInput(inputId))
-				{
-					signup.idField.setText("");
-					return;
-				}
-				
-				signup.passwordField.requestFocus();
-				
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-			}
-			
-		}
-	}
 	
 }

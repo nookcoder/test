@@ -4,6 +4,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
 
 import model.Constants;
 
@@ -26,9 +29,13 @@ public class SignUp extends JFrame {
 	public JTextField phoneNumberField;
 	public JTextField emailField;
 	public JTextField addressField;
-
+	public JButton cansleButton;
+	public JButton okayButton;
+	public JButton idCheckButton;
+	
 	public SignUp() {
-		setSize(400,600);
+		setUndecorated(true);
+		setSize(400,550);
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
@@ -52,7 +59,7 @@ public class SignUp extends JFrame {
 		
 		JLabel idLabel = new JLabel("게임아이디");
 		JLabel idExplanation = new JLabel("4~12자의 영어 소문자,숫자만 사용가능합니다");
-		JButton idCheckButton = new JButton("중복확인");
+		idCheckButton = new JButton("중복확인");
 		idCheckButton.setHorizontalAlignment(SwingConstants.LEFT);
 		idCheckButton.setLocation(257, 7);
 		idCheckButton.setSize(104, 23);
@@ -67,6 +74,7 @@ public class SignUp extends JFrame {
 		idField = new JTextField();
 		idField.setBounds(101, 7, 157, 23);
 		idField.setColumns(10);
+		idField.setDocument(new JTextFieldLimit(12));
 		idField.setFont(constants.EXPLANINATION_FONT);
 		idPanel.setLayout(null);
 		
@@ -134,6 +142,7 @@ public class SignUp extends JFrame {
 		JLabel nameLabel = new JLabel("이름");
 		JLabel nameExplanation = new JLabel("");
 		nameExplanation.setBounds(105, 33, 234, 23);
+		nameExplanation.setFont(constants.EXPLANINATION_FONT);
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nameLabel.setBounds(12, 10, 88, 23);
 		decorateTextBox(nameLabel);
@@ -144,6 +153,7 @@ public class SignUp extends JFrame {
 		JLabel birthExplanation = new JLabel("주민등록번호 앞 6자리를 입력해주세요");
 		birthExplanation.setLocation(105, 80);
 		birthExplanation.setSize(234, 30);
+		birthExplanation.setFont(constants.EXPLANINATION_FONT);
 		birthLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		birthLabel.setBounds(12, 60, 88, 23);
 		decorateTextBox(birthLabel);
@@ -153,6 +163,7 @@ public class SignUp extends JFrame {
 		JLabel phoneNumberLabel = new JLabel("전화번호");
 		JLabel phoneNumberExplanation = new JLabel("\'-\' 제외한 숫자만 입력해주세요");
 		phoneNumberExplanation.setLocation(105, 131);
+		phoneNumberExplanation.setFont(constants.EXPLANINATION_FONT);
 		phoneNumberExplanation.setSize(234, 30);
 		phoneNumberLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		phoneNumberLabel.setBounds(12, 110, 88, 23);
@@ -164,6 +175,7 @@ public class SignUp extends JFrame {
 		JLabel emailExplanation= new JLabel();
 		emailExplanation.setLocation(105, 182);
 		emailExplanation.setSize(234, 30);
+		emailExplanation.setFont(constants.EXPLANINATION_FONT);
 		emailLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		emailLabel.setBounds(12, 160, 88, 23);
 		decorateTextBox(emailLabel);
@@ -174,6 +186,7 @@ public class SignUp extends JFrame {
 		JLabel addressExplanation= new JLabel("");
 		addressExplanation.setLocation(105, 236);
 		addressExplanation.setSize(234, 30);
+		addressExplanation.setFont(constants.EXPLANINATION_FONT);
 		addressLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		addressLabel.setBounds(12, 210, 88, 23);
 		decorateTextBox(addressLabel);
@@ -182,11 +195,13 @@ public class SignUp extends JFrame {
 		
 		nameField = new JTextField();
 		nameField.setColumns(10);
+		nameField.setDocument(new JTextFieldLimit(4));
 		nameField.setBounds(105, 10, 234, 23);
 		nameField.setFont(constants.SIGNUP_FONT);
 		userInfoPanel.add(nameField);
 		
 		birthField = new JTextField();
+		birthField.setDocument(new JTextFieldLimit(6));
 		birthField.setColumns(10);
 		birthField.setBounds(105, 210, 234, 23);
 		birthField.setFont(constants.SIGNUP_FONT);
@@ -194,6 +209,7 @@ public class SignUp extends JFrame {
 		
 		phoneNumberField = new JTextField();
 		phoneNumberField.setColumns(10);
+		phoneNumberField.setDocument(new JTextFieldLimit(11));
 		phoneNumberField.setBounds(105, 60, 234, 23);
 		phoneNumberField.setFont(constants.SIGNUP_FONT);
 		userInfoPanel.add(phoneNumberField);
@@ -212,12 +228,13 @@ public class SignUp extends JFrame {
 		
 		contentPane.add(userInfoPanel);
 		
-		JButton okayButton = new JButton("확인");
+		okayButton = new JButton("확인");
 		okayButton.setBounds(98, 503, 90, 30);
+		okayButton.setEnabled(false);
 		contentPane.add(okayButton);
 		constants.decorateButton(okayButton);
 		
-		JButton cansleButton = new JButton("취소");
+		cansleButton = new JButton("취소");
 		cansleButton.setLocation(219, 503);
 		cansleButton.setSize(90, 30);
 		contentPane.add(cansleButton);
@@ -308,35 +325,21 @@ public class SignUp extends JFrame {
 		addressField.addActionListener(listener);
 	}
 	
-	
-	
-	
-	private class RoundedCornerBorder extends AbstractBorder {
-		private Color ALPHA_ZERO = new Color(0x0, true);
-		@Override 
-		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-			Graphics2D g2 = (Graphics2D) g.create();
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			Shape border = getBorderShape(x, y, width - 1, height - 1);
-			g2.setPaint(ALPHA_ZERO);
-			Area corner = new Area(new Rectangle2D.Double(x, y, width, height));
-			corner.subtract(new Area(border));
-			g2.fill(corner);
-			g2.setPaint(Color.GRAY);
-			g2.draw(border);
-			g2.dispose();
+	public class JTextFieldLimit extends PlainDocument {
+		  private int limit;
+
+		  JTextFieldLimit(int limit) {
+		   super();
+		   this.limit = limit;
+		   }
+
+		  public void insertString( int offset, String  str, AttributeSet attr ) throws BadLocationException {
+		    if (str == null) return;
+
+		    if ((getLength() + str.length()) <= limit) {
+		      super.insertString(offset, str, attr);
+		    }
+		  }
 		}
-		public Shape getBorderShape(int x, int y, int w, int h) {
-			int r = h; //h / 2;
-			return new RoundRectangle2D.Double(x, y, w, h, r, r);
-		}
-		@Override public Insets getBorderInsets(Component c) {
-			return new Insets(4, 8, 4, 8);
-		}
-		@Override public Insets getBorderInsets(Component c, Insets insets) {
-			insets.set(4, 8, 4, 8);
-			return insets;
-		}
-	}
 	
 }
