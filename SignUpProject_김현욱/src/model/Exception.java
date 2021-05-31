@@ -33,4 +33,28 @@ public class Exception {
 		}
 		return false;
 	}
+	
+	public boolean checkBirthInput(String check) {
+		if(Pattern.matches(constants.BIRTH_REGEX, check)) 
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkPhoneNumberInput(String check) {
+		if(Pattern.matches(constants.PHONENUMBER_REGEX, check)) 
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkEmailInput(String check) {
+		if(Pattern.matches(constants.EMAIL_REGEX, check)) 
+		{
+			return true;
+		}
+		return false;
+	}
 }

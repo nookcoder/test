@@ -231,12 +231,14 @@ public class SignUp extends JFrame {
 		emailField.setColumns(10);
 		emailField.setBounds(105, 160, 234, 23);
 		emailField.setFont(constants.SIGNUP_FONT);
+		emailField.setDocument(new JTextFieldLimit(26));
 		userInfoPanel.add(emailField);
 		
 		addressField = new JTextField();
 		addressField.setColumns(10);
 		addressField.setBounds(105, 210, 234, 23);
 		addressField.setFont(constants.SIGNUP_FONT);
+		addressField.setDocument(new JTextFieldLimit(26));
 		userInfoPanel.add(addressField);
 		
 		contentPane.add(userInfoPanel);

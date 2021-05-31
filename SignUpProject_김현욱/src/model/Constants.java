@@ -44,7 +44,9 @@ public class Constants {
 	public String ID_REGEX = "^[a-z0-9]{4,12}"; 
 	public String PASSWORD_REGEX = "^[a-zA-Z0-9]{8,16}"; 
 	public String NAME_REGEX  = "^[가-힣]{2,4}";
-	
+	public String BIRTH_REGEX = "\\d{6}";
+	public String PHONENUMBER_REGEX = "^010(\\d{4})(\\d{4})$";
+	public String EMAIL_REGEX = "^[0-9a-zA-Z]*@[0-9a-zA-Z]*.[a-zA-Z]{2,3}$";
 	public void decorateButton(JButton btn)
 	{
 		

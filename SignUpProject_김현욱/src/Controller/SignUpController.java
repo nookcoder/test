@@ -23,7 +23,9 @@ public class SignUpController {
 	private boolean isIdCheck = false;
 	private boolean isPasswordCheck = false;
 	private boolean isNameCheck = false;
-	
+	private boolean isBirthCheck = false;
+	private boolean isPhoneNumberCheck = false;
+	private boolean isEmailCheck = false;
 	
 	public SignUpController(MemberDataBase member, SignUp signup)
 	{
@@ -37,6 +39,9 @@ public class SignUpController {
 		signup.passwordField.addKeyListener(new PasswordFieldListener());
 		signup.passwordCheckField.addActionListener(new PasswordCheckListener());
 		signup.nameField.addActionListener(new NameFieldListener());
+		signup.birthField.addActionListener(new BirthFieldListener());
+		signup.phoneNumberField.addActionListener(new PhoneNumberListenr());
+		signup.emailField.addActionListener(new EmailListenr());
 	}
 	
 	public void setError(String explanation) {
@@ -44,6 +49,18 @@ public class SignUpController {
 		signup.idExplanation.setForeground(Color.RED);
 		signup.idExplanation.setText(explanation);
 		signup.idExplanation.setForeground(Color.BLACK);
+	}
+	
+	public void setOkayButtonEnabled() {
+		if(isIdCheck && isPasswordCheck && isNameCheck && isBirthCheck && isPhoneNumberCheck && isPhoneNumberCheck)
+		{
+			signup.okayButton.setEnabled(true);
+		}
+		
+		else
+		{
+			signup.okayButton.setEnabled(false);
+		}
 	}
 	
 	private class IdCheckButtonListener implements ActionListener{
@@ -67,6 +84,7 @@ public class SignUpController {
 					signup.idExplanation.setText("멋진 아이디네요!");
 					signup.passwordField.requestFocus();
 					isIdCheck = true;
+					setOkayButtonEnabled();
 					return;
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
@@ -124,6 +142,7 @@ public class SignUpController {
 					signup.passwordCheckField.requestFocus();
 					signup.passwordExplanation.setText("사용가능합니다");
 					isPasswordCheck = true;
+					setOkayButtonEnabled();
 					return;
 				}
 				isPasswordCheck = false;
@@ -167,6 +186,7 @@ public class SignUpController {
 			if(passwordCheck.equals(password))
 			{
 				isPasswordCheck = true;
+				setOkayButtonEnabled();
 				signup.nameField.requestFocus();
 				signup.passwordCheckExplanation.setText("일치합니다");
 			}
@@ -194,6 +214,7 @@ public class SignUpController {
 			if(exception.checkNameInput(name))
 			{
 				isNameCheck = true;
+				setOkayButtonEnabled();
 				signup.nameExplanation.setText(name + "님 환영합니다");
 				signup.birthField.requestFocus();
 				
@@ -206,4 +227,80 @@ public class SignUpController {
 		}
 		
 	}
+
+	private class BirthFieldListener implements ActionListener{
+
+		String birth; 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			birth = signup.getBirth();
+			// TODO Auto-generated method stub
+			if(exception.checkBirthInput(birth))
+			{
+				isBirthCheck = true;
+				setOkayButtonEnabled();
+				signup.birthExplanation.setText("확인됐습니다.");
+				signup.phoneNumberField.requestFocus();
+			}
+			else {
+				isBirthCheck = false;
+				signup.birthExplanation.setText("잘못된 형식입니다");
+				signup.birthField.setText("");
+			}
+		}
+		
+	}
+
+	private class PhoneNumberListenr implements ActionListener{
+
+		String phoneNumber;
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			phoneNumber = signup.getPhoneNumber();
+			// TODO Auto-generated method stub
+			if(exception.checkPhoneNumberInput(phoneNumber))
+			{
+				signup.phoneNumberExplanation.setText("확인됐습니다");
+				isPhoneNumberCheck = true;
+				setOkayButtonEnabled();
+				signup.emailField.requestFocus();
+			}
+			
+			else {
+				signup.phoneNumberField.setText("");
+				signup.phoneNumberExplanation.setText("잘못된 형식입니다");	
+				isPhoneNumberCheck = false;
+			}
+		}
+		
+	}
+	
+	private class EmailListenr implements ActionListener{
+
+		String email;
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			email = signup.getEmail();
+			// TODO Auto-generated method stub
+			if(exception.checkEmailInput(email))
+			{
+				signup.emailExplanation.setText("확인됐습니다");
+				isEmailCheck = true;
+				setOkayButtonEnabled();
+				signup.addressField.requestFocus();
+			}
+			
+			else {
+				signup.emailField.setText("");
+				signup.emailExplanation.setText("잘못된 형식입니다");	
+				isEmailCheck = false;
+			}
+		}
+		
+	}
+
+	//private class addressListener 
+	
+	private class OkayButtonListener implements Mo
 }
