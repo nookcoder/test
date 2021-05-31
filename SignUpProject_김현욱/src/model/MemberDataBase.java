@@ -52,7 +52,7 @@ public class MemberDataBase {
 	
 		while(resultset.next())
 		{
-			if(check == resultset.getString("\"" + data + "\""))
+			if(check == resultset.getString(data))
 			{
 				isHaving = true;
 			}

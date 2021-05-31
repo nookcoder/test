@@ -42,6 +42,9 @@ public class SignUpController {
 		signup.birthField.addActionListener(new BirthFieldListener());
 		signup.phoneNumberField.addActionListener(new PhoneNumberListenr());
 		signup.emailField.addActionListener(new EmailListenr());
+		//signup.addressField.addActionListener(null));
+		signup.okayButton.addMouseListener(new OkayButtonListener());
+		signup.cansleButton.addMouseListener(new CansleButtonListener());
 	}
 	
 	public void setError(String explanation) {
@@ -261,6 +264,18 @@ public class SignUpController {
 			// TODO Auto-generated method stub
 			if(exception.checkPhoneNumberInput(phoneNumber))
 			{
+				try {
+					if(member.checkIsHaving("phoneNumber",phoneNumber))
+					{
+						signup.phoneNumberExplanation.setText("중복된 번호입니다");
+						signup.phoneNumberField.setText("");
+						isPhoneNumberCheck = false;
+						return;
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				signup.phoneNumberExplanation.setText("확인됐습니다");
 				isPhoneNumberCheck = true;
 				setOkayButtonEnabled();
@@ -285,6 +300,18 @@ public class SignUpController {
 			// TODO Auto-generated method stub
 			if(exception.checkEmailInput(email))
 			{
+				try {
+					if(member.checkIsHaving("email", email))
+					{
+						signup.emailExplanation.setText("중복된 이메일입니다");
+						signup.emailField.setText("");
+						isEmailCheck = false;
+						return;
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				signup.emailExplanation.setText("확인됐습니다");
 				isEmailCheck = true;
 				setOkayButtonEnabled();
@@ -302,5 +329,92 @@ public class SignUpController {
 
 	//private class addressListener 
 	
-	private class OkayButtonListener implements Mo
+	private class OkayButtonListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(isIdCheck && isPasswordCheck && isNameCheck && isBirthCheck && isPhoneNumberCheck && isPhoneNumberCheck)
+			{
+				String id = signup.getId();
+				String password = signup.getPassword();
+				String name = signup.getName();
+				String birth = signup.getBirth();
+				String email = signup.getEmail();
+				String phoneNumber = signup.getPhoneNumber();
+				String address = signup.getAddress();
+				try {
+					member.insertData(id,password,name,birth,email,phoneNumber,address);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				signup.setVisible(false);
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().darker());
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+			}
+		}
+	}
+	
+	private class CansleButtonListener implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			signup.setVisible(false);
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			e.getComponent().setBackground(e.getComponent().getBackground().darker());
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+		}
+		
+	}
 }
