@@ -33,7 +33,6 @@ public class SignUp extends JFrame {
 	public JTextField addressField;
 
 	public SignUp() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(400,600);
 		setResizable(false);
 		setLocationRelativeTo(null);

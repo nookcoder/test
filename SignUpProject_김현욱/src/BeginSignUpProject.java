@@ -1,5 +1,6 @@
 import java.awt.EventQueue;
 
+import Controller.LoginController;
 import Controller.SignUpController;
 import model.MemberDataBase;
 import view.*;
@@ -11,7 +12,8 @@ public class BeginSignUpProject {
 		// TODO Auto-generated method stub
 
 		LoginView loginView = new LoginView();
-		
+		MemberDataBase data = new MemberDataBase();
+		LoginController loginController = new LoginController(data,loginView);
 //		EventQueue.invokeLater(new Runnable() {
 //			public void run() {
 //				try {

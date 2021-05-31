@@ -19,7 +19,6 @@ import javax.swing.*;
 
 public class LoginView extends JFrame{
 
-	private setRoundBorder roundBorder = new setRoundBorder();
 	private Constants constants;
 	
 	// 가장 큰 패널 
@@ -27,9 +26,9 @@ public class LoginView extends JFrame{
 	
 	// 버튼 패널 
 	private JPanel buttonPanel; 
-	private JButton newIdButton;
-	private JButton okButton; 
-	private JButton exitButton; 
+	public JButton newIdButton;
+	public JButton okButton; 
+	public JButton exitButton; 
 	
 	// 로그인 패널 
 	private JPanel loginPanel; 
@@ -165,8 +164,8 @@ public class LoginView extends JFrame{
 		checkboxPanel.add(dreamServer);
 		checkboxPanel.add(happyServer);
 		checkboxPanel.setFont(constants.SERVER_FONT);
-		dreamServer.setFont(constants.LOGIN_FONT);
-		happyServer.setFont(constants.LOGIN_FONT);
+		decorateCheckBox(dreamServer);
+		decorateCheckBox(happyServer);
 		
 		decorateButton(findButton);
 		findButton.setBackground(constants.YELLOW);
@@ -195,6 +194,7 @@ public class LoginView extends JFrame{
 		buttonPanel.add(okButton);
 		buttonPanel.add(exitButton);
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		buttonPanel.setBackground(new Color(255,0,0,0));
 		
 		contentPanel.add(buttonPanel);
 		getContentPane().add(contentPanel);
@@ -213,6 +213,11 @@ public class LoginView extends JFrame{
 		setVisible(true);
 	}
 	
+	public void decorateCheckBox(Checkbox box)
+	{
+		box.setFont(constants.LOGIN_FONT);
+		box.setForeground(Color.WHITE);
+	}
 	public void decorateFieldLabel(JLabel label)
 	{
 		label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -226,11 +231,11 @@ public class LoginView extends JFrame{
 	public void decorateButton(JButton btn)
 	{
 		
-		btn.setBackground(constants.LIGHE_BLUE);
+		btn.setBackground(constants.BLUE);
 		btn.setForeground(Color.WHITE);
 		btn.setFont(constants.LOGIN_FONT);
 		btn.setBorder(BorderFactory.createCompoundBorder(
-				BorderFactory.createLineBorder(constants.BLUE, 3, true),
+				BorderFactory.createRaisedBevelBorder(),
 				BorderFactory.createEmptyBorder(2, 20, 2, 20)
 				));
 		btn.setMargin(new Insets(5,15,5,15));
@@ -238,25 +243,9 @@ public class LoginView extends JFrame{
 		
 	}
 	
-	public void setEventListener(JButton btn,MouseListener listener)
+	public void setButtonListener(JButton btn,ActionListener listener)
 	{
-		btn.addMouseListener(listener);
-	}
-	
-	private class setRoundBorder extends Component{ 
-
-		public void paintComponent(Graphics g) {
-		    Graphics2D g2 = (Graphics2D)g.create();
-		    RenderingHints qualityHints =
-		      new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		    qualityHints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-		    g2.setRenderingHints(qualityHints);
-
-		    g2.setPaint(new GradientPaint(new Point(0, 0), Color.orange, new Point(0, getHeight()),
-		    		constants.DARKER_YELLOW));
-		    g2.fillRoundRect(0, 0, getWidth(), getHeight(), 40, 40);
-		    g2.dispose();
-		  }
+		btn.addActionListener(listener);
 	}
 	
 	private class ButtonDecorate implements MouseListener{
