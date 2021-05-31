@@ -2,7 +2,9 @@ package model;
 
 import java.awt.*;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 public class Constants {
 	
@@ -18,12 +20,14 @@ public class Constants {
 	public Color DARKER_YELLOW = new Color(255,85,30);
 	public Color YELLOW = new Color(240,160,11);
 	public Color LIGHE_BLUE = new Color(60,212,254);
+	public Color MIDDLE_BLUE = new Color(25,157,255);
 	public Color BLUE = new Color(33,91,190);
 	
 	public Font SERVER_FONT = new Font("한컴 고딕", Font.BOLD, 10); 
 	public Font SIGNUP_FONT = new Font("한컴 고딕", Font.BOLD, 15); 
 	public Font LOGIN_FONT = new Font("한컴 고딕",Font.BOLD,14);
 	public Font FIELD_LABEL_FONT = new Font("한컴 고딕",Font.BOLD,16);
+	public Font EXPLANINATION_FONT = new Font("한컴 고딕",Font.PLAIN,14);
 	
 	public String TEXT_NUMBER = "^[a-z0-9]{5,12}$";
 	
@@ -36,4 +40,18 @@ public class Constants {
 	public ImageIcon EXIT_BUTTON = new ImageIcon("src/images/exitbtn.png");
 	public ImageIcon PLAYER1 = new ImageIcon("src/images/1p.png");
 	public ImageIcon PLATER2 = new ImageIcon("src/images/2p.png");
+
+	public void decorateButton(JButton btn)
+	{
+		
+		btn.setBackground(BLUE);
+		btn.setForeground(Color.WHITE);
+		btn.setFont(LOGIN_FONT);
+		btn.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createRaisedBevelBorder(),
+				BorderFactory.createEmptyBorder(2, 20, 2, 20)
+				));
+		btn.setMargin(new Insets(5,15,5,15));
+		btn.setFocusPainted(false);
+	}
 }

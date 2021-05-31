@@ -38,16 +38,17 @@ public class SignUp extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel topLabel = new JLabel("크아 게임아이디 만들기");
-		topLabel.setLocation(0, 0);
-		topLabel.setSize(396, 36);
+		JLabel topLabel = new JLabel("  크아 게임아이디 만들기");
+		topLabel.setBounds(0, 0, 396, 36);
 		topLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		topLabel.setFont(new Font("한컴 고딕",Font.BOLD,20));
+		topLabel.setForeground(Color.white);
 		contentPane.add(topLabel);
 		
 		// 아이디 입력 부분
-		JPanel idPanel = new JPanel(); 
-		idPanel.setLocation(10, 31);
-		idPanel.setSize(364, 51);
+		JPanel idPanel = new JPanel();
+		idPanel.setBackground(constants.MIDDLE_BLUE);
+		idPanel.setBounds(10, 35, 364, 56);
 		
 		JLabel idLabel = new JLabel("게임아이디");
 		JLabel idExplanation = new JLabel("4~12자의 영어 소문자,숫자만 사용가능합니다");
@@ -55,9 +56,8 @@ public class SignUp extends JFrame {
 		idCheckButton.setHorizontalAlignment(SwingConstants.LEFT);
 		idCheckButton.setLocation(257, 7);
 		idCheckButton.setSize(104, 23);
-		
-		idExplanation.setHorizontalAlignment(SwingConstants.CENTER);
-		idExplanation.setBounds(22, 36, 330, 15);
+		idExplanation.setBounds(100, 36, 255, 15);
+		idExplanation.setFont(constants.EXPLANINATION_FONT);
 		idLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		idLabel.setBounds(12, 7, 88, 23);
 		
@@ -67,7 +67,7 @@ public class SignUp extends JFrame {
 		idField = new JTextField();
 		idField.setBounds(101, 7, 157, 23);
 		idField.setColumns(10);
-		idField.setFont(constants.SIGNUP_FONT);
+		idField.setFont(constants.EXPLANINATION_FONT);
 		idPanel.setLayout(null);
 		
 		idPanel.add(idCheckButton);
@@ -79,32 +79,36 @@ public class SignUp extends JFrame {
 		
 		// 비밀번호 입력 부분 
 		JPanel passwordPanel = new JPanel();
-		passwordPanel.setLocation(12, 92);
-		passwordPanel.setSize(362, 116);
+		passwordPanel.setBackground(constants.MIDDLE_BLUE);
+		passwordPanel.setBounds(12, 101, 362, 116);
 		
 		JLabel passwordLabel = new JLabel("비밀번호");
 		JLabel passwordExplanation = new JLabel("8~16자 영문 대 소문자, 숫자를 사용하세요");
-		passwordExplanation.setLocation(96, 28);
-		passwordExplanation.setSize(234, 34);
+		passwordExplanation.setLocation(105, 32);
+		passwordExplanation.setSize(234, 30);
+		passwordExplanation.setFont(constants.EXPLANINATION_FONT);
 		passwordLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 12));
 		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordLabel.setBounds(12, 12, 88, 23);
 		
 		JLabel passwordCheckLabel = new JLabel("비밀번호 확인");
 		JLabel passwordCheckExplanation = new JLabel("");
-		passwordCheckExplanation.setLocation(96, 83);
+		passwordCheckExplanation.setLocation(105, 85);
 		passwordCheckExplanation.setSize(199, 23);
+		passwordCheckExplanation.setFont(constants.EXPLANINATION_FONT);
 		passwordCheckLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 10));
 		passwordCheckLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordCheckLabel.setBounds(12, 61, 88, 23);
 		
 		passwordField = new JPasswordField();
 		passwordField.setColumns(10);
-		passwordField.setBounds(96, 12, 234, 23);
+		passwordField.setBounds(105, 12, 234, 23);
+		passwordField.setFont(constants.SIGNUP_FONT);
 		
 		passwordCheckField = new JPasswordField();
 		passwordCheckField.setColumns(10);
-		passwordCheckField.setBounds(96, 61, 234, 23);
+		passwordCheckField.setBounds(105, 61, 234, 23);
+		passwordCheckField.setFont(constants.SIGNUP_FONT);
 		passwordPanel.setLayout(null);
 		
 		decorateTextBox(passwordLabel);
@@ -122,76 +126,103 @@ public class SignUp extends JFrame {
 		
 		contentPane.add(passwordPanel);
 		
+		JPanel userInfoPanel = new JPanel();
+		userInfoPanel.setBounds(10, 227, 364, 266);
+		userInfoPanel.setLayout(null);
+		userInfoPanel.setBackground(constants.MIDDLE_BLUE);
+		
 		JLabel nameLabel = new JLabel("이름");
+		JLabel nameExplanation = new JLabel("");
+		nameExplanation.setBounds(105, 33, 234, 23);
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		nameLabel.setFont(constants.SIGNUP_FONT);
-		nameLabel.setBounds(31, 206, 71, 51);
-		nameLabel.setForeground(constants.YELLOW);
-		contentPane.add(nameLabel);
+		nameLabel.setBounds(12, 10, 88, 23);
+		decorateTextBox(nameLabel);
+		userInfoPanel.add(nameLabel);
+		userInfoPanel.add(nameExplanation);
 		
 		JLabel birthLabel = new JLabel("생년월일");
+		JLabel birthExplanation = new JLabel("주민등록번호 앞 6자리를 입력해주세요");
+		birthExplanation.setLocation(105, 80);
+		birthExplanation.setSize(234, 30);
 		birthLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		birthLabel.setFont(constants.SIGNUP_FONT);
-		birthLabel.setBounds(31, 267, 71, 51);
-		birthLabel.setForeground(constants.YELLOW);
-		contentPane.add(birthLabel);
+		birthLabel.setBounds(12, 60, 88, 23);
+		decorateTextBox(birthLabel);
+		userInfoPanel.add(birthLabel);
+		userInfoPanel.add(birthExplanation);
 		
 		JLabel phoneNumberLabel = new JLabel("전화번호");
+		JLabel phoneNumberExplanation = new JLabel("\'-\' 제외한 숫자만 입력해주세요");
+		phoneNumberExplanation.setLocation(105, 131);
+		phoneNumberExplanation.setSize(234, 30);
 		phoneNumberLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		phoneNumberLabel.setFont(constants.SIGNUP_FONT);
-		phoneNumberLabel.setBounds(31, 328, 71, 51);
-		phoneNumberLabel.setForeground(constants.YELLOW);
-		contentPane.add(phoneNumberLabel);
+		phoneNumberLabel.setBounds(12, 110, 88, 23);
+		decorateTextBox(phoneNumberLabel);
+		userInfoPanel.add(phoneNumberLabel);
+		userInfoPanel.add(phoneNumberExplanation);
 		 
 		JLabel emailLabel = new JLabel("이메일");
+		JLabel emailExplanation= new JLabel();
+		emailExplanation.setLocation(105, 182);
+		emailExplanation.setSize(234, 30);
 		emailLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		emailLabel.setFont(constants.SIGNUP_FONT);
-		emailLabel.setForeground(constants.YELLOW);
-		emailLabel.setBounds(43, 389, 59, 51);
-		contentPane.add(emailLabel);
+		emailLabel.setBounds(12, 160, 88, 23);
+		decorateTextBox(emailLabel);
+		userInfoPanel.add(emailLabel);
+		userInfoPanel.add(emailExplanation);
 		
 		JLabel addressLabel = new JLabel("주소");
+		JLabel addressExplanation= new JLabel("");
+		addressExplanation.setLocation(105, 236);
+		addressExplanation.setSize(234, 30);
 		addressLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		addressLabel.setFont(constants.SIGNUP_FONT);
-		addressLabel.setBounds(43, 450, 59, 53);
-		addressLabel.setForeground(constants.YELLOW);
-		contentPane.add(addressLabel);
+		addressLabel.setBounds(12, 210, 88, 23);
+		decorateTextBox(addressLabel);
+		userInfoPanel.add(addressLabel);
+		userInfoPanel.add(addressExplanation);
 		
 		nameField = new JTextField();
 		nameField.setColumns(10);
-		nameField.setBounds(114, 221, 225, 36);
+		nameField.setBounds(105, 10, 234, 23);
 		nameField.setFont(constants.SIGNUP_FONT);
-		contentPane.add(nameField);
+		userInfoPanel.add(nameField);
 		
 		birthField = new JTextField();
 		birthField.setColumns(10);
-		birthField.setBounds(114, 274, 225, 36);
+		birthField.setBounds(105, 210, 234, 23);
 		birthField.setFont(constants.SIGNUP_FONT);
-		contentPane.add(birthField);
+		userInfoPanel.add(birthField);
 		
 		phoneNumberField = new JTextField();
 		phoneNumberField.setColumns(10);
-		phoneNumberField.setBounds(114, 335, 225, 36);
+		phoneNumberField.setBounds(105, 60, 234, 23);
 		phoneNumberField.setFont(constants.SIGNUP_FONT);
-		contentPane.add(phoneNumberField);
+		userInfoPanel.add(phoneNumberField);
 		
 		emailField = new JTextField();
 		emailField.setColumns(10);
-		emailField.setBounds(114, 396, 225, 36);
+		emailField.setBounds(105, 160, 234, 23);
 		emailField.setFont(constants.SIGNUP_FONT);
-		contentPane.add(emailField);
+		userInfoPanel.add(emailField);
 		
 		addressField = new JTextField();
 		addressField.setColumns(10);
-		addressField.setBounds(114, 458, 225, 36);
+		addressField.setBounds(105, 110, 234, 23);
 		addressField.setFont(constants.SIGNUP_FONT);
-		contentPane.add(addressField);
+		userInfoPanel.add(addressField);
 		
-		JButton okayButton = new JButton("OK");
-		okayButton.setBounds(161, 519, 91, 23);
-		okayButton.setBackground(constants.LIGHE_BLUE);
-		okayButton.setForeground(constants.YELLOW);
+		contentPane.add(userInfoPanel);
+		
+		JButton okayButton = new JButton("확인");
+		okayButton.setBounds(98, 503, 90, 30);
 		contentPane.add(okayButton);
+		constants.decorateButton(okayButton);
+		
+		JButton cansleButton = new JButton("취소");
+		cansleButton.setLocation(219, 503);
+		cansleButton.setSize(90, 30);
+		contentPane.add(cansleButton);
+		constants.decorateButton(cansleButton);
+		
 	}
 	
 	public void decorateIdCheckButton(JButton btn)
