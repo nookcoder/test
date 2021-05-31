@@ -142,9 +142,13 @@ public class LoginView extends JFrame{
 		idField = new JTextField();
 		idField.setBounds(86, 5, 130, 24);
 		idField.setBorder(null);
+		idField.addKeyListener(new FieldKeyListener());
+	
 		textField = new JPasswordField();
 		textField.setBounds(86, 34, 130, 24);
 		textField.setBorder(null);
+		textField.addKeyListener(new FieldKeyListener());
+		
 		InputPanel.add(textField);
 		textField.setColumns(10);
 		InputPanel.add(id);
@@ -182,6 +186,7 @@ public class LoginView extends JFrame{
 		// 버튼 생성 
 		newIdButton = new JButton("회원가입");
 		okButton = new JButton("로그인");
+		okButton.setEnabled(false);
 		exitButton = new JButton("종 료");
 		decorateButton(newIdButton);
 		decorateButton(okButton);
@@ -246,6 +251,41 @@ public class LoginView extends JFrame{
 	public void setButtonListener(JButton btn,ActionListener listener)
 	{
 		btn.addActionListener(listener);
+	}
+	
+	private class FieldKeyListener implements KeyListener{
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			int textLength;
+			int idLength;
+			
+			textLength = textField.getText().length();
+			idLength = idField.getText().length(); 
+			
+			if(textLength >= 4 && idLength >=4)
+			{
+				okButton.setEnabled(true);
+			}
+			
+			else {
+				okButton.setEnabled(false);
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 	
 	private class ButtonDecorate implements MouseListener{
