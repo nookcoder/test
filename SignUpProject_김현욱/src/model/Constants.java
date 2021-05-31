@@ -41,6 +41,9 @@ public class Constants {
 	public ImageIcon PLAYER1 = new ImageIcon("src/images/1p.png");
 	public ImageIcon PLATER2 = new ImageIcon("src/images/2p.png");
 
+	public String ID_REGEX = "^[a-z0-9]{4,12}"; 
+	public String PASSWORD_REGEX = "^[a-zA-Z0-9]{8,16}"; 
+	
 	public void decorateButton(JButton btn)
 	{
 		

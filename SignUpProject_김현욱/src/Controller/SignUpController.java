@@ -5,6 +5,8 @@ import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JPasswordField;
+
 import com.mysql.jdbc.*;
 
 import model.Constants;
@@ -19,6 +21,7 @@ public class SignUpController {
 	private Constants constants;
 	private Exception exception;
 	private boolean isIdCheck = false;
+	private boolean isPasswordCheck = false;
 	
 	public SignUpController(MemberDataBase member, SignUp signup)
 	{
@@ -29,6 +32,8 @@ public class SignUpController {
 		
 		signup.idCheckButton.addActionListener(new IdCheckButtonListener ());
 		signup.idField.addKeyListener(new IdFieldListener());
+		signup.passwordField.addKeyListener(new PasswordFieldListener());
+		signup.passwordCheckField.addActionListener(new PasswordCheckListener());
 	}
 	
 	public void setError(String explanation) {
@@ -38,7 +43,7 @@ public class SignUpController {
 		signup.idExplanation.setForeground(Color.BLACK);
 	}
 	
-	public class IdCheckButtonListener implements ActionListener{
+	private class IdCheckButtonListener implements ActionListener{
 
 		String IdCheck; 
 		
@@ -70,7 +75,7 @@ public class SignUpController {
 		}
 	}
 	
-	public class IdFieldListener implements KeyListener{
+	private class IdFieldListener implements KeyListener{
 
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -83,7 +88,7 @@ public class SignUpController {
 			// TODO Auto-generated method stub
 			isIdCheck = false; 
 			signup.idExplanation.setText("4~12자의 영어 소문자,숫자만 사용가능합니다");
-			if(e.getKeyCode() == KeyEvent.VK_ENTER && !isIdCheck)
+			if((e.getKeyCode() == KeyEvent.VK_TAB||e.getKeyCode() == KeyEvent.VK_ENTER) && !isIdCheck)
 			{
 				signup.idExplanation.setText("중복 확인을 해주세요!");	
 			}
@@ -94,5 +99,84 @@ public class SignUpController {
 			// TODO Auto-generated method stub
 			
 		}
+	}
+	
+	private class PasswordFieldListener implements KeyListener{
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			// TODO Auto-generated method stub
+			String password = signup.getPassword();
+			
+			if(e.getKeyCode() == KeyEvent.VK_TAB ||e.getKeyCode() == KeyEvent.VK_ENTER)
+			{
+				if(exception.checkPasswordInput(password))
+				{
+					signup.passwordCheckField.requestFocus();
+					signup.passwordExplanation.setText("사용가능합니다");
+					isPasswordCheck = true;
+					return;
+				}
+				isPasswordCheck = false;
+				signup.passwordField.setText("");
+				signup.passwordExplanation.setText("허용되지않는 형식입니다");
+				return;
+			}
+			
+			checkPassword(password);
+			
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		public void checkPassword(String password) {
+			if(exception.checkPasswordInput(password))
+			{
+				isPasswordCheck = true;
+				signup.passwordExplanation.setText("사용가능합니다");
+			}
+			
+			else
+			{
+				isPasswordCheck = false;
+				signup.passwordExplanation.setText("8~16자 영문 대 소문자, 숫자를 사용하세요");
+			}
+		}
+	}
+
+	private class PasswordCheckListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			String passwordCheck = signup.getPasswordCheck();
+			String password = signup.getPassword();
+			if(passwordCheck.equals(password))
+			{
+				isPasswordCheck = true;
+				signup.nameField.requestFocus();
+				signup.passwordCheckExplanation.setText("일치합니다");
+			}
+			
+			else
+			{
+				isPasswordCheck = false;
+				signup.passwordCheckField.setText("");
+				signup.passwordCheckExplanation.setText("비밀번호를 확인해주세요");
+			}
+		}
+		
+
+		
 	}
 }

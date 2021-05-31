@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
@@ -116,7 +118,6 @@ public class SignUp extends JFrame {
 		passwordCheckLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 10));
 		passwordCheckLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		passwordCheckLabel.setBounds(12, 61, 88, 23);
-		
 		passwordField = new JPasswordField();
 		passwordField.setColumns(10);
 		passwordField.setDocument(new JTextFieldLimit(16));

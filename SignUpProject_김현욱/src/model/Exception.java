@@ -11,8 +11,15 @@ public class Exception {
 	
 	
 	public boolean checkIdInput(String check) {
-		String a = "^[a-z0-9]{4,12}"; 
-		if(Pattern.matches(a, check)) 
+		if(Pattern.matches(constants.ID_REGEX, check)) 
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean checkPasswordInput(String check) {
+		if(Pattern.matches(constants.PASSWORD_REGEX, check)) 
 		{
 			return true;
 		}
