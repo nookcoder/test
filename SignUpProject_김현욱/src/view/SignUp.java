@@ -1,28 +1,23 @@
 package view;
 
-import java.awt.Color;
 import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
 
 import model.Constants;
 
-import javax.swing.JTextField;
 import java.awt.*;
-import javax.swing.JLabel;
 import java.awt.geom.Area;
 import java.awt.geom.*;
 
-import javax.swing.SwingConstants;
 import javax.swing.*;
 
 public class SignUp extends JFrame {
 
 	private Constants constants = new Constants();
 	private JPanel contentPane;
+	private JLabel topLabel;
 	public JTextField idField;
 	public JTextField passwordField;
 	public JTextField passwordCheckField;
@@ -37,319 +32,189 @@ public class SignUp extends JFrame {
 		setResizable(false);
 		setLocationRelativeTo(null);
 		
-		contentPane = new JPanel() {
-			public void paintComponent(Graphics g)
-			{
-				Dimension dimension = getSize();
-				Image background = constants.SIGNUP_BACKGROUND.getImage();
-				g.drawImage(background, 0, 0, dimension.width,dimension.height,null);
-				setOpaque(false);
-				super.paintComponent(g);
-			}
-		};
+		contentPane = new JPanel();
+		contentPane.setBackground(constants.LIGHE_BLUE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel idLabel = new JLabel("아이디 :  ");
-		idLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		idLabel.setFont(constants.SIGNUP_FONT);
-		idLabel.setBounds(31, 23, 71, 51);
-		idLabel.setForeground(constants.YELLOW);
-		contentPane.add(idLabel);
+		JLabel topLabel = new JLabel("크아 게임아이디 만들기");
+		topLabel.setLocation(0, 0);
+		topLabel.setSize(396, 36);
+		topLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		contentPane.add(topLabel);
 		
-		JLabel passwordLabel = new JLabel("비밀번호 : ");
-		passwordLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		passwordLabel.setFont(constants.SIGNUP_FONT);
-		passwordLabel.setBounds(31, 84, 71, 51);
-		passwordLabel.setForeground(constants.YELLOW);
-		contentPane.add(passwordLabel);
+		// 아이디 입력 부분
+		JPanel idPanel = new JPanel(); 
+		idPanel.setLocation(10, 31);
+		idPanel.setSize(364, 51);
 		
-		JLabel passwordCheckLabel = new JLabel("비밀번호 확인 : ");
-		passwordCheckLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		passwordCheckLabel.setFont(constants.SIGNUP_FONT);
-		passwordCheckLabel.setBounds(-1, 145, 103, 51);
-		passwordCheckLabel.setForeground(Color.RED);
-		contentPane.add(passwordCheckLabel);
+		JLabel idLabel = new JLabel("게임아이디");
+		JLabel idExplanation = new JLabel("4~12자의 영어 소문자,숫자만 사용가능합니다");
+		JButton idCheckButton = new JButton("중복확인");
+		idCheckButton.setHorizontalAlignment(SwingConstants.LEFT);
+		idCheckButton.setLocation(257, 7);
+		idCheckButton.setSize(104, 23);
 		
-		JLabel nameLabel = new JLabel("이름 : ");
-		nameLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		idExplanation.setHorizontalAlignment(SwingConstants.CENTER);
+		idExplanation.setBounds(22, 36, 330, 15);
+		idLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		idLabel.setBounds(12, 7, 88, 23);
+		
+		decorateIdCheckButton(idCheckButton);
+		decorateTextBox(idLabel);
+		
+		idField = new JTextField();
+		idField.setBounds(101, 7, 157, 23);
+		idField.setColumns(10);
+		idField.setFont(constants.SIGNUP_FONT);
+		idPanel.setLayout(null);
+		
+		idPanel.add(idCheckButton);
+		idPanel.add(idLabel);
+		idPanel.add(idField);
+		idPanel.add(idExplanation);
+		
+		contentPane.add(idPanel);
+		
+		// 비밀번호 입력 부분 
+		JPanel passwordPanel = new JPanel();
+		passwordPanel.setLocation(12, 92);
+		passwordPanel.setSize(362, 116);
+		
+		JLabel passwordLabel = new JLabel("비밀번호");
+		JLabel passwordExplanation = new JLabel("8~16자 영문 대 소문자, 숫자를 사용하세요");
+		passwordExplanation.setLocation(96, 28);
+		passwordExplanation.setSize(234, 34);
+		passwordLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 12));
+		passwordLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordLabel.setBounds(12, 12, 88, 23);
+		
+		JLabel passwordCheckLabel = new JLabel("비밀번호 확인");
+		JLabel passwordCheckExplanation = new JLabel("");
+		passwordCheckExplanation.setLocation(96, 83);
+		passwordCheckExplanation.setSize(199, 23);
+		passwordCheckLabel.setFont(new Font("한컴 고딕", Font.PLAIN, 10));
+		passwordCheckLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		passwordCheckLabel.setBounds(12, 61, 88, 23);
+		
+		passwordField = new JPasswordField();
+		passwordField.setColumns(10);
+		passwordField.setBounds(96, 12, 234, 23);
+		
+		passwordCheckField = new JPasswordField();
+		passwordCheckField.setColumns(10);
+		passwordCheckField.setBounds(96, 61, 234, 23);
+		passwordPanel.setLayout(null);
+		
+		decorateTextBox(passwordLabel);
+		decorateTextBox(passwordCheckLabel);
+		passwordCheckLabel.setFont(new Font("한컴 고딕",Font.BOLD,11));
+	
+		passwordPanel.add(passwordLabel);
+		passwordPanel.add(passwordField);
+		passwordPanel.add(passwordLabel);
+		passwordPanel.add(passwordExplanation);
+		passwordPanel.add(passwordCheckExplanation);
+		
+		passwordPanel.add(passwordCheckLabel);
+		passwordPanel.add(passwordCheckField);
+		
+		contentPane.add(passwordPanel);
+		
+		JLabel nameLabel = new JLabel("이름");
+		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nameLabel.setFont(constants.SIGNUP_FONT);
 		nameLabel.setBounds(31, 206, 71, 51);
 		nameLabel.setForeground(constants.YELLOW);
 		contentPane.add(nameLabel);
 		
-		JLabel birthLabel = new JLabel("생년월일 : ");
-		birthLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		JLabel birthLabel = new JLabel("생년월일");
+		birthLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		birthLabel.setFont(constants.SIGNUP_FONT);
 		birthLabel.setBounds(31, 267, 71, 51);
 		birthLabel.setForeground(constants.YELLOW);
 		contentPane.add(birthLabel);
 		
-		JLabel phoneNumberLabel = new JLabel("전화번호 : ");
-		phoneNumberLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		JLabel phoneNumberLabel = new JLabel("전화번호");
+		phoneNumberLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		phoneNumberLabel.setFont(constants.SIGNUP_FONT);
 		phoneNumberLabel.setBounds(31, 328, 71, 51);
 		phoneNumberLabel.setForeground(constants.YELLOW);
 		contentPane.add(phoneNumberLabel);
 		 
-		JLabel emailLabel = new JLabel("이메일 : ");
-		emailLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		JLabel emailLabel = new JLabel("이메일");
+		emailLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		emailLabel.setFont(constants.SIGNUP_FONT);
 		emailLabel.setForeground(constants.YELLOW);
 		emailLabel.setBounds(43, 389, 59, 51);
 		contentPane.add(emailLabel);
 		
-		JLabel addressLabel = new JLabel("주소 : ");
-		addressLabel.setHorizontalAlignment(SwingConstants.TRAILING);
+		JLabel addressLabel = new JLabel("주소");
+		addressLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		addressLabel.setFont(constants.SIGNUP_FONT);
 		addressLabel.setBounds(43, 450, 59, 53);
 		addressLabel.setForeground(constants.YELLOW);
 		contentPane.add(addressLabel);
 		
-		idField = new JTextField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
-		idField.setBounds(114, 30, 225, 36);
-		idField.setColumns(10);
-		idField.setBackground(constants.LIGHE_BLUE);
-		idField.setForeground(Color.WHITE);
-		idField.setFont(constants.SIGNUP_FONT);
-		contentPane.add(idField);
-		
-		passwordField = new JPasswordField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
-		passwordField.setColumns(10);
-		passwordField.setBounds(114, 92, 225, 36);
-		passwordField.setBackground(constants.LIGHE_BLUE);
-		passwordField.setForeground(Color.WHITE);
-		contentPane.add(passwordField);
-		
-		passwordCheckField = new JPasswordField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
-		passwordCheckField.setColumns(10);
-		passwordCheckField.setBounds(114, 153, 225, 36);
-		passwordCheckField.setBackground(constants.LIGHE_BLUE);
-		passwordCheckField.setForeground(Color.WHITE);
-		contentPane.add(passwordCheckField);
-		
-		nameField = new JTextField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
+		nameField = new JTextField();
 		nameField.setColumns(10);
 		nameField.setBounds(114, 221, 225, 36);
-		nameField.setBackground(constants.LIGHE_BLUE);
-		nameField.setForeground(Color.WHITE);
 		nameField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(nameField);
 		
-		birthField = new JTextField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
+		birthField = new JTextField();
 		birthField.setColumns(10);
 		birthField.setBounds(114, 274, 225, 36);
-		birthField.setBackground(constants.LIGHE_BLUE);
-		birthField.setForeground(Color.WHITE);
 		birthField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(birthField);
 		
-		phoneNumberField = new JTextField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
+		phoneNumberField = new JTextField();
 		phoneNumberField.setColumns(10);
 		phoneNumberField.setBounds(114, 335, 225, 36);
-		phoneNumberField.setBackground(constants.LIGHE_BLUE);
-		phoneNumberField.setForeground(Color.WHITE);
 		phoneNumberField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(phoneNumberField);
 		
-		emailField = new JTextField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
+		emailField = new JTextField();
 		emailField.setColumns(10);
 		emailField.setBounds(114, 396, 225, 36);
-		emailField.setBackground(constants.LIGHE_BLUE);
-		emailField.setForeground(Color.WHITE);
 		emailField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(emailField);
 		
-		addressField = new JTextField() {
-			@Override 
-			protected void paintComponent(Graphics g) {
-				if (!isOpaque() && getBorder() instanceof RoundedCornerBorder) {
-					Graphics2D g2 = (Graphics2D) g.create();
-					g2.setPaint(getBackground());
-					g2.fill(((RoundedCornerBorder) getBorder()).getBorderShape(
-							0, 0, getWidth() - 1, getHeight() - 1));
-					g2.dispose();
-				}
-				super.paintComponent(g);
-			}
-			@Override 
-			public void updateUI() {
-				super.updateUI();
-				setOpaque(false);
-				setBorder(new RoundedCornerBorder());
-			}
-		};
+		addressField = new JTextField();
 		addressField.setColumns(10);
 		addressField.setBounds(114, 458, 225, 36);
-		addressField.setBackground(constants.LIGHE_BLUE);
-		addressField.setForeground(Color.WHITE);
 		addressField.setFont(constants.SIGNUP_FONT);
 		contentPane.add(addressField);
 		
-		JButton okayButton = new JButton("OK") {
-			@Override
-			protected void paintComponent(Graphics g) {
-				int width = getWidth();
-				int height = getHeight();
-				
-				Graphics2D graphics = (Graphics2D) g;
-				
-				graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				
-				if(getModel().isArmed()) {
-					graphics.setColor(getBackground().darker());
-				} else if (getModel().isRollover()) {
-					graphics.setColor(getBackground().brighter());
-				} else {
-					graphics.setColor(getBackground());
-				}
-				
-				graphics.fillRoundRect(0,0,width,height,15,15);
-				
-				FontMetrics fontMetrics = graphics.getFontMetrics(); 
-				Rectangle stringBounds = fontMetrics.getStringBounds(this.getText(), graphics).getBounds();
-				
-				int textX = (width - stringBounds.width) / 2;
-				int textY = (height - stringBounds.height) / 2 + fontMetrics.getAscent(); graphics.setColor(getForeground()); 
-				
-				graphics.setFont(getFont());
-				graphics.drawString(getText(), textX, textY);
-				graphics.dispose();
-
-				super.paintComponent(g);
-			}
-		};
+		JButton okayButton = new JButton("OK");
 		okayButton.setBounds(161, 519, 91, 23);
 		okayButton.setBackground(constants.LIGHE_BLUE);
 		okayButton.setForeground(constants.YELLOW);
 		contentPane.add(okayButton);
+	}
+	
+	public void decorateIdCheckButton(JButton btn)
+	{
+		
+		btn.setBackground(constants.LIGHE_BLUE);
+		btn.setForeground(Color.WHITE);
+		btn.setFont(constants.LOGIN_FONT);
+		btn.setBorder(BorderFactory.createCompoundBorder(
+				BorderFactory.createRaisedBevelBorder(),
+				BorderFactory.createEmptyBorder(2, 20, 2, 20)
+				));
+		btn.setMargin(new Insets(5,15,5,15));
+		btn.setFocusPainted(false);
+	}
+	
+	public void decorateTextBox(JLabel label) {
+		label.setBackground(constants.BLUE);
+		label.setForeground(constants.LIGHE_BLUE);
+		label.setFont(constants.LOGIN_FONT);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setOpaque(true);
+		label.setBorder(BorderFactory.createEmptyBorder(2, 10, 2, 10));
 	}
 	
 	// 텍스트 필드 값 받아오기 

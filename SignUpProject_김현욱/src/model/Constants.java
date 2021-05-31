@@ -20,8 +20,8 @@ public class Constants {
 	public Color LIGHE_BLUE = new Color(60,212,254);
 	public Color BLUE = new Color(33,91,190);
 	
-	public Font SERVER_FONT = new Font("휴먼매직체", Font.BOLD, 10); 
-	public Font SIGNUP_FONT = new Font("휴먼매직체", Font.BOLD, 15); 
+	public Font SERVER_FONT = new Font("한컴 고딕", Font.BOLD, 10); 
+	public Font SIGNUP_FONT = new Font("한컴 고딕", Font.BOLD, 15); 
 	public Font LOGIN_FONT = new Font("한컴 고딕",Font.BOLD,14);
 	public Font FIELD_LABEL_FONT = new Font("한컴 고딕",Font.BOLD,16);
 	

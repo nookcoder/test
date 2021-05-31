@@ -230,7 +230,6 @@ public class LoginView extends JFrame{
 		label.setBackground(constants.BLUE);
 		label.setForeground(Color.WHITE);
 		label.setFont(constants.FIELD_LABEL_FONT);
-		label.setBackground(constants.BLUE);
 	}
 	
 	public void decorateButton(JButton btn)
@@ -245,7 +244,6 @@ public class LoginView extends JFrame{
 				));
 		btn.setMargin(new Insets(5,15,5,15));
 		btn.setFocusPainted(false);
-		
 	}
 	
 	public void setButtonListener(JButton btn,ActionListener listener)
