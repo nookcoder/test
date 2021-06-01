@@ -17,7 +17,12 @@ public class UserInfoView extends JFrame{
 	public JButton revisingButton; 
 	public JButton resignButton;
 	
-	
+	public JLabel userId;
+	public JLabel userName;
+	public JLabel userBirth;
+	public JLabel userPhoneNumber;
+	public JLabel userEmail;
+	public JLabel userAddress;
 	
 	public UserInfoView() {
 		setSize(800,597);
@@ -33,7 +38,6 @@ public class UserInfoView extends JFrame{
 				super.paintComponent(g);
 			}
 		};
-		
 	
 		buttonPanel = new JPanel();
 		buttonPanel.setBounds(334, 503, 399, 45);
@@ -52,6 +56,7 @@ public class UserInfoView extends JFrame{
 		buttonPanel.add(revisingButton);
 		buttonPanel.add(resignButton);
 		buttonPanel.setOpaque(true);
+		buttonPanel.setBackground(constants.BLUE);
 		backgroundPanel.setLayout(null);
 		backgroundPanel.add(exitButton);
 		backgroundPanel.add(buttonPanel);
@@ -63,6 +68,73 @@ public class UserInfoView extends JFrame{
 		infoPanel.setBounds(298, 75, 476, 473);
 		infoPanel.setBackground(constants.BLUE);
 		backgroundPanel.add(infoPanel);
+		infoPanel.setLayout(null);
+		
+		JLabel idLabel = new JLabel("아이디");
+		idLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		idLabel.setBounds(40, 30, 90, 35);
+		decorateTextBox(idLabel);
+		infoPanel.add(idLabel);
+		
+		JLabel nameLabel = new JLabel("이름");
+		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nameLabel.setBounds(40, 90, 90, 35);
+		decorateTextBox(nameLabel);
+		infoPanel.add(nameLabel);
+		
+		JLabel phoneNumberLabel = new JLabel("전화번호");
+		phoneNumberLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		phoneNumberLabel.setBounds(40, 210, 90, 35);
+		decorateTextBox(phoneNumberLabel);
+		infoPanel.add(phoneNumberLabel);
+		
+		JLabel emailLabel = new JLabel("이메일");
+		emailLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		emailLabel.setBounds(40, 270, 90, 35);
+		decorateTextBox(emailLabel);
+		infoPanel.add(emailLabel);
+		
+		JLabel addressLabel = new JLabel("주소");
+		addressLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		addressLabel.setBounds(40, 330, 90, 35);
+		decorateTextBox(addressLabel);
+		infoPanel.add(addressLabel);
+		
+		JLabel birthLabel = new JLabel("생년월일");
+		birthLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		birthLabel.setBounds(40, 150, 90, 35);
+		decorateTextBox(birthLabel);
+		infoPanel.add(birthLabel);
+		
+		userId = new JLabel();
+		userId.setBounds(145, 30, 300, 35);
+		decorateUserInfo(userId);
+		infoPanel.add(userId);
+		
+		userName = new JLabel();
+		userName.setBounds(145, 90, 300, 35);
+		decorateUserInfo(userName);
+		infoPanel.add(userName);
+		
+		userBirth= new JLabel();
+		userBirth.setBounds(145, 150, 300, 35);
+		decorateUserInfo(userBirth);
+		infoPanel.add(userBirth);
+		
+		userPhoneNumber = new JLabel();
+		userPhoneNumber.setBounds(145, 210, 300, 35);
+		decorateUserInfo(userPhoneNumber);
+		infoPanel.add(userPhoneNumber);
+		
+		userEmail = new JLabel();
+		userEmail.setBounds(145, 270, 300, 35);
+		decorateUserInfo(userEmail);
+		infoPanel.add(userEmail);
+		
+		userAddress = new JLabel();
+		userAddress.setBounds(145, 330, 300, 35);
+		decorateUserInfo(userAddress);
+		infoPanel.add(userAddress);
 		setVisible(true);
 	}
 	
@@ -78,5 +150,23 @@ public class UserInfoView extends JFrame{
 				));
 		btn.setMargin(new Insets(5,15,5,15));
 		btn.setFocusPainted(false);
+	}
+	
+	public void decorateTextBox(JLabel label) {
+		label.setBackground(constants.USER_LABEL_BLUE);
+		label.setForeground(constants.LIGHE_BLUE);
+		label.setFont(constants.LOGIN_FONT);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setOpaque(true);
+		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+	}
+	
+	public void decorateUserInfo(JLabel label) {
+		label.setBackground(constants.USER_INFO_BLUE);
+		label.setForeground(constants.LIGHE_BLUE);
+		label.setFont(constants.LOGIN_FONT);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setOpaque(true);
+		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 	}
 }

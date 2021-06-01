@@ -22,6 +22,8 @@ public class Constants {
 	public Color LIGHE_BLUE = new Color(60,212,254);
 	public Color MIDDLE_BLUE = new Color(25,157,255);
 	public Color BLUE = new Color(33,91,190);
+	public Color USER_LABEL_BLUE = new Color(0,118,229);
+	public Color USER_INFO_BLUE = new Color(57,158,252);
 	
 	public Font SERVER_FONT = new Font("한컴 고딕", Font.BOLD, 10); 
 	public Font SIGNUP_FONT = new Font("한컴 고딕", Font.BOLD, 15); 
