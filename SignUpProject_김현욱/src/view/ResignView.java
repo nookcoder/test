@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -13,49 +14,56 @@ public class ResignView extends JFrame{
 	public JPasswordField password;
 	public JPasswordField passwordCheck;
 	public JButton okayButton;
-	public JButton cansleButton;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
+	public JButton cansleButton; 
+	public JLabel noFind;
 	
 	public ResignView() {
 		this.constants = new Constants();
+		setResizable(false);
 		
-		getContentPane().setBackground(constants.BLUE);
+		JPanel contentPanel = new JPanel();
+		contentPanel.setBackground(constants.BLUE);
 		setSize(400,300);
-		getContentPane().setLayout(null);
+		contentPanel.setLayout(null);
 		
-		JButton btnNewButton = new JButton("확인");
-		btnNewButton.setBounds(83, 230, 91, 23);
-		decorateButton(btnNewButton);
-		getContentPane().add(btnNewButton);
+		okayButton = new JButton("확인");
+		okayButton.setBounds(83, 230, 91, 23);
+		decorateButton(okayButton);
+		contentPanel.add(okayButton);
 		
 		JButton btnNewButton_1 = new JButton("취소");
 		btnNewButton_1.setBounds(210, 230, 91, 23);
 		decorateButton(btnNewButton_1);
-		getContentPane().add(btnNewButton_1);
+		btnNewButton_1.addActionListener(new CansleButtonListener());
+		contentPanel.add(btnNewButton_1);
 		
 		JLabel lblNewLabel = new JLabel("비밀번호");
-		lblNewLabel.setBounds(23, 68, 100, 30);
+		lblNewLabel.setBounds(13, 68, 110, 30);
 		decorateTextBox(lblNewLabel);
-		getContentPane().add(lblNewLabel);
+		contentPanel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("비밀번호 확인");
+		JLabel lblNewLabel_1 = new JLabel("비밀번호확인");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(23, 155, 100, 30);
+		lblNewLabel_1.setBounds(13, 155, 110, 30);
 		decorateTextBox(lblNewLabel_1);
-		getContentPane().add(lblNewLabel_1);
+		contentPanel.add(lblNewLabel_1);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(135, 155, 216, 30);
-		decorateUserInfo(passwordField);
-		getContentPane().add(passwordField);
+		password = new JPasswordField();
+		password.setBounds(135, 155, 216, 30);
+		decorateUserInfo(password);
+		contentPanel.add(password);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(135, 70, 216, 30);
-		decorateUserInfo(passwordField_1);
-		getContentPane().add(passwordField_1);
+		passwordCheck = new JPasswordField();
+		passwordCheck.setBounds(135, 70, 216, 30);
+		decorateUserInfo(passwordCheck);
+		contentPanel.add(passwordCheck);
 
+		getContentPane().add(contentPanel);
 		
+		noFind = new JLabel();
+		noFind.setBounds(83, 195, 218, 25);
+		noFind.setForeground(Color.WHITE);
+		contentPanel.add(noFind);
 		setVisible(true);
 	}
 	
@@ -87,5 +95,15 @@ public class ResignView extends JFrame{
 		label.setFont(constants.LOGIN_FONT);
 		label.setOpaque(true);
 		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+	}
+	
+	private class CansleButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			setVisible(false);
+		}
+		
 	}
 }

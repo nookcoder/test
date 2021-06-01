@@ -43,6 +43,13 @@ public class MemberDataBase {
 		statement.executeUpdate();
 	}
 	
+	public void deleteData(String id) throws SQLException
+	{
+		String deleteQuery = constants.DELETEQUERY+" "+ "where id='"+id+"';";
+		Statement statement = (Statement)connection.createStatement();
+		statement.executeUpdate(deleteQuery);
+	}
+	
 	public boolean checkIsHaving(String data,String check) throws SQLException
 	{
 		boolean isHaving = false;

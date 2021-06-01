@@ -44,20 +44,26 @@ public class UserController {
 		view.resignButton.addActionListener(new ResignButtonListener());
 	}
 	
+	public void loadLoginView()
+	{
+		loginView.getContentPane().removeAll();
+		loginView.getContentPane().add(loginView.contentPanel);
+		loginView.idField.setText("");
+		loginView.textField.setText("");
+		loginView.okButton.setBackground(constants.BLUE);
+		loginView.okButton.setEnabled(false);
+		loginView.revalidate();
+		loginView.repaint();
+
+	}
+	
 	private class ExitButtonListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			
-			loginView.getContentPane().removeAll();
-			loginView.getContentPane().add(loginView.contentPanel);
-			loginView.idField.setText("");
-			loginView.textField.setText("");
-			loginView.okButton.setBackground(constants.BLUE);
-			loginView.okButton.setEnabled(false);
-			loginView.revalidate();
-			loginView.repaint();
+			loadLoginView();
 		}
 	}
 	
@@ -67,6 +73,7 @@ public class UserController {
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
 			ResignView resign = new ResignView();
+			ResignController resignController = new ResignController(id,data,resign);
 		}
 		
 	}
