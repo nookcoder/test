@@ -296,9 +296,6 @@ public class LoginView extends JFrame{
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
-				e.getComponent().setBackground(e.getComponent().getBackground().brighter());
-			
 		}
 
 		@Override

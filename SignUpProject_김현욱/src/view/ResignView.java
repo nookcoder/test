@@ -28,12 +28,14 @@ public class ResignView extends JFrame{
 		
 		okayButton = new JButton("확인");
 		okayButton.setBounds(83, 230, 91, 23);
+		okayButton.addMouseListener(new ButtonDecorate());
 		decorateButton(okayButton);
 		contentPanel.add(okayButton);
 		
 		JButton btnNewButton_1 = new JButton("취소");
 		btnNewButton_1.setBounds(210, 230, 91, 23);
 		decorateButton(btnNewButton_1);
+		btnNewButton_1.addMouseListener(new ButtonDecorate());
 		btnNewButton_1.addActionListener(new CansleButtonListener());
 		contentPanel.add(btnNewButton_1);
 		
@@ -105,5 +107,44 @@ public class ResignView extends JFrame{
 			setVisible(false);
 		}
 		
+	}
+	
+	private class ButtonDecorate implements MouseListener{
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+		
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().darker());
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+			}
+		}
 	}
 }

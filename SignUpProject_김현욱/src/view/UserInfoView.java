@@ -1,6 +1,8 @@
 package view;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 
@@ -42,10 +44,13 @@ public class UserInfoView extends JPanel{
 		
 		exitButton = new JButton("뒤로가기");
 		exitButton.setBounds(63, 540, 200, 45);
+		exitButton.addMouseListener(new ButtonDecorate());
 		revisingButton = new JButton("정보수정");
 		revisingButton.setBounds(12, 5, 152, 37);
+		revisingButton.addMouseListener(new ButtonDecorate());
 		resignButton = new JButton("탈퇴하기");
 		resignButton.setBounds(222, 5, 165, 37);
+		resignButton.addMouseListener(new ButtonDecorate());
 		decorateButton(exitButton);
 		decorateButton(revisingButton);
 		decorateButton(resignButton);
@@ -165,5 +170,44 @@ public class UserInfoView extends JPanel{
 		label.setFont(constants.LOGIN_FONT);
 		label.setOpaque(true);
 		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+	}
+
+	private class ButtonDecorate implements MouseListener{
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+		
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().darker());
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+			}
+		}
 	}
 }

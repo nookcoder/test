@@ -1,6 +1,8 @@
 package model;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -62,5 +64,44 @@ public class Constants {
 				));
 		btn.setMargin(new Insets(5,15,5,15));
 		btn.setFocusPainted(false);
+	}
+	
+	public class ButtonDecorate implements MouseListener{
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+		
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().darker());
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+			}
+		}
 	}
 }
