@@ -1,5 +1,6 @@
 package Controller;
 
+import java.awt.BorderLayout;
 import java.awt.event.*;
 import java.sql.SQLException;
 
@@ -48,10 +49,16 @@ public class LoginController {
 					if(data.isCorrectId(id, password))
 					{
 						UserInfoView userInfoView = new UserInfoView();
+						UserController userController = new UserController(id,data,userInfoView,login);
 						login.getContentPane().removeAll();
 						login.getContentPane().add(userInfoView);
 						login.revalidate();
 						login.repaint();
+					}
+					
+					else {
+						login.idField.setText("");
+						login.textField.setText("");
 					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

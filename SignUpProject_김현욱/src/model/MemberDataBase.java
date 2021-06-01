@@ -77,4 +77,18 @@ public class MemberDataBase {
 		
 		return isCorrect;
 	}
+	
+	public String getInfoText(String type,String id) throws SQLException
+	{
+		String selecQuery = constants.SELECTQUERY+" "+ "where id='"+id+"';";
+		Statement statement = (Statement)connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(selecQuery);
+		String userInfo;
+		
+		resultSet.next(); 
+		userInfo = resultSet.getString(type);
+		
+		
+		return userInfo;
+	}
 }

@@ -162,9 +162,8 @@ public class UserInfoView extends JPanel{
 	
 	public void decorateUserInfo(JLabel label) {
 		label.setBackground(constants.USER_INFO_BLUE);
-		label.setForeground(constants.LIGHE_BLUE);
+		label.setForeground(Color.WHITE);
 		label.setFont(constants.LOGIN_FONT);
-		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setOpaque(true);
 		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 	}
