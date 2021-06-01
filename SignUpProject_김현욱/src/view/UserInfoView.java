@@ -139,7 +139,6 @@ public class UserInfoView extends JPanel{
 	
 	public void decorateButton(JButton btn)
 	{
-		
 		btn.setBackground(constants.LIGHE_BLUE);
 		btn.setForeground(Color.WHITE);
 		btn.setFont(constants.LOGIN_FONT);

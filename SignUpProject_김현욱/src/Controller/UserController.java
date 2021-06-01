@@ -1,20 +1,28 @@
 package Controller;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import java.sql.SQLException;
 
-import model.MemberDataBase;
-import view.LoginView;
-import view.UserInfoView;
+import javax.swing.*;
+
+import model.*;
+import view.*;
 
 public class UserController {
 
+	private Constants constants;
 	private String id; 
 	private MemberDataBase data; 
 	private UserInfoView view;
 	private LoginView loginView;
+	
 	public UserController(String _id,MemberDataBase _data,UserInfoView _view, LoginView _loginView) throws SQLException
 	{
+		this.constants = new Constants();
+		
 		this.id = _id;
 		this.data = _data;
 		this.view = _view;
@@ -33,6 +41,7 @@ public class UserController {
 		view.userEmail.setText(email);
 		view.userAddress.setText(address);
 		view.exitButton.addActionListener(new ExitButtonListener());
+		view.resignButton.addActionListener(new ResignButtonListener());
 	}
 	
 	private class ExitButtonListener implements ActionListener{
@@ -43,7 +52,21 @@ public class UserController {
 			
 			loginView.getContentPane().removeAll();
 			loginView.getContentPane().add(loginView.contentPanel);
+			loginView.idField.setText("");
+			loginView.textField.setText("");
+			loginView.okButton.setBackground(constants.BLUE);
+			loginView.okButton.setEnabled(false);
+			loginView.revalidate();
 			loginView.repaint();
+		}
+	}
+	
+	private class ResignButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			ResignView resign = new ResignView();
 		}
 		
 	}
