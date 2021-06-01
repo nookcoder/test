@@ -40,7 +40,8 @@ public class Constants {
 	public ImageIcon EXIT_BUTTON = new ImageIcon("src/images/exitbtn.png");
 	public ImageIcon PLAYER1 = new ImageIcon("src/images/1p.png");
 	public ImageIcon PLATER2 = new ImageIcon("src/images/2p.png");
-
+	public ImageIcon MYPAGE = new ImageIcon("src/images/마이페이지.png");
+	
 	public String ID_REGEX = "^[a-z0-9]{4,12}"; 
 	public String PASSWORD_REGEX = "^[a-zA-Z0-9]{8,16}"; 
 	public String NAME_REGEX  = "^[가-힣]{2,4}";

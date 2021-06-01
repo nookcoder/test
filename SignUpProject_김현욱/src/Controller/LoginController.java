@@ -37,7 +37,11 @@ public class LoginController {
 			
 			else if(btn.getText().equals("로그인"))
 			{
-				
+				UserInfoView userInfoView = new UserInfoView();
+				login.getContentPane().removeAll();
+				login.getContentPane().add(userInfoView);
+				login.revalidate();
+				login.repaint();
 			}
 			
 			else if(btn.getText().equals("종 료"))

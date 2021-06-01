@@ -25,7 +25,7 @@ public class LoginView extends JFrame{
 	private Constants constants;
 	
 	// 가장 큰 패널 
-	private JPanel contentPanel;
+	public JPanel contentPanel;
 	
 	// 버튼 패널 
 	private JPanel buttonPanel; 
@@ -315,13 +315,19 @@ public class LoginView extends JFrame{
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			e.getComponent().setBackground(e.getComponent().getBackground().darker());
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().darker());
+			}
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+			if(e.getComponent().isEnabled())
+			{
+				e.getComponent().setBackground(e.getComponent().getBackground().brighter());
+			}
 		}
 	}
 	
