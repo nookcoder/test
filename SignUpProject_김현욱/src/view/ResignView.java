@@ -14,13 +14,46 @@ public class ResignView extends JFrame{
 	public JPasswordField passwordCheck;
 	public JButton okayButton;
 	public JButton cansleButton;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
 	
 	public ResignView() {
 		this.constants = new Constants();
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setBackground(constants.BLUE);
 		setSize(400,300);
-		setLayout(null);
+		getContentPane().setLayout(null);
+		
+		JButton btnNewButton = new JButton("확인");
+		btnNewButton.setBounds(83, 230, 91, 23);
+		decorateButton(btnNewButton);
+		getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("취소");
+		btnNewButton_1.setBounds(210, 230, 91, 23);
+		decorateButton(btnNewButton_1);
+		getContentPane().add(btnNewButton_1);
+		
+		JLabel lblNewLabel = new JLabel("비밀번호");
+		lblNewLabel.setBounds(23, 68, 100, 30);
+		decorateTextBox(lblNewLabel);
+		getContentPane().add(lblNewLabel);
+		
+		JLabel lblNewLabel_1 = new JLabel("비밀번호 확인");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1.setBounds(23, 155, 100, 30);
+		decorateTextBox(lblNewLabel_1);
+		getContentPane().add(lblNewLabel_1);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(135, 155, 216, 30);
+		decorateUserInfo(passwordField);
+		getContentPane().add(passwordField);
+		
+		passwordField_1 = new JPasswordField();
+		passwordField_1.setBounds(135, 70, 216, 30);
+		decorateUserInfo(passwordField_1);
+		getContentPane().add(passwordField_1);
 
 		
 		setVisible(true);
@@ -37,5 +70,22 @@ public class ResignView extends JFrame{
 				));
 		btn.setMargin(new Insets(5,15,5,15));
 		btn.setFocusPainted(false);
+	}
+	
+	public void decorateTextBox(JLabel label) {
+		label.setBackground(constants.USER_LABEL_BLUE);
+		label.setForeground(constants.LIGHE_BLUE);
+		label.setFont(constants.LOGIN_FONT);
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setOpaque(true);
+		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
+	}
+	
+	public void decorateUserInfo(JPasswordField label) {
+		label.setBackground(constants.USER_INFO_BLUE);
+		label.setForeground(Color.WHITE);
+		label.setFont(constants.LOGIN_FONT);
+		label.setOpaque(true);
+		label.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 10));
 	}
 }
