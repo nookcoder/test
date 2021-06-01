@@ -41,13 +41,13 @@ public class LoginView extends JFrame{
 	private JButton player2; 
 	private Checkbox happyServer; 
 	private Checkbox dreamServer;
-	private JButton findButton;
+	public JButton findButton;
 	private JPanel InputPanel;
 	private JLabel id; 
 	private JLabel password; 
-	private JTextField idField; 
+	public JTextField idField; 
 	private JPasswordField passwordField; 
-	private JTextField textField;
+	public JTextField textField;
 	
 	
 	public LoginView(){

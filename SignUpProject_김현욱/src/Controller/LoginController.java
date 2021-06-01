@@ -1,8 +1,11 @@
 package Controller;
 
 import java.awt.event.*;
+import java.sql.SQLException;
 
 import javax.swing.*;
+
+import com.mysql.jdbc.DatabaseMetaData;
 
 import model.*;
 import view.*;
@@ -37,11 +40,23 @@ public class LoginController {
 			
 			else if(btn.getText().equals("로그인"))
 			{
-				UserInfoView userInfoView = new UserInfoView();
-				login.getContentPane().removeAll();
-				login.getContentPane().add(userInfoView);
-				login.revalidate();
-				login.repaint();
+				String id;
+				String password;
+				try {
+					id =  login.idField.getText();
+					password = login.textField.getText();
+					if(data.isCorrectId(id, password))
+					{
+						UserInfoView userInfoView = new UserInfoView();
+						login.getContentPane().removeAll();
+						login.getContentPane().add(userInfoView);
+						login.revalidate();
+						login.repaint();
+					}
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 			
 			else if(btn.getText().equals("종 료"))

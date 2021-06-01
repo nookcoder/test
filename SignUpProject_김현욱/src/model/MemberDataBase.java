@@ -60,4 +60,21 @@ public class MemberDataBase {
 		
 		return isHaving; 
 	}
+	
+	public boolean isCorrectId(String id,String password) throws SQLException
+	{
+		boolean isCorrect = false; 
+		String selecQuery = constants.SELECTQUERY+" "+ "where id='"+id+"';";
+		Statement statement = (Statement)connection.createStatement();
+		ResultSet resultSet = statement.executeQuery(selecQuery);
+		
+		while(resultSet.next()) {
+			if(resultSet.getString("password").equals(password))
+			{
+				isCorrect = true;
+			}
+		}
+		
+		return isCorrect;
+	}
 }

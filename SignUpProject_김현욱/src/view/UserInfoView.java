@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import model.*;
 
-public class UserInfoView extends JFrame{
+public class UserInfoView extends JPanel{
 	
 	private Constants constants;
 
@@ -25,10 +25,8 @@ public class UserInfoView extends JFrame{
 	public JLabel userAddress;
 	
 	public UserInfoView() {
-		setSize(800,597);
-		getContentPane().setLayout(new BorderLayout());
 		constants= new Constants();
-		
+		setLayout(new BorderLayout());
 		backgroundPanel = new JPanel() {
 			public void paintComponent(Graphics g) {
 				Dimension demension = getSize();
@@ -43,7 +41,7 @@ public class UserInfoView extends JFrame{
 		buttonPanel.setBounds(334, 503, 399, 45);
 		
 		exitButton = new JButton("뒤로가기");
-		exitButton.setBounds(63, 503, 191, 45);
+		exitButton.setBounds(63, 540, 200, 45);
 		revisingButton = new JButton("정보수정");
 		revisingButton.setBounds(12, 5, 152, 37);
 		resignButton = new JButton("탈퇴하기");
@@ -62,10 +60,8 @@ public class UserInfoView extends JFrame{
 		backgroundPanel.add(buttonPanel);
 		
 		
-		getContentPane().add(backgroundPanel,BorderLayout.CENTER);
-		
 		JPanel infoPanel = new JPanel();
-		infoPanel.setBounds(298, 75, 476, 473);
+		infoPanel.setBounds(300, 80, 476, 505);
 		infoPanel.setBackground(constants.BLUE);
 		backgroundPanel.add(infoPanel);
 		infoPanel.setLayout(null);
@@ -135,6 +131,9 @@ public class UserInfoView extends JFrame{
 		userAddress.setBounds(145, 330, 300, 35);
 		decorateUserInfo(userAddress);
 		infoPanel.add(userAddress);
+		
+		backgroundPanel.add(infoPanel);
+		add(backgroundPanel,BorderLayout.CENTER);
 		setVisible(true);
 	}
 	
