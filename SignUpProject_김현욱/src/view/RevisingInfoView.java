@@ -2,6 +2,8 @@ package view;
 
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -18,8 +20,6 @@ public class RevisingInfoView extends JFrame{
 	private Constants constants = new Constants();
 	private JPanel contentPane;
 	public JTextField idField;
-	public JTextField passwordField;
-	public JTextField passwordCheckField;
 	public JTextField nameField;
 	public JTextField birthField;
 	public JTextField phoneNumberField;
@@ -36,7 +36,7 @@ public class RevisingInfoView extends JFrame{
 	public JLabel phoneNumberExplanation;
 	public JLabel emailExplanation;
 	public JLabel addressExplanation;
-	private JTextField textField;
+	public JTextField textField;
 
 
 	public RevisingInfoView() {
@@ -170,9 +170,13 @@ public class RevisingInfoView extends JFrame{
 
 		cansleButton = new JButton("취소");
 		cansleButton.setLocation(208, 395);
+		cansleButton.addActionListener(new CansleButtonListener());
 		cansleButton.setSize(90, 30);
+		
 		contentPane.add(cansleButton);
 		constants.decorateButton(cansleButton);
+	
+		setVisible(true);
 	}	
 	
 	public void decorateIdCheckButton(JButton btn)
@@ -214,6 +218,16 @@ public class RevisingInfoView extends JFrame{
 				super.insertString(offset, str, attr);
 			}
 		}
+	}
+	
+	private class CansleButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			setVisible(false);
+		}
+		
 	}
 }
 

@@ -41,6 +41,7 @@ public class UserController {
 		view.userEmail.setText(email);
 		view.userAddress.setText(address);
 		view.exitButton.addActionListener(new ExitButtonListener());
+		view.revisingButton.addActionListener(new RevisingButtonListener());
 		view.resignButton.addActionListener(new ResignButtonListener());
 	}
 	
@@ -65,6 +66,22 @@ public class UserController {
 			
 			loadLoginView();
 		}
+	}
+	
+	private class RevisingButtonListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			RevisingInfoView revise = new RevisingInfoView();
+			try {
+				RevisingController reviseController = new RevisingController(id,data,revise);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 	}
 	
 	private class ResignButtonListener implements ActionListener{
