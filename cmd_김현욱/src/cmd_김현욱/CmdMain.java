@@ -3,6 +3,7 @@ package cmd_±èÇö¿í;
 import java.io.IOException;
 
 import controller.CmdController;
+import model.CmdModel;
 import view.CmdView;
 
 public class CmdMain {
@@ -11,7 +12,8 @@ public class CmdMain {
 		// TODO Auto-generated method stub
 		
 		CmdView view = new CmdView();
-		CmdController controller = new CmdController(view);
+		CmdModel model = new CmdModel();
+		CmdController controller = new CmdController(view,model);
 	}
 
 }

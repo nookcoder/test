@@ -6,22 +6,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import model.CmdModel;
 import view.CmdView;
 
 public class CmdController {
 	private CmdView view ;
-	private File file; 
+	private CmdModel model;
+	private CdStatement cdStatement; 
 	private Scanner scanner = new Scanner(System.in);
-	public CmdController(CmdView view) throws IOException {
+	
+	public String routeName ; 
+	
+	public CmdController(CmdView view,CmdModel model) throws IOException {
 		this.view = view;
-		getStatement();
+		this.model = model;
+		this.routeName = getUserDirectory(); 
+		Init();
 	}
 	
+	// 처음 실행시킬 함수
 	public void Init() throws IOException {
-		view.showWindowsVersion();
-		view.showRoute(getUserDirectory());
+		String statement;
+		List<String> userStatementList;
+		
+		setInitView();
+		while(true)
+		{
+			statement = getStatement();
+			userStatementList = setStatementToArrayList(statement);
+		}
+		
 	}
 	
+	// cmd 실행 시 처음 화면 출력 
+	public void setInitView() throws IOException {
+		view.showWindowsVersion();
+		view.showRoute(routeName);
+	}
+	
+	// 유저 파일 불러오기 
 	public String getUserDirectory() {
 		String userDirectory; 
 		userDirectory = System.getProperty("user.home");
