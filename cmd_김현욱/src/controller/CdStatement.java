@@ -35,7 +35,7 @@ public class CdStatement {
 		
 		else
 		{
-			view.showNoFindRoute()
+			view.showNoFindRoute();
 			view.showRoute(controller.routeName);
 		}
 	}
@@ -69,8 +69,13 @@ public class CdStatement {
 			goRoute(userStatementList);
 		}
 		
-		else if(userStatementList.get(0).equals("cd.."))
+		else if(userStatementList.get(0).equals("cd..") || userStatementList.get(0).equals("cd..\\") || userStatementList.get(0).equals("cd../"))
 		{
+			if(userStatementList.size() > 1)
+			{
+			
+				return;
+			}
 			backOneRoute();
 			view.showRoute(controller.routeName);
 		}
@@ -92,39 +97,30 @@ public class CdStatement {
 		{
 			view.showRoute(controller.routeName);
 		}
-
 	}
 	
-	public void temp(List<String> userStatementList)
+	// 문자열에 . / \ 를 제외한 문자열이 있는 지 확인 
+	public boolean isHavingText(List<String> userStatementList)
 	{
-		if(userStatementList.get(0).equals("cd")) 
+		boolean isHaving = false;
+		
+		for(int index=1; index < userStatementList.size(); index++)
 		{
-			
-			goRoute(userStatementList);
+			if(!deleteChar(userStatementList.get(index)).equals(null))
+				isHaving = true;
 		}
 		
-		else if(userStatementList.get(0).equals("cd.."))
-		{
-			backOneRoute();
-			view.showRoute(routeName);
-		}
+		return isHaving;
+	}
+	
+	// 문자열에서 . \ / 삭제
+	public String deleteChar(String str)
+	{
+		str = str.trim();
+		str = str.replaceAll(".", "");	
+		str = str.replaceAll("\\", "");
+		str = str.replaceAll("/", "");
 		
-		else if(userStatementList.get(0).equals("cd..\\.."))
-		{
-			backOneRoute();
-			backOneRoute();
-			view.showRoute(routeName);
-		}
-		
-		else if(userStatementList.get(0).equals("cd\\"))
-		{
-			backAllRoute();
-			view.showRoute(routeName);
-		}
-		
-		else
-		{
-			view.showRoute(routeName);
-		}
+		return str;
 	}
 }
