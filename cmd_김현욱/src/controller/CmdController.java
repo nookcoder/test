@@ -14,6 +14,7 @@ public class CmdController {
 	private CmdModel model;
 	private CdStatement cdStatement; 
 	private DirStatement dirStatement;
+	private CopyStatement copyStatement;
 	private Scanner scanner = new Scanner(System.in);
 	private Constants constants; 
 	
@@ -24,6 +25,7 @@ public class CmdController {
 		this.model = model;
 		this.cdStatement = new CdStatement(view,this,model,constants);
 		this.dirStatement = new DirStatement(view, this, model,constants);
+		this.copyStatement = new CopyStatement(view,this,model);
 		this.routeName = getUserDirectory(); 
 		this.constants = new Constants();
 		Init();
@@ -76,7 +78,7 @@ public class CmdController {
 				
 				else if(lowerCaseStatement.equals("copy"))
 				{
-					
+					copyStatement.copyWithNoPath(userStatementList);
 				}
 			}
 			
