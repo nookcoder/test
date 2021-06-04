@@ -96,7 +96,7 @@ public class CmdView {
 		String fileByteString = decimalFormate.format(fileByteSum);
 		String directoryByteString = decimalFormate.format(directoyByte);
 		System.out.printf("%16d개 파일%20s 바이트\n",fileCount,fileByteString);
-		System.out.printf("%16d개 디렉터리%20s 바이트\n",directoryCount,directoryByteString);
+		System.out.printf("%16d개 디렉터리%20s 바이트 남음\n",directoryCount,directoryByteString);
 		System.out.print("\n");
 	}
 	
@@ -226,7 +226,7 @@ public class CmdView {
 	// 복사 성공했을 때 
 	public void showSuccessCopy()
 	{
-		System.out.println("1개 파일이 복사되었습니다.");
+		System.out.println("      1개 파일이 복사되었습니다.");
 		System.out.print("\n");
 	}
 	

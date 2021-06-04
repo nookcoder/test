@@ -78,7 +78,7 @@ public class CmdController {
 				
 				else if(lowerCaseStatement.equals("copy"))
 				{
-					copyStatement.copyWithNoPath(userStatementList);
+					copyStatement.runCopyStatement(userStatementList);
 				}
 			}
 			
