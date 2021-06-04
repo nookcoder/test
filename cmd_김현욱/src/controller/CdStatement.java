@@ -20,24 +20,20 @@ public class CdStatement {
 		this.model = model;
 	}
 
+	// cd 명령문 실행 
 	public void runCdStatement(List<String> userStatementList) throws IOException
 	{
+		// cd가 입력됐을때 
 		if(userStatementList.get(0).equals("cd")) 
 		{
-			if(userStatementList.get(1).equals(".."))
+			if(userStatementList.size() == 1)
 			{
-			
+				System.out.println(controller.routeName);
+				view.showBlankLine();
+				view.showRoute(controller.routeName);
+				return;
 			}
-			else if(userStatementList.get(1).equals("..\\.."))
-			{
-				
-			}
-			
-			else if(userStatementList.get(1).equals("\\"))
-			{
-				
-			}
-			goRoute(userStatementList);
+			runCd(userStatementList);
 		}
 
 		else if(userStatementList.get(0).equals("cd..") || userStatementList.get(0).equals("cd..\\") || userStatementList.get(0).equals("cd../"))
@@ -59,6 +55,33 @@ public class CdStatement {
 		{
 			view.showRoute(controller.routeName);
 		}
+	}
+	
+	public void runCd(List<String> userStatementList) throws IOException
+	{
+		if(userStatementList.get(1).equals(".."))
+		{
+			userStatementList.set(0, "cd..");
+			userStatementList.remove(1);
+			runCdDotDot(userStatementList);
+			return;
+		}
+		else if(userStatementList.get(1).equals("..\\.."))
+		{
+			userStatementList.set(0, "cd..\\..");
+			userStatementList.remove(1);
+			runCdDotBackSlash(userStatementList);
+			return;
+		}
+		
+		else if(userStatementList.get(1).equals("\\"))
+		{
+			userStatementList.set(0, "cd\\");
+			userStatementList.remove(1);
+			runCdBackSlash(userStatementList);
+			return;
+		}
+		goRoute(userStatementList);
 	}
 
 	// cd.. 명령문 실행 
@@ -95,7 +118,6 @@ public class CdStatement {
 			{
 				view.showNoFindRoute();
 				view.showRoute(controller.routeName);
-				view.showBlankLine();
 			}
 			
 			else
@@ -116,13 +138,11 @@ public class CdStatement {
 		{
 			view.showNoFindRoute();
 			view.showRoute(controller.routeName);
-			view.showBlankLine();
 		}
 		
 		else
 		{
 			view.showRoute(controller.routeName);
-			view.showBlankLine();
 		}
 		return;
 	}
