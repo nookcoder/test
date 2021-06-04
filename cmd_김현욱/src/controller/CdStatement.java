@@ -160,7 +160,7 @@ public class CdStatement {
 		
 		for(int index=1;index<userStatementList.size();index++)
 		{
-			path = path + userStatementList.get(index);
+			path = path + userStatementList.get(index).toLowerCase();
 		}
 		
 		pathName = controller.routeName + File.separator + path;

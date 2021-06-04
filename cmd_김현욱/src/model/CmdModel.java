@@ -25,4 +25,19 @@ public class CmdModel {
 		
 		return file.getCanonicalPath();
 	}
+	
+	// 한칸 뒤로가기 
+	public String backOneRoute(String routeName) throws IOException
+	{
+		int seperateIndex; 
+		if(routeName.equals("C:")||routeName.equals("c:"))
+		{
+			return routeName;
+		}
+
+		seperateIndex = routeName.lastIndexOf(File.separator); 
+		routeName = routeName.substring(0, seperateIndex);
+
+		return routeName;
+	}
 }

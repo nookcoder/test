@@ -44,7 +44,7 @@ public class DirStatement {
 		else if(userStatementList.get(0).equals("dir.."))
 		{
 
-			newRouteName = backOneRoute(routeName);
+			newRouteName = model.backOneRoute(routeName);
 			showDirectory(newRouteName);
 			
 			repeatRunDir(userStatementList,routeName);
@@ -52,8 +52,8 @@ public class DirStatement {
 		
 		else if(userStatementList.get(0).equals("dir..\\.."))
 		{
-			newRouteName = backOneRoute(routeName);
-			newRouteName = backOneRoute(newRouteName);
+			newRouteName = model.backOneRoute(routeName);
+			newRouteName = model.backOneRoute(newRouteName);
 			showDirectory(newRouteName);
 		
 			repeatRunDir(userStatementList,routeName);
@@ -91,14 +91,14 @@ public class DirStatement {
 		// cd 뒤에 다른 명령어가 있을 때 
 		if(userStatementList.get(index).equals(".."))
 		{
-			routeName = backOneRoute(routeName);
+			routeName = model.backOneRoute(routeName);
 			showDirectory(routeName);
 			return;
 		}
 		else if(userStatementList.get(index).equals("..\\.."))
 		{
-			routeName = backOneRoute(routeName);
-			routeName = backOneRoute(routeName);
+			routeName = model.backOneRoute(routeName);
+			routeName = model.backOneRoute(routeName);
 			return;
 		}
 
@@ -150,20 +150,5 @@ public class DirStatement {
 			view.showDirTop(controller.routeName);
 			view.showDirNoFine();
 		}
-	}
-	
-	// 한칸 뒤로가기 
-	public String backOneRoute(String routeName) throws IOException
-	{
-		int seperateIndex; 
-		if(routeName.equals("C:")||routeName.equals("c:"))
-		{
-			return routeName;
-		}
-
-		seperateIndex = routeName.lastIndexOf(File.separator); 
-		routeName = routeName.substring(0, seperateIndex);
-
-		return routeName;
 	}
 }
