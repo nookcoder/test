@@ -80,6 +80,11 @@ public class CmdController {
 				{
 					copyStatement.runCopyStatement(userStatementList);
 				}
+				
+				else {
+					view.showErrorStatement(userStatementList.get(0));
+					view.showRoute(routeName);
+				}
 			}
 			
 			else

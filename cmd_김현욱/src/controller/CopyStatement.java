@@ -21,7 +21,7 @@ public class CopyStatement {
 		this.model = model;
 	}
 	
-	
+	// copy 명령문 실행 
 	public void runCopyStatement(List<String> userStatementList)
 	{
 		if(userStatementList.size() == 3)
@@ -45,6 +45,12 @@ public class CopyStatement {
 			{
 				copyWithTwoPath(userStatementList);
 			}
+		}
+		
+		else if(userStatementList.size() == 1)
+		{
+			view.showErrorSyntax();
+			view.showRoute(controller.routeName);
 		}
 	}
 	
@@ -80,6 +86,7 @@ public class CopyStatement {
 		runCopy(originalPath,copyPath);
 	}
 	
+	// 복사해올 파일 경로만 일력됐을 때 
 	public void copyWithOriginalPath(List<String> userStatementList)
 	{
 		String originalPath = userStatementList.get(1);
@@ -87,6 +94,7 @@ public class CopyStatement {
 		runCopy(originalPath,copyPath);
 	}
 	
+	// 복사될 파일 경로만 입력됐을 때 
 	public void copyWithCopyPath(List<String> userStatementList)
 	{
 		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
