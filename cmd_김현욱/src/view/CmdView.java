@@ -56,12 +56,17 @@ public class CmdView {
 		System.out.print(route + ">");
 	}
 	
-	public void showDirTop(File file) throws IOException
+	public void showVolumeNumber()
 	{
 		System.out.println(" C 드라이브의 볼륨에는 이름이 없습니다.");
 		System.out.println(" 볼륨 일련 번호 :BEBF-2222D");
+	}
+	
+	// 파일디렉터리 출력
+	public void showDirTop(String file) throws IOException
+	{
 		System.out.print("\n");
-		System.out.println(" "+file.getCanonicalPath()+" 디렉터리");
+		System.out.println(" "+file+" 디렉터리");
 		System.out.print("\n");
 	}
 	

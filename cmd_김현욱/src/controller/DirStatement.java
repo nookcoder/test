@@ -25,6 +25,9 @@ public class DirStatement {
 	{
 		String routeName = controller.routeName;
 		String newRouteName;
+		
+		view.showVolumeNumber();
+		
 		if(userStatementList.get(0).equals("dir"))
 		{
 			if(userStatementList.size()>1)
@@ -44,30 +47,16 @@ public class DirStatement {
 			newRouteName = backOneRoute(routeName);
 			showDirectory(newRouteName);
 			
-			if(userStatementList.size()>1)
-			{
-				for(int index=1;index < userStatementList.size(); index++)
-				{
-					runDir(userStatementList,routeName,index);
-				}
-				return;
-			}
+			repeatRunDir(userStatementList,routeName);
 		}
 		
 		else if(userStatementList.get(0).equals("dir..\\.."))
 		{
 			newRouteName = backOneRoute(routeName);
-			newRouteName = backOneRoute(routeName);
+			newRouteName = backOneRoute(newRouteName);
 			showDirectory(newRouteName);
 		
-			if(userStatementList.size()>1)
-			{
-				for(int index=1;index < userStatementList.size(); index++)
-				{
-					runDir(userStatementList,routeName,index);
-				}
-				return;
-			}
+			repeatRunDir(userStatementList,routeName);
 		}
 		
 		else if(userStatementList.get(0).equals("dir\\"))
@@ -75,14 +64,22 @@ public class DirStatement {
 			newRouteName = "C:";
 			showDirectory(newRouteName);
 			
-			if(userStatementList.size()>1)
+			repeatRunDir(userStatementList,routeName);
+		}
+		
+		view.showRoute(controller.routeName);
+	}
+	
+	// dir 명령문 여러개 있을 떄 처리 
+	public void repeatRunDir(List<String> userStatementList,String routeName) throws IOException
+	{
+		if(userStatementList.size()>1)
+		{
+			for(int index=1;index < userStatementList.size(); index++)
 			{
-				for(int index=1;index < userStatementList.size(); index++)
-				{
-					runDir(userStatementList,routeName,index);
-				}
-				return;
+				runDir(userStatementList,routeName,index);
 			}
+			return;
 		}
 	}
 
@@ -113,7 +110,7 @@ public class DirStatement {
 		
 		else
 		{
-			showDirectory(routeName);
+			showDirectory(routeName+File.separator+userStatementList.get(index).toString());
 		}
 		
 	}
@@ -127,10 +124,9 @@ public class DirStatement {
 		
 		File[] files = file.listFiles();
 		
-		view.showDirTop(file);
-		
 		if(file.exists())
 		{
+			view.showDirTop(file.getCanonicalPath());
 			for(File components : files)
 			{
 				view.showDirectoryFormat(components, components.isDirectory());
@@ -151,9 +147,9 @@ public class DirStatement {
 		
 		else
 		{
+			view.showDirTop(controller.routeName);
 			view.showDirNoFine();
 		}
-		view.showRoute(controller.routeName);
 	}
 	
 	// 한칸 뒤로가기 
