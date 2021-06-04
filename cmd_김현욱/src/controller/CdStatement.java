@@ -29,7 +29,7 @@ public class CdStatement {
 			if(userStatementList.size() == 1)
 			{
 				System.out.println(controller.routeName);
-				view.showBlankLine();
+				System.out.print("\n");
 				view.showRoute(controller.routeName);
 				return;
 			}
@@ -53,6 +53,7 @@ public class CdStatement {
 
 		else
 		{
+			view.showErrorStatement(userStatementList.get(0).toString());
 			view.showRoute(controller.routeName);
 		}
 	}
