@@ -47,6 +47,21 @@ public class CmdController {
 				{
 					dirStatement.runDirStatement(userStatementList);
 				}
+				
+				else if(userStatementList.get(0).contains("cls"))
+				{
+					if(isExecuteClear(userStatementList.get(0)))
+					{
+						view.showClear();
+						view.showRoute(routeName);
+					}
+					
+					else
+					{
+						view.showErrorStatement(userStatementList.get(0));
+						view.showRoute(routeName);
+					}
+				}
 			}
 			
 			else
@@ -94,6 +109,22 @@ public class CmdController {
 		}
 		
 		return userStatementList;
+	}
+	
+	public boolean isExecuteClear(String statement)
+	{
+		boolean isClear = false;
+		if(statement.charAt(0) == 'c' && statement.charAt(1) == 'l' && statement.charAt(2) == 's')
+		{
+			if(statement.length() == 3 || statement.charAt(3) == '&'|| statement.charAt(3) == '(' || statement.charAt(3) == '=' || statement.charAt(3) == '+'
+					|| statement.charAt(3) == '['|| statement.charAt(3) == ']'||statement.charAt(3) == ';' || statement.charAt(3) == ':' || statement.charAt(3) == '.'
+					|| statement.charAt(3) == ',' || statement.charAt(3) == '.' || statement.charAt(3) == '\\')
+			{
+				isClear = true;
+			}
+		}
+		
+		return isClear;
 	}
 	
 }

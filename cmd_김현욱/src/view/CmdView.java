@@ -106,6 +106,14 @@ public class CmdView {
 		System.out.print("\n");
 	}
 	
+	public void showClear()
+	{
+		for(int i=0;i<50;i++)
+		{
+			System.out.println("\n");	
+		}
+	}
+	
 	
 	
 }
