@@ -90,6 +90,7 @@ public class CmdView {
 		}
 	}
 	
+	// dir 에서 바이트 출력 부분 
 	public void showDirBottom(int fileCount,int directoryCount,int fileByteSum,long directoyByte)
 	{
 		DecimalFormat decimalFormate = new DecimalFormat("###,###");
@@ -100,6 +101,7 @@ public class CmdView {
 		System.out.print("\n");
 	}
 	
+	// dir 애서 파일을 찾을 수 없을 때
 	public void showDirNoFine()
 	{
 		System.out.println("파일을 찾을 수 없습니다.");

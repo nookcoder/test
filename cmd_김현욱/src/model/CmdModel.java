@@ -69,4 +69,11 @@ public class CmdModel {
 			e.printStackTrace();
 		}
 	}
+	
+	public void deleteFile(String filePath)
+	{
+		File deleteFile = new File(filePath);
+		
+		deleteFile.delete();
+	}
 }
