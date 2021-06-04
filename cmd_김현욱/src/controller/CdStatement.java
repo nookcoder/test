@@ -58,8 +58,10 @@ public class CdStatement {
 		}
 	}
 	
+	// cd 명령문 실행 
 	public void runCd(List<String> userStatementList) throws IOException
 	{
+		// cd 뒤에 다른 명령어가 있을 때 
 		if(userStatementList.get(1).equals(".."))
 		{
 			userStatementList.set(0, "cd..");
@@ -82,6 +84,8 @@ public class CdStatement {
 			runCdBackSlash(userStatementList);
 			return;
 		}
+		
+		// cd 뒤에 경로가 나올 때 
 		goRoute(userStatementList);
 	}
 

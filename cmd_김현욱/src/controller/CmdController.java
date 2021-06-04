@@ -1,6 +1,5 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,7 @@ public class CmdController {
 	private CmdView view ;
 	private CmdModel model;
 	private CdStatement cdStatement; 
+	private DirStatement dirStatement;
 	private Scanner scanner = new Scanner(System.in);
 	
 	public String routeName ; 
@@ -21,6 +21,7 @@ public class CmdController {
 		this.view = view;
 		this.model = model;
 		this.cdStatement = new CdStatement(view,this,model);
+		this.dirStatement = new DirStatement(view, this, model);
 		this.routeName = getUserDirectory(); 
 		Init();
 	}
@@ -40,6 +41,11 @@ public class CmdController {
 				if(userStatementList.get(0).contains("cd"))
 				{
 					cdStatement.runCdStatement(userStatementList);
+				}
+				
+				else if(userStatementList.get(0).contains("dir"))
+				{
+					dirStatement.runDirStatement(userStatementList);
 				}
 			}
 			
