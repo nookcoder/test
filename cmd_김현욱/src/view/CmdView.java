@@ -228,7 +228,15 @@ public class CmdView {
 	// 복사 성공했을 때 
 	public void showSuccessCopy()
 	{
-		System.out.println("      1개 파일이 복사되었습니다.");
+		System.out.println("        1개 파일이 복사되었습니다.");
+		System.out.print("\n");
+	}
+	
+	// 이동 성공했을 때 
+	// 복사 성공했을 때 
+	public void showSuccessMove()
+	{
+		System.out.println("        1개 파일이 이동되었습니다.");
 		System.out.print("\n");
 	}
 	

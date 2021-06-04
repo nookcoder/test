@@ -70,6 +70,8 @@ public class CopyStatement {
 			view.showRoute(controller.routeName);
 		}
 		
+		//isDirectory 추가 
+		
 		// 복사파일이 없을 때 
 		else
 		{
