@@ -33,7 +33,15 @@ public class CmdController {
 		while(true)
 		{
 			statement = getStatement();
-			userStatementList = setStatementToArrayList(statement);
+			if(statement.length() != 0)
+			{
+				userStatementList = setStatementToArrayList(statement);
+			}
+			
+			else
+			{
+				view.showRoute(routeName);
+			}
 		}
 		
 	}
