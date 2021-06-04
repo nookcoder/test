@@ -38,19 +38,20 @@ public class CmdController {
 			if(statement.length() != 0)
 			{
 				userStatementList = setStatementToArrayList(statement);
-				if(userStatementList.get(0).contains("cd"))
+				String lowerCaseStatement= userStatementList.get(0).toLowerCase();
+				if(lowerCaseStatement.contains("cd"))
 				{
 					cdStatement.runCdStatement(userStatementList);
 				}
 				
-				else if(userStatementList.get(0).contains("dir"))
+				else if(lowerCaseStatement.contains("dir"))
 				{
 					dirStatement.runDirStatement(userStatementList);
 				}
 				
-				else if(userStatementList.get(0).contains("cls"))
+				else if(lowerCaseStatement.contains("cls"))
 				{
-					if(isExecuteClear(userStatementList.get(0)))
+					if(isExecuteClear(lowerCaseStatement))
 					{
 						view.showClear();
 						view.showRoute(routeName);
@@ -61,6 +62,12 @@ public class CmdController {
 						view.showErrorStatement(userStatementList.get(0));
 						view.showRoute(routeName);
 					}
+				}
+				
+				else if(lowerCaseStatement.equals("help"))
+				{
+					view.showHelp();
+					view.showRoute(routeName);
 				}
 			}
 			
