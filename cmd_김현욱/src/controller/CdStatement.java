@@ -24,6 +24,19 @@ public class CdStatement {
 	{
 		if(userStatementList.get(0).equals("cd")) 
 		{
+			if(userStatementList.get(1).equals(".."))
+			{
+			
+			}
+			else if(userStatementList.get(1).equals("..\\.."))
+			{
+				
+			}
+			
+			else if(userStatementList.get(1).equals("\\"))
+			{
+				
+			}
 			goRoute(userStatementList);
 		}
 
@@ -78,7 +91,18 @@ public class CdStatement {
 	{
 		if(userStatementList.size() > 1)
 		{
-			checkInputChar(userStatementList);
+			if(isHavingText(userStatementList))
+			{
+				view.showNoFindRoute();
+				view.showRoute(controller.routeName);
+				view.showBlankLine();
+			}
+			
+			else
+			{
+				backAllRoute();
+				view.showRoute(controller.routeName);
+			}
 			return;
 		}
 		backAllRoute();
@@ -92,10 +116,13 @@ public class CdStatement {
 		{
 			view.showNoFindRoute();
 			view.showRoute(controller.routeName);
+			view.showBlankLine();
 		}
+		
 		else
 		{
 			view.showRoute(controller.routeName);
+			view.showBlankLine();
 		}
 		return;
 	}
@@ -135,7 +162,7 @@ public class CdStatement {
 			return controller.routeName;
 		}
 
-		seperateIndex =controller.routeName.lastIndexOf(File.separator); 
+		seperateIndex = controller.routeName.lastIndexOf(File.separator); 
 		controller.routeName = controller.routeName.substring(0, seperateIndex);
 
 		return controller.routeName;
