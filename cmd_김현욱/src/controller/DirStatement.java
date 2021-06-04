@@ -27,6 +27,11 @@ public class DirStatement {
 		
 		if(userStatementList.get(0).equals("dir"))
 		{
+			if(userStatementList.size()>1)
+			{
+				runDir(userStatementList,routeName);
+				return;
+			}
 			showDirectory(routeName);
 		}
 		
@@ -36,7 +41,7 @@ public class DirStatement {
 			showDirectory(routeName);
 		}
 		
-		else if(userStatementList.get(0).equals("dir.\\.."))
+		else if(userStatementList.get(0).equals("dir..\\.."))
 		{
 			routeName = backOneRoute(routeName);
 			routeName = backOneRoute(routeName);
@@ -50,32 +55,77 @@ public class DirStatement {
 		}
 	}
 	
+	// cd 명령문 실행 
+	public void runDir(List<String> userStatementList,String routeName) throws IOException
+	{
+		// cd 뒤에 다른 명령어가 있을 때 
+		if(userStatementList.get(1).equals(".."))
+		{
+			userStatementList.set(0, "dir..");
+			userStatementList.remove(1);
+			routeName = backOneRoute(routeName);
+			showDirectory(routeName);
+			return;
+		}
+		else if(userStatementList.get(1).equals("..\\.."))
+		{
+			userStatementList.set(0, "dir..\\..");
+			userStatementList.remove(1);
+			routeName = backOneRoute(routeName);
+			routeName = backOneRoute(routeName);
+			return;
+		}
+
+		else if(userStatementList.get(1).equals("\\"))
+		{
+			userStatementList.set(0, "dir\\");
+			userStatementList.remove(1);
+			routeName = "C:";
+			showDirectory(routeName);
+			return;
+		}
+		else
+		{
+			showDirectory(routeName);
+		}
+		
+	}
+	
 	public void showDirectory(String routeName) throws IOException
 	{
-		int sum = 0;
 		int fileCount = 0;
 		int fileByteSum = 0;
 		int directoryCount = 0;
 		File file = new File(routeName);
+		
 		File[] files = file.listFiles();
 		
 		view.showDirTop(file);
-		for(File components : files)
+		
+		if(file.exists())
 		{
-			view.showDirectoryFormat(components, components.isDirectory());
-			if(components.isDirectory())
+			for(File components : files)
 			{
-				directoryCount++;
-			}
-			
-			else
-			{
-				fileByteSum += components.length();
-				fileCount++;
-			}
-		}	
+				view.showDirectoryFormat(components, components.isDirectory());
+				if(components.isDirectory())
+				{
+					directoryCount++;
+				}
+				
+				else
+				{
+					fileByteSum += components.length();
+					fileCount++;
+				}
+			}	
 
-		view.showDirBottom(fileCount, directoryCount, fileByteSum,file.getUsableSpace());
+			view.showDirBottom(fileCount, directoryCount, fileByteSum,file.getUsableSpace());
+		}
+		
+		else
+		{
+			view.showDirNoFine();
+		}
 		view.showRoute(controller.routeName);
 	}
 	

@@ -95,6 +95,12 @@ public class CmdView {
 		System.out.print("\n");
 	}
 	
+	public void showDirNoFine()
+	{
+		System.out.println("파일을 찾을 수 없습니다.");
+		System.out.print("\n");
+	}
+	
 	
 	
 }
