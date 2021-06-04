@@ -20,6 +20,7 @@ public class CmdController {
 	public CmdController(CmdView view,CmdModel model) throws IOException {
 		this.view = view;
 		this.model = model;
+		this.cdStatement = new CdStatement(view,this,model);
 		this.routeName = getUserDirectory(); 
 		Init();
 	}
@@ -36,6 +37,10 @@ public class CmdController {
 			if(statement.length() != 0)
 			{
 				userStatementList = setStatementToArrayList(statement);
+				if(userStatementList.get(0).contains("cd"))
+				{
+					cdStatement.runCdStatement(userStatementList);
+				}
 			}
 			
 			else
