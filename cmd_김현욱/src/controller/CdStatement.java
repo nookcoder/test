@@ -24,32 +24,22 @@ public class CdStatement {
 	{
 		if(userStatementList.get(0).equals("cd")) 
 		{
-
 			goRoute(userStatementList);
 		}
 
 		else if(userStatementList.get(0).equals("cd..") || userStatementList.get(0).equals("cd..\\") || userStatementList.get(0).equals("cd../"))
 		{
-			if(userStatementList.size() > 1)
-			{
-				
-				return;
-			}
-			backOneRoute();
-			view.showRoute(controller.routeName);
+			runCdDotDot(userStatementList);
 		}
 
 		else if(userStatementList.get(0).equals("cd..\\.."))
 		{
-			backOneRoute();
-			backOneRoute();
-			view.showRoute(controller.routeName);
+			runCdDotBackSlash(userStatementList);
 		}
 
 		else if(userStatementList.get(0).equals("cd\\"))
 		{
-			backAllRoute();
-			view.showRoute(controller.routeName);
+			runCdBackSlash(userStatementList);
 		}
 
 		else
@@ -58,6 +48,58 @@ public class CdStatement {
 		}
 	}
 
+	// cd.. 명령문 실행 
+	public void runCdDotDot(List<String> userStatementList) throws IOException
+	{
+		if(userStatementList.size() > 1)
+		{
+			checkInputChar(userStatementList);
+			return;
+		}
+		backOneRoute();
+		view.showRoute(controller.routeName);
+	}
+	
+	// cd..\.. 실행
+	public void runCdDotBackSlash(List<String> userStatementList) throws IOException
+	{
+		if(userStatementList.size() > 1)
+		{
+			checkInputChar(userStatementList);
+			return;
+		}
+		backOneRoute();
+		backOneRoute();
+		view.showRoute(controller.routeName);
+	}
+	
+	// cd\ 싱행 
+	public void runCdBackSlash(List<String> userStatementList)
+	{
+		if(userStatementList.size() > 1)
+		{
+			checkInputChar(userStatementList);
+			return;
+		}
+		backAllRoute();
+		view.showRoute(controller.routeName);
+	}
+	
+	// cd 명령문 뒤에 .\/ 이외에 문자가 있으면 지정경로 오류 출력 
+	public void checkInputChar(List<String> userStatementList)
+	{
+		if(isHavingText(userStatementList))
+		{
+			view.showNoFindRoute();
+			view.showRoute(controller.routeName);
+		}
+		else
+		{
+			view.showRoute(controller.routeName);
+		}
+		return;
+	}
+	
 	// 파일 경로 이동 
 	public void goRoute(List<String> userStatementList) throws IOException
 	{
@@ -114,8 +156,10 @@ public class CdStatement {
 
 		for(int index=1; index < userStatementList.size(); index++)
 		{
-			if(!deleteChar(userStatementList.get(index)).equals(null))
+			if(!deleteChar(userStatementList.get(index)).equals(""))
+			{
 				isHaving = true;
+			}
 		}
 
 		return isHaving;
@@ -124,11 +168,9 @@ public class CdStatement {
 	// 문자열에서 . \ / 삭제
 	public String deleteChar(String str)
 	{
-		str = str.trim();
-		str = str.replaceAll(".", "");	
-		str = str.replaceAll("\\", "");
-		str = str.replaceAll("/", "");
-
+		str = str.replaceAll("[.]", "");	
+		str = str.replaceAll("[/]", "");
+		str = str.replace("\\", "");
 		return str;
 	}
 }
