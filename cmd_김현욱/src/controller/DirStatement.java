@@ -24,12 +24,15 @@ public class DirStatement {
 	public void runDirStatement(List<String> userStatementList) throws IOException
 	{
 		String routeName = controller.routeName;
-		
+		String newRouteName;
 		if(userStatementList.get(0).equals("dir"))
 		{
 			if(userStatementList.size()>1)
 			{
-				runDir(userStatementList,routeName);
+				for(int index=1;index < userStatementList.size(); index++)
+				{
+					runDir(userStatementList,routeName,index);
+				}
 				return;
 			}
 			showDirectory(routeName);
@@ -37,53 +40,77 @@ public class DirStatement {
 		
 		else if(userStatementList.get(0).equals("dir.."))
 		{
-			routeName = backOneRoute(routeName);
-			showDirectory(routeName);
+
+			newRouteName = backOneRoute(routeName);
+			showDirectory(newRouteName);
+			
+			if(userStatementList.size()>1)
+			{
+				for(int index=1;index < userStatementList.size(); index++)
+				{
+					runDir(userStatementList,routeName,index);
+				}
+				return;
+			}
 		}
 		
 		else if(userStatementList.get(0).equals("dir..\\.."))
 		{
-			routeName = backOneRoute(routeName);
-			routeName = backOneRoute(routeName);
-			showDirectory(routeName);
+			newRouteName = backOneRoute(routeName);
+			newRouteName = backOneRoute(routeName);
+			showDirectory(newRouteName);
+		
+			if(userStatementList.size()>1)
+			{
+				for(int index=1;index < userStatementList.size(); index++)
+				{
+					runDir(userStatementList,routeName,index);
+				}
+				return;
+			}
 		}
 		
 		else if(userStatementList.get(0).equals("dir\\"))
 		{	
-			routeName = "C:";
-			showDirectory(routeName);
+			newRouteName = "C:";
+			showDirectory(newRouteName);
+			
+			if(userStatementList.size()>1)
+			{
+				for(int index=1;index < userStatementList.size(); index++)
+				{
+					runDir(userStatementList,routeName,index);
+				}
+				return;
+			}
 		}
 	}
+
 	
 	// cd 명령문 실행 
-	public void runDir(List<String> userStatementList,String routeName) throws IOException
+	public void runDir(List<String> userStatementList,String routeName,int index) throws IOException
 	{
+		
 		// cd 뒤에 다른 명령어가 있을 때 
-		if(userStatementList.get(1).equals(".."))
+		if(userStatementList.get(index).equals(".."))
 		{
-			userStatementList.set(0, "dir..");
-			userStatementList.remove(1);
 			routeName = backOneRoute(routeName);
 			showDirectory(routeName);
 			return;
 		}
-		else if(userStatementList.get(1).equals("..\\.."))
+		else if(userStatementList.get(index).equals("..\\.."))
 		{
-			userStatementList.set(0, "dir..\\..");
-			userStatementList.remove(1);
 			routeName = backOneRoute(routeName);
 			routeName = backOneRoute(routeName);
 			return;
 		}
 
-		else if(userStatementList.get(1).equals("\\"))
+		else if(userStatementList.get(index).equals("\\"))
 		{
-			userStatementList.set(0, "dir\\");
-			userStatementList.remove(1);
-			routeName = "C:";
-			showDirectory(routeName);
+			showDirectory("C:");
 			return;
 		}
+		
 		else
 		{
 			showDirectory(routeName);
