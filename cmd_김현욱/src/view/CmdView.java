@@ -215,6 +215,20 @@ public class CmdView {
 				+ "\r\n"
 				+ "도구에 대한 자세한 내용은 온라인 도움말의 명령줄 참조를 참조하십시오.\n");
 	}
+
+	// 복사 파일이 존재하지 않을 때 
+	public void showNoExistsOriginalFile()
+	{
+		System.out.println("지정된 파일을 찾을 수 없습니다.");
+		System.out.print("\n");
+	}
+	
+	// 복사 성공했을 때 
+	public void showSuccessCopy()
+	{
+		System.out.println("1개 파일이 복사되었습니다.");
+		System.out.print("\n");
+	}
 	
 	
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import cmd_±èÇö¿í.Constants;
 import model.CmdModel;
 import view.CmdView;
 
@@ -14,15 +15,17 @@ public class CmdController {
 	private CdStatement cdStatement; 
 	private DirStatement dirStatement;
 	private Scanner scanner = new Scanner(System.in);
+	private Constants constants; 
 	
 	public String routeName ; 
 	
 	public CmdController(CmdView view,CmdModel model) throws IOException {
 		this.view = view;
 		this.model = model;
-		this.cdStatement = new CdStatement(view,this,model);
-		this.dirStatement = new DirStatement(view, this, model);
+		this.cdStatement = new CdStatement(view,this,model,constants);
+		this.dirStatement = new DirStatement(view, this, model,constants);
 		this.routeName = getUserDirectory(); 
+		this.constants = new Constants();
 		Init();
 	}
 	
@@ -39,6 +42,7 @@ public class CmdController {
 			{
 				userStatementList = setStatementToArrayList(statement);
 				String lowerCaseStatement= userStatementList.get(0).toLowerCase();
+				
 				if(lowerCaseStatement.contains("cd"))
 				{
 					cdStatement.runCdStatement(userStatementList);
@@ -68,6 +72,11 @@ public class CmdController {
 				{
 					view.showHelp();
 					view.showRoute(routeName);
+				}
+				
+				else if(lowerCaseStatement.equals("copy"))
+				{
+					
 				}
 			}
 			
@@ -105,7 +114,7 @@ public class CmdController {
 	public List<String> setStatementToArrayList(String userStatement) {
 		String temp[];
 		List<String> userStatementList = new ArrayList<String>();
-		temp = userStatement.split(" ");
+		temp = userStatement.split(constants.BLANK);
 		
 		for(int index=0;index<temp.length;index++)
 		{
