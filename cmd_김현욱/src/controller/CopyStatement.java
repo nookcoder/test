@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import model.CmdModel;
@@ -22,7 +23,7 @@ public class CopyStatement {
 	}
 	
 	// copy 명령문 실행 
-	public void runCopyStatement(List<String> userStatementList)
+	public void runCopyStatement(List<String> userStatementList)throws IOException
 	{
 		if(userStatementList.size() == 3)
 		{
@@ -54,17 +55,22 @@ public class CopyStatement {
 		}
 	}
 	
-	// 복사 실행하기 
-	public void runCopy(String originalPath, String copyPath)
+	// 복사 실행하기 f
+	public void runCopy(String originalPath, String copyPath) throws IOException
 	{
 		// 복사할 파일이 존재할 때 
 		if(model.isExistsFile(originalPath))
 		{
-			try {
-				model.copyFile(originalPath,copyPath);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			File originalFile = new File(originalPath);
+			File copyFile = new File(copyPath);
+			if(originalFile.isDirectory())
+			{
+				model.copyDirectory(originalFile,copyFile);				
+			}
+			
+			else
+			{
+				model.copyFile(originalFile, copyFile);
 			}
 			view.showSuccessCopy();
 			view.showRoute(controller.routeName);
@@ -81,7 +87,7 @@ public class CopyStatement {
 	}
 	
 	// 경로가 없을 때 
-	public void copyWithNoPath(List<String> userStatementList)
+	public void copyWithNoPath(List<String> userStatementList) throws IOException
 	{
 		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
 		String copyPath = controller.routeName + File.separator+userStatementList.get(2);
@@ -89,7 +95,7 @@ public class CopyStatement {
 	}
 	
 	// 복사해올 파일 경로만 일력됐을 때 
-	public void copyWithOriginalPath(List<String> userStatementList)
+	public void copyWithOriginalPath(List<String> userStatementList)throws IOException
 	{
 		String originalPath = userStatementList.get(1);
 		String copyPath = controller.routeName + File.separator+userStatementList.get(2);
@@ -97,7 +103,7 @@ public class CopyStatement {
 	}
 	
 	// 복사될 파일 경로만 입력됐을 때 
-	public void copyWithCopyPath(List<String> userStatementList)
+	public void copyWithCopyPath(List<String> userStatementList)throws IOException
 	{
 		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
 		String copyPath = userStatementList.get(2);
@@ -105,7 +111,7 @@ public class CopyStatement {
 	}
 	
 	// 경로 두개 입력 됐을 때 
-	public void copyWithTwoPath(List<String> userStatementList)
+	public void copyWithTwoPath(List<String> userStatementList)throws IOException
 	{
 		String originalPath = userStatementList.get(1);
 		String copyPath = userStatementList.get(2);

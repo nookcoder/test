@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 import model.CmdModel;
@@ -11,7 +12,6 @@ public class MoveStatement {
 	private CmdView view;
 	private CmdController controller;
 	private CmdModel model;	
-	private CopyStatement copy; 
 	
 	public MoveStatement(CmdView view,CmdController controller,CmdModel model)
 	{
@@ -21,7 +21,7 @@ public class MoveStatement {
 	}
 	
 	// copy 명령문 실행 
-	public void runMoveStatement(List<String> userStatementList)
+	public void runMoveStatement(List<String> userStatementList) throws IOException
 	{
 		if(userStatementList.size() == 3)
 		{
@@ -54,18 +54,15 @@ public class MoveStatement {
 	}
 	
 	
-	public void runMove(String originalPath, String movePath)
+	public void runMove(String originalPath, String movePath) throws IOException
 	{
+		File originalFile = new File(originalPath);
+		File moveFile = new File(movePath);
 		// 복사할 파일이 존재할 때 
 		if(model.isExistsFile(originalPath))
 		{
-			try {
-				model.copyFile(originalPath,movePath);
-				model.deleteFile(originalPath);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			model.copyFile(originalFile,moveFile);
+			model.deleteFile(originalPath);
 			view.showSuccessMove();
 			view.showRoute(controller.routeName);
 		}
@@ -80,7 +77,7 @@ public class MoveStatement {
 		}
 	}
 	
-	public void moveFileWithNoPath(List<String> userStatementList)
+	public void moveFileWithNoPath(List<String> userStatementList) throws IOException
 	{
 		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
 		String copyPath = controller.routeName + File.separator+userStatementList.get(2);
@@ -88,7 +85,7 @@ public class MoveStatement {
 	}
 	
 	// 이동해올 파일 경로만 일력됐을 때 
-	public void moveFileWithOriginalPath(List<String> userStatementList)
+	public void moveFileWithOriginalPath(List<String> userStatementList) throws IOException
 	{
 		String originalPath = userStatementList.get(1);
 		String copyPath = controller.routeName + File.separator+userStatementList.get(2);
@@ -96,7 +93,7 @@ public class MoveStatement {
 	}
 	
 	// 이동될 파일 경로만 입력됐을 때 
-	public void moveFileWithCopyPath(List<String> userStatementList)
+	public void moveFileWithCopyPath(List<String> userStatementList) throws IOException
 	{
 		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
 		String copyPath = userStatementList.get(2);
@@ -104,7 +101,7 @@ public class MoveStatement {
 	}
 	
 	// 경로 두개 입력 됐을 때 
-	public void moveFileWithTwoPath(List<String> userStatementList)
+	public void moveFileWithTwoPath(List<String> userStatementList) throws IOException
 	{
 		String originalPath = userStatementList.get(1);
 		String copyPath = userStatementList.get(2);

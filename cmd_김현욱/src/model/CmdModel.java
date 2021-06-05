@@ -44,29 +44,66 @@ public class CmdModel {
 		return routeName;
 	}
 	
-	
-	public void copyFile(String originalPath, String copyPath) throws FileNotFoundException
+	public void copyFile(File originalFile, File copyFile)
 	{
-		int fileByte;
-		
-		File originalFile = new File(originalPath);
-		File copyFile = new File(copyPath);
-		
-		FileInputStream InputFile = new FileInputStream(originalFile); 
-		FileOutputStream outFile = new FileOutputStream(copyFile);
-	
-		fileByte = 0;
 		try {
-			while((fileByte = InputFile.read()) != -1)
-			{
-				outFile.write(fileByte);
-			}
+
+			FileInputStream fis = new FileInputStream(originalFile); //읽을파일
+			FileOutputStream fos = new FileOutputStream(copyFile); //복사할파일
+
+			int fileByte = 0; 
 			
-			InputFile.close();
-			outFile.close();
+			while((fileByte = fis.read()) != -1) {
+				fos.write(fileByte);
+			}
+			//자원사용종료
+			fis.close();
+			fos.close();
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+    }
+	
+	
+	public void copyDirectory(File originalFile, File copyFile)
+	{
+		File[] targetFile = originalFile.listFiles();
+		
+		for(File file : targetFile)
+		{
+			File temp = new File(copyFile.getAbsoluteFile() + File.separator + file.getName());
+			if(file.isDirectory()) {
+				temp.mkdir();
+				copyFile(file,temp);
+			}else {
+				FileInputStream InputFile =null;  
+				FileOutputStream outFile = null; 
+				try{
+					InputFile = new FileInputStream(file);
+					outFile = new FileOutputStream(temp);
+					byte[] fileByte = new byte[4096];
+					int count = 0;
+					while((count = InputFile.read(fileByte)) != -1) {
+						outFile.write(fileByte,0,count);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}finally {
+					try {
+						InputFile.close();
+						outFile.close();
+
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+			}
 		}
 	}
 	

@@ -86,11 +86,11 @@ public class DirStatement {
 	}
 
 	
-	// cd 명령문 실행 
+	//  dir 명령문 실행 
 	public void runDir(List<String> userStatementList,String routeName,int index) throws IOException
 	{
 		
-		// cd 뒤에 다른 명령어가 있을 때 
+		// dir 뒤에 다른 명령어가 있을 때 
 		if(userStatementList.get(index).equals(".."))
 		{
 			routeName = model.backOneRoute(routeName);

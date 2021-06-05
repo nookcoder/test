@@ -233,7 +233,7 @@ public class CmdView {
 	}
 	
 	// 이동 성공했을 때 
-	// 복사 성공했을 때 
+	// 복사 성공했을 때 dir
 	public void showSuccessMove()
 	{
 		System.out.println("        1개 파일이 이동되었습니다.");
