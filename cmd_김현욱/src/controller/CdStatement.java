@@ -159,7 +159,6 @@ public class CdStatement {
 	public void goRoute(List<String> userStatementList) throws IOException
 	{
 		String pathName;
-		String koreanPathName;
 		String path = ""; 
 		
 		for(int index=1;index<userStatementList.size();index++)
@@ -167,31 +166,30 @@ public class CdStatement {
 			path = path+ userStatementList.get(index);
 		}
 		
-		pathName = controller.routeName + File.separator + path.toLowerCase();
+		pathName = model.makePath(controller.routeName,path.toLowerCase());
 		
 		if(model.isExistsFile(pathName))
 		{
 			controller.routeName = model.getFileRouteName(pathName);
 			view.showRoute(controller.routeName);
+			return;
 		}
-
-		else
+		
+		path ="";
+		for(int index=1;index<userStatementList.size();index++)
 		{
-			path ="";
-			for(int index=1;index<userStatementList.size();index++)
-			{
-				path = path + " "+ userStatementList.get(index);
-			}
-			pathName = controller.routeName + File.separator + path.trim();
-			if(model.isExistsFile(pathName))
-			{
-				controller.routeName = model.getFileRouteName(pathName);
-				view.showRoute(controller.routeName);
-				return;
-			}
-			view.showNoFindRoute();
-			view.showRoute(controller.routeName);
+			path = path + " "+ userStatementList.get(index);
 		}
+		pathName = controller.routeName + File.separator + path.trim();
+		
+		if(model.isExistsFile(pathName))
+		{
+			controller.routeName = model.getFileRouteName(pathName);
+			view.showRoute(controller.routeName);
+			return;
+		}
+		view.showNoFindRoute();
+		view.showRoute(controller.routeName);
 	}
 
 	// 한칸 뒤로가기 

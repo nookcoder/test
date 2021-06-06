@@ -30,9 +30,9 @@ public class DirStatement {
 		
 		view.showVolumeNumber();
 		
-		if(userStatementList.get(0).equals("dir"))
+		if(userStatementList.get(constants.FIRST_COMMADN).equals("dir"))
 		{
-			if(userStatementList.size()>1)
+			if(userStatementList.size()>constants.ONE_TEXT)
 			{
 				for(int index=1;index < userStatementList.size(); index++)
 				{
@@ -43,7 +43,7 @@ public class DirStatement {
 			showDirectory(routeName);
 		}
 		
-		else if(userStatementList.get(0).equals("dir.."))
+		else if(userStatementList.get(constants.FIRST_COMMADN).equals("dir.."))
 		{
 
 			newRouteName = model.backOneRoute(routeName);
@@ -52,7 +52,7 @@ public class DirStatement {
 			repeatRunDir(userStatementList,routeName);
 		}
 		
-		else if(userStatementList.get(0).equals("dir..\\.."))
+		else if(userStatementList.get(constants.FIRST_COMMADN).equals("dir..\\.."))
 		{
 			newRouteName = model.backOneRoute(routeName);
 			newRouteName = model.backOneRoute(newRouteName);
@@ -61,7 +61,7 @@ public class DirStatement {
 			repeatRunDir(userStatementList,routeName);
 		}
 		
-		else if(userStatementList.get(0).equals("dir\\"))
+		else if(userStatementList.get(constants.FIRST_COMMADN).equals("dir\\"))
 		{	
 			newRouteName = "C:";
 			showDirectory(newRouteName);

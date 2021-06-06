@@ -4,6 +4,8 @@ import java.io.File;
 
 public class Constants {
 
-	public int ONE_TEXT = 1;
-	public String BLANK = " ";
+	public final int ONE_TEXT = 1;
+	public final String BLANK = " ";
+	public final String PERMIT_TEXT = "&(=+[];:.,\\";
+	public final int FIRST_COMMADN = 0;
 }

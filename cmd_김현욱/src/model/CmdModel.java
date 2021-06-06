@@ -113,4 +113,19 @@ public class CmdModel {
 		
 		deleteFile.delete();
 	}
+	
+	public String makePath(String currentPath,String path)
+	{
+		String newPath = ""; 
+		
+		if(path.contains("c:"))
+		{
+			newPath = path; 
+			return newPath; 
+		}
+		
+		newPath = currentPath + File.separator + path; 
+		
+		return newPath; 
+	}
 }

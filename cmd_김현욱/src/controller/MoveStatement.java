@@ -56,25 +56,35 @@ public class MoveStatement {
 	
 	public void runMove(String originalPath, String movePath) throws IOException
 	{
-		File originalFile = new File(originalPath);
-		File moveFile = new File(movePath);
 		// 복사할 파일이 존재할 때 
-		if(model.isExistsFile(originalPath))
-		{
-			model.copyFile(originalFile,moveFile);
-			model.deleteFile(originalPath);
-			view.showSuccessMove();
-			view.showRoute(controller.routeName);
-		}
-		
-		//isDirectory 추가 
-		
-		// 복사파일이 없을 때 
-		else
-		{
-			view.showNoExistsOriginalFile();
-			view.showRoute(controller.routeName);
-		}
+				if(model.isExistsFile(originalPath))
+				{
+					File originalFile = new File(originalPath);
+					File copyFile = new File(movePath);
+					if(originalFile.isDirectory())
+					{
+						model.copyDirectory(originalFile,copyFile);	
+						model.deleteFile(originalPath);
+					}
+					
+					else
+					{
+						model.copyFile(originalFile, copyFile);
+						model.deleteFile(originalPath);
+					}
+					
+					view.showSuccessMove();
+					view.showRoute(controller.routeName);
+				}
+				
+				//isDirectory 추가 
+				
+				// 복사파일이 없을 때 
+				else
+				{
+					view.showNoExistsOriginalFile();
+					view.showRoute(controller.routeName);
+				}
 	}
 	
 	public void moveFileWithNoPath(List<String> userStatementList) throws IOException
