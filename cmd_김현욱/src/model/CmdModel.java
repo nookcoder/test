@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class CmdModel {
 	private File file; 
@@ -137,5 +138,30 @@ public class CmdModel {
 		}
 		
 		return false;
+	}
+	
+	public String getCurrentFileName(String routeName)
+	{
+		int lastSeparatorIndex = routeName.lastIndexOf(File.separator);
+		String currentFileName = routeName.substring(lastSeparatorIndex+1, routeName.length());
+		
+		return currentFileName;
+	}
+	
+	public long getFileInfoFromParentFile(String routeName) {
+		File file = new File(routeName);
+		File parentFile = file.getParentFile(); 
+		File[] parentFiles = parentFile.listFiles();
+		String currentFileName = getCurrentFileName(routeName);
+		
+		for(File components : parentFiles)
+		{
+			if(components.getName().equals(currentFileName))
+			{
+				return components.lastModified();
+			}
+		}
+		
+		return 0;
 	}
 }

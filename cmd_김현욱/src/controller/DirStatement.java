@@ -124,7 +124,7 @@ public class DirStatement {
 	{
 		int fileCount = 0;
 		int fileByteSum = 0;
-		int directoryCount = 0;
+		int directoryCount = 2;
 		File file = new File(routeName);
 		
 		File[] files = file.listFiles();
@@ -132,7 +132,7 @@ public class DirStatement {
 		if(file.exists())
 		{
 			view.showDirTop(file.getCanonicalPath());
-			
+			view.showCurrentFileInfo(model.getFileInfoFromParentFile(routeName));
 			for(File components : files)
 			{
 				if(!model.isHiddenFile(components))

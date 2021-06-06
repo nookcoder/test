@@ -71,6 +71,20 @@ public class CmdView {
 	}
 	
 	// dir 실행 시 출력 포멧 
+	public void showCurrentFileInfo(long lastModifiedSecond)
+	{
+		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		System.out.print(dataFormat.format(lastModifiedSecond));
+		System.out.print("    <DIR>");
+		System.out.print("          ");
+		System.out.print(".\n");
+		System.out.print(dataFormat.format(lastModifiedSecond));
+		System.out.print("    <DIR>");
+		System.out.print("          ");
+		System.out.print("..\n");
+
+	}
+	
 	public void showDirectoryFormat(File file,boolean isDirectory)
 	{
 		SimpleDateFormat dataFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
