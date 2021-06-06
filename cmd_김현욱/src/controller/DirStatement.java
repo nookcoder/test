@@ -40,6 +40,7 @@ public class DirStatement {
 				}
 				return;
 			}
+			
 			showDirectory(routeName);
 		}
 		
@@ -69,7 +70,6 @@ public class DirStatement {
 			repeatRunDir(userStatementList,routeName);
 		}
 		
-		view.showRoute(controller.routeName);
 	}
 	
 	// dir 명령문 여러개 있을 떄 처리 
@@ -112,7 +112,10 @@ public class DirStatement {
 		
 		else
 		{
-			showDirectory(routeName+File.separator+userStatementList.get(index).toString());
+			String pathName ; 
+			pathName = model.makePath(routeName,userStatementList.get(index));
+			pathName = model.getFileRouteName(pathName);
+			showDirectory(pathName);
 		}
 		
 	}
@@ -152,5 +155,7 @@ public class DirStatement {
 			view.showDirTop(controller.routeName);
 			view.showDirNoFine();
 		}
+		
+		view.showRoute(controller.routeName);
 	}
 }
