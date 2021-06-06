@@ -132,30 +132,35 @@ public class DirStatement {
 		if(file.exists())
 		{
 			view.showDirTop(file.getCanonicalPath());
+			
 			for(File components : files)
 			{
-				view.showDirectoryFormat(components, components.isDirectory());
-				if(components.isDirectory())
+				if(!model.isHiddenFile(components))
 				{
-					directoryCount++;
+					view.showDirectoryFormat(components, components.isDirectory());
+					
+					if(components.isDirectory())
+					{
+						directoryCount++;
+					}
+					
+					else
+					{
+						fileByteSum += components.length();
+						fileCount++;
+					}
 				}
 				
-				else
-				{
-					fileByteSum += components.length();
-					fileCount++;
-				}
 			}	
 
 			view.showDirBottom(fileCount, directoryCount, fileByteSum,file.getUsableSpace());
+			view.showRoute(controller.routeName);
+			
+			return;
 		}
 		
-		else
-		{
-			view.showDirTop(controller.routeName);
-			view.showDirNoFine();
-		}
-		
+		view.showDirTop(controller.routeName);
+		view.showDirNoFine();
 		view.showRoute(controller.routeName);
 	}
 }

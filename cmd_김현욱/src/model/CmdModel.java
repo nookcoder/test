@@ -128,4 +128,14 @@ public class CmdModel {
 		
 		return newPath; 
 	}
+	
+	public boolean isHiddenFile(File file)
+	{
+		if(file.isHidden())
+		{
+			return true;
+		}
+		
+		return false;
+	}
 }
