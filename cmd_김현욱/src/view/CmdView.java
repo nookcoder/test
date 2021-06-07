@@ -251,6 +251,24 @@ public class CmdView {
 		System.out.print("\n");
 	}
 	
+	
+	public void showFailCopy()
+	{
+		System.out.println("같은 파일로 복사할 수 없습니다.");
+		System.out.println("        0개 파일이 복사되었습니다.");
+		System.out.print("\n");
+	}
+	
+	public void askOverWrite(String path)
+	{
+		System.out.print(path + "을(를) 덮어쓰시겠습니까? (Yes/No/All): ");
+	}
+	
+	public void showNumberOfCopy(int number)
+	{
+		System.out.printf("        %d개 파일이 복사되었습니다.\n",number);
+		System.out.print("\n");
+	}
 	// 이동 성공했을 때 
 	// 복사 성공했을 때 dir
 	public void showSuccessMove()
@@ -258,6 +276,4 @@ public class CmdView {
 		System.out.println("        1개 파일이 이동되었습니다.");
 		System.out.print("\n");
 	}
-	
-	
 }
