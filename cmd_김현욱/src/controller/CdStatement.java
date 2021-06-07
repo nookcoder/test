@@ -160,7 +160,7 @@ public class CdStatement {
 	{
 		String pathName;
 		
-		pathName = model.makePath2(userStatementList,controller.routeName);
+		pathName = model.makePath(userStatementList,controller.routeName);
 		
 		if(model.isExistsFile(pathName))
 		{

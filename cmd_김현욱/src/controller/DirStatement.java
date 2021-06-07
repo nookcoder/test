@@ -113,8 +113,7 @@ public class DirStatement {
 		else
 		{
 			String pathName ; 
-			pathName = model.makePath(routeName,userStatementList.get(index));
-			pathName = model.getFileRouteName(pathName);
+			pathName = model.makePath(userStatementList,routeName);
 			showDirectory(pathName);
 		}
 		
