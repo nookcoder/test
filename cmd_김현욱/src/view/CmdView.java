@@ -10,12 +10,23 @@ import java.text.SimpleDateFormat;
 
 public class CmdView {
 
-	public void showWindowsVersion() throws IOException {
+	public void showVolumeNumber() throws IOException, InterruptedException
+	{
+		ProcessBuilder builder = new ProcessBuilder();
+		builder.command("cmd.exe","/c","dir");
+		builder.directory(new File(System.getProperty("user.home")));
+		Process process = builder.start();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream(),"euc-kr"));
+		System.out.println(reader.readLine());
+		System.out.println(reader.readLine());
+	}
+	
+	public void showWindowsVersion() throws IOException, InterruptedException {
 		Process process = Runtime.getRuntime().exec("cmd");
 		InputStream inputStream = process.getInputStream();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 		System.out.println(reader.readLine());
-		System.out.println("(c) Microsoft Corporation. All rights reserved.");
+		System.out.println(reader.readLine());
 		System.out.print("\n");
 	}
 	
@@ -54,12 +65,6 @@ public class CmdView {
 	// 현재 경로 보여주기 
 	public void showRoute(String route) {
 		System.out.print(route + ">");
-	}
-	
-	public void showVolumeNumber()
-	{
-		System.out.println(" C 드라이브의 볼륨에는 이름이 없습니다.");
-		System.out.println(" 볼륨 일련 번호 :BEBF-2222D");
 	}
 	
 	// 파일디렉터리 출력

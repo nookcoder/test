@@ -231,12 +231,19 @@ public class CdStatement {
 		return isHaving;
 	}
 
+//	// 문자열에서 . \ / 삭제
+//	public String deleteChar(String str)
+//	{
+//		str = str.replaceAll("[.\\/]", "");	
+//		str = str.replaceAll("[/]", "");
+//		str = str.replace("\\", "");
+//		return str;
+//	}
+	
 	// 문자열에서 . \ / 삭제
 	public String deleteChar(String str)
 	{
-		str = str.replaceAll("[.]", "");	
-		str = str.replaceAll("[/]", "");
-		str = str.replace("\\", "");
+		str = str.replaceAll("[.\\/]", "");	
 		return str;
 	}
 }

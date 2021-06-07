@@ -23,7 +23,7 @@ public class DirStatement {
 		this.constants = new Constants();
 	}
 	
-	public void runDirStatement(List<String> userStatementList) throws IOException
+	public void runDirStatement(List<String> userStatementList) throws IOException, InterruptedException
 	{
 		String routeName = controller.routeName;
 		String newRouteName;

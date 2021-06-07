@@ -8,7 +8,7 @@ import view.CmdView;
 
 public class CmdMain {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		
 		CmdView view = new CmdView();

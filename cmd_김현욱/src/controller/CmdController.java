@@ -21,7 +21,7 @@ public class CmdController {
 	
 	public String routeName ; 
 	
-	public CmdController(CmdView view,CmdModel model) throws IOException {
+	public CmdController(CmdView view,CmdModel model) throws IOException, InterruptedException {
 		this.view = view;
 		this.model = model;
 		this.cdStatement = new CdStatement(view,this,model,constants);
@@ -34,7 +34,7 @@ public class CmdController {
 	}
 	
 	// 처음 실행시킬 함수
-	public void Init() throws IOException {
+	public void Init() throws IOException, InterruptedException {
 		String statement;
 		List<String> userStatementList;
 		
@@ -103,7 +103,7 @@ public class CmdController {
 	}
 	
 	// cmd 실행 시 처음 화면 출력 
-	public void setInitView() throws IOException {
+	public void setInitView() throws IOException, InterruptedException {
 		view.showWindowsVersion();
 		view.showRoute(routeName);
 	}
