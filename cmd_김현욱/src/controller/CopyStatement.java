@@ -1,25 +1,30 @@
 package controller;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
 import model.CmdModel;
+import model.Constants;
+import model.Copy;
 import view.CmdView;
 
 public class CopyStatement {
 	
 	private CmdView view;
 	private CmdController controller;
-	private CmdModel model;	
+	private CmdModel model;
+	private Copy copy; 
+	private Constants constants;
 	
 	
-	public CopyStatement(CmdView view,CmdController controller, CmdModel model)
+	public CopyStatement(CmdView view,CmdController controller, CmdModel model, Constants constants)
 	{
 		this.view = view;
 		this.controller = controller;
 		this.model = model;
+		this.copy = new Copy(constants);
+		this.constants = constants;
 	}
 	
 	// copy 명령문 실행 
@@ -27,25 +32,7 @@ public class CopyStatement {
 	{
 		if(userStatementList.size() == 3)
 		{
-			// 같은경로에 복사할때 
-			if(!userStatementList.get(1).contains(File.separator) && !userStatementList.get(2).contains(File.separator))
-			{
-				copyWithNoPath(userStatementList);
-			}
-			else if(userStatementList.get(1).contains(File.separator) && !userStatementList.get(2).contains(File.separator))
-			{
-				copyWithOriginalPath(userStatementList);
-			}
-			
-			else if(!userStatementList.get(1).contains(File.separator) && userStatementList.get(2).contains(File.separator))
-			{
-				copyWithCopyPath(userStatementList);
-			}
-			// 경로가 모두 입력될때 
-			else if(userStatementList.get(1).contains(File.separator) && userStatementList.get(2).contains(File.separator))
-			{
-				copyWithTwoPath(userStatementList);
-			}
+			runCopy(userStatementList);
 		}
 		
 		else if(userStatementList.size() == 1)
@@ -55,85 +42,77 @@ public class CopyStatement {
 		}
 	}
 	
-	// 복사 실행하기 f
-	public void runCopy(String originalPath, String copyPath) throws IOException
+	public String makeCopyPathName(String currentRoute, String inputPath)
 	{
-		// 복사할 파일이 존재할 때 
-		if(model.isExistsFile(originalPath))
+		if(!inputPath.contains("C:"))
 		{
-			File originalFile = new File(originalPath);
-			File copyFile = new File(copyPath);
-			if(originalFile.isDirectory())
-			{
-				model.copyDirectory(originalFile,copyFile);				
-			}
-			
-			else
-			{
-				model.copyFile(originalFile, copyFile);
-			}
-			view.showSuccessCopy();
-			view.showRoute(controller.routeName);
+			inputPath = currentRoute+ File.separator + inputPath;  
 		}
 		
-		//isDirectory 추가 
+		return inputPath;
+	}
+	
+	public void runCopy(List<String> userStatementList) throws IOException
+	{
+		String sourcePath = makeCopyPathName(controller.routeName,userStatementList.get(1));
+		String copyPath = makeCopyPathName(controller.routeName,userStatementList.get(2));
 		
-		// 복사파일이 없을 때 
-		else
+		File source = new File(sourcePath); 
+		File destination = new File(copyPath);
+		
+		int catagory = model.checkCatagory(source, destination);
+		
+		switch(catagory)
 		{
-			view.showNoExistsOriginalFile();
-			view.showRoute(controller.routeName);
+			//case constants.FILE_FILE:
+			case 0:
+				view.showNoExistsOriginalFile();
+				view.showRoute(controller.routeName);
+				break;
+			case 1: // File_File
+				copyFileToFile(sourcePath,copyPath);
+				break;
+				
+			case 2: // File_Directory
+				break;
+				
+			case 3: // Directory_File
+				copyDirectoryToFile(sourcePath,copyPath);
+				break;
+				
+			case 4: // Directory_Directory
+				copyDirectoryToDirectory(sourcePath,copyPath);
+				break;
 		}
 	}
 	
-	// 경로가 없을 때 
-	public void copyWithNoPath(List<String> userStatementList) throws IOException
+	public void copyFileToFile(String sourcePath, String copyPath) throws IOException
 	{
-		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
-		String copyPath = controller.routeName + File.separator+userStatementList.get(2);
-		runCopy(originalPath,copyPath);
-	}
-	
-	// 복사해올 파일 경로만 일력됐을 때 
-	public void copyWithOriginalPath(List<String> userStatementList)throws IOException
-	{
-		String originalPath = userStatementList.get(1);
-		String copyPath = controller.routeName + File.separator+userStatementList.get(2);
-		originalPath = model.getFileRouteName(originalPath);
-		runCopy(originalPath,copyPath);
-	}
-	
-	// 복사될 파일 경로만 입력됐을 때 
-	public void copyWithCopyPath(List<String> userStatementList)throws IOException
-	{
-		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
-		String copyPath = makeDestinationPathName(controller.routeName,originalPath,userStatementList.get(2));
-		copyPath = model.getFileRouteName(copyPath);
-		runCopy(originalPath,copyPath);
-	}
-	
-	// 경로 두개 입력 됐을 때 
-	public void copyWithTwoPath(List<String> userStatementList)throws IOException
-	{
-		String originalPath = userStatementList.get(1);
-		String copyPath = makeDestinationPathName(controller.routeName,originalPath,userStatementList.get(2));
-		originalPath = model.getFileRouteName(originalPath);
-		copyPath = model.getFileRouteName(copyPath);
-		runCopy(originalPath,copyPath);
-	}
-	
-	public String makeDestinationPathName(String currentRoute, String source, String destination)
-	{
-		if(!destination.contains("C:"))
-		{
-			destination = currentRoute+ File.separator + destination;  
-		}
+		File source = new File(sourcePath); 
+		File destination = new File(copyPath);
 		
-		if(destination.charAt(destination.length()-1) == '\\')
-		{
-			return destination + source; 
-		}
+		copy.FileToFile(source, destination);
+		view.showSuccessCopy();
+		view.showRoute(controller.routeName);
+	}
+	
+	public void copyDirectoryToDirectory(String sourcePath, String copyPath) throws IOException
+	{
+		File source = new File(sourcePath); 
+		File destination = new File(copyPath);
 		
-		return destination;
+		copy.DirectoryToDirectory(source,destination);
+		view.showSuccessCopy();
+		view.showRoute(controller.routeName);
+	}
+	
+	public void copyDirectoryToFile(String sourcePath, String copyPath) throws IOException
+	{
+		File source = new File(sourcePath); 
+		File destination = new File(copyPath);
+		
+		copy.DirectoryToFile(source,destination);
+		view.showSuccessCopy();
+		view.showRoute(controller.routeName);
 	}
 }
