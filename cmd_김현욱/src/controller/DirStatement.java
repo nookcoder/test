@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import cmd_±èÇö¿í.Constants;
 import model.CmdModel;
+import model.Constants;
 import view.CmdView;
 
 public class DirStatement {
@@ -113,7 +113,7 @@ public class DirStatement {
 		else
 		{
 			String pathName ; 
-			pathName = model.makePath(userStatementList,routeName);
+			pathName = model.makePath(userStatementList,routeName,1);
 			showDirectory(pathName);
 		}
 		
@@ -131,7 +131,11 @@ public class DirStatement {
 		if(file.exists())
 		{
 			view.showDirTop(file.getCanonicalPath());
-			view.showCurrentFileInfo(model.getFileInfoFromParentFile(routeName));
+			if(model.getFileInfoFromParentFile(routeName) != constants.FIRST_DIRECTORY)
+			{
+				view.showCurrentFileInfo(model.getFileInfoFromParentFile(routeName));
+			}
+			
 			for(File components : files)
 			{
 				if(!model.isHiddenFile(components))
