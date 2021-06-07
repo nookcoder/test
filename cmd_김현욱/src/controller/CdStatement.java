@@ -122,7 +122,7 @@ public class CdStatement {
 	{
 		if(userStatementList.size() > constants.ONE_TEXT)
 		{
-			if(isHavingText(userStatementList))
+			if(model.isHavingText(userStatementList))
 			{
 				view.showNoFindRoute();
 				view.showRoute(controller.routeName);
@@ -142,7 +142,7 @@ public class CdStatement {
 	// cd 명령문 뒤에 .\/ 이외에 문자가 있으면 지정경로 오류 출력 
 	public void checkInputChar(List<String> userStatementList)
 	{
-		if(isHavingText(userStatementList))
+		if(model.isHavingText(userStatementList))
 		{
 			view.showNoFindRoute();
 			view.showRoute(controller.routeName);
@@ -159,35 +159,16 @@ public class CdStatement {
 	public void goRoute(List<String> userStatementList) throws IOException
 	{
 		String pathName;
-		String path = ""; 
 		
-		for(int index=1;index<userStatementList.size();index++)
-		{
-			path = path+ userStatementList.get(index);
-		}
-		
-		pathName = model.makePath(controller.routeName,path.toLowerCase());
+		pathName = model.makePath2(userStatementList,controller.routeName);
 		
 		if(model.isExistsFile(pathName))
 		{
-			controller.routeName = model.getFileRouteName(pathName);
+			controller.routeName = pathName;
 			view.showRoute(controller.routeName);
 			return;
 		}
 		
-		path ="";
-		for(int index=1;index<userStatementList.size();index++)
-		{
-			path = path + " "+ userStatementList.get(index);
-		}
-		pathName = controller.routeName + File.separator + path.trim();
-		
-		if(model.isExistsFile(pathName))
-		{
-			controller.routeName = model.getFileRouteName(pathName);
-			view.showRoute(controller.routeName);
-			return;
-		}
 		view.showNoFindRoute();
 		view.showRoute(controller.routeName);
 	}
@@ -215,22 +196,6 @@ public class CdStatement {
 		return controller.routeName;
 	}
 
-	// 문자열에 . / \ 를 제외한 문자열이 있는 지 확인 
-	public boolean isHavingText(List<String> userStatementList)
-	{
-		boolean isHaving = false;
-
-		for(int index=1; index < userStatementList.size(); index++)
-		{
-			if(!deleteChar(userStatementList.get(index)).equals(""))
-			{
-				isHaving = true;
-			}
-		}
-
-		return isHaving;
-	}
-
 //	// 문자열에서 . \ / 삭제
 //	public String deleteChar(String str)
 //	{
@@ -240,10 +205,4 @@ public class CdStatement {
 //		return str;
 //	}
 	
-	// 문자열에서 . \ / 삭제
-	public String deleteChar(String str)
-	{
-		str = str.replaceAll("[.\\/]", "");	
-		return str;
-	}
 }

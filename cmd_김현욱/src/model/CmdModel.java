@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class CmdModel {
 	private File file; 
@@ -130,6 +131,29 @@ public class CmdModel {
 		return newPath; 
 	}
 	
+	public String makePath2(List<String> userStatementList,String currentPath) throws IOException
+	{
+		String newPath = ""; 
+		String path = ""; 
+		
+		for(int index=1;index<userStatementList.size();index++)
+		{
+			path = path+ " "+userStatementList.get(index);
+		}
+		
+		if(path.contains("c:")||path.contains("C:"))
+		{
+			newPath = path.trim().toLowerCase(); 
+		}
+		
+		else
+		{
+			newPath = currentPath + File.separator + path.trim().toLowerCase(); 
+		}
+		
+		return getFileRouteName(newPath); 
+	}
+	
 	public boolean isHiddenFile(File file)
 	{
 		if(file.isHidden())
@@ -163,5 +187,28 @@ public class CmdModel {
 		}
 		
 		return 0;
+	}
+	
+	// 문자열에서 . \ / 삭제
+	public String deleteChar(String str)
+	{
+		str = str.replaceAll("[.\\/]", "");	
+		return str;
+	}
+		
+	// 문자열에 . / \ 를 제외한 문자열이 있는 지 확인 
+	public boolean isHavingText(List<String> userStatementList)
+	{
+		boolean isHaving = false;
+
+		for(int index=1; index < userStatementList.size(); index++)
+		{
+			if(!deleteChar(userStatementList.get(index)).equals(""))
+			{
+				isHaving = true;
+			}
+		}
+
+		return isHaving;
 	}
 }
