@@ -47,57 +47,31 @@ public class CmdModel {
 		return routeName;
 	}
 	
-	public void copyFile(File source, File dest) throws IOException
+	public int checkCatagory(File source, File destination)
 	{
-		FileInputStream origin = new FileInputStream(source);
-		FileOutputStream copy = new FileOutputStream(dest);
-		
-		int fileByte = 0;
-		while((fileByte = origin.read()) != constants.END_FILE)
+		if(source.isFile() && destination.isFile())
 		{
-			copy.write(fileByte);
+			return 1; 
 		}
 		
-		origin.close();
-		copy.close();
+		else if(source.isFile() && destination.isDirectory())
+		{
+			return 2;
+		}
+		
+		else if(source.isDirectory() && destination.isFile())
+		{
+			return 3;
+		}
+		
+		else if(source.isDirectory() && destination.isDirectory())
+		{
+			return 4;
+		}
+		
+		return 0;
 	}
 	
-	public void copyDirectory(File originalFile, File copyFile) throws IOException
-	{
-		File[] targetFile = originalFile.listFiles();
-		
-		for(File file : targetFile)
-		{
-			File temp = new File(copyFile.getAbsoluteFile() + File.separator + file.getName());
-			if(file.isDirectory()) {
-				temp.mkdir();
-				copyFile(file,temp);
-			}else {
-				FileInputStream InputFile =null;  
-				FileOutputStream outFile = null; 
-				try{
-					InputFile = new FileInputStream(file);
-					outFile = new FileOutputStream(temp);
-					byte[] fileByte = new byte[4096];
-					int count = 0;
-					while((count = InputFile.read(fileByte)) != -1) {
-						outFile.write(fileByte,0,count);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}finally {
-					try {
-						InputFile.close();
-						outFile.close();
-
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}	
-				}
-			}
-		}
-	}
 	
 	public void deleteFile(String filePath)
 	{
@@ -105,6 +79,7 @@ public class CmdModel {
 		
 		deleteFile.delete();
 	}
+	
 	
 	public String makePath(List<String> userStatementList,String currentPath,int startIndex) throws IOException
 	{
