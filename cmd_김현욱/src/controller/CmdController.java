@@ -1,12 +1,13 @@
 package controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import cmd_±èÇö¿í.Constants;
 import model.CmdModel;
+import model.Constants;
 import view.CmdView;
 
 public class CmdController {
@@ -120,7 +121,7 @@ public class CmdController {
 		String userStatement;
 		userStatement = scanner.nextLine();
 		userStatement = userStatement.trim(); 
-		
+		userStatement = userStatement.replace("/", File.separator);
 		return userStatement;
 	}
 
