@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import cmd_김현욱.Constants;
 import model.CmdModel;
+import model.Constants;
 import view.CmdView;
 
 public class CdStatement {
@@ -27,7 +27,7 @@ public class CdStatement {
 	public void runCdStatement(List<String> userStatementList) throws IOException
 	{
 		// cd가 입력됐을때 
-		if(userStatementList.get(0).equals("cd")) 
+		if(userStatementList.get(constants.FIRST_COMMADN).equals("cd")) 
 		{
 			if(userStatementList.size() == constants.ONE_TEXT)
 			{
@@ -39,24 +39,24 @@ public class CdStatement {
 			runCd(userStatementList);
 		}
 
-		else if(userStatementList.get(0).equals("cd..") || userStatementList.get(0).equals("cd..\\") || userStatementList.get(0).equals("cd../"))
+		else if(userStatementList.get(constants.FIRST_COMMADN).equals("cd..") || userStatementList.get(0).equals("cd..\\") || userStatementList.get(0).equals("cd../"))
 		{
 			runCdDotDot(userStatementList);
 		}
 
-		else if(userStatementList.get(0).equals("cd..\\.."))
+		else if(userStatementList.get(constants.FIRST_COMMADN).equals("cd..\\.."))
 		{
 			runCdDotBackSlash(userStatementList);
 		}
 
-		else if(userStatementList.get(0).equals("cd\\"))
+		else if(userStatementList.get(constants.FIRST_COMMADN).equals("cd\\"))
 		{
 			runCdBackSlash(userStatementList);
 		}
 
 		else
 		{
-			view.showErrorStatement(userStatementList.get(0).toString());
+			view.showErrorStatement(userStatementList.get(constants.FIRST_COMMADN).toString());
 			view.showRoute(controller.routeName);
 		}
 	}
@@ -65,25 +65,25 @@ public class CdStatement {
 	public void runCd(List<String> userStatementList) throws IOException
 	{
 		// cd 뒤에 다른 명령어가 있을 때 
-		if(userStatementList.get(1).equals(".."))
+		if(userStatementList.get(constants.SECOND_COMMAND).equals(".."))
 		{
-			userStatementList.set(0, "cd..");
-			userStatementList.remove(1);
+			userStatementList.set(constants.FIRST_COMMADN, "cd..");
+			userStatementList.remove(constants.SECOND_COMMAND);
 			runCdDotDot(userStatementList);
 			return;
 		}
-		else if(userStatementList.get(1).equals("..\\.."))
+		else if(userStatementList.get(constants.SECOND_COMMAND).equals("..\\.."))
 		{
-			userStatementList.set(0, "cd..\\..");
+			userStatementList.set(constants.FIRST_COMMADN, "cd..\\..");
 			userStatementList.remove(1);
 			runCdDotBackSlash(userStatementList);
 			return;
 		}
 		
-		else if(userStatementList.get(1).equals("\\"))
+		else if(userStatementList.get(constants.SECOND_COMMAND).equals("\\"))
 		{
-			userStatementList.set(0, "cd\\");
-			userStatementList.remove(1);
+			userStatementList.set(constants.FIRST_COMMADN, "cd\\");
+			userStatementList.remove(constants.SECOND_COMMAND);
 			runCdBackSlash(userStatementList);
 			return;
 		}
@@ -160,7 +160,7 @@ public class CdStatement {
 	{
 		String pathName;
 		
-		pathName = model.makePath(userStatementList,controller.routeName);
+		pathName = model.makePath(userStatementList,controller.routeName,1);
 		
 		if(model.isExistsFile(pathName))
 		{
@@ -195,14 +195,5 @@ public class CdStatement {
 
 		return controller.routeName;
 	}
-
-//	// 문자열에서 . \ / 삭제
-//	public String deleteChar(String str)
-//	{
-//		str = str.replaceAll("[.\\/]", "");	
-//		str = str.replaceAll("[/]", "");
-//		str = str.replace("\\", "");
-//		return str;
-//	}
 	
 }
