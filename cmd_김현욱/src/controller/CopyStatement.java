@@ -37,7 +37,7 @@ public class CopyStatement {
 				copyWithOriginalPath(userStatementList);
 			}
 			
-			else if(userStatementList.get(1).contains(File.separator) && !userStatementList.get(2).contains(File.separator))
+			else if(!userStatementList.get(1).contains(File.separator) && userStatementList.get(2).contains(File.separator))
 			{
 				copyWithCopyPath(userStatementList);
 			}
@@ -99,6 +99,7 @@ public class CopyStatement {
 	{
 		String originalPath = userStatementList.get(1);
 		String copyPath = controller.routeName + File.separator+userStatementList.get(2);
+		originalPath = model.getFileRouteName(originalPath);
 		runCopy(originalPath,copyPath);
 	}
 	
@@ -106,7 +107,8 @@ public class CopyStatement {
 	public void copyWithCopyPath(List<String> userStatementList)throws IOException
 	{
 		String originalPath = controller.routeName + File.separator+userStatementList.get(1);
-		String copyPath = userStatementList.get(2);
+		String copyPath = makeDestinationPathName(controller.routeName,originalPath,userStatementList.get(2));
+		copyPath = model.getFileRouteName(copyPath);
 		runCopy(originalPath,copyPath);
 	}
 	
@@ -114,38 +116,24 @@ public class CopyStatement {
 	public void copyWithTwoPath(List<String> userStatementList)throws IOException
 	{
 		String originalPath = userStatementList.get(1);
-		String copyPath = userStatementList.get(2);
+		String copyPath = makeDestinationPathName(controller.routeName,originalPath,userStatementList.get(2));
+		originalPath = model.getFileRouteName(originalPath);
+		copyPath = model.getFileRouteName(copyPath);
 		runCopy(originalPath,copyPath);
 	}
-//	
-//	public String getFirstFilePath(List<String> userStatementList)
-//	{
-//		String allPath="";
-//		int newPathStartIndex;
-//		
-//		for(int index=1;index < userStatementList.size();index++)
-//		{
-//			allPath += userStatementList.get(index);
-//		}
-//		
-//		newPathStartIndex = allPath.lastIndexOf(":");
-//		
-//		return allPath.substring(0, newPathStartIndex-1);
-//	}
-//	
-//	public String getSecondPath(List<String> userStatementList)
-//	{
-//		String allPath="";
-//		int newPathStartIndex;
-//		
-//		for(int index=1;index < userStatementList.size();index++)
-//		{
-//			allPath += userStatementList.get(index);
-//		}
-//		
-//		newPathStartIndex = allPath.lastIndexOf(":");
-//		
-//		return allPath.substring(newPathStartIndex-1, allPath.length());
-//	
-//	}
+	
+	public String makeDestinationPathName(String currentRoute, String source, String destination)
+	{
+		if(!destination.contains("C:"))
+		{
+			destination = currentRoute+ File.separator + destination;  
+		}
+		
+		if(destination.charAt(destination.length()-1) == '\\')
+		{
+			return destination + source; 
+		}
+		
+		return destination;
+	}
 }

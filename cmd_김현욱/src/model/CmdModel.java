@@ -2,19 +2,19 @@ package model;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class CmdModel {
 	private File file; 
+	private Constants constants;
 	public String routeName; 
 	
 	
 	public CmdModel() {
 		this.routeName = System.getProperty("user.home");; 		
+		this.constants = new Constants();
 	}
 	
 	public boolean isExistsFile(String pathName)
@@ -26,6 +26,7 @@ public class CmdModel {
 	
 	public String getFileRouteName(String pathName) throws IOException
 	{
+		pathName = pathName.trim().toLowerCase();
 		file = new File(pathName);
 		
 		return file.getCanonicalPath();
@@ -46,33 +47,22 @@ public class CmdModel {
 		return routeName;
 	}
 	
-	public void copyFile(File originalFile, File copyFile)
+	public void copyFile(File source, File dest) throws IOException
 	{
-		try {
-
-			FileInputStream fis = new FileInputStream(originalFile); //읽을파일
-			FileOutputStream fos = new FileOutputStream(copyFile); //복사할파일
-
-			int fileByte = 0; 
-			
-			while((fileByte = fis.read()) != -1) {
-				fos.write(fileByte);
-			}
-			//자원사용종료
-			fis.close();
-			fos.close();
-
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		FileInputStream origin = new FileInputStream(source);
+		FileOutputStream copy = new FileOutputStream(dest);
+		
+		int fileByte = 0;
+		while((fileByte = origin.read()) != constants.END_FILE)
+		{
+			copy.write(fileByte);
 		}
-    }
+		
+		origin.close();
+		copy.close();
+	}
 	
-	
-	public void copyDirectory(File originalFile, File copyFile)
+	public void copyDirectory(File originalFile, File copyFile) throws IOException
 	{
 		File[] targetFile = originalFile.listFiles();
 		
@@ -116,27 +106,12 @@ public class CmdModel {
 		deleteFile.delete();
 	}
 	
-	public String makePath(String currentPath,String path)
-	{
-		String newPath = ""; 
-		
-		if(path.contains("c:"))
-		{
-			newPath = path; 
-			return newPath; 
-		}
-		
-		newPath = currentPath + File.separator + path; 
-		
-		return newPath; 
-	}
-	
-	public String makePath2(List<String> userStatementList,String currentPath) throws IOException
+	public String makePath(List<String> userStatementList,String currentPath,int startIndex) throws IOException
 	{
 		String newPath = ""; 
 		String path = ""; 
 		
-		for(int index=1;index<userStatementList.size();index++)
+		for(int index=startIndex;index<userStatementList.size();index++)
 		{
 			path = path+ " "+userStatementList.get(index);
 		}
@@ -147,6 +122,7 @@ public class CmdModel {
 		}
 		
 		else
+			
 		{
 			newPath = currentPath + File.separator + path.trim().toLowerCase(); 
 		}
@@ -173,17 +149,19 @@ public class CmdModel {
 	}
 	
 	public long getFileInfoFromParentFile(String routeName) {
-		File file = new File(routeName);
-		File parentFile = file.getParentFile(); 
-		File[] parentFiles = parentFile.listFiles();
-		String currentFileName = getCurrentFileName(routeName);
-		
-		for(File components : parentFiles)
+		if(!routeName.equals("C:"))
 		{
-			if(components.getName().equals(currentFileName))
+			File file = new File(routeName);
+			File parentFile = file.getParentFile(); 
+			File[] parentFiles = parentFile.listFiles();
+			String currentFileName = getCurrentFileName(routeName);
+			for(File components : parentFiles)
 			{
-				return components.lastModified();
-			}
+				if(components.getName().equals(currentFileName))
+				{
+					return components.lastModified();
+				}
+			}		
 		}
 		
 		return 0;
@@ -211,4 +189,7 @@ public class CmdModel {
 
 		return isHaving;
 	}
+		
+	
+	
 }
