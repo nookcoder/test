@@ -271,9 +271,14 @@ public class CmdView {
 	}
 	// 이동 성공했을 때 
 	// 복사 성공했을 때 dir
-	public void showSuccessMove()
+	public void showSuccessMove(int number)
 	{
-		System.out.println("        1개 파일이 이동되었습니다.");
+		System.out.printf("        %d개 파일이 이동되었습니다.\n",number);
 		System.out.print("\n");
+	}
+	
+	public void showFailExcess()
+	{
+		System.out.println("액세스가 거부되었습니다.");
 	}
 }
