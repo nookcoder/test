@@ -25,7 +25,7 @@ public class Copy {
 	public void FileToDirectory(File source, File destination) throws IOException
 	{
 		FileInputStream origin = new FileInputStream(source);
-		File temp = new File(destination.getAbsoluteFile() + File.separator + source.getName());
+		File temp = new File(destination.getCanonicalPath() + File.separator + source.getName());
 		FileOutputStream copy = new FileOutputStream(temp);
 		
 		runWrite(origin,copy);
@@ -61,7 +61,7 @@ public class Copy {
 		File[] targetFile = originalFile.listFiles();
 		for(File file : targetFile)
 		{
-			File temp = new File(copyFile.getAbsoluteFile() + File.separator + file.getName());				
+			File temp = new File(copyFile.getCanonicalPath() + File.separator + file.getName());				
 			
 			if(file.isFile()){
 				FileInputStream origin = new FileInputStream(file);

@@ -17,7 +17,7 @@ public class CopyStatement {
 	private CmdModel model;
 	private Copy copy; 
 	private Constants constants;
-	
+	private Scanner scan;
 	
 	public CopyStatement(CmdView view,CmdController controller, CmdModel model, Constants constants)
 	{
@@ -26,6 +26,7 @@ public class CopyStatement {
 		this.model = model;
 		this.constants = constants;
 		this.copy = new Copy();
+		this.scan = new Scanner(System.in);
 	}
 	
 	// copy 명령문 실행 
@@ -67,7 +68,7 @@ public class CopyStatement {
 		{
 			//case constants.FILE_FILE:
 			case 0:
-				//view.showNoExistsOriginalFile();
+				view.showNoExistsOriginalFile();
 				view.showRoute(controller.routeName);
 				break;
 			case 1: // File_File
@@ -75,15 +76,15 @@ public class CopyStatement {
 				break;
 				
 			case 2: // File_Directory
-				copyFileToDirectory(sourcePath,copyPath);
+				copyFileToDirectory(sourcePath,copyPath,userStatementList);
 				break;
 				
 			case 3: // Directory_File
-				copyDirectoryToFile(sourcePath,copyPath);
+				copyDirectoryToFile(sourcePath,copyPath,userStatementList);
 				break;
 				
 			case 4: // Directory_Directory
-				copyDirectoryToDirectory(sourcePath,copyPath);
+				copyDirectoryToDirectory(sourcePath,copyPath,userStatementList);
 				break;
 		}
 	}
@@ -102,7 +103,6 @@ public class CopyStatement {
 		
 		if(destination.exists())
 		{
-			Scanner scan = new Scanner(System.in);
 			String answer;
 			view.askOverWrite(userStatementList.get(2));
 			answer = scan.next().toLowerCase();
@@ -128,27 +128,73 @@ public class CopyStatement {
 		view.showRoute(controller.routeName);
 	}
 	
-	public void copyFileToDirectory(String sourcePath, String copyPath) throws IOException
+	public void copyFileToDirectory(String sourcePath, String copyPath,List<String> userStatementList) throws IOException
 	{
+		int count = 0;
 		File source = new File(sourcePath); 
 		File destination = new File(copyPath);
+		String checkPath = copyPath + File.separator + source.getName();
+		
+		if(sourcePath.equals(checkPath))
+		{
+			String answer;
+			view.askOverWrite(userStatementList.get(2));
+			answer = scan.next().toLowerCase();
+			if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
+			{
+				copy.FileToDirectory(source, destination);
+				view.showSuccessCopy();
+				view.showRoute(controller.routeName);
+				return;
+			}
+			
+			else if(answer.charAt(0) == 'n')
+			{
+				view.showNumberOfCopy(0);
+				view.showRoute(controller.routeName);
+				return;
+			}
+		}
+		
+		
 		
 		copy.FileToDirectory(source, destination);
 		view.showSuccessCopy();
 		view.showRoute(controller.routeName);
 	}
 	
-	public void copyDirectoryToFile(String sourcePath, String copyPath) throws IOException
+	public void copyDirectoryToFile(String sourcePath, String copyPath,List<String> userStatementList) throws IOException
 	{
 		File source = new File(sourcePath); 
 		File destination = new File(copyPath);
+		
+		if(destination.exists())
+		{
+			String answer;
+			view.askOverWrite(userStatementList.get(2));
+			answer = scan.next().toLowerCase();
+			if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
+			{
+				copy.DirectoryToFile(source, destination);
+				view.showSuccessCopy();
+				view.showRoute(controller.routeName);
+				return;
+			}
+			
+			else if(answer.charAt(0) == 'n')
+			{
+				view.showNumberOfCopy(0);
+				view.showRoute(controller.routeName);
+				return;
+			}
+		}
 		
 		copy.DirectoryToFile(source,destination);
 		view.showSuccessCopy();
 		view.showRoute(controller.routeName);
 	}
 	
-	public void copyDirectoryToDirectory(String sourcePath, String copyPath) throws IOException
+	public void copyDirectoryToDirectory(String sourcePath, String copyPath,List<String> userStatementList) throws IOException
 	{
 		File source = new File(sourcePath); 
 		File destination = new File(copyPath);
@@ -158,6 +204,26 @@ public class CopyStatement {
 		view.showRoute(controller.routeName);
 	}
 	
+	public void selectOverwrite(File source,File destination,List<String> userStatementList) throws IOException
+	{
+		String answer;
+		view.askOverWrite(userStatementList.get(2));
+		answer = scan.next().toLowerCase();
+		if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
+		{
+			copy.FileToFile(source, destination);
+			view.showSuccessCopy();
+			view.showRoute(controller.routeName);
+			return;
+		}
+		
+		else if(answer.charAt(0) == 'n')
+		{
+			view.showNumberOfCopy(0);
+			view.showRoute(controller.routeName);
+			return;
+		}
+	}
 
 	
 
