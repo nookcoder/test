@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -103,9 +105,13 @@ public class CopyStatement {
 		
 		if(destination.exists())
 		{
-			String answer;
-			view.askOverWrite(userStatementList.get(2));
-			answer = scan.next().toLowerCase();
+			String answer ="k";
+			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
+			{
+				view.askOverWrite(userStatementList.get(2));
+				answer = scan.next().toLowerCase();
+				
+			}
 			if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
 			{
 				copy.FileToFile(source, destination);
@@ -130,16 +136,19 @@ public class CopyStatement {
 	
 	public void copyFileToDirectory(String sourcePath, String copyPath,List<String> userStatementList) throws IOException
 	{
-		int count = 0;
 		File source = new File(sourcePath); 
 		File destination = new File(copyPath);
 		String checkPath = copyPath + File.separator + source.getName();
-		
-		if(sourcePath.equals(checkPath))
+		File check = new File(checkPath);
+		if(check.exists())
 		{
-			String answer;
-			view.askOverWrite(userStatementList.get(2));
-			answer = scan.next().toLowerCase();
+			String answer ="k";
+			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
+			{
+				view.askOverWrite(userStatementList.get(2)+File.separator + source.getName());
+				answer = scan.next().toLowerCase();
+				
+			}
 			if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
 			{
 				copy.FileToDirectory(source, destination);
@@ -170,12 +179,16 @@ public class CopyStatement {
 		
 		if(destination.exists())
 		{
-			String answer;
-			view.askOverWrite(userStatementList.get(2));
-			answer = scan.next().toLowerCase();
+			String answer ="k";
+			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
+			{
+				view.askOverWrite(userStatementList.get(2));
+				answer = scan.next().toLowerCase();
+				
+			}
 			if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
 			{
-				copy.DirectoryToFile(source, destination);
+				DirectoryToFile(source, destination,userStatementList);
 				view.showSuccessCopy();
 				view.showRoute(controller.routeName);
 				return;
@@ -189,7 +202,7 @@ public class CopyStatement {
 			}
 		}
 		
-		copy.DirectoryToFile(source,destination);
+		DirectoryToFile(source,destination,userStatementList);
 		view.showSuccessCopy();
 		view.showRoute(controller.routeName);
 	}
@@ -224,7 +237,54 @@ public class CopyStatement {
 			return;
 		}
 	}
-
 	
+	
+	public void DirectoryToFile(File originalFile, File copyFile,List<String> userStatementList) throws IOException
+	{
+		File[] targetFile = originalFile.listFiles();
+		boolean isFirst = true;
+		boolean isYes = false; 
+		FileOutputStream destination;
+		String answer = "k";
 
+		for(File file:targetFile)
+		{
+			if(file.isFile()) {
+				FileInputStream origin = new FileInputStream(file);
+				
+				
+				while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n' && !isYes)
+				{
+					System.out.println(userStatementList.get(1) + File.separator + file.getName());
+					view.askOverWrite(userStatementList.get(2));
+					answer = scan.next().toLowerCase();
+				}
+				
+				if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a' || isYes)
+				{
+					if(isFirst)
+					{
+						destination = new FileOutputStream(copyFile,false);					
+						isFirst = false;
+						isYes = true;
+					}
+					else
+					{
+						destination = new FileOutputStream(copyFile,true);
+						isYes = true;
+					}
+
+					copy.runWrite(origin,destination);
+				}
+
+				else if(answer.charAt(0) == 'n')
+				{
+					continue;
+				}
+
+				
+			}
+		}
+	}
+	
 }
