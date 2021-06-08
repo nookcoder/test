@@ -17,4 +17,6 @@ public class Constants {
 	public final int FILE_DIRECTORY = 2; 
 	public final int DIRECTORY_FILE = 3; 
 	public final int DIRECTORY_DIRECTORY = 4; 	
+
+	public final String INITIALIZATION_STRING = "x";
 }
