@@ -26,7 +26,7 @@ public class CopyStatement {
 		this.view = view;
 		this.controller = controller;
 		this.model = model;
-		this.constants = constants;
+		this.constants = new Constants();
 		this.copy = new Copy();
 		this.scan = new Scanner(System.in);
 	}
@@ -167,33 +167,7 @@ public class CopyStatement {
 		File source = new File(sourcePath); 
 		File destination = new File(copyPath);
 		
-		if(destination.exists())
-		{
-			String answer =constants.INITIALIZATION_STRING;
-			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
-			{
-				view.askOverWrite(userStatementList.get(2));
-				answer = scan.next().toLowerCase();
-				
-			}
-			if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
-			{
-				DirectoryToFile(source, destination,userStatementList);
-				view.showSuccessCopy();
-				view.showRoute(controller.routeName);
-				return;
-			}
-			
-			else if(answer.charAt(0) == 'n')
-			{
-				view.showNumberOfCopy(0);
-				view.showRoute(controller.routeName);
-				return;
-			}
-		}
-		
 		DirectoryToFile(source,destination,userStatementList);
-		view.showSuccessCopy();
 		view.showRoute(controller.routeName);
 	}
 	
@@ -212,47 +186,66 @@ public class CopyStatement {
 		File[] targetFile = originalFile.listFiles();
 		boolean isFirst = true;
 		boolean isYes = false; 
-		FileOutputStream destination;
+		boolean isCheck = false;
 		String answer = constants.INITIALIZATION_STRING;
 
 		for(File file:targetFile)
 		{
 			if(file.isFile()) {
-				FileInputStream origin = new FileInputStream(file);
 				
-				
-				while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n' && !isYes)
+				if(copyFile.exists() && !isCheck)
 				{
-					System.out.println(userStatementList.get(1) + File.separator + file.getName());
-					view.askOverWrite(userStatementList.get(2));
-					answer = scan.next().toLowerCase();
+					isCheck = true;
+					while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n' && !isYes)
+					{
+						System.out.println(userStatementList.get(1) + File.separator + file.getName());
+						view.askOverWrite(userStatementList.get(2));
+						answer = scan.next().toLowerCase();
+					}
+					
+					if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a' || isYes)
+					{
+						if(isFirst)
+						{
+							FileInputStream origin = new FileInputStream(file);
+							FileOutputStream destination = new FileOutputStream(copyFile,false);	
+							copy.runWrite(origin,destination);
+							isFirst = false;
+							isYes = true;
+						}
+						else
+						{
+							FileInputStream origin = new FileInputStream(file);
+							FileOutputStream destination = new FileOutputStream(copyFile,false);	
+							copy.runWrite(origin,destination);
+							isYes = true;
+						}	
+					}
+	
+					else if(answer.charAt(0) == 'n')
+					{
+						continue;
+					}
 				}
 				
-				if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a' || isYes)
+				if(isFirst)
 				{
-					if(isFirst)
-					{
-						destination = new FileOutputStream(copyFile,false);					
-						isFirst = false;
-						isYes = true;
-					}
-					else
-					{
-						destination = new FileOutputStream(copyFile,true);
-						isYes = true;
-					}
-
+					FileInputStream origin = new FileInputStream(file);
+					FileOutputStream destination = new FileOutputStream(copyFile,false);	
 					copy.runWrite(origin,destination);
+					isFirst = false;
+					isYes = true;
 				}
-
-				else if(answer.charAt(0) == 'n')
+				else
 				{
-					continue;
-				}
-
-				
+					FileInputStream origin = new FileInputStream(file);
+					FileOutputStream destination = new FileOutputStream(copyFile,false);	
+					copy.runWrite(origin,destination);
+					isYes = true;
+				}	
 			}
 		}
+		view.showNumberOfCopy(1);
 	}
 	
 }
