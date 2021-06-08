@@ -49,7 +49,12 @@ public class CmdModel {
 	
 	public int checkCatagory(File source, File destination)
 	{
-		if(source.isFile() && destination.isFile())
+		if(!source.exists() || !destination.getParentFile().exists())
+		{
+			return 0; 
+		}
+		
+		else if(source.isFile() && destination.isFile())
 		{
 			return 1; 
 		}
@@ -69,7 +74,13 @@ public class CmdModel {
 			return 4;
 		}
 		
-		return 0;
+		else if(source.isDirectory() && destination.getParentFile().exists())
+		{
+			return 3;
+		}
+		
+		return 1;
+		
 	}
 	
 	
@@ -80,7 +91,7 @@ public class CmdModel {
 		deleteFile.delete();
 	}
 	
-	
+	// cd, dir 경로 만들기 
 	public String makePath(List<String> userStatementList,String currentPath,int startIndex) throws IOException
 	{
 		String newPath = ""; 
@@ -105,6 +116,7 @@ public class CmdModel {
 		return getFileRouteName(newPath); 
 	}
 	
+	// 숨겨진 파일인지 확인 하기 
 	public boolean isHiddenFile(File file)
 	{
 		if(file.isHidden())
@@ -115,6 +127,7 @@ public class CmdModel {
 		return false;
 	}
 	
+	// 현재 파일 이름 가져오기 
 	public String getCurrentFileName(String routeName)
 	{
 		int lastSeparatorIndex = routeName.lastIndexOf(File.separator);
@@ -123,6 +136,7 @@ public class CmdModel {
 		return currentFileName;
 	}
 	
+	// 부모 폴더에서 최근 수정일자 받아오기 
 	public long getFileInfoFromParentFile(String routeName) {
 		if(!routeName.equals("C:"))
 		{
@@ -164,7 +178,17 @@ public class CmdModel {
 
 		return isHaving;
 	}
+	
+	// 복사, 이동 경로 만들기 
+	public String makeCopyPathName(String currentRoute, String inputPath)
+	{
+		if(!inputPath.toLowerCase().contains("c:"))
+		{
+			inputPath = currentRoute+ File.separator + inputPath;  
+		}
 		
+		return inputPath;
+	}
 	
 	
 }

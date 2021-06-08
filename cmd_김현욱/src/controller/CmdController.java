@@ -27,7 +27,7 @@ public class CmdController {
 		this.model = model;
 		this.cdStatement = new CdStatement(view,this,model,constants);
 		this.dirStatement = new DirStatement(view, this, model,constants);
-		this.copyStatement = new CopyStatement(view,this,model);
+		this.copyStatement = new CopyStatement(view,this,model,constants);
 		this.moveStatement = new MoveStatement(view, this, model);
 		this.routeName = getUserDirectory(); 
 		this.constants = new Constants();

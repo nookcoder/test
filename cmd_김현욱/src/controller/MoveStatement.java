@@ -66,6 +66,7 @@ public class MoveStatement {
 				break;
 				
 			case 2: // File_Directory
+				moveFileToDirectory(sourcePath,movePath,userStatementList);
 				break;
 				
 			case 3: // Directory_File
@@ -96,7 +97,7 @@ public class MoveStatement {
 			String answer = constants.INITIALIZATION_STRING;
 			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
 			{
-				view.askOverWrite(userStatementList.get(2));
+				view.askOverWrite(copyPath);
 				answer = scan.next().toLowerCase();
 				
 			}
@@ -119,8 +120,48 @@ public class MoveStatement {
 		}
 		
 		copy.FileToFile(source, destination);
-		destination.delete();
-		view.showSuccessCopy();
+		source.delete();
+		view.showSuccessMove(1);
+		view.showRoute(controller.routeName);
+	}
+	
+	public void moveFileToDirectory(String sourcePath, String copyPath,List<String> userStatementList) throws IOException
+	{
+		File source = new File(sourcePath); 
+		File destination = new File(copyPath);
+		String checkPath = copyPath + File.separator + source.getName();
+		File check = new File(checkPath);
+		if(check.exists())
+		{
+			String answer =constants.INITIALIZATION_STRING;
+			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
+			{
+				view.askOverWrite(checkPath);
+				answer = scan.next().toLowerCase();
+				
+			}
+			if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
+			{
+				copy.FileToDirectory(source, destination);
+				source.delete();
+				view.showSuccessMove(1);
+				view.showRoute(controller.routeName);
+				return;
+			}
+			
+			else if(answer.charAt(0) == 'n')
+			{
+				view.showSuccessMove(0);
+				view.showRoute(controller.routeName);
+				return;
+			}
+		}
+		
+		
+		
+		copy.FileToDirectory(source, destination);
+		source.delete();
+		view.showSuccessMove(1);
 		view.showRoute(controller.routeName);
 	}
 

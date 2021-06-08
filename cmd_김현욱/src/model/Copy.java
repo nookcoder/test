@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class Copy {
 	
@@ -30,31 +31,6 @@ public class Copy {
 		
 		runWrite(origin,copy);
 	}
-	
-	public void DirectoryToFile(File originalFile, File copyFile) throws IOException
-	{
-		File[] targetFile = originalFile.listFiles();
-		boolean isFirst = true;
-		FileOutputStream copy;
-		for(File file:targetFile)
-		{
-			if(file.isFile()) {
-				FileInputStream origin = new FileInputStream(file);
-				if(isFirst)
-				{
-					copy = new FileOutputStream(copyFile,false);					
-					isFirst = false;
-				}
-				else
-				{
-					copy = new FileOutputStream(copyFile,true);
-				}
-				
-				runWrite(origin,copy);
-			}
-		}
-	}
-
 	
 	public void DirectoryToDirectory(File originalFile, File copyFile) throws IOException
 	{

@@ -46,20 +46,10 @@ public class CopyStatement {
 		}
 	}
 	
-	public String makeCopyPathName(String currentRoute, String inputPath)
-	{
-		if(!inputPath.contains("C:"))
-		{
-			inputPath = currentRoute+ File.separator + inputPath;  
-		}
-		
-		return inputPath;
-	}
-	
 	public void runCopy(List<String> userStatementList) throws IOException
 	{
-		String sourcePath = makeCopyPathName(controller.routeName,userStatementList.get(1));
-		String copyPath = makeCopyPathName(controller.routeName,userStatementList.get(2));
+		String sourcePath = model.makeCopyPathName(controller.routeName,userStatementList.get(1));
+		String copyPath = model.makeCopyPathName(controller.routeName,userStatementList.get(2));
 		
 		File source = new File(sourcePath); 
 		File destination = new File(copyPath);
@@ -105,7 +95,7 @@ public class CopyStatement {
 		
 		if(destination.exists())
 		{
-			String answer ="k";
+			String answer =constants.INITIALIZATION_STRING;
 			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
 			{
 				view.askOverWrite(userStatementList.get(2));
@@ -142,7 +132,7 @@ public class CopyStatement {
 		File check = new File(checkPath);
 		if(check.exists())
 		{
-			String answer ="k";
+			String answer =constants.INITIALIZATION_STRING;
 			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
 			{
 				view.askOverWrite(userStatementList.get(2)+File.separator + source.getName());
@@ -179,7 +169,7 @@ public class CopyStatement {
 		
 		if(destination.exists())
 		{
-			String answer ="k";
+			String answer =constants.INITIALIZATION_STRING;
 			while(answer.charAt(0) != 'y' && answer.charAt(0) != 'a' && answer.charAt(0) != 'n')
 			{
 				view.askOverWrite(userStatementList.get(2));
@@ -217,35 +207,13 @@ public class CopyStatement {
 		view.showRoute(controller.routeName);
 	}
 	
-	public void selectOverwrite(File source,File destination,List<String> userStatementList) throws IOException
-	{
-		String answer;
-		view.askOverWrite(userStatementList.get(2));
-		answer = scan.next().toLowerCase();
-		if(answer.charAt(0) == 'y' || answer.charAt(0) == 'a')
-		{
-			copy.FileToFile(source, destination);
-			view.showSuccessCopy();
-			view.showRoute(controller.routeName);
-			return;
-		}
-		
-		else if(answer.charAt(0) == 'n')
-		{
-			view.showNumberOfCopy(0);
-			view.showRoute(controller.routeName);
-			return;
-		}
-	}
-	
-	
 	public void DirectoryToFile(File originalFile, File copyFile,List<String> userStatementList) throws IOException
 	{
 		File[] targetFile = originalFile.listFiles();
 		boolean isFirst = true;
 		boolean isYes = false; 
 		FileOutputStream destination;
-		String answer = "k";
+		String answer = constants.INITIALIZATION_STRING;
 
 		for(File file:targetFile)
 		{
