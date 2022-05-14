@@ -11,7 +11,7 @@ public class KeyPadPanel extends JPanel {
 
 	private JPanel keyPadPanel;
 
-	// ¼ýÀÚ ÆÐµå¿¡ µé¾î°¥ ¹öÆ°µé
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ðµå¿¡ ï¿½ï¿½î°¥ ï¿½ï¿½Æ°ï¿½ï¿½
 	private JButton[] numberButton;
 	private JButton ce;
 	private JButton c;
@@ -24,7 +24,7 @@ public class KeyPadPanel extends JPanel {
 	private JButton dot;
 	private JButton changingSign;
 
-	// °è»ê°úÁ¤¿¡¼­ ¾²ÀÏ º¯¼ö
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	private Double sum;
 	private Double num;
 	private Double temp;
@@ -47,16 +47,16 @@ public class KeyPadPanel extends JPanel {
 
 	public KeyPadPanel(JLabel showingProcess, JTextField calculatorDisplay, JTextArea calculatorRecord) {
 
-		// °è»ê°úÁ¤ È­¸é ÃÊ±âÈ­
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È­ï¿½ï¿½ ï¿½Ê±ï¿½È­
 		this.calculatorDisplay = calculatorDisplay;
 		this.showingProcess = showingProcess;
 		this.calculatorRecord = calculatorRecord;
-		// ¼ýÀÚ ÆÐ³Î ÃÊ±âÈ­
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³ï¿½ ï¿½Ê±ï¿½È­
 		this.keyPadPanel = new JPanel();
 		this.negateLabel = new JLabel(); 
 		negateLabel.setVisible(true);
 		
-		// °è»ê°úÁ¤ º¯¼ö ÃÊ±âÈ­
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 		this.sum = 0.0;
 		this.num = 0.0;
 		this.temp = 0.0;
@@ -71,25 +71,25 @@ public class KeyPadPanel extends JPanel {
 		
 		this.constant = new Constants();
 
-		// ¹öÆ° ÃÊ±âÈ­
+		// ï¿½ï¿½Æ° ï¿½Ê±ï¿½È­
 		this.numberButton = new JButton[10];
 		for (int number = 0; number < 10; number++) {
 			numberButton[number] = new JButton(Integer.toString(number));
 			constant.setButtonFont(numberButton[number]);
 			numberButton[number].addActionListener(new NumberButtonListene());
 		}
-		this.plus = new JButton("£«");
-		this.minus = new JButton("£­");
-		this.multiply = new JButton("¡¿");
-		this.divide = new JButton("¡À");
+		this.plus = new JButton("+");
+		this.minus = new JButton("-");
+		this.multiply = new JButton("*");
+		this.divide = new JButton("/");
 		this.c = new JButton("C");
 		this.ce = new JButton("CE");
 		this.dot = new JButton(".");
-		this.changingSign = new JButton("¡¾");
-		this.equal = new JButton("£½");
-		this.backSpace = new JButton("¢¸");
+		this.changingSign = new JButton("+/-");
+		this.equal = new JButton("=");
+		this.backSpace = new JButton("<");
 
-		// ¿¬»êÀÚ ÀÌº¥Æ® Ãß°¡
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® ï¿½ß°ï¿½
 		plus.addActionListener(new OperatorButton());
 		minus.addActionListener(new OperatorButton());
 		multiply.addActionListener(new OperatorButton());
@@ -101,7 +101,7 @@ public class KeyPadPanel extends JPanel {
 		changingSign.addActionListener(new NegateListener());
 		backSpace.addActionListener(new BackSpaceListener());
 
-		// ¹öÆ° ²Ù¹Ì±â
+		// ï¿½ï¿½Æ° ï¿½Ù¹Ì±ï¿½
 		constant.setOperatorButton(plus);
 		constant.setOperatorButton(minus);
 		constant.setOperatorButton(multiply);
@@ -113,7 +113,7 @@ public class KeyPadPanel extends JPanel {
 		constant.setOperatorButton(backSpace);
 		constant.setOperatorButton(divide);
 
-		// ¼ýÀÚ ÆÐ³Î¿¡ ¹öÆ° Ãß°¡
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½Ð³Î¿ï¿½ ï¿½ï¿½Æ° ï¿½ß°ï¿½
 		keyPadPanel.setLayout(new GridLayout(5, 4, 2, 2));
 
 		keyPadPanel.add(ce);
@@ -220,7 +220,7 @@ public class KeyPadPanel extends JPanel {
 		return number;
 	}
 	
-	// ¼ýÀÚ ±æ¾îÁö¸é ÄÞ¸¶ Ãß°¡
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½ ï¿½ß°ï¿½
 	public String printingNumber(String number) {
 		String newText;
 		String oldText;
@@ -264,7 +264,7 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 	
-	// ÀÔ·ÂµÈ ¼ýÀÚ ÀúÀåÇÏ±â
+	// ï¿½Ô·Âµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	public void getNumber() {
 		if (isFirst) {
 			sum = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
@@ -273,20 +273,20 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 
-	// µÎ¹øÂ° ¼ýÀÚ°¡ ÀÔ·ÂµÆÀ» ¶§ ¿¬»ê
+	// ï¿½Î¹ï¿½Â° ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ô·Âµï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void calculate(String operator, Double number) {
-		if (operator == "£«") {
+		if (operator == "+") {
 			sum += number;
-		} else if (operator == "£­") {
+		} else if (operator == "-") {
 			sum -= number;
-		} else if (operator == "¡¿") {
+		} else if (operator == "*") {
 			sum *= number;
-		} else if (operator == "¡À") {
+		} else if (operator == "/") {
 			sum /= number;
 		}
 	}
 
-	// °è»ê±â ÃÊ±âÈ­ ÇÏ±â
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Ï±ï¿½
 	public void reset() {
 		sum = 0.0;
 		num = 0.0;
@@ -306,22 +306,22 @@ public class KeyPadPanel extends JPanel {
 	}
 
 	
-	// °è»ê±â·Ï ÀúÀåÇÏ±â
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
 	public void saveCalculatorRecord(String oldSum, String number) {
 		if (operator != null) {
 			calculatorRecord.append(setOverflow(oldSum) + " " + operator + " " + setOverflow(number)+ " = " + setOverflow(sum.toString()) + "\n");
 		}
 	}
 
-	// °Ô»ê±â ·Î±× È­¸é¿¡ Ç¥½ÃµÇ°ÔÇÏ´Â ÇÔ¼ö
+	// ï¿½Ô»ï¿½ï¿½ ï¿½Î±ï¿½ È­ï¿½é¿¡ Ç¥ï¿½ÃµÇ°ï¿½ï¿½Ï´ï¿½ ï¿½Ô¼ï¿½
 	public void showResult(String oldSum, String number) {
 		if (sum.toString() == "Infinity") {
-			calculatorDisplay.setText("0À¸·Î ³ª´­ ¼ö ¾ø½À´Ï´Ù");
+			calculatorDisplay.setText("ì •ì˜ë˜ì§€ ì•Šì€ ê²°ê³¼ìž…ë‹ˆë‹¤.");
 			isInfinity = true;
 			return;
 		} else if (sum.toString() == "NaN") {
 			showingProcess.setText("");
-			calculatorDisplay.setText("Á¤ÀÇµÇÁö¾ÊÀº °á°úÀÔ´Ï´Ù");
+			calculatorDisplay.setText("0ìœ¼ë¡œ ë‚˜ëˆŒ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
 			isInfinity = true;
 			return;
 		}
@@ -366,8 +366,8 @@ public class KeyPadPanel extends JPanel {
 			isFirstEqual = true;
 			isDone = false;
 			isEqualNext = false;
-			showingProcess.setText(temp1 + " ¡À 0 " + operator);
-			calculatorDisplay.setText("0À¸·Î ³ª´­ ¼ö ¾ø½À´Ï´Ù");
+			showingProcess.setText(temp1 + " ï¿½ï¿½ 0 " + operator);
+			calculatorDisplay.setText("0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½");
 			sum = 0.0;
 			num = 0.0;
 			temp = 0.0;
@@ -382,7 +382,7 @@ public class KeyPadPanel extends JPanel {
 		resizeNumber();
 	}
 	
-	// °è»ê±â ce ¹öÆ°
+	// ï¿½ï¿½ï¿½ï¿½ ce ï¿½ï¿½Æ°
 	public void actCE()
 	{
 		calculatorDisplay.setText("0");
@@ -399,10 +399,10 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 	
-	// µîÈ£(=) ÀÛµ¿ ÇÔ¼ö
+	// ï¿½ï¿½È£(=) ï¿½Ûµï¿½ ï¿½Ô¼ï¿½
 	public void actEqual() {
 		String oldSum = sum.toString();
-		// 0À¸·Î ³ª´³À» ¶§
+		// 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		if (isInfinity) {
 			reset();
 			isDone = false;
@@ -410,9 +410,9 @@ public class KeyPadPanel extends JPanel {
 			return;
 		}
 
-		// ¿¬»êÀÚ ´ÙÀ½ÀÇ µîÈ£ÀÏ¶§
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½Ï¶ï¿½
 		if (isDone) {
-			// µîÈ£°¡ Ã³À½ ÀÔ·ÂµÆÀ» ¶§
+			// ï¿½ï¿½È£ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½Ô·Âµï¿½ï¿½ï¿½ ï¿½ï¿½
 			if(isCENext)
 			{
 				isCENext = false;
@@ -428,16 +428,16 @@ public class KeyPadPanel extends JPanel {
 			showResult(oldSum, temp.toString());
 		}
 
-		// ¼ýÀÚ ´ÙÀ½ÀÇ µîÈ£ÀÏ¶§
+		// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ï¿½Ï¶ï¿½
 		else {
-			// ¿¬»êÀÚ°¡ ÀÔ·Â µÆÀ» ¶§
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			if (operator != null) {
 				calculate(operator, num);
 				showResult(oldSum, num.toString());
 				saveCalculatorRecord(makeIntPrinting(oldSum), makeIntPrinting(num.toString()));
 			}
 
-			// ¿¬»êÀÚ°¡ ¾øÀ» ‹š
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 			else {
 				showingProcess.setText(setOverflow(makeIntPrinting(oldSum)) + " =");
 			}
@@ -446,12 +446,12 @@ public class KeyPadPanel extends JPanel {
 		resizeNumber();
 	}
 	
-	// ¿¬»ê ±âÈ£ ÀÔ·Â½Ã Ã³¸® ÇÔ¼ö
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½Ô·Â½ï¿½ Ã³ï¿½ï¿½ ï¿½Ô¼ï¿½
 	public void actOperator(String op) {
 		String oldSum = sum.toString();
 		String newSum = makeIntPrinting(oldSum);
-		// ¾Õ¼± ¿¬»êÀÚ Àû¿ë
-		// 0À¸·Î ³ª´³À» ¶§
+		// ï¿½Õ¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+		// 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
 		if (isInfinity) {
 			reset();
 			isDone = false;
@@ -472,7 +472,7 @@ public class KeyPadPanel extends JPanel {
 		isEqualNext = false;
 	}
 
-	// ¹é½ºÆäÀÌ½º ·ÎÁ÷
+	// ï¿½é½ºï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void actBackSpace() {
 		if (!isEqualNext) {
 			String oldText = calculatorDisplay.getText().replaceAll("[,]", "");
@@ -555,7 +555,7 @@ public class KeyPadPanel extends JPanel {
 		resizeNumber();
 	}
 	
-	// Á¡ Ãß°¡
+	// ï¿½ï¿½ ï¿½ß°ï¿½
 	public void addDot() {
 		String oldText = calculatorDisplay.getText();
 		String newText = oldText + ".";
@@ -573,7 +573,7 @@ public class KeyPadPanel extends JPanel {
 		resizeNumber();
 	}
 	
-	// ¼ýÀÚ¹öÆ° ÀÌº¥Æ®¸®½º³Ê
+	// ï¿½ï¿½ï¿½Ú¹ï¿½Æ° ï¿½Ìºï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private class NumberButtonListene implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
@@ -587,7 +587,7 @@ public class KeyPadPanel extends JPanel {
 				return;
 			}
 			
-			// µîÈ£ ´ÙÀ½ ¼ýÀÚ ÀÔ·Â ½Ã °è»ê±â ÃÊ±âÈ­
+			// ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 			if (isEqualNext || (isEqualNext && isHaveNegate)) {
 				reset();
 				isEqualNext = false;
@@ -600,46 +600,46 @@ public class KeyPadPanel extends JPanel {
 				return;
 			}
 			
-			// Ã³À½ ÀÔ·ÂÇÏ´Â ¼ýÀÚÀÎÁö È®ÀÎ
+			// Ã³ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 			if (isFirstNumberButton || calculatorDisplay.getText().equals("0") )
 			{
 				calculatorDisplay.setText("");
 			}
 			
-			// ¼ýÀÚ ÀÔ·Â
+			// ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
 			isFirstNumberButton = false;
 			calculatorDisplay.setText(printingNumber(number));
 			isDone = false;
-			// °è»ê°úÁ¤ÀÇ Ã³À½ ¼ýÀÚ¸é sum, Ã³À½ÀÌ¾Æ´Ï¸é num ¿¡ ÀúÀå
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ sum, Ã³ï¿½ï¿½ï¿½Ì¾Æ´Ï¸ï¿½ num ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			getNumber();
 			resizeNumber();
 			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 
-	// ¿¬»ê¹öÆ° ÀÌº¥Æ® ¸®½º³Ê
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Æ° ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	private class OperatorButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 
 			JButton btn = (JButton) e.getSource();
 			String operatorBtn = btn.getText();
 
-			if (operatorBtn == "£«") {
-				actOperator("£«");
-			} else if (operatorBtn == "£­") {
-				actOperator("£­");
-			} else if (operatorBtn == "¡¿") {
-				actOperator("¡¿");
-			} else if (operatorBtn == "¡À") {
-				actOperator("¡À");
-			} else if (operatorBtn == "£½") {
+			if (operatorBtn == "+") {
+				actOperator("+");
+			} else if (operatorBtn == "-") {
+				actOperator("-");
+			} else if (operatorBtn == "*") {
+				actOperator("*");
+			} else if (operatorBtn == "/") {
+				actOperator("/");
+			} else if (operatorBtn == "=") {
 				actEqual();
 			}
 			calculatorDisplay.requestFocusInWindow();
 		}
 	}
 
-	// ÃÊ±âÈ­ ¹öÆ° ÀÌº¥Æ® ¸®½º³Ê( c, ce)
+	// ï¿½Ê±ï¿½È­ ï¿½ï¿½Æ° ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½( c, ce)
 	private class ResetButton implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JButton btn = (JButton) e.getSource();
@@ -656,7 +656,7 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 
-	// ¹é½ºÆäÀÌ½º ÀÌº¥Æ®
+	// ï¿½é½ºï¿½ï¿½ï¿½Ì½ï¿½ ï¿½Ìºï¿½Æ®
 	private class BackSpaceListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			actBackSpace();
@@ -678,7 +678,7 @@ public class KeyPadPanel extends JPanel {
 		}
 	}
 	
-	// Å°º¸µå ÀÔ·Â ÀÌº¥Æ®
+	// Å°ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½Ìºï¿½Æ®
 	private class CalcKetListener implements KeyListener {
 
 		@Override
@@ -691,10 +691,10 @@ public class KeyPadPanel extends JPanel {
 				switch(operatorKeyCode)
 				{
 					case KeyEvent.VK_EQUALS:
-						actOperator("£«");
+						actOperator("=");
 						break;
 					case KeyEvent.VK_8:
-						actOperator("¡¿");
+						actOperator("*");
 						break;
 				}
 				return;
@@ -702,19 +702,19 @@ public class KeyPadPanel extends JPanel {
 			
 			switch (operatorKeyCode) {
 			case KeyEvent.VK_ADD:
-				actOperator("£«");
+				actOperator("+");
 				break;
 
 			case KeyEvent.VK_MINUS:
-				actOperator("£­");
+				actOperator("-");
 				break;
 
 			case KeyEvent.VK_MULTIPLY:
-				actOperator("¡¿");
+				actOperator("*");
 				break;
 
 			case KeyEvent.VK_DIVIDE: case KeyEvent.VK_SLASH:
-				actOperator("¡À");
+				actOperator("/");
 				break;
 
 			case KeyEvent.VK_ENTER:
@@ -752,7 +752,7 @@ public class KeyPadPanel extends JPanel {
 			calculatorDisplay.requestFocus();
 			
 			char number = e.getKeyChar();
-			if (number >= '0' && number <= '9') {// µîÈ£ ´ÙÀ½ ¼ýÀÚ ÀÔ·Â ½Ã °è»ê±â ÃÊ±âÈ­
+			if (number >= '0' && number <= '9') {// ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 				
 				if (isInfinity) {
 					reset();
@@ -773,7 +773,7 @@ public class KeyPadPanel extends JPanel {
 					return;
 				}
 				
-				// Ã³À½ ÀÔ·ÂÇÏ´Â ¼ýÀÚÀÎÁö È®ÀÎ
+				// Ã³ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
 				if (isFirstNumberButton || calculatorDisplay.getText().equals("0")) {
 					calculatorDisplay.setText("");
 					isFirstNumberButton = false;
@@ -781,7 +781,7 @@ public class KeyPadPanel extends JPanel {
 
 				
 				String oldText = calculatorDisplay.getText() + number;
-				// ¼ýÀÚ ÀÔ·Â
+				// ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
 				if (calculatorDisplay.getText().replaceAll("[,]","").length() < 16) {
 					String oldTextCheck = oldText.replaceAll("[,]", "");
 						calculatorDisplay.setText(setComma(oldTextCheck));
@@ -793,7 +793,7 @@ public class KeyPadPanel extends JPanel {
 
 				isDone = false;
 				resizeNumber();
-				// °è»ê°úÁ¤ÀÇ Ã³À½ ¼ýÀÚ¸é sum, Ã³À½ÀÌ¾Æ´Ï¸é num ¿¡ ÀúÀå
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½Ú¸ï¿½ sum, Ã³ï¿½ï¿½ï¿½Ì¾Æ´Ï¸ï¿½ num ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 				if (isFirst) {
 					sum = Double.valueOf(calculatorDisplay.getText().replaceAll("[,]", ""));
 				} else {

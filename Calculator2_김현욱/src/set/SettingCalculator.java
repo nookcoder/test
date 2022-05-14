@@ -15,7 +15,7 @@ public class SettingCalculator extends JFrame{
 	public SettingCalculator() {
 		this.textPanel = new TextPanel();
 	
-		setTitle("°è»ê±â");
+		setTitle("ê³„ì‚°ê¸°");
 		setSize(350,500);
 		setMinimumSize(constats.dimension);
 		

@@ -17,7 +17,7 @@ import set.Constants;
 
 public class TextPanel extends JPanel{
 	
-	// °¡Àå À§¿¡ ÀÖ´Â ±¸¼º¿ä¼Ò(±â·Ï¹öÆ°, °è»ê°úÁ¤) 
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Ï¹ï¿½Æ°, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) 
 	public JButton calculateRecordButton; 
 	public JLabel showingProcess;
 	public JPanel upperPanel;
@@ -26,11 +26,11 @@ public class TextPanel extends JPanel{
 	public JPanel textPanel;
 	public JLabel kindLabel;
 	public JPanel miniPanel = new JPanel();
-	// ÀÔ·ÂÃ¢ 
+	// ï¿½Ô·ï¿½Ã¢ 
 	public JTextField calculatorDisplay;
 	public JPanel calculatorDisplayPanel; 
 	
-	// °è»ê±â·Ï Ã¢
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢
 	public JTextArea calculatorRecord;
 	public JButton deleteButton;
 	public JPanel calculatorRecordPanel; 
@@ -38,7 +38,7 @@ public class TextPanel extends JPanel{
 	
 	public JPanel bottomPanel;
 	public KeyPadPanel keyPadPanel;
-	public JLabel label = new JLabel("±â·Ï"); 
+	public JLabel label = new JLabel("í‘œì¤€");
 	private JPanel labelPanel = new JPanel(); 
 	
 	private Constants constants;
@@ -52,7 +52,7 @@ public class TextPanel extends JPanel{
 		this.calculateRecordButton = new JButton(new ImageIcon("src/images/record.png"));
 		calculateRecordButton.setBorderPainted(false);
 		calculateRecordButton.setContentAreaFilled(false);
-		this.kindLabel = new JLabel("Ç¥ÁØ");
+		this.kindLabel = new JLabel("í‘œì¤€");
 		kindLabel.setFont(constants.RECORD_FONT);
 		this.upperPanel = new JPanel();
 		this.recordButtonPanel = new JPanel();
